@@ -47,7 +47,7 @@ class ContactUsScreen extends StatelessWidget {
                           hintStyle: TextStyle(
                               color: kLightGreyColor.withOpacity(0.8),
                               fontWeight: FontWeight.w300,
-                              fontSize: 14),
+                              fontSize: 12),
                           border: InputBorder.none,
                         ),
                       ),
