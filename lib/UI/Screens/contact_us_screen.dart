@@ -61,6 +61,7 @@ class ContactUsScreen extends StatelessWidget {
                       width: screenWidth / 2.5,
                       child: TextField(
                         controller: phoneCnt,
+                        keyboardType: TextInputType.phone,
                         decoration: InputDecoration(
                           hintText: 'Phone',
                           hintStyle: TextStyle(
@@ -115,6 +116,7 @@ class ContactUsScreen extends StatelessWidget {
                 child: TextField(
                   obscureText: false,
                   controller: emailController,
+                  keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     hintText: 'Details',
                     hintStyle: TextStyle(
@@ -209,18 +211,18 @@ class ContactUsScreen extends StatelessWidget {
                 margin: const EdgeInsets.only(top: 20, bottom: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    const Icon(
+                  children: const [
+                    Icon(
                       Icons.g_mobiledata,
                       color: Colors.red,
                       size: 40,
                     ),
-                    const Icon(
+                    Icon(
                       Icons.apple,
                       color: Colors.black,
                       size: 40,
                     ),
-                    const Icon(
+                    Icon(
                       Icons.facebook,
                       color: Colors.blue,
                       size: 40,

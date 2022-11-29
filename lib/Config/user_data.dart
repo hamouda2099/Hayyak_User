@@ -1,6 +1,10 @@
 class UserData {
   static String token = '';
-  // ignore: prefer_typing_uninitialized_variables
-  static var id;
+  static num id = 0;
   static String userName = '';
+  static String phone = '';
+  static String imageUrl = '';
+  static String role = '';
+  static String email = '';
+  static String language = '';
 }

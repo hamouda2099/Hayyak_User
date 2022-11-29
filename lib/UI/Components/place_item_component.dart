@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/UI/Screens/event_details_screen.dart';
+import 'package:hayyak/UI/Screens/place_details_screen.dart';
 import 'package:hayyak/main.dart';
 
 class PlaceCard extends StatelessWidget {
@@ -12,7 +13,7 @@ class PlaceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        navigator(context: context, screen: EventDetails());
+        navigator(context: context, screen: PlaceDetails());
       },
       child: Padding(
         padding: const EdgeInsets.all(5.0),

@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/src/provider.dart';
 import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/Config/user_data.dart';
+import 'package:hayyak/Models/event_model.dart';
+import 'package:hayyak/Models/home_model.dart';
 import 'package:hayyak/States/providers.dart';
 
 import 'package:http/http.dart' as http;
@@ -13,22 +15,17 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import '../../UI/Screens/error_screen.dart';
 
 class ApiManger {
-  static const String hostUrl = 'https://hayyak.net';
-  static const String _loginUrl = '$hostUrl/api/scanner/login';
-  static const String _placesUrl = '$hostUrl/api/scanner/places';
-  static const String _placeDashboardUrl = '$hostUrl/api/scanner/dashboard';
-  static const String _eventDashboardUrl =
-      '$hostUrl/api/scanner/dashboard_event';
-  static const String _placeDashboardDetailsUrl =
-      'https://hayyak.net/api/scanner/details';
-  static const String _eventsUrl = '$hostUrl/api/scanner/event';
-  static const String _serviceUrl = '$hostUrl/api/scanner/check_in_servise';
-  static const String _order = '$hostUrl/api/scanner/order';
-  static const String _service = '$hostUrl/api/scanner/service';
-  static const String _category = '$hostUrl/api/scanner/category';
-  static const String _orders = '$hostUrl/api/scanner/order';
+  static const String hostUrl = 'https://testing.hayyak.net/api';
+  static const String _loginUrl = '$hostUrl/auth/login';
+  static const String _signupUrl = '$hostUrl/auth/signup';
+  static const String _requestOtpUrl = '$hostUrl/auth/request-otp';
+  static const String _verifyOtp = '$hostUrl/auth/verify-otp';
+  static const String _exploreUrl = '$hostUrl/events/explore';
+  static const String _eventDetails = '$hostUrl/event';
+
   static const String _timeDateUrl =
       'https://hayyak.net/api/scanner/data/curr_date';
+
   static Future<http.Response> sendPostRequest(
       String url, Map<String, dynamic> parameters) async {
     return await http.post(
@@ -36,6 +33,7 @@ class ApiManger {
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer ' + UserData.token,
+        'lang': 'en'
       },
       body: jsonEncode(parameters),
     );
@@ -61,6 +59,63 @@ class ApiManger {
     });
   }
 
+  static Future<Response> registerUser({
+    required String firstName,
+    required String lastName,
+    required String phone,
+    required String email,
+    required String dateOfBirth,
+    required String password,
+    required String confirmPassword,
+    required String gender,
+  }) async {
+    return await sendPostRequest(_signupUrl, <String, String>{
+      'first_name': firstName,
+      'last_name': lastName,
+      'phone': phone,
+      'date_of_birth': dateOfBirth,
+      'gender': gender,
+      'email': email,
+      'password': password,
+      'password_confirmation': confirmPassword,
+    });
+  }
+
+  static Future<Response> requestCode({
+    required String email,
+  }) async {
+    return await sendPostRequest(
+        _requestOtpUrl, <String, String>{'email': email});
+  }
+
+  static Future<Response> verifyOtp({
+    required String email,
+    required String otp,
+  }) async {
+    return await sendPostRequest(_verifyOtp, <String, String>{
+      'email': email,
+      'otp': otp,
+    });
+  }
+
+  static Future<HomeModel> getHome() async {
+    // Map<String, String> parameters = {
+    //   "page": page,
+    //   "limit": limit,
+    // };
+    Response response = await sendGetRequest(_exploreUrl);
+    return HomeModel.fromJson(json.decode(response.body));
+  }
+
+  static Future<EventModel> getEvent({required String id}) async {
+    // Map<String, String> parameters = {
+    //   "page": page,
+    //   "limit": limit,
+    // };
+    Response response = await sendGetRequest('$_eventDetails/$id');
+    return EventModel.fromJson(json.decode(response.body));
+  }
+
   static Future getTime(BuildContext context) async {
     bool result = await InternetConnectionChecker().hasConnection;
     if (result == true) {
@@ -72,6 +127,4 @@ class ApiManger {
       navigator(context: context, screen: const ErrorScreen());
     }
   }
-
-
 }

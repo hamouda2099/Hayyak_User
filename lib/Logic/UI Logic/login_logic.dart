@@ -8,9 +8,8 @@ import 'package:hayyak/Dialogs/loading_dialog.dart';
 import 'package:hayyak/Dialogs/message_dialog.dart';
 import 'package:hayyak/Logic/Services/api_manger.dart';
 import 'package:hayyak/States/providers.dart';
+import 'package:hayyak/UI/Screens/home_screen.dart';
 import 'package:hayyak/UI/Screens/login_screen.dart';
-
-
 
 import 'package:hive/hive.dart';
 
@@ -23,21 +22,18 @@ class LoginLogic {
       loadingDialog(context);
       ApiManger.userLogin(email: email, password: password).then((value) async {
         Navigator.pop(context);
-        if (jsonDecode(value.body)['status'] == true) {
+        if (jsonDecode(value.body)['success'] == true ||
+            jsonDecode(value.body)['code'] == 200) {
           UserData.token = jsonDecode(value.body)['data']['token'];
           UserData.id = jsonDecode(value.body)['data']['id'];
-          UserData.userName = jsonDecode(value.body)['data']['name'];
-          if ( context.read(rememberMeProvider).state == true ){
-            Hive.box('user_data').put('logged_in', true);
-            Hive.box('user_data').put('token', UserData.token);
-            Hive.box('user_data').put('name', UserData.userName);
-            Hive.box('user_data').put('id', UserData.id);
-          } else {
-            null;
-          }
-          navigator(context: context, screen:  LoginScreen(), remove: true);
+          // UserData.userName = jsonDecode(value.body)['data']['name'];
+          UserData.role = jsonDecode(value.body)['data']['role'];
+          UserData.email = jsonDecode(value.body)['data']['email'];
+          UserData.phone = jsonDecode(value.body)['data']['phone'];
+          UserData.imageUrl = jsonDecode(value.body)['data']['image'];
+          navigator(context: context, screen: const HomeScreen(), remove: true);
         } else {
-          messageDialog(context, '${jsonDecode(value.body)['msg']}');
+          messageDialog(context, '${jsonDecode(value.body)['error']}');
         }
       });
     }
