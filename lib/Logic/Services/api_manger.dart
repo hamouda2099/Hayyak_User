@@ -5,6 +5,7 @@ import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/Config/user_data.dart';
 import 'package:hayyak/Models/event_model.dart';
 import 'package:hayyak/Models/home_model.dart';
+import 'package:hayyak/Models/profile_model.dart';
 import 'package:hayyak/States/providers.dart';
 
 import 'package:http/http.dart' as http;
@@ -22,6 +23,7 @@ class ApiManger {
   static const String _verifyOtp = '$hostUrl/auth/verify-otp';
   static const String _exploreUrl = '$hostUrl/events/explore';
   static const String _eventDetails = '$hostUrl/event';
+  static const String _profileUrl = '$hostUrl/user/profile';
 
   static const String _timeDateUrl =
       'https://hayyak.net/api/scanner/data/curr_date';
@@ -98,6 +100,11 @@ class ApiManger {
     });
   }
 
+  static Future<ProfileModel> getProfileData() async {
+    Response response = await sendGetRequest(_profileUrl);
+    return ProfileModel.fromJson(json.decode(response.body));
+  }
+
   static Future<HomeModel> getHome() async {
     // Map<String, String> parameters = {
     //   "page": page,
@@ -115,7 +122,15 @@ class ApiManger {
     Response response = await sendGetRequest('$_eventDetails/$id');
     return EventModel.fromJson(json.decode(response.body));
   }
-
+  static Future<Response> getEventTickets({
+    required String eventId,
+    required String date,
+  }) async {
+    return await sendPostRequest('$_eventDetails/tickets', <String, String>{
+      'event_id': eventId,
+      'date': date,
+    });
+  }
   static Future getTime(BuildContext context) async {
     bool result = await InternetConnectionChecker().hasConnection;
     if (result == true) {

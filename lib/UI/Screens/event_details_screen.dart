@@ -1,3 +1,4 @@
+import 'package:custom_date_range_picker/custom_date_range_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hayyak/Config/constants.dart';
@@ -7,6 +8,7 @@ import 'package:hayyak/Logic/Services/api_manger.dart';
 import 'package:hayyak/Models/event_model.dart';
 import 'package:hayyak/UI/Components/app_bar.dart';
 import 'package:hayyak/UI/Components/seccond_app_bar.dart';
+import 'package:hayyak/UI/Screens/date_picker_screen.dart';
 import 'package:hayyak/UI/Screens/event_tickets_screen.dart';
 
 import '../../main.dart';
@@ -14,6 +16,8 @@ import '../../main.dart';
 class EventDetails extends StatelessWidget {
   EventDetails({required this.eventId});
   num eventId;
+  DateTime? startDate;
+  DateTime? endDate;
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<EventModel>(
@@ -73,8 +77,11 @@ class EventDetails extends StatelessWidget {
                       ),
                       InkWell(
                         onTap: () {
-                          navigator(
-                              context: context, screen: EventTicketsScreen());
+                          navigator(context: context,screen: DatePickerScreen(
+                            startDate: snapShot?.data?.data?.pickerStartDate.toString()??'',
+                            endDate: snapShot?.data?.data?.prickerEndDate.toString()??'',
+                          ));
+                          print(snapShot?.data?.data?.pickerStartDate.toString()??'',);
                         },
                         child: Container(
                           alignment: Alignment.center,

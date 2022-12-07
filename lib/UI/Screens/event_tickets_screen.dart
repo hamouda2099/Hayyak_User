@@ -9,8 +9,8 @@ import 'package:hayyak/main.dart';
 import '../../Config/constants.dart';
 
 class EventTicketsScreen extends StatelessWidget {
-  const EventTicketsScreen({Key? key}) : super(key: key);
-
+  EventTicketsScreen({required this.selectedDate});
+  String selectedDate = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
