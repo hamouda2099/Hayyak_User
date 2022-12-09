@@ -5,6 +5,7 @@ import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/UI/Components/app_bar.dart';
 import 'package:hayyak/UI/Components/seccond_app_bar.dart';
 import 'package:hayyak/UI/Screens/event_tickets_screen.dart';
+import 'package:hayyak/UI/Screens/place_department_screen.dart';
 
 import '../../main.dart';
 
@@ -205,7 +206,9 @@ class PlaceDetails extends StatelessWidget {
                   Column(
                     children: [
                       IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            navigator(context: context,screen: PlaceDepartmentScreen());
+                          },
                           icon: Icon(
                             Icons.business,
                             color: kLightGreyColor,

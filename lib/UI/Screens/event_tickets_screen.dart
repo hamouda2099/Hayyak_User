@@ -24,18 +24,18 @@ class EventTicketsScreen extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
+              children: const [
+                Text(
                   'Total Price',
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,
                       fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(
+                SizedBox(
                   height: 5,
                 ),
-                const Text(
+                Text(
                   '201.0 SAR',
                   style: TextStyle(
                       color: Colors.white,
