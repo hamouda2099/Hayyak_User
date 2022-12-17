@@ -54,6 +54,7 @@ class PlaceDetails extends StatelessWidget {
             InkWell(
               onTap: () {
                 navigator(context: context, screen: EventTicketsScreen(
+                  eventId: '',
                   selectedDate: '',
                 ));
               },

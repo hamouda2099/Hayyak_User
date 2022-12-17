@@ -4,9 +4,10 @@ String dateFormatter(String date) {
   String formattedDate = '';
 
   try {
-    var dateFormat = DateFormat("dd-MM-yyyy");
+    Intl.defaultLocale = 'en';
+    var dateFormat = DateFormat("E, MMM d");
     var utcDate = dateFormat.format(DateTime.parse(date));
-    var localDate = dateFormat.parse(utcDate, true).toString();
+    var localDate = dateFormat.parse(utcDate, false).toString();
     formattedDate = dateFormat.format(DateTime.parse(localDate));
   } catch (e) {}
 

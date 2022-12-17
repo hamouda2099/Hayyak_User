@@ -118,7 +118,7 @@ class Action {
   String color;
 
   factory Action.fromJson(Map<String, dynamic> json) => Action(
-        name: json["name"],
+        name: json["name"] == null ? '' : json["name"] ,
         color: json["color"],
       );
 

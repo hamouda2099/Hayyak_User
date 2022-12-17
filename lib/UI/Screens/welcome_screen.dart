@@ -7,6 +7,7 @@ import 'package:hayyak/Logic/UI%20Logic/login_logic.dart';
 import 'package:hayyak/States/providers.dart';
 import 'package:hayyak/UI/Components/text_field.dart';
 import 'package:hayyak/UI/Screens/contact_us_screen.dart';
+import 'package:hayyak/UI/Screens/home_screen.dart';
 import 'package:hayyak/UI/Screens/login_screen.dart';
 import 'package:hayyak/UI/Screens/sign_up_screen.dart';
 import 'package:hayyak/main.dart';
@@ -86,7 +87,8 @@ class WelcomeScreen extends StatelessWidget {
                 onTap: (){
                   navigator(
                     context: context,
-                    screen: LoginScreen(),
+                    screen: HomeScreen(
+                    ),
                   );
                 },
                 child: const Text('Skip',style: TextStyle(

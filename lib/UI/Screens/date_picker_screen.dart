@@ -7,9 +7,10 @@ import 'package:hayyak/main.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class DatePickerScreen extends StatefulWidget {
-  DatePickerScreen({required this.startDate,required this.endDate});
+  DatePickerScreen({required this.startDate,required this.endDate,required this.eventId});
   String startDate ='' ;
   String endDate = '';
+  String eventId ='';
   @override
   State<DatePickerScreen> createState() => _DatePickerScreenState();
 }
@@ -66,6 +67,7 @@ class _DatePickerScreenState extends State<DatePickerScreen> {
               onTap: (){
                 navigator(context: context,screen: EventTicketsScreen(
                   selectedDate: selectedDate,
+                  eventId: widget.eventId,
                 ));
               },
               child: Container(

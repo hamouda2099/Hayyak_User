@@ -4,6 +4,7 @@ import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/UI/Screens/notifications_screen.dart';
 import 'package:hayyak/main.dart';
+import 'package:share/share.dart';
 
 class SecondAppBar extends StatelessWidget {
   SecondAppBar({required this.title});
@@ -19,22 +20,47 @@ class SecondAppBar extends StatelessWidget {
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: SvgPicture.asset(
-                color: kDarkGreyColor,
-                width: 25, height: 25, 'assets/icon/back.svg'),
+            icon: SizedBox(
+              width: 15,
+              height: 15,
+              child: SvgPicture.asset(
+                  color: kDarkGreyColor,
+                  width: 25, height: 25, 'assets/icon/back.svg'),
+            ),
           ),
           Text(
             title,
-            style: TextStyle(color: kDarkGreyColor, fontSize: 16),
+            style: TextStyle(color: kDarkGreyColor, fontSize: 16,fontWeight: FontWeight.bold),
           ),
-          IconButton(
-            onPressed: () {
-              navigator(context: context, screen: NotificationsScreen());
-            },
-            icon: Icon(Icons.notifications),
-            color: kDarkGreyColor,
-            iconSize: 30,
-          ),
+          Row(
+            children: [
+              InkWell(
+                  onTap: () {
+                    Share.share(
+                        'https://hayyak.net/',
+                        subject: title);
+                  },
+                  child: const Icon(
+                    Icons.file_upload_outlined,
+                    size: 20,
+                    color: kDarkGreyColor,
+                  )),
+              SizedBox(width: 10,),
+              InkWell(
+                onTap: (){
+                  navigator(context: context, screen: NotificationsScreen());
+                },
+                child: SizedBox(
+                  width: 15,
+                  height: 15,
+                  child: SvgPicture.asset(
+                      color: kDarkGreyColor,
+                      'assets/icon/Icon feather-heart.svg'),
+                ),
+              ),
+
+            ],
+          )
         ],
       ),
     );

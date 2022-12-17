@@ -56,20 +56,20 @@ class Data {
 class Event {
   Event({
     required this.details,
-    required this.tickets,
+    required this.kinds,
   });
 
   Details details;
-  List<Ticket> tickets;
+  List<Kind> kinds;
 
   factory Event.fromJson(Map<String, dynamic> json) => Event(
     details: Details.fromJson(json["details"]),
-    tickets: List<Ticket>.from(json["tickets"].map((x) => Ticket.fromJson(x))),
+    kinds: List<Kind>.from(json["kinds"].map((x) => Kind.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
     "details": details.toJson(),
-    "tickets": List<dynamic>.from(tickets.map((x) => x.toJson())),
+    "kinds": List<dynamic>.from(kinds.map((x) => x.toJson())),
   };
 }
 
@@ -81,8 +81,6 @@ class Details {
     required this.image,
     required this.startDate,
     required this.endDate,
-    required this.pickerStartDate,
-    required this.prickerEndDate,
     required this.time,
     required this.latLng,
     required this.address,
@@ -97,8 +95,6 @@ class Details {
   String image;
   String startDate;
   String endDate;
-  DateTime pickerStartDate;
-  DateTime prickerEndDate;
   String time;
   String latLng;
   String address;
@@ -113,8 +109,6 @@ class Details {
     image: json["image"],
     startDate: json["start_date"],
     endDate: json["end_date"],
-    pickerStartDate: DateTime.parse(json["picker_start_date"]),
-    prickerEndDate: DateTime.parse(json["pricker_end_date"]),
     time: json["time"],
     latLng: json["lat_lng"],
     address: json["address"],
@@ -130,8 +124,6 @@ class Details {
     "image": image,
     "start_date": startDate,
     "end_date": endDate,
-    "picker_start_date": "${pickerStartDate.year.toString().padLeft(4, '0')}-${pickerStartDate.month.toString().padLeft(2, '0')}-${pickerStartDate.day.toString().padLeft(2, '0')}",
-    "pricker_end_date": "${prickerEndDate.year.toString().padLeft(4, '0')}-${prickerEndDate.month.toString().padLeft(2, '0')}-${prickerEndDate.day.toString().padLeft(2, '0')}",
     "time": time,
     "lat_lng": latLng,
     "address": address,
@@ -161,34 +153,126 @@ class Action {
   };
 }
 
-class Ticket {
-  Ticket({
+class Kind {
+  Kind({
     required this.id,
     required this.name,
-    required this.cost,
+    required this.costBeforeDiscount,
     required this.max,
     required this.color,
+    required this.tickets,
   });
 
   int id;
   String name;
-  String cost;
+  int costBeforeDiscount;
   int max;
   String color;
+  Tickets tickets;
 
-  factory Ticket.fromJson(Map<String, dynamic> json) => Ticket(
+  factory Kind.fromJson(Map<String, dynamic> json) => Kind(
     id: json["id"],
     name: json["name"],
-    cost: json["cost"],
+    costBeforeDiscount: json["cost_before_discount"],
     max: json["max"],
     color: json["color"],
+    tickets: Tickets.fromJson(json["tickets"]),
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
     "name": name,
-    "cost": cost,
+    "cost_before_discount": costBeforeDiscount,
     "max": max,
     "color": color,
+    "tickets": tickets.toJson(),
+  };
+}
+
+class Tickets {
+  Tickets({
+    required this.empty,
+  });
+
+  List<Empty> empty;
+
+  factory Tickets.fromJson(Map<String, dynamic> json) => Tickets(
+    empty: List<Empty>.from(json[""].map((x) => Empty.fromJson(x))),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "": List<dynamic>.from(empty.map((x) => x.toJson())),
+  };
+}
+
+class Empty {
+  Empty({
+    required this.id,
+    required this.numId,
+    required this.row,
+    required this.number,
+    required this.type,
+    required this.holdAt,
+    required this.date,
+    required this.kindId,
+    required this.eventId,
+    required this.reservedAt,
+    required this.checkin,
+    required this.checkout,
+    required this.deletedAt,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  int id;
+  String numId;
+  String row;
+  int number;
+  String type;
+  dynamic holdAt;
+  DateTime date;
+  int kindId;
+  int eventId;
+  dynamic reservedAt;
+  dynamic checkin;
+  dynamic checkout;
+  dynamic deletedAt;
+  String createdAt;
+  String updatedAt;
+
+  factory Empty.fromJson(Map<String, dynamic> json) => Empty(
+    id: json["id"],
+    numId: json["num_id"],
+    row: json["row"],
+    number: json["number"],
+    type: json["type"],
+    holdAt: json["hold_at"],
+    date: DateTime.parse(json["date"]),
+    kindId: json["kind_id"],
+    eventId: json["event_id"],
+    reservedAt: json["reserved_at"],
+    checkin: json["checkin"],
+    checkout: json["checkout"],
+    deletedAt: json["deleted_at"],
+    createdAt: json["created_at"],
+    updatedAt: json["updated_at"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "num_id": numId,
+    "row": row,
+    "number": number,
+    "type": type,
+    "hold_at": holdAt,
+    "date": "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
+    "kind_id": kindId,
+    "event_id": eventId,
+    "reserved_at": reservedAt,
+    "checkin": checkin,
+    "checkout": checkout,
+    "deleted_at": deletedAt,
+    "created_at": createdAt,
+    "updated_at": updatedAt,
   };
 }

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/src/provider.dart';
 import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/Config/user_data.dart';
 import 'package:hayyak/Models/event_model.dart';
+import 'package:hayyak/Models/event_tickets_model.dart';
 import 'package:hayyak/Models/home_model.dart';
 import 'package:hayyak/Models/profile_model.dart';
 import 'package:hayyak/States/providers.dart';
@@ -47,6 +48,8 @@ class ApiManger {
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer ' + UserData.token,
+        'lang': 'en'
+
       },
     );
   }
@@ -122,15 +125,20 @@ class ApiManger {
     Response response = await sendGetRequest('$_eventDetails/$id');
     return EventModel.fromJson(json.decode(response.body));
   }
-  static Future<Response> getEventTickets({
+
+  static Future<EventTicketsModel> getEventTickets({
     required String eventId,
     required String date,
   }) async {
-    return await sendPostRequest('$_eventDetails/tickets', <String, String>{
-      'event_id': eventId,
-      'date': date,
+    Response response = await sendPostRequest('$_eventDetails/tickets', <String, String>{
+      "event_id": eventId,
+      "date": date,
     });
+    return EventTicketsModel.fromJson(json.decode(response.body));
   }
+
+
+
   static Future getTime(BuildContext context) async {
     bool result = await InternetConnectionChecker().hasConnection;
     if (result == true) {

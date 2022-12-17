@@ -23,9 +23,13 @@ class CustomAppBar extends StatelessWidget {
             onPressed: () {
               navigator(context: context, screen: SettingsScreen());
             },
-            icon: SvgPicture.asset(
-              color: kDarkGreyColor,
-                'assets/icon/profile.svg'),
+            icon: SizedBox(
+              width: 15,
+              height: 15,
+              child: SvgPicture.asset(
+                color: kDarkGreyColor,
+                  'assets/icon/profile.svg',),
+            ),
           ),
           Image(
               width: screenWidth / 4,
@@ -36,7 +40,7 @@ class CustomAppBar extends StatelessWidget {
             },
             icon: Icon(Icons.notifications),
             color: kDarkGreyColor,
-            iconSize: 30,
+            iconSize: 20,
           ),
         ],
       ),

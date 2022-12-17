@@ -40,11 +40,15 @@ dependencies:
   easy_localization:
   intl: ^0.17.0
   hive: ^2.1.0
-  path_provider: ^2.0.2
+  path_provider:
   qr_flutter: ^4.0.0
   flutter_svg: ^1.1.6
-  custom_date_range_picker: ^1.0.6
   syncfusion_flutter_datepicker: ^20.3.60
+  share: ^2.0.4
+  google_maps_flutter: ^2.2.1
+  flutter_widget_from_html: ^0.9.0+1
+  webview_flutter: ^3.0.4
+  add_2_calendar: ^2.2.3
 
 dev_dependencies:
   flutter_test:

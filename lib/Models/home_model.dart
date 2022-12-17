@@ -23,18 +23,18 @@ class HomeModel {
   int code;
 
   factory HomeModel.fromJson(Map<String, dynamic> json) => HomeModel(
-        success: json["success"],
-        message: json["message"],
-        data: Data.fromJson(json["data"]),
-        code: json["code"],
-      );
+    success: json["success"],
+    message: json["message"],
+    data: Data.fromJson(json["data"]),
+    code: json["code"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "success": success,
-        "message": message,
-        "data": data.toJson(),
-        "code": code,
-      };
+    "success": success,
+    "message": message,
+    "data": data.toJson(),
+    "code": code,
+  };
 }
 
 class Data {
@@ -43,20 +43,18 @@ class Data {
     required this.categories,
   });
 
-  List<SliderEvents> slider;
+  List<ExploreSlider> slider;
   List<Category> categories;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        slider: List<SliderEvents>.from(
-            json["slider"].map((x) => SliderEvents.fromJson(x))),
-        categories: List<Category>.from(
-            json["categories"].map((x) => Category.fromJson(x))),
-      );
+    slider: List<ExploreSlider>.from(json["slider"].map((x) => ExploreSlider.fromJson(x))),
+    categories: List<Category>.from(json["categories"].map((x) => Category.fromJson(x))),
+  );
 
   Map<String, dynamic> toJson() => {
-        "slider": List<dynamic>.from(slider.map((x) => x.toJson())),
-        "categories": List<dynamic>.from(categories.map((x) => x.toJson())),
-      };
+    "slider": List<dynamic>.from(slider.map((x) => x.toJson())),
+    "categories": List<dynamic>.from(categories.map((x) => x.toJson())),
+  };
 }
 
 class Category {
@@ -68,27 +66,27 @@ class Category {
 
   int id;
   String name;
-  List<SliderEvents> events;
+  List<ExploreSlider> events;
 
   factory Category.fromJson(Map<String, dynamic> json) => Category(
-        id: json["id"],
-        name: json["name"],
-        events: List<SliderEvents>.from(
-            json["events"].map((x) => SliderEvents.fromJson(x))),
-      );
+    id: json["id"],
+    name: json["name"],
+    events: List<ExploreSlider>.from(json["events"].map((x) => ExploreSlider.fromJson(x))),
+  );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "events": List<dynamic>.from(events.map((x) => x.toJson())),
-      };
+    "id": id,
+    "name": name,
+    "events": List<dynamic>.from(events.map((x) => x.toJson())),
+  };
 }
 
-class SliderEvents {
-  SliderEvents({
+class ExploreSlider {
+  ExploreSlider({
     required this.id,
     required this.name,
     required this.description,
+    required this.location,
     required this.image,
     required this.start,
     required this.end,
@@ -99,31 +97,34 @@ class SliderEvents {
   int id;
   String name;
   String description;
+  String location;
   String image;
   String start;
   String end;
   String price;
   String latLng;
 
-  factory SliderEvents.fromJson(Map<String, dynamic> json) => SliderEvents(
-        id: json["id"],
-        name: json["name"],
-        description: json["description"],
-        image: json["image"],
-        start: json["start"],
-        end: json["end"],
-        price: json["price"],
-        latLng: json["lat_lng"],
-      );
+  factory ExploreSlider.fromJson(Map<String, dynamic> json) => ExploreSlider(
+    id: json["id"],
+    name: json["name"],
+    description: json["description"],
+    location: json["location"],
+    image: json["image"],
+    start: json["start"],
+    end: json["end"],
+    price: json["price"],
+    latLng: json["lat_lng"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "description": description,
-        "image": image,
-        "start": start,
-        "end": end,
-        "price": price,
-        "lat_lng": latLng,
-      };
+    "id": id,
+    "name": name,
+    "description": description,
+    "location": location,
+    "image": image,
+    "start": start,
+    "end": end,
+    "price": price,
+    "lat_lng": latLng,
+  };
 }

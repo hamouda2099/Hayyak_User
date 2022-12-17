@@ -13,11 +13,11 @@ import 'package:hayyak/main.dart';
 import '../../Dialogs/loading_dialog.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       bottomNavigationBar: BottomNavBar(
         currentScreen: 'Explore',
       ),
@@ -44,7 +44,7 @@ class HomeScreen extends StatelessWidget {
                           children: [
                             Container(
                               width: screenWidth / 1,
-                              height: screenHeight / 3,
+                              height: screenHeight / 3.2,
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
                                 itemCount: snapShot?.data?.data.slider.length,
@@ -52,14 +52,14 @@ class HomeScreen extends StatelessWidget {
                                   return InkWell(
                                     onTap: () {},
                                     child: Container(
-                                      margin: EdgeInsets.all(5),
+                                      margin: EdgeInsets.only(top: 5,bottom: 20,left: 5,right: 5),
                                       width: screenWidth / 1.2,
                                       height: screenHeight / 5,
                                       decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(10),
                                           image: DecorationImage(
-                                              fit: BoxFit.cover,
+                                              fit: BoxFit.fill,
                                               image: NetworkImage(snapShot
                                                       ?.data
                                                       ?.data
@@ -80,7 +80,7 @@ class HomeScreen extends StatelessWidget {
                                   return Column(
                                     children: [
                                       Padding(
-                                        padding: EdgeInsets.all(8.0),
+                                        padding: EdgeInsets.all(5.0),
                                         child: Align(
                                             alignment: Alignment.centerLeft,
                                             child: Text(
@@ -91,14 +91,14 @@ class HomeScreen extends StatelessWidget {
                                                       .name ??
                                                   '',
                                               style: TextStyle(
-                                                  color: kLightGreyColor,
+                                                  color: kDarkGreyColor,
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.bold),
                                             )),
                                       ),
                                       Container(
-                                        width: screenWidth / 1,
-                                        height: screenHeight / 3,
+                                        width: screenWidth,
+                                        height: screenHeight / 3.2,
                                         child: ListView.builder(
                                           scrollDirection: Axis.horizontal,
                                           itemCount: snapShot?.data?.data
@@ -131,7 +131,7 @@ class HomeScreen extends StatelessWidget {
                                                       ?.data
                                                       .categories[index]
                                                       .events[i]
-                                                      .latLng ??
+                                                      .location ??
                                                   '',
                                               startDate: snapShot
                                                       ?.data

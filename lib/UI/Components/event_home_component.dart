@@ -5,10 +5,11 @@ import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/Models/home_model.dart';
 import 'package:hayyak/UI/Screens/event_details_screen.dart';
 import 'package:hayyak/main.dart';
+import 'package:share/share.dart';
 
 class EventHomeCard extends StatelessWidget {
   EventHomeCard(
-      {required this.eventName,
+      {super.key, required this.eventName,
       required this.image,
       required this.location,
       required this.startDate,
@@ -31,7 +32,7 @@ class EventHomeCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(5.0),
         child: Container(
-          padding: EdgeInsets.all(5),
+          padding: const EdgeInsets.all(5),
           width: screenWidth / 2,
           height: screenHeight / 4,
           child: Column(
@@ -42,9 +43,9 @@ class EventHomeCard extends StatelessWidget {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     image: DecorationImage(
-                        fit: BoxFit.cover, image: NetworkImage(image))),
+                        fit: BoxFit.fill, image: NetworkImage(image))),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 4,
               ),
               Row(
@@ -55,14 +56,18 @@ class EventHomeCard extends StatelessWidget {
                     child: Text(
                       eventName,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(color: kLightGreyColor, fontSize: 14),
+                      style: const TextStyle(color: kLightGreyColor, fontSize: 14),
                     ),
                   ),
                   Row(
                     children: [
                       InkWell(
-                          onTap: () {},
-                          child: Icon(
+                          onTap: () {
+                            Share.share(
+                                'https://hayyak.net/ar/event/$id',
+                                subject: eventName);
+                          },
+                          child: const Icon(
                             Icons.file_upload_outlined,
                             size: 20,
                             color: kLightGreyColor,
@@ -79,7 +84,7 @@ class EventHomeCard extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 4,
               ),
               Row(
@@ -88,23 +93,27 @@ class EventHomeCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.location_on,
                         size: 20,
                         color: kLightGreyColor,
                       ),
-                      Text(
-                        location,
-                        style: TextStyle(color: kLightGreyColor, fontSize: 12),
+                      SizedBox(
+                        width: screenWidth/4,
+                        child: Text(
+                          location,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(color: kLightGreyColor, fontSize: 12),
+                        ),
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                   ),
                   Text(
                     startDate,
-                    style: TextStyle(color: Colors.blue, fontSize: 12),
+                    style: const TextStyle(color: Colors.blue, fontSize: 12),
                   ),
                 ],
               )

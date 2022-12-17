@@ -4,7 +4,7 @@ import 'package:hayyak/Models/home_model.dart';
 
 class HomeSlider extends StatelessWidget {
   HomeSlider({required this.slider});
-  List<SliderEvents> slider = [];
+  List<ExploreSlider> slider = [];
   @override
   Widget build(BuildContext context) {
     return Container(

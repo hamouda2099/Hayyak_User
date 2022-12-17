@@ -1,23 +1,34 @@
-import 'package:custom_date_range_picker/custom_date_range_picker.dart';
+import 'dart:async';
+import 'dart:io';
+
+import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/Dialogs/loading_screen.dart';
 import 'package:hayyak/Logic/Services/api_manger.dart';
 import 'package:hayyak/Models/event_model.dart';
 import 'package:hayyak/UI/Components/app_bar.dart';
+import 'package:hayyak/UI/Components/map_view_screen.dart';
 import 'package:hayyak/UI/Components/seccond_app_bar.dart';
+import 'package:hayyak/UI/Components/web_view_screen.dart';
 import 'package:hayyak/UI/Screens/date_picker_screen.dart';
+import 'package:hayyak/UI/Screens/event_seats_screen.dart';
 import 'package:hayyak/UI/Screens/event_tickets_screen.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../main.dart';
 
 class EventDetails extends StatelessWidget {
   EventDetails({required this.eventId});
   num eventId;
-  DateTime? startDate;
-  DateTime? endDate;
+  DateTime startDate = DateTime.now();
+  DateTime endDate = DateTime.now();
+  GoogleMapController? controller;
+  Set<Marker> marker = Set();
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<EventModel>(
@@ -32,10 +43,29 @@ class EventDetails extends StatelessWidget {
             }
           default:
             if (snapShot.hasError) {
+              print(snapShot);
               return Scaffold(
                   body: Center(child: Text('Error: ${snapShot.error}')));
             } else {
+              double? lat = double.tryParse(snapShot.data!.data.latLng
+                  .substring(0, snapShot.data?.data.latLng.indexOf(','))
+                  .toString());
+              double? lng = double.tryParse(snapShot.data!.data.latLng
+                  .substring(snapShot.data!.data.latLng.indexOf(',') + 1,
+                      snapShot.data!.data.latLng.length));
+              marker.add(
+                Marker(
+                  markerId: const MarkerId('Location'),
+                  position: LatLng(lat!, lng!),
+                  infoWindow: InfoWindow(
+                    title: snapShot.data!.data.name,
+                    snippet: snapShot.data!.data.description,
+                  ),
+                ),
+              );
+
               return Scaffold(
+                backgroundColor: Colors.white,
                 bottomNavigationBar: Container(
                   width: screenWidth / 1,
                   height: screenHeight / 10,
@@ -58,9 +88,13 @@ class EventDetails extends StatelessWidget {
                               ? const SizedBox()
                               : Row(
                                   children: [
-                                    const Icon(
+                                    Icon(
                                       Icons.electric_bolt_rounded,
-                                      color: Colors.white,
+                                      color: snapShot.data!.data.action.color ==
+                                              ''
+                                          ? Colors.transparent
+                                          : Color(int.parse(
+                                              '0xFF${snapShot.data!.data.action.color.toString().substring(1)}')),
                                       size: 20,
                                     ),
                                     const SizedBox(
@@ -68,8 +102,15 @@ class EventDetails extends StatelessWidget {
                                     ),
                                     Text(
                                       snapShot?.data?.data?.action?.name ?? '',
-                                      style: const TextStyle(
-                                          fontSize: 14, color: Colors.white),
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: snapShot
+                                                    .data!.data.action.color ==
+                                                ''
+                                            ? Colors.transparent
+                                            : Color(int.parse(
+                                                '0xFF${snapShot.data!.data.action.color.toString().substring(1)}')),
+                                      ),
                                     ),
                                   ],
                                 )
@@ -77,11 +118,29 @@ class EventDetails extends StatelessWidget {
                       ),
                       InkWell(
                         onTap: () {
-                          navigator(context: context,screen: DatePickerScreen(
-                            startDate: snapShot?.data?.data?.pickerStartDate.toString()??'',
-                            endDate: snapShot?.data?.data?.prickerEndDate.toString()??'',
-                          ));
-                          print(snapShot?.data?.data?.pickerStartDate.toString()??'',);
+                          if (snapShot.data!.data.seats == 'seats') {
+                            navigator(
+                                context: context, screen: EventSeatsScreen());
+                          } else if (snapShot.data!.data.seats == 'tickets') {
+                            navigator(
+                                context: context,
+                                screen: DatePickerScreen(
+                                  eventId: snapShot.data!.data.id.toString(),
+                                  startDate: snapShot
+                                          ?.data?.data?.pickerStartDate
+                                          .toString() ??
+                                      '',
+                                  endDate: snapShot?.data?.data?.prickerEndDate
+                                          .toString() ??
+                                      '',
+                                ));
+                          } else {
+                            navigator(
+                                context: context,
+                                screen: WebViewScreen(
+                                  link: snapShot.data!.data.seats.toString(),
+                                ));
+                          }
                         },
                         child: Container(
                           alignment: Alignment.center,
@@ -92,7 +151,7 @@ class EventDetails extends StatelessWidget {
                             color: kPrimaryColor,
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Text(
+                          child: const Text(
                             'Tickets',
                             style: TextStyle(
                                 color: Colors.white,
@@ -118,7 +177,7 @@ class EventDetails extends StatelessWidget {
                               height: screenHeight / 3.5,
                               decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    fit: BoxFit.cover,
+                                    fit: BoxFit.fill,
                                     image: NetworkImage(snapShot
                                             ?.data?.data?.image
                                             .toString() ??
@@ -147,7 +206,7 @@ class EventDetails extends StatelessWidget {
                                                 .toString() ??
                                             '',
                                         style: TextStyle(
-                                            color: kLightGreyColor,
+                                            color: kDarkGreyColor,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 14),
                                       ),
@@ -163,10 +222,27 @@ class EventDetails extends StatelessWidget {
                                       SizedBox(
                                         height: 5,
                                       ),
-                                      Text(
-                                        'Add to calender',
-                                        style: TextStyle(
-                                            color: kPrimaryColor, fontSize: 14),
+                                      InkWell(
+                                        onTap: () {
+                                          final Event event = Event(
+                                            title: snapShot.data!.data.name,
+                                            description:
+                                                snapShot.data!.data.description,
+                                            location:
+                                                snapShot.data!.data.address,
+                                            startDate: snapShot
+                                                .data!.data.pickerStartDate,
+                                            endDate: snapShot
+                                                .data!.data.prickerEndDate,
+                                          );
+                                          Add2Calendar.addEvent2Cal(event);
+                                        },
+                                        child: const Text(
+                                          'Add to calender',
+                                          style: TextStyle(
+                                              color: kPrimaryColor,
+                                              fontSize: 14),
+                                        ),
                                       ),
                                     ],
                                   )
@@ -193,7 +269,7 @@ class EventDetails extends StatelessWidget {
                                       Text(
                                         'Address',
                                         style: TextStyle(
-                                            color: kLightGreyColor,
+                                            color: kDarkGreyColor,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 14),
                                       ),
@@ -213,10 +289,24 @@ class EventDetails extends StatelessWidget {
                                       SizedBox(
                                         height: 5,
                                       ),
-                                      Text(
-                                        'View Map',
-                                        style: TextStyle(
-                                            color: kPrimaryColor, fontSize: 14),
+                                      InkWell(
+                                        onTap: () {
+                                          navigator(
+                                              context: context,
+                                              screen: MapViewScreen(
+                                                lat: lat!,
+                                                lng: lng!,
+                                                title: snapShot.data!.data.name,
+                                                desc: snapShot
+                                                    .data!.data.description,
+                                              ));
+                                        },
+                                        child: const Text(
+                                          'View Map',
+                                          style: TextStyle(
+                                              color: kPrimaryColor,
+                                              fontSize: 14),
+                                        ),
                                       ),
                                     ],
                                   )
@@ -240,14 +330,13 @@ class EventDetails extends StatelessWidget {
                                   )),
                             ),
                             Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 15.0, right: 15),
-                              child: Text(
-                                snapShot?.data?.data?.description ?? '',
-                                style: TextStyle(
-                                    color: kLightGreyColor, fontSize: 14),
-                              ),
-                            ),
+                                padding: const EdgeInsets.only(
+                                    left: 15.0, right: 15),
+                                child: Opacity(
+                                    opacity: 0.7,
+                                    child: HtmlWidget(
+                                        snapShot?.data?.data?.description ??
+                                            ''))),
                             SizedBox(
                               height: 20,
                             ),
@@ -267,7 +356,17 @@ class EventDetails extends StatelessWidget {
                             Container(
                               width: screenWidth / 1.2,
                               height: screenHeight / 4,
-                              color: Colors.grey.withOpacity(0.1),
+                              child: GoogleMap(
+                                mapType: MapType.normal,
+                                initialCameraPosition: CameraPosition(
+                                  target: LatLng(lat!, lng!),
+                                  zoom: 14.4746,
+                                ),
+                                markers: marker,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
                             ),
                           ],
                         )

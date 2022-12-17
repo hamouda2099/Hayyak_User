@@ -31,7 +31,7 @@ class LoginLogic {
           UserData.email = jsonDecode(value.body)['data']['email'];
           UserData.phone = jsonDecode(value.body)['data']['phone'];
           UserData.imageUrl = jsonDecode(value.body)['data']['image'];
-          navigator(context: context, screen: const HomeScreen(), remove: true);
+          navigator(context: context, screen:  HomeScreen(), remove: true);
         } else {
           messageDialog(context, '${jsonDecode(value.body)['error']}');
         }
