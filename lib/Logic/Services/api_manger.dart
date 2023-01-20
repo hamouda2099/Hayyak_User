@@ -5,9 +5,11 @@ import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/Config/user_data.dart';
 import 'package:hayyak/Models/event_model.dart';
 import 'package:hayyak/Models/event_tickets_model.dart';
+import 'package:hayyak/Models/fav_list_model.dart';
 import 'package:hayyak/Models/home_model.dart';
 import 'package:hayyak/Models/profile_model.dart';
 import 'package:hayyak/States/providers.dart';
+import 'package:hayyak/UI/Screens/favourite_list_screen.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -24,6 +26,7 @@ class ApiManger {
   static const String _verifyOtp = '$hostUrl/auth/verify-otp';
   static const String _exploreUrl = '$hostUrl/events/explore';
   static const String _eventDetails = '$hostUrl/event';
+  static const String _favUrl = '$hostUrl/favorites';
   static const String _profileUrl = '$hostUrl/user/profile';
 
   static const String _timeDateUrl =
@@ -35,7 +38,7 @@ class ApiManger {
       Uri.parse(url),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer ' + UserData.token,
+        'Authorization': 'Bearer ${UserData.token}',
         'lang': 'en'
       },
       body: jsonEncode(parameters),
@@ -47,9 +50,20 @@ class ApiManger {
       Uri.parse(url),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer ' + UserData.token,
-        'lang': 'en'
+        'Authorization': 'Bearer ${UserData.token}',
+        'lang': 'en',
+        'user-id': UserData.id.toString()
+      },
+    );
+  }
 
+  static Future<http.Response> sendDeleteRequest(String url) async {
+    return http.delete(
+      Uri.parse(url),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ${UserData.token}',
+        'accept-language': 'en',
       },
     );
   }
@@ -109,19 +123,31 @@ class ApiManger {
   }
 
   static Future<HomeModel> getHome() async {
-    // Map<String, String> parameters = {
-    //   "page": page,
-    //   "limit": limit,
-    // };
     Response response = await sendGetRequest(_exploreUrl);
     return HomeModel.fromJson(json.decode(response.body));
   }
 
+  static Future<FavListModel> getFavList() async {
+    Response response = await sendGetRequest('$_favUrl/get-events');
+    return FavListModel.fromJson(json.decode(response.body));
+  }
+
+  static Future removeFromFav({required String id}) async {
+    Response response = await sendDeleteRequest('$_favUrl/remove-event/$id');
+    return json.decode(response.body);
+  }
+
+  static Future addToFav({
+    required String eventId,
+  }) async {
+    Response response =
+        await sendPostRequest('$_favUrl/add-event', <String, String>{
+      "event_id": eventId,
+    });
+    return json.decode(response.body);
+  }
+
   static Future<EventModel> getEvent({required String id}) async {
-    // Map<String, String> parameters = {
-    //   "page": page,
-    //   "limit": limit,
-    // };
     Response response = await sendGetRequest('$_eventDetails/$id');
     return EventModel.fromJson(json.decode(response.body));
   }
@@ -130,14 +156,13 @@ class ApiManger {
     required String eventId,
     required String date,
   }) async {
-    Response response = await sendPostRequest('$_eventDetails/tickets', <String, String>{
+    Response response =
+        await sendPostRequest('$_eventDetails/tickets', <String, String>{
       "event_id": eventId,
       "date": date,
     });
     return EventTicketsModel.fromJson(json.decode(response.body));
   }
-
-
 
   static Future getTime(BuildContext context) async {
     bool result = await InternetConnectionChecker().hasConnection;

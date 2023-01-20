@@ -38,7 +38,7 @@ class EventDetails extends StatelessWidget {
           case ConnectionState.waiting:
             {
               return Scaffold(
-                body: ScreenLoading(),
+                body: Center(child: ScreenLoading()),
               );
             }
           default:

@@ -24,8 +24,8 @@ class SignUpScreen extends StatelessWidget {
   TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController dateOfBirthController = TextEditingController();
   final genderProvider = StateProvider<String>((ref) => 'Male');
-  DateTime? selectedDate = DateTime(2018);
   List gender = ['Male', 'Female'];
+  DateTime? selectedDate = DateTime(2018);
   SignUpScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -110,6 +110,7 @@ class SignUpScreen extends StatelessWidget {
               height: 10,
             ),
             CustomTextField(
+              width: screenWidth/1.2,
               controller: emailController,
               hintText: 'Email',
               obscure: false,
@@ -260,6 +261,7 @@ class SignUpScreen extends StatelessWidget {
               height: 10,
             ),
             CustomTextField(
+              width: screenWidth/1.2,
               controller: passwordController,
               hintText: 'Password',
               obscure: true,
@@ -268,6 +270,7 @@ class SignUpScreen extends StatelessWidget {
               height: 10,
             ),
             CustomTextField(
+              width: screenWidth/1.2,
               controller: confirmPasswordController,
               hintText: 'Confirm Password',
               obscure: true,

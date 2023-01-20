@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hayyak/Config/constants.dart';
+import 'package:hayyak/UI/Components/Dashboard/screens/dashboard_screen.dart';
 import 'package:hayyak/UI/Screens/favourite_list_screen.dart';
 import 'package:hayyak/UI/Screens/home_screen.dart';
 import 'package:hayyak/UI/Screens/my_tickets_screen.dart';
@@ -146,6 +147,29 @@ class BottomNavBar extends StatelessWidget {
                   'Search',
                   style: TextStyle(
                       color: currentScreen == 'Search'
+                          ? Colors.blue
+                          : Colors.white,
+                      fontSize: 10),
+                ),
+              ],
+            ),
+          ),
+          InkWell(
+            onTap: () {
+              navigator(context: context, screen: DashboardScreen());
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.dashboard,
+                  color: currentScreen == 'Dashboard' ? Colors.blue : Colors.white,
+                  size: 25,
+                ),
+                Text(
+                  'Dashboard',
+                  style: TextStyle(
+                      color: currentScreen == 'Dashboard'
                           ? Colors.blue
                           : Colors.white,
                       fontSize: 10),

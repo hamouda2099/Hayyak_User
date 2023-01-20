@@ -2,7 +2,6 @@
 //
 //     final eventTicketsModel = eventTicketsModelFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 EventTicketsModel eventTicketsModelFromJson(String str) => EventTicketsModel.fromJson(json.decode(str));
@@ -57,19 +56,23 @@ class Event {
   Event({
     required this.details,
     required this.kinds,
+    required this.services,
   });
 
   Details details;
   List<Kind> kinds;
+  List<Service> services;
 
   factory Event.fromJson(Map<String, dynamic> json) => Event(
     details: Details.fromJson(json["details"]),
     kinds: List<Kind>.from(json["kinds"].map((x) => Kind.fromJson(x))),
+    services: List<Service>.from(json["services"].map((x) => Service.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
     "details": details.toJson(),
     "kinds": List<dynamic>.from(kinds.map((x) => x.toJson())),
+    "services": List<dynamic>.from(services.map((x) => x.toJson())),
   };
 }
 
@@ -87,6 +90,8 @@ class Details {
     required this.averageCost,
     required this.action,
     required this.seats,
+    required this.vat,
+    required this.vatDisplayed,
   });
 
   int id;
@@ -101,6 +106,8 @@ class Details {
   String averageCost;
   Action action;
   String seats;
+  int vat;
+  String vatDisplayed;
 
   factory Details.fromJson(Map<String, dynamic> json) => Details(
     id: json["id"],
@@ -115,6 +122,8 @@ class Details {
     averageCost: json["average_cost"],
     action: Action.fromJson(json["action"]),
     seats: json["seats"],
+    vat: json["vat"],
+    vatDisplayed: json["vat_displayed"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -130,6 +139,8 @@ class Details {
     "average_cost": averageCost,
     "action": action.toJson(),
     "seats": seats,
+    "vat": vat,
+    "vat_displayed": vatDisplayed,
   };
 }
 
@@ -143,8 +154,8 @@ class Action {
   String color;
 
   factory Action.fromJson(Map<String, dynamic> json) => Action(
-    name: json["name"],
-    color: json["color"],
+    name: json["name"]??'',
+    color: json["color"]??'',
   );
 
   Map<String, dynamic> toJson() => {
@@ -158,121 +169,109 @@ class Kind {
     required this.id,
     required this.name,
     required this.costBeforeDiscount,
-    required this.max,
+    required this.costAfterDiscount,
+    required this.discountValue,
+    required this.finalCost,
+    required this.countLimit,
     required this.color,
     required this.tickets,
   });
 
   int id;
   String name;
-  int costBeforeDiscount;
-  int max;
+  String costBeforeDiscount;
+  String costAfterDiscount;
+  dynamic discountValue;
+  int finalCost;
+  int countLimit;
   String color;
-  Tickets tickets;
+  List<Ticket> tickets;
 
   factory Kind.fromJson(Map<String, dynamic> json) => Kind(
     id: json["id"],
     name: json["name"],
     costBeforeDiscount: json["cost_before_discount"],
-    max: json["max"],
+    costAfterDiscount: json["cost_after_discount"],
+    discountValue: json["discount_value"],
+    finalCost: json["final_cost"],
+    countLimit: json["count_limit"],
     color: json["color"],
-    tickets: Tickets.fromJson(json["tickets"]),
+    tickets: List<Ticket>.from(json["tickets"].map((x) => Ticket.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
     "name": name,
     "cost_before_discount": costBeforeDiscount,
-    "max": max,
+    "cost_after_discount": costAfterDiscount,
+    "discount_value": discountValue,
+    "final_cost": finalCost,
+    "count_limit": countLimit,
     "color": color,
-    "tickets": tickets.toJson(),
+    "tickets": List<dynamic>.from(tickets.map((x) => x.toJson())),
   };
 }
 
-class Tickets {
-  Tickets({
-    required this.empty,
-  });
-
-  List<Empty> empty;
-
-  factory Tickets.fromJson(Map<String, dynamic> json) => Tickets(
-    empty: List<Empty>.from(json[""].map((x) => Empty.fromJson(x))),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "": List<dynamic>.from(empty.map((x) => x.toJson())),
-  };
-}
-
-class Empty {
-  Empty({
+class Ticket {
+  Ticket({
     required this.id,
-    required this.numId,
-    required this.row,
-    required this.number,
-    required this.type,
-    required this.holdAt,
-    required this.date,
-    required this.kindId,
-    required this.eventId,
-    required this.reservedAt,
-    required this.checkin,
-    required this.checkout,
-    required this.deletedAt,
-    required this.createdAt,
-    required this.updatedAt,
   });
 
   int id;
-  String numId;
-  String row;
-  int number;
-  String type;
-  dynamic holdAt;
-  DateTime date;
-  int kindId;
-  int eventId;
-  dynamic reservedAt;
-  dynamic checkin;
-  dynamic checkout;
-  dynamic deletedAt;
-  String createdAt;
-  String updatedAt;
 
-  factory Empty.fromJson(Map<String, dynamic> json) => Empty(
+  factory Ticket.fromJson(Map<String, dynamic> json) => Ticket(
     id: json["id"],
-    numId: json["num_id"],
-    row: json["row"],
-    number: json["number"],
-    type: json["type"],
-    holdAt: json["hold_at"],
-    date: DateTime.parse(json["date"]),
-    kindId: json["kind_id"],
-    eventId: json["event_id"],
-    reservedAt: json["reserved_at"],
-    checkin: json["checkin"],
-    checkout: json["checkout"],
-    deletedAt: json["deleted_at"],
-    createdAt: json["created_at"],
-    updatedAt: json["updated_at"],
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "num_id": numId,
-    "row": row,
-    "number": number,
+  };
+}
+
+class Service {
+  Service({
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.type,
+    required this.countLimit,
+    required this.costBeforeDiscount,
+    required this.costAfterDiscount,
+    required this.discountValue,
+    required this.finalCost,
+  });
+
+  int id;
+  String name;
+  String description;
+  String type;
+  int countLimit;
+  String costBeforeDiscount;
+  String costAfterDiscount;
+  String discountValue;
+  int finalCost;
+
+  factory Service.fromJson(Map<String, dynamic> json) => Service(
+    id: json["id"],
+    name: json["name"],
+    description: json["description"],
+    type: json["type"],
+    countLimit: json["count_limit"],
+    costBeforeDiscount: json["cost_before_discount"],
+    costAfterDiscount: json["cost_after_discount"],
+    discountValue: json["discount_value"]??'',
+    finalCost: json["final_cost"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "name": name,
+    "description": description,
     "type": type,
-    "hold_at": holdAt,
-    "date": "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
-    "kind_id": kindId,
-    "event_id": eventId,
-    "reserved_at": reservedAt,
-    "checkin": checkin,
-    "checkout": checkout,
-    "deleted_at": deletedAt,
-    "created_at": createdAt,
-    "updated_at": updatedAt,
+    "count_limit": countLimit,
+    "cost_before_discount": costBeforeDiscount,
+    "cost_after_discount": costAfterDiscount,
+    "discount_value": discountValue,
+    "final_cost": finalCost,
   };
 }

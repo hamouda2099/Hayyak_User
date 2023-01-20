@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:hayyak/Config/constants.dart';
-import 'package:hayyak/Config/date_formatter.dart';
+import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/Dialogs/loading_screen.dart';
 import 'package:hayyak/Logic/Services/api_manger.dart';
 import 'package:hayyak/Models/home_model.dart';
 import 'package:hayyak/UI/Components/app_bar.dart';
 import 'package:hayyak/UI/Components/bottom_nav_bar.dart';
 import 'package:hayyak/UI/Components/event_home_component.dart';
-import 'package:hayyak/UI/Components/home_slider_component.dart';
+import 'package:hayyak/UI/Screens/event_details_screen.dart';
 import 'package:hayyak/main.dart';
 
-import '../../Dialogs/loading_dialog.dart';
 
 class HomeScreen extends StatelessWidget {
 
@@ -33,26 +32,31 @@ class HomeScreen extends StatelessWidget {
                   switch (snapShot.connectionState) {
                     case ConnectionState.waiting:
                       {
-                        return ScreenLoading();
+                        return Center(child: ScreenLoading());
                       }
                     default:
                       if (snapShot.hasError) {
                         return Text('Error: ${snapShot.error}');
                       } else {
-                        var fetchedOrder = snapShot.data;
                         return Column(
                           children: [
-                            Container(
+                            SizedBox(
                               width: screenWidth / 1,
                               height: screenHeight / 3.2,
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
-                                itemCount: snapShot?.data?.data.slider.length,
+                                itemCount: snapShot.data?.data.slider.length,
                                 itemBuilder: (context, index) {
                                   return InkWell(
-                                    onTap: () {},
+                                    onTap: () {
+                                      navigator(
+                                          context: context,
+                                          screen: EventDetails(
+                                            eventId: snapShot.data!.data.slider[index].id,
+                                          ));
+                                    },
                                     child: Container(
-                                      margin: EdgeInsets.only(top: 5,bottom: 20,left: 5,right: 5),
+                                      margin: const EdgeInsets.only(top: 5,bottom: 20,left: 5,right: 5),
                                       width: screenWidth / 1.2,
                                       height: screenHeight / 5,
                                       decoration: BoxDecoration(
@@ -61,85 +65,92 @@ class HomeScreen extends StatelessWidget {
                                           image: DecorationImage(
                                               fit: BoxFit.fill,
                                               image: NetworkImage(snapShot
+                                                      .data
                                                       ?.data
-                                                      ?.data
-                                                      ?.slider[index]
-                                                      ?.image ??
+                                                      .slider[index]
+                                                      .image ??
                                                   ''))),
                                     ),
                                   );
                                 },
                               ),
                             ),
-                            Container(
+                            SizedBox(
                               height: screenHeight / 2,
                               child: ListView.builder(
                                 itemCount:
-                                    snapShot?.data?.data.categories.length,
+                                    snapShot.data?.data.categories.length,
                                 itemBuilder: (context, index) {
                                   return Column(
                                     children: [
                                       Padding(
-                                        padding: EdgeInsets.all(5.0),
+                                        padding: const EdgeInsets.all(5.0),
                                         child: Align(
                                             alignment: Alignment.centerLeft,
                                             child: Text(
                                               snapShot
+                                                      .data
                                                       ?.data
-                                                      ?.data
-                                                      ?.categories[index]
+                                                      .categories[index]
                                                       .name ??
                                                   '',
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   color: kDarkGreyColor,
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.bold),
                                             )),
                                       ),
-                                      Container(
+                                      SizedBox(
                                         width: screenWidth,
                                         height: screenHeight / 3.2,
                                         child: ListView.builder(
                                           scrollDirection: Axis.horizontal,
-                                          itemCount: snapShot?.data?.data
+                                          itemCount: snapShot.data?.data
                                               .categories[index].events.length,
                                           itemBuilder: (context, i) {
                                             return EventHomeCard(
                                               id: snapShot
-                                                      ?.data
+                                                      .data
                                                       ?.data
                                                       .categories[index]
-                                                      ?.events[i]
-                                                      ?.id ??
+                                                      .events[i]
+                                                      .id ??
                                                   0,
                                               eventName: snapShot
-                                                      ?.data
+                                                      .data
                                                       ?.data
                                                       .categories[index]
-                                                      ?.events[i]
-                                                      ?.name ??
+                                                      .events[i]
+                                                      .name ??
                                                   '',
                                               image: snapShot
-                                                      ?.data
+                                                      .data
                                                       ?.data
                                                       .categories[index]
-                                                      ?.events[i]
-                                                      ?.image ??
+                                                      .events[i]
+                                                      .image ??
                                                   '',
                                               location: snapShot
-                                                      ?.data
+                                                      .data
                                                       ?.data
                                                       .categories[index]
                                                       .events[i]
                                                       .location ??
                                                   '',
                                               startDate: snapShot
-                                                      ?.data
+                                                      .data
                                                       ?.data
                                                       .categories[index]
                                                       .events[i]
                                                       .start ??
                                                   '',
+                                              is_favourite: snapShot
+                                                  .data
+                                                  ?.data
+                                                  .categories[index]
+                                                  .events[i]
+                                                  .is_favourite ??
+                                                  false,
                                             );
                                           },
                                         ),

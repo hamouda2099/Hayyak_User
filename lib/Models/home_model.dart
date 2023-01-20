@@ -92,6 +92,7 @@ class ExploreSlider {
     required this.end,
     required this.price,
     required this.latLng,
+    required this.is_favourite
   });
 
   int id;
@@ -103,6 +104,7 @@ class ExploreSlider {
   String end;
   String price;
   String latLng;
+  bool is_favourite;
 
   factory ExploreSlider.fromJson(Map<String, dynamic> json) => ExploreSlider(
     id: json["id"],
@@ -114,6 +116,7 @@ class ExploreSlider {
     end: json["end"],
     price: json["price"],
     latLng: json["lat_lng"],
+    is_favourite: json["is_favourite"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -126,5 +129,6 @@ class ExploreSlider {
     "end": end,
     "price": price,
     "lat_lng": latLng,
+    "is_favourite":is_favourite
   };
 }

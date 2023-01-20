@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hayyak/Config/constants.dart';
+import 'package:hayyak/Dialogs/loading_screen.dart';
+import 'package:hayyak/Logic/Services/api_manger.dart';
+import 'package:hayyak/Models/fav_list_model.dart';
 import 'package:hayyak/UI/Components/bottom_nav_bar.dart';
 import 'package:hayyak/UI/Components/fav_row_component.dart';
 import 'package:hayyak/UI/Components/seccond_app_bar.dart';
@@ -15,26 +18,34 @@ class FavListScreen extends StatelessWidget {
         child: Column(
           children: [
             SecondAppBar(title: 'Favourites '),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Sat, Mar 19',
-                  style: TextStyle(
-                      color: kLightGreyColor,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-            Expanded(
-                child: ListView.builder(
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return FavRow();
+            FutureBuilder<FavListModel>(
+              future: ApiManger.getFavList(),
+              builder:
+                  (BuildContext context, AsyncSnapshot<FavListModel> snapShot) {
+                switch (snapShot.connectionState) {
+                  case ConnectionState.waiting:
+                    {
+                      return Center(child: ScreenLoading());
+                    }
+                  default:
+                    if (snapShot.hasError) {
+                      return Text('Error: ${snapShot.error}');
+                    } else {
+                      return  Expanded(
+                          child: ListView.builder(
+                            itemCount: snapShot.data!.data.length,
+                            itemBuilder: (context, index) {
+                              return FavRow(
+                                item: snapShot.data!.data[index],
+                              );
+                            },
+                          )) ;
+                    }
+                }
               },
-            ))
+            )
+
+
           ],
         ),
       ),

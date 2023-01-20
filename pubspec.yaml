@@ -49,6 +49,7 @@ dependencies:
   flutter_widget_from_html: ^0.9.0+1
   webview_flutter: ^3.0.4
   add_2_calendar: ^2.2.3
+  curved_drawer_fork: ^0.0.1+1
 
 dev_dependencies:
   flutter_test:

@@ -11,9 +11,7 @@ import 'package:hayyak/UI/Components/text_field.dart';
 import 'package:hayyak/UI/Screens/home_screen.dart';
 import 'package:hayyak/UI/Screens/sign_up_screen.dart';
 import 'package:hayyak/main.dart';
-
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-
 // ignore: must_be_immutable
 class LoginScreen extends StatelessWidget {
   TextEditingController emailController = TextEditingController();
@@ -57,6 +55,7 @@ class LoginScreen extends StatelessWidget {
                 height: 10,
               ),
               CustomTextField(
+                width: screenWidth/1.2,
                 controller: emailController,
                 hintText: 'Email',
                 obscure: false,
@@ -65,6 +64,7 @@ class LoginScreen extends StatelessWidget {
                 height: 10,
               ),
               CustomTextField(
+                width: screenWidth/1.2,
                 controller: passwordController,
                 hintText: 'Password',
                 obscure: true,
@@ -145,7 +145,7 @@ class LoginScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Container(
-                      padding: EdgeInsets.all(5),
+                      padding: const EdgeInsets.all(5),
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
@@ -171,7 +171,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.all(5),
+                      padding: const EdgeInsets.all(5),
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
@@ -201,7 +201,7 @@ class LoginScreen extends StatelessWidget {
                       onTap: () {
                         navigator(context: context, screen: SignUpScreen());
                       },
-                      child: Text(
+                      child: const Text(
                         "Create One",
                         style: TextStyle(
                           color: Colors.blue,
@@ -210,7 +210,7 @@ class LoginScreen extends StatelessWidget {
                       )),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
             ],

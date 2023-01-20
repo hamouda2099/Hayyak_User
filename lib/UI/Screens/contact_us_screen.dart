@@ -19,6 +19,7 @@ class ContactUsScreen extends StatelessWidget {
             children: [
               SecondAppBar(title: 'Contact Us'),
               CustomTextField(
+                width: screenWidth/1.2,
                 controller: nameCnt,
                 hintText: 'Name',
                 obscure: false,
@@ -79,6 +80,7 @@ class ContactUsScreen extends StatelessWidget {
                 height: 10,
               ),
               CustomTextField(
+                width: screenWidth/1.2,
                 controller: emailController,
                 hintText: 'Email',
                 obscure: false,
@@ -87,6 +89,7 @@ class ContactUsScreen extends StatelessWidget {
                 height: 10,
               ),
               CustomTextField(
+                width: screenWidth/1.2,
                 controller: nameCnt,
                 hintText: 'dd/mm/year',
                 obscure: false,
@@ -95,6 +98,7 @@ class ContactUsScreen extends StatelessWidget {
                 height: 10,
               ),
               CustomTextField(
+                width: screenWidth/1.2,
                 controller: nameCnt,
                 hintText: 'Subject',
                 obscure: false,

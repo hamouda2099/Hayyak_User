@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/Config/navigator.dart';
+import 'package:hayyak/Config/user_data.dart';
+import 'package:hayyak/UI/Components/Dashboard/screens/dashboard_screen.dart';
 import 'package:hayyak/UI/Components/box_shadow.dart';
 import 'package:hayyak/UI/Components/seccond_app_bar.dart';
 import 'package:hayyak/UI/Screens/account_screen.dart';
@@ -38,7 +40,7 @@ class SettingsScreen extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Ensa Karem',style: TextStyle(color: kDarkGreyColor,fontSize: 14,fontWeight: FontWeight.bold)),
+                       Text(UserData.userName??'',style: TextStyle(color: kDarkGreyColor,fontSize: 14,fontWeight: FontWeight.bold)),
                       const Text('enasss12@gmail.com',style: TextStyle(color: kDarkGreyColor,fontSize: 12)),
 
                     ],
@@ -172,6 +174,28 @@ class SettingsScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text('Contact us',style: TextStyle(color: kLightGreyColor,fontSize: 14,fontWeight: FontWeight.bold)),
+                      Icon(Icons.arrow_forward_ios,color: kDarkGreyColor,size: 20,),
+                    ],
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: (){
+                  navigator(context: context,screen: DashboardScreen());
+                },
+                child: Container(
+                  margin: EdgeInsets.all(10),
+                  width: screenWidth/1.1,
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: boxShadow
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Visits Dashboard',style: TextStyle(color: kLightGreyColor,fontSize: 14,fontWeight: FontWeight.bold)),
                       Icon(Icons.arrow_forward_ios,color: kDarkGreyColor,size: 20,),
                     ],
                   ),

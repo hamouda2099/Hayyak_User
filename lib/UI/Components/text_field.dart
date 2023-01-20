@@ -9,10 +9,12 @@ class CustomTextField extends StatelessWidget {
     required this.controller,
     required this.hintText,
     required this.obscure,
+    required this.width
   }) : super(key: key);
   TextEditingController controller = TextEditingController();
   String hintText;
   bool obscure = false;
+  double width ;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,7 +26,7 @@ class CustomTextField extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(5),
       ),
-      width: screenWidth / 1.2,
+      width: width,
       child: TextField(
         obscureText: obscure,
         controller: controller,
