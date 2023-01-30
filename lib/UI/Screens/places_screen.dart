@@ -19,7 +19,10 @@ class PlacesScreen extends StatelessWidget {
       body: SafeArea(
           child: Column(
         children: [
-          SecondAppBar(title: 'Places'),
+          SecondAppBar(
+            title: 'Places',
+            shareAndFav: false,
+          ),
           SizedBox(
             width: screenWidth / 1.1,
             child: TextField(
@@ -38,8 +41,12 @@ class PlacesScreen extends StatelessWidget {
           ),
           Expanded(
               child: GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, childAspectRatio: 0.79),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 0.87,
+              crossAxisSpacing: 1,
+              mainAxisSpacing: 0.3
+            ),
             itemBuilder: (context, index) {
               return PlaceCard();
             },

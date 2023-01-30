@@ -72,7 +72,7 @@ class CheckoutScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            SecondAppBar(title: 'Checkout'),
+            SecondAppBar(title: 'Checkout',shareAndFav: false),
             Container(
               width: screenWidth,
               height: screenHeight / 1.3,

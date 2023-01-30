@@ -214,7 +214,7 @@ class EventTicketsScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       SecondAppBar(
-                          title: snapShot.data!.data.event.details.name),
+                          title: snapShot.data!.data.event.details.name,shareAndFav: false),
                       Container(
                         width: screenWidth / 1.2,
                         height: screenHeight / 5,

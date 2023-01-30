@@ -17,7 +17,7 @@ class EventSeatsScreen extends StatelessWidget {
       body: SafeArea(child: SingleChildScrollView(
         child: Column(
           children: [
-            SecondAppBar(title: 'Seats'),
+            SecondAppBar(title: 'Seats',shareAndFav: false),
             Container(
               width: double.infinity,
               height: screenHeight/4,

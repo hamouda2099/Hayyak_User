@@ -169,6 +169,7 @@ class EventDetails extends StatelessWidget {
                       children: [
                         SecondAppBar(
                           title: snapShot?.data?.data?.name.toString() ?? '',
+                          shareAndFav: true,
                         ),
                         Column(
                           children: [

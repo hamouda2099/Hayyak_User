@@ -69,6 +69,46 @@ class LoginScreen extends StatelessWidget {
                 hintText: 'Password',
                 obscure: true,
               ),
+              Consumer(
+                builder: (context, watch, child) {
+                  final rememberMe = watch(rememberMeProvider).state;
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 15.0),
+                    child: Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            if (rememberMe == false) {
+                              context.read(rememberMeProvider).state = true;
+                            } else {
+                              context.read(rememberMeProvider).state = false;
+                            }
+                          },
+                          icon: rememberMe == false
+                              ? const Icon(
+                            Icons.check_circle_outline,
+                            color: Colors.grey,
+                            size: 18,
+                          )
+                              : const Icon(
+                            Icons.check_circle,
+                            color: Colors.blue,
+                            size: 18,
+                          ),
+                        ),
+                        Text(
+                          'Remember me',
+                          style: TextStyle(
+                              color: kDarkGreyColor.withOpacity(0.6),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+
               Padding(
                 padding:
                     const EdgeInsets.only(top: 10, left: 35.0, right: 35.0),

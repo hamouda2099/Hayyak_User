@@ -17,7 +17,7 @@ class FavListScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            SecondAppBar(title: 'Favourites '),
+            SecondAppBar(title: 'Favourites ',shareAndFav: false,),
             FutureBuilder<FavListModel>(
               future: ApiManger.getFavList(),
               builder:

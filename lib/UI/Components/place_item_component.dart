@@ -16,12 +16,13 @@ class PlaceCard extends StatelessWidget {
         navigator(context: context, screen: PlaceDetails());
       },
       child: Padding(
-        padding: const EdgeInsets.all(5.0),
+        padding: const EdgeInsets.only(top: 5.0,left: 2.5,bottom: 5,right: 5),
         child: Container(
           padding: EdgeInsets.all(5),
-          width: screenWidth / 2,
-          height: screenHeight / 4,
+          width: screenWidth / 2.5,
+          height: screenWidth/2.5,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 width: screenWidth / 2,
@@ -29,66 +30,34 @@ class PlaceCard extends StatelessWidget {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage('assets/images/amr-diab-promo.jpg'))),
+                        fit: BoxFit.fill,
+                        image: NetworkImage('https://testing.hayyak.net/public/upload/image/46760581664472715img-4.jpg'))),
+              ),
+              SizedBox(
+                height: 4,
+              ),
+              Text(
+                'Dammos',
+                style: TextStyle(color: kDarkGreyColor, fontSize: 14),
+              ),
+              Text(
+                'Main Building',
+                style: TextStyle(color: kLightGreyColor.withOpacity(0.5), fontSize: 12),
               ),
               SizedBox(
                 height: 4,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(
-                    'Amr Diab',
-                    style: TextStyle(color: kLightGreyColor, fontSize: 14),
-                  ),
-                  Row(
-                    children: [
-                      InkWell(
-                          onTap: () {},
-                          child: Icon(
-                            Icons.file_upload_outlined,
-                            size: 20,
-                            color: kLightGreyColor,
-                          )),
-                      InkWell(
-                        onTap: () {},
-                        child: SvgPicture.asset(
-                            color: kLightGreyColor,
-                            width: 15,
-                            height: 15,
-                            'assets/icon/Icon feather-heart.svg'),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 4,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(
-                        Icons.location_on,
-                        size: 20,
-                        color: kLightGreyColor,
-                      ),
-                      Text(
-                        'Riyadh',
-                        style: TextStyle(color: kLightGreyColor, fontSize: 12),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    width: 20,
+                  Icon(
+                    Icons.location_on,
+                    size: 20,
+                    color: kLightGreyColor,
                   ),
                   Text(
-                    '19 Mars',
-                    style: TextStyle(color: Colors.blue, fontSize: 12),
+                    'Riyadh',
+                    style: TextStyle(color: kLightGreyColor, fontSize: 12),
                   ),
                 ],
               )

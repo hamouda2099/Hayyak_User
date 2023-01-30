@@ -21,7 +21,7 @@ class SettingsScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SecondAppBar(title: 'Settings'),
+              SecondAppBar(title: 'Settings',shareAndFav: false,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

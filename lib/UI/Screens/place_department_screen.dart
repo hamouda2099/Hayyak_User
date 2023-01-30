@@ -17,6 +17,7 @@ class PlaceDepartmentScreen extends StatelessWidget {
            children: [
              SecondAppBar(
                title: 'The Host',
+               shareAndFav: false,
              ),
              const SizedBox(height: 10,),
              Expanded(

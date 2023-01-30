@@ -13,7 +13,7 @@ TextEditingController controller = TextEditingController();
       body: SafeArea(
         child: Column(
           children: [
-            SecondAppBar(title: 'Search'),
+            SecondAppBar(title: 'Search',shareAndFav: false),
             Container(
               width: screenWidth/1.1,
               decoration: BoxDecoration(

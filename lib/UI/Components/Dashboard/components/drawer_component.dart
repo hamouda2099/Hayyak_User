@@ -9,10 +9,11 @@ import 'package:hayyak/UI/Components/Dashboard/screens/history_screen.dart';
 import 'package:hayyak/UI/Components/Dashboard/screens/surveys_screen.dart';
 
 class DrawerComponent extends StatelessWidget {
-
+  int index = 0;
   @override
   Widget build(BuildContext context) {
     return CurvedDrawer(
+
       items: const [
         DrawerItem(
             icon: Icon(
@@ -59,22 +60,35 @@ class DrawerComponent extends StatelessWidget {
               Icons.settings,
             ),
             label: 'Settings'),
-
       ],
+      index: index,
       onTap: (int value) {
-        if(value==0){
-          navigator(context: context,screen: DashboardScreen());
-        } else if (value == 1){
-          navigator(context: context,screen: HistoryScreen());
-        } else if (value == 2){
-          navigator(context: context,screen: DepartmentScreen());
-        } else if (value == 3){
-          navigator(context: context,screen: EmployeesScreen());
-        } else if (value ==4){
-          navigator(context: context,screen: SurveysScreen());
-        } else if (value==5){
-          navigator(context: context,screen: BookScreen());
-
+        if (value == 0) {
+          Future.delayed(const Duration(milliseconds: 900), () {
+            navigator(context: context, screen: DashboardScreen());
+            index = 0;
+          });
+        } else if (value == 1) {
+          Future.delayed(const Duration(milliseconds: 900), () {
+            navigator(context: context, screen: HistoryScreen());
+            index = 1;
+          });
+        } else if (value == 2) {
+          Future.delayed(const Duration(milliseconds: 900), () {
+            navigator(context: context, screen: DepartmentScreen());
+          });
+        } else if (value == 3) {
+          Future.delayed(const Duration(milliseconds: 900), () {
+            navigator(context: context, screen: EmployeesScreen());
+          });
+        } else if (value == 4) {
+          Future.delayed(const Duration(milliseconds: 900), () {
+            navigator(context: context, screen: SurveysScreen());
+          });
+        } else if (value == 5) {
+          Future.delayed(const Duration(milliseconds: 900), () {
+            navigator(context: context, screen: BookScreen());
+          });
         }
       },
     );

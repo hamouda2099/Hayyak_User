@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/UI/Components/app_bar.dart';
+import 'package:hayyak/UI/Components/bottom_nav_bar.dart';
 import 'package:hayyak/UI/Components/seccond_app_bar.dart';
 import 'package:hayyak/UI/Screens/event_tickets_screen.dart';
 import 'package:hayyak/UI/Screens/place_department_screen.dart';
@@ -15,84 +16,22 @@ class PlaceDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: Container(
-        width: screenWidth / 1,
-        height: screenHeight / 10,
-        color: kDarkGreyColor,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '15 - 30 SAR',
-                  style: TextStyle(color: Colors.white, fontSize: 14),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.electric_bolt_rounded,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      'Selling fast',
-                      style: TextStyle(color: Colors.white, fontSize: 14),
-                    ),
-                  ],
-                )
-              ],
-            ),
-            InkWell(
-              onTap: () {
-                navigator(context: context, screen: EventTicketsScreen(
-                  eventId: '',
-                  selectedDate: '',
-                ));
-              },
-              child: Container(
-                alignment: Alignment.center,
-                width: screenWidth / 2,
-                height: 50,
-                margin: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: kPrimaryColor,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Text(
-                  'Tickets',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
+      bottomNavigationBar: BottomNavBar(currentScreen: 'Visits'),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
               SecondAppBar(
-                title: 'Amr Diab',
+                title: 'Dammos',
+                shareAndFav: false,
               ),
               Container(
                 width: screenWidth,
                 height: screenHeight / 3.5,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage('assets/images/amr-diab-promo.jpg')),
+                      fit: BoxFit.fill,
+                      image: NetworkImage('https://testing.hayyak.net/public/upload/image/46760581664472715img-4.jpg')),
                 ),
               ),
               Padding(
@@ -243,6 +182,9 @@ class PlaceDetails extends StatelessWidget {
                 height: screenHeight / 4,
                 color: Colors.grey.withOpacity(0.1),
               ),
+              SizedBox(
+                height: 20,
+              )
             ],
           ),
         ),

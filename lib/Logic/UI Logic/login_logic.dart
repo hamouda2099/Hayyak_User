@@ -31,6 +31,19 @@ class LoginLogic {
           UserData.email = jsonDecode(value.body)['data']['email'];
           UserData.phone = jsonDecode(value.body)['data']['phone'];
           UserData.imageUrl = jsonDecode(value.body)['data']['image'];
+          if ( context.read(rememberMeProvider).state == true ){
+            Hive.box('user_data').put('logged_in', true);
+            Hive.box('user_data').put('token', UserData.token);
+            Hive.box('user_data').put('role', UserData.role);
+            Hive.box('user_data').put('id', UserData.id);
+            Hive.box('user_data').put('name', UserData.userName);
+            Hive.box('user_data').put('phone', UserData.phone);
+            Hive.box('user_data').put('email', UserData.email);
+            Hive.box('user_data').put('lang', UserData.language);
+            Hive.box('user_data').put('image', UserData.imageUrl);
+          } else {
+            null;
+          }
           navigator(context: context, screen:  HomeScreen(), remove: true);
         } else {
           messageDialog(context, '${jsonDecode(value.body)['error']}');

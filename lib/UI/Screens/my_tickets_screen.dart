@@ -18,7 +18,7 @@ class MyTicketsScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            SecondAppBar(title: 'My Tickets'),
+            SecondAppBar(title: 'My Tickets',shareAndFav: false),
             Container(
               width: screenWidth/1.2,
               padding: EdgeInsets.all(10),
@@ -36,7 +36,7 @@ class MyTicketsScreen extends StatelessWidget {
               ),
             ),
             Container(
-              height: screenHeight/1.41,
+              height: screenHeight/1.5,
               child: ListView.builder(
 
                 itemBuilder: (context, index) {

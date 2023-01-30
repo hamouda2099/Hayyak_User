@@ -72,7 +72,7 @@ class EventHomeCard extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      InkWell(
+                     InkWell(
                           onTap: () {
                             Share.share('https://hayyak.net/ar/event/$id',
                                 subject: eventName);
@@ -82,7 +82,7 @@ class EventHomeCard extends StatelessWidget {
                             size: 20,
                             color: kLightGreyColor,
                           )),
-                      InkWell(
+                      UserData.token == '' ? SizedBox():  InkWell(
                         onTap: () {
                          if (UserData.id == 0){
                            messageDialog(context, 'Please Login to Add to Favourites !');

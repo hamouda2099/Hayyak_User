@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/Config/navigator.dart';
+import 'package:hayyak/Config/user_data.dart';
 import 'package:hayyak/UI/Screens/notifications_screen.dart';
 import 'package:hayyak/main.dart';
 import 'package:share/share.dart';
 
 class SecondAppBar extends StatelessWidget {
-  SecondAppBar({required this.title});
+  SecondAppBar({required this.title,required this.shareAndFav});
   String title;
+  bool shareAndFav = false;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -30,9 +32,9 @@ class SecondAppBar extends StatelessWidget {
           ),
           Text(
             title,
-            style: TextStyle(color: kDarkGreyColor, fontSize: 16,fontWeight: FontWeight.bold),
+            style: const TextStyle(color: kDarkGreyColor, fontSize: 16,fontWeight: FontWeight.bold),
           ),
-          Row(
+        shareAndFav || UserData.token == '' ?  Row(
             children: [
               InkWell(
                   onTap: () {
@@ -45,10 +47,10 @@ class SecondAppBar extends StatelessWidget {
                     size: 20,
                     color: kDarkGreyColor,
                   )),
-              SizedBox(width: 10,),
+              const SizedBox(width: 10,),
               InkWell(
                 onTap: (){
-                  navigator(context: context, screen: NotificationsScreen());
+                  navigator(context: context, screen: const NotificationsScreen());
                 },
                 child: SizedBox(
                   width: 15,
@@ -60,7 +62,7 @@ class SecondAppBar extends StatelessWidget {
               ),
 
             ],
-          )
+          ) : const SizedBox(width: 50,)
         ],
       ),
     );

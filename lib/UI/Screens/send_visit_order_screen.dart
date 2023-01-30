@@ -20,7 +20,7 @@ class VisitOrderScreen extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
         children: [
-            SecondAppBar(title: 'The Host'),
+            SecondAppBar(title: 'The Host',shareAndFav: false,),
             const SizedBox(
               height: 10,
             ),

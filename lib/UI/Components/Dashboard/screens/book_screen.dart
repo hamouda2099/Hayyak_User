@@ -67,110 +67,116 @@ class BookScreen extends StatelessWidget {
             ),
           ),
           SizedBox(height: 10,),
-          Padding(
-            padding: const EdgeInsets.only(left: 15.0,right: 15),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Container(
+              width: screenWidth *2,
+              height: screenHeight/1.5,
+              child: Column(
                 children: [
-                  Container(
-                      width: 80,
-                      child: Text('Card No',style: TextStyle(color: Colors.blue),)),
-                  Container(
-                      width: screenWidth/4,
-                      child: Text('Name',style: TextStyle(color: kDarkGreyColor),)),
-                  Container(
-                      width: screenWidth/4,
-                      child: Text('Email',style: TextStyle(color: kDarkGreyColor),)),
-                  Container(
-                      width: screenWidth/4,
-                      child: Text('Category',style: TextStyle(color: kDarkGreyColor),)),
-                  Container(
-                      width: 50,
-                      child: Text('Edit',style: TextStyle(color: kDarkGreyColor),)),
-                  Container(
-                      width: 50,
-                      child: Text('Delete',style: TextStyle(color: kDarkGreyColor),)),
+                  SizedBox(height: 10,),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0,right: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                            width: 80,
+                            child: Text('Card No',style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold),)),
+                        Container(
+                            width: screenWidth/4,
+                            child: Text('Name',style: TextStyle(color: kDarkGreyColor,fontWeight: FontWeight.bold),)),
+                        Container(
+                            width: screenWidth/4,
+                            child: Text('Email',style: TextStyle(color: kDarkGreyColor,fontWeight: FontWeight.bold),)),
+                        Container(
+                            width: screenWidth/4,
+                            child: Text('Category',style: TextStyle(color: kDarkGreyColor,fontWeight: FontWeight.bold),)),
+                        Container(
+                            width: 50,
+                            child: Text('Edit',style: TextStyle(color: kDarkGreyColor,fontWeight: FontWeight.bold),)),
+                        Container(
+                            width: 50,
+                            child: Text('Delete',style: TextStyle(color: kDarkGreyColor,fontWeight: FontWeight.bold),)),
 
 
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+                  Container(
+                    width: screenWidth*1.9,
+                    height: 1,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: kDarkGreyColor,
+                    ),
+                  ),
+                  SizedBox(height: 5,),
+                  Consumer(
+                    builder: (context, watch, child) {
+                      return  Expanded(
+                        child: ListView.builder(
+                          itemCount: 4,
+                          itemBuilder: (context, index) {
+                            return  Container(
+                              margin: const EdgeInsets.all(5),
+                              padding: const EdgeInsets.all(10),
+                              width: screenWidth / 1.3,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                color: Colors.grey.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                      width: 80,
+                                      child: Text('Card No',style: TextStyle(color: Colors.blue),)),
+                                  Container(
+                                      width: screenWidth/4,
+                                      child: Text('Name',style: TextStyle(color: kDarkGreyColor),)),
+                                  Container(
+                                      width: screenWidth/4,
+                                      child: Text('Email',style: TextStyle(color: kDarkGreyColor),)),
+                                  Container(
+                                      width: screenWidth/4,
+                                      child: Text('Category',style: TextStyle(color: kDarkGreyColor),)),
+                                  Container(
+                                    width: 50,
+                                    child: InkWell(
+                                        onTap: () {},
+                                        child: const Icon(
+                                          Icons.edit,
+                                          color: Colors.blue,
+                                          size: 20,
+                                        )
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 50,
+                                    child: InkWell(
+                                        onTap: () {},
+                                        child: const Icon(
+                                          Icons.delete,
+                                          color: Colors.red,
+                                          size: 20,
+                                        )
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  )
                 ],
               ),
             ),
-          ),
-          SizedBox(height: 10,),
-          Container(
-            width: screenWidth/1.1,
-            height: 1,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: kDarkGreyColor,
-            ),
-          ),
-          SizedBox(height: 5,),
-          Consumer(
-            builder: (context, watch, child) {
-              return  Expanded(
-                child: ListView.builder(
-                  itemCount: 4,
-                  itemBuilder: (context, index) {
-                    return  Container(
-                      margin: const EdgeInsets.all(5),
-                      padding: const EdgeInsets.all(20),
-                      width: screenWidth / 1.3,
-                      height: screenHeight / 10,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                                width: 80,
-                                child: Text('Card No',style: TextStyle(color: Colors.blue),)),
-                            Container(
-                                width: screenWidth/4,
-                                child: Text('Name',style: TextStyle(color: kDarkGreyColor),)),
-                            Container(
-                                width: screenWidth/4,
-                                child: Text('Email',style: TextStyle(color: kDarkGreyColor),)),
-                            Container(
-                                width: screenWidth/4,
-                                child: Text('Category',style: TextStyle(color: kDarkGreyColor),)),
-                            Container(
-                              width: 50,
-                              child: InkWell(
-                                  onTap: () {},
-                                  child: const Icon(
-                                    Icons.edit,
-                                    color: Colors.blue,
-                                    size: 20,
-                                  )
-                              ),
-                            ),
-                            Container(
-                              width: 50,
-                              child: InkWell(
-                                  onTap: () {},
-                                  child: const Icon(
-                                    Icons.delete,
-                                    color: Colors.red,
-                                    size: 20,
-                                  )
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              );
-            },
           )
 
         ],

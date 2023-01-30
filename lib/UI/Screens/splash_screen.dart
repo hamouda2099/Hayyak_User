@@ -23,7 +23,6 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(const Duration(seconds: 4), () async {
       if (await Hive.box('user_data').get('logged_in') == true) {
         UserData.token = await Hive.box('user_data').get('token');
-        UserData.userName = await Hive.box('user_data').get('name').toString();
         UserData.id = await Hive.box('user_data').get('id');
         UserData.phone = await Hive.box('user_data').get('phone').toString();
         UserData.email = await Hive.box('user_data').get('email');

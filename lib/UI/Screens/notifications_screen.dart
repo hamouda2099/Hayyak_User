@@ -15,7 +15,7 @@ class NotificationsScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SecondAppBar(title: 'Notification'),
+              SecondAppBar(title: 'Notification',shareAndFav: false,),
               Container(
                   height: screenHeight / 1.2,
                   child: ListView.builder(
