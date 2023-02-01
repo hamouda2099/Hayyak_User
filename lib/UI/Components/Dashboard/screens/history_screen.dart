@@ -50,114 +50,119 @@ class HistoryScreen extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 10,),
-          Padding(
-            padding: const EdgeInsets.only(left: 15.0,right: 15),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          SizedBox(height: 20,),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Container(
+              width: screenWidth *2.5,
+              height: screenHeight/1.5,
+              child: Column(
                 children: [
-                  Container(
-                      width: 80,
-                      child: Text('Name',style: TextStyle(color: Colors.blue),)),
-                  Container(
-                      width: screenWidth/4,
-                      child: Text('Title',style: TextStyle(color: kDarkGreyColor),)),
-                  Container(
-                      width: screenWidth/4,
-                      child: Text('Reason',style: TextStyle(color: kDarkGreyColor),)),
-                  Container(
-                      width: screenWidth/4,
-                      child: Text('Start Date',style: TextStyle(color: kDarkGreyColor),)),
-                  Container(
-                      width: screenWidth/4,
-                      child: Text('End Date',style: TextStyle(color: kDarkGreyColor),)),
-                  Container(
-                      width: screenWidth/4,
-                      child: Text('Department',style: TextStyle(color: kDarkGreyColor),)),
-                  Container(
-                      width: screenWidth/4,
-                      child: Text('Employee',style: TextStyle(color: kDarkGreyColor),)),
-                  Container(
-                      width: screenWidth/4,
-                      child: Text('Accepted By',style: TextStyle(color: kDarkGreyColor),)),
-                  Container(
-                      width: screenWidth/4,
-                      child: Text('Rejected By',style: TextStyle(color: kDarkGreyColor),)),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0,right: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                            width: 80,
+                            child: Text('Name',style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold),)),
+                        Container(
+                            width: screenWidth/4,
+                            child: Text('Title',style: TextStyle(color: kDarkGreyColor,fontWeight: FontWeight.bold),)),
+                        Container(
+                            width: screenWidth/4,
+                            child: Text('Reason',style: TextStyle(color: kDarkGreyColor,fontWeight: FontWeight.bold),)),
+                        Container(
+                            width: screenWidth/4,
+                            child: Text('Start Date',style: TextStyle(color: kDarkGreyColor,fontWeight: FontWeight.bold),)),
+                        Container(
+                            width: screenWidth/4,
+                            child: Text('End Date',style: TextStyle(color: kDarkGreyColor,fontWeight: FontWeight.bold),)),
+                        Container(
+                            width: screenWidth/4,
+                            child: Text('Department',style: TextStyle(color: kDarkGreyColor,fontWeight: FontWeight.bold),)),
+                        Container(
+                            width: screenWidth/4,
+                            child: Text('Employee',style: TextStyle(color: kDarkGreyColor,fontWeight: FontWeight.bold),)),
+                        Container(
+                            width: screenWidth/4,
+                            child: Text('Accepted By',style: TextStyle(color: kDarkGreyColor,fontWeight: FontWeight.bold),)),
+                        Container(
+                            width: screenWidth/4,
+                            child: Text('Rejected By',style: TextStyle(color: kDarkGreyColor,fontWeight: FontWeight.bold),)),
 
 
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+                  Container(
+                    width: screenWidth*2.4,
+                    height: 1,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: kDarkGreyColor,
+                    ),
+                  ),
+                  SizedBox(height: 5,),
+                  Consumer(
+                    builder: (context, watch, child) {
+                      return  Expanded(
+                        child: ListView.builder(
+                          itemCount: 4,
+                          itemBuilder: (context, index) {
+                            return  Container(
+                              margin: const EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(10),
+                              width: screenWidth / 1.3,
+                              height: screenHeight / 15,
+                              decoration: BoxDecoration(
+                                color: Colors.grey.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                      width: 80,
+                                      child: Text('Name',style: TextStyle(color: Colors.blue),)),
+                                  Container(
+                                      width: screenWidth/4,
+                                      child: Text('Title',style: TextStyle(color: kDarkGreyColor),)),
+                                  Container(
+                                      width: screenWidth/4,
+                                      child: Text('Reason',style: TextStyle(color: kDarkGreyColor),)),
+                                  Container(
+                                      width: screenWidth/4,
+                                      child: Text('Start Date',style: TextStyle(color: kDarkGreyColor),)),
+                                  Container(
+                                      width: screenWidth/4,
+                                      child: Text('End Date',style: TextStyle(color: kDarkGreyColor),)),
+                                  Container(
+                                      width: screenWidth/4,
+                                      child: Text('Department',style: TextStyle(color: kDarkGreyColor),)),
+                                  Container(
+                                      width: screenWidth/4,
+                                      child: Text('Employee',style: TextStyle(color: kDarkGreyColor),)),
+                                  Container(
+                                      width: screenWidth/4,
+                                      child: Text('Accepted By',style: TextStyle(color: kDarkGreyColor),)),
+                                  Container(
+                                      width: screenWidth/4,
+                                      child: Text('Rejected By',style: TextStyle(color: kDarkGreyColor),)),
+
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  )
                 ],
               ),
             ),
-          ),
-          SizedBox(height: 10,),
-          Container(
-            width: screenWidth/1.1,
-            height: 1,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: kDarkGreyColor,
-            ),
-          ),
-          SizedBox(height: 5,),
-          Consumer(
-            builder: (context, watch, child) {
-              return  Expanded(
-                child: ListView.builder(
-                  itemCount: 4,
-                  itemBuilder: (context, index) {
-                    return  Container(
-                      margin: const EdgeInsets.all(10),
-                      padding: const EdgeInsets.all(10),
-                      width: screenWidth / 1.3,
-                      height: screenHeight / 15,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                                width: 80,
-                                child: Text('Name',style: TextStyle(color: Colors.blue),)),
-                            Container(
-                                width: screenWidth/4,
-                                child: Text('Title',style: TextStyle(color: kDarkGreyColor),)),
-                            Container(
-                                width: screenWidth/4,
-                                child: Text('Reason',style: TextStyle(color: kDarkGreyColor),)),
-                            Container(
-                                width: screenWidth/4,
-                                child: Text('Start Date',style: TextStyle(color: kDarkGreyColor),)),
-                            Container(
-                                width: screenWidth/4,
-                                child: Text('End Date',style: TextStyle(color: kDarkGreyColor),)),
-                            Container(
-                                width: screenWidth/4,
-                                child: Text('Department',style: TextStyle(color: kDarkGreyColor),)),
-                            Container(
-                                width: screenWidth/4,
-                                child: Text('Employee',style: TextStyle(color: kDarkGreyColor),)),
-                            Container(
-                                width: screenWidth/4,
-                                child: Text('Accepted By',style: TextStyle(color: kDarkGreyColor),)),
-                            Container(
-                                width: screenWidth/4,
-                                child: Text('Rejected By',style: TextStyle(color: kDarkGreyColor),)),
-
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              );
-            },
           )
 
         ],

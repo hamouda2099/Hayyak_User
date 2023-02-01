@@ -132,7 +132,7 @@ class DashboardScreen extends StatelessWidget {
                               children: [
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
+                                  children:  [
                                     Text(
                                       'In-Coming',
                                       style: TextStyle(
@@ -141,12 +141,21 @@ class DashboardScreen extends StatelessWidget {
                                     SizedBox(
                                       width: 5,
                                     ),
-                                    Text(
-                                      '24',
-                                      style: TextStyle(
-                                          color: Colors.orange,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14),
+                                    Container(
+                                      alignment: Alignment.center,
+                                      width: 20,
+                                      height: 20,
+                                      decoration: BoxDecoration(
+                                        color: Colors.blue,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Text(
+                                        '24',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 10),
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -170,7 +179,7 @@ class DashboardScreen extends StatelessWidget {
                               children: [
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
+                                  children:  [
                                     Text(
                                       'Pending',
                                       style:
@@ -179,13 +188,23 @@ class DashboardScreen extends StatelessWidget {
                                     SizedBox(
                                       width: 5,
                                     ),
-                                    Text(
-                                      '5',
-                                      style: TextStyle(
-                                          color: Colors.orange,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14),
+                                    Container(
+                                      alignment: Alignment.center,
+                                      width: 20,
+                                      height: 20,
+                                      decoration: BoxDecoration(
+                                        color: Colors.blue,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Text(
+                                        '5',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 10),
+                                      ),
                                     ),
+
                                   ],
                                 ),
                                 Container(
@@ -209,7 +228,7 @@ class DashboardScreen extends StatelessWidget {
                               children: [
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
+                                  children:  [
                                     Text(
                                       'Tasks',
                                       style:
@@ -218,13 +237,23 @@ class DashboardScreen extends StatelessWidget {
                                     SizedBox(
                                       width: 5,
                                     ),
-                                    Text(
-                                      '30',
-                                      style: TextStyle(
-                                          color: Colors.orange,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14),
+                                    Container(
+                                      alignment: Alignment.center,
+                                      width: 20,
+                                      height: 20,
+                                      decoration: BoxDecoration(
+                                        color: Colors.blue,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Text(
+                                        '30',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 10),
+                                      ),
                                     ),
+
                                   ],
                                 ),
                                 Container(
@@ -266,7 +295,21 @@ class DashboardScreen extends StatelessWidget {
                     Consumer(
                       builder: (context, watch, child) {
                        watch(tabsProvider);
-                        return  Expanded(
+                        return context.read(tabsProvider).state == 'Tasks' ? Expanded(
+                          child: ListView.builder(
+                            itemCount: 4,
+                            itemBuilder: (context, index) {
+                              return  TaskCard();
+                            },
+                          ),
+                        ) : context.read(tabsProvider).state == 'Pending' ? Expanded(
+                          child: ListView.builder(
+                            itemCount: 4,
+                            itemBuilder: (context, index) {
+                              return  PendingCard();
+                            },
+                          ),
+                        ) : Expanded(
                           child: ListView.builder(
                             itemCount: 4,
                             itemBuilder: (context, index) {

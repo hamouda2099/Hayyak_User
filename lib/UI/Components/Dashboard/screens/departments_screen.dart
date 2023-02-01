@@ -49,7 +49,7 @@ class DepartmentScreen extends StatelessWidget {
               )
             ],
           ),
-          SizedBox(height: 20,),
+          const SizedBox(height: 20,),
           Container(
             width: screenWidth/1.1,
             decoration: BoxDecoration(
@@ -58,14 +58,14 @@ class DepartmentScreen extends StatelessWidget {
             ),
             child: TextField(
               controller: controller,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 border: InputBorder.none,
                 prefixIcon: Icon(Icons.search,color: kLightGreyColor,),
                 hintText: 'Search',
               ),
             ),
           ),
-          SizedBox(height: 10,),
+          const SizedBox(height: 20,),
           Padding(
             padding: const EdgeInsets.only(left: 15.0,right: 15),
             child: Row(
@@ -73,22 +73,22 @@ class DepartmentScreen extends StatelessWidget {
               children: [
                 Container(
                     width: 80,
-                    child: Text('Card No',style: TextStyle(color: Colors.blue),)),
+                    child: const Text('Card No',style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold),)),
                 Container(
                     width: screenWidth/4,
-                    child: Text('Dep Name',style: TextStyle(color: kDarkGreyColor),)),
+                    child: const Text('Dep Name',style: TextStyle(color: kDarkGreyColor,fontWeight: FontWeight.bold),)),
                 Container(
                     width: 50,
-                    child: Text('Edit',style: TextStyle(color: kDarkGreyColor),)),
+                    child: const Text('Edit',style: TextStyle(color: kDarkGreyColor,fontWeight: FontWeight.bold),)),
                 Container(
                     width: 50,
-                    child: Text('Delete',style: TextStyle(color: kDarkGreyColor),)),
+                    child: const Text('Delete',style: TextStyle(color: kDarkGreyColor,fontWeight: FontWeight.bold),)),
 
 
               ],
             ),
           ),
-          SizedBox(height: 10,),
+          const SizedBox(height: 10,),
           Container(
             width: screenWidth/1.1,
             height: 1,
@@ -97,7 +97,7 @@ class DepartmentScreen extends StatelessWidget {
               color: kDarkGreyColor,
             ),
           ),
-          SizedBox(height: 5,),
+          const SizedBox(height: 5,),
           Consumer(
             builder: (context, watch, child) {
               return  Expanded(
@@ -108,7 +108,6 @@ class DepartmentScreen extends StatelessWidget {
                       margin: const EdgeInsets.all(10),
                       padding: const EdgeInsets.all(20),
                       width: screenWidth / 1.3,
-                      height: screenHeight / 10,
                       decoration: BoxDecoration(
                         color: Colors.grey.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(20),
@@ -119,10 +118,10 @@ class DepartmentScreen extends StatelessWidget {
                         children: [
                           Container(
                               width: 80,
-                              child: Text('Card No',style: TextStyle(color: Colors.blue),)),
+                              child: const Text('Card No',style: TextStyle(color: Colors.blue),)),
                           Container(
                               width: screenWidth/4,
-                              child: Text('Dep Name',style: TextStyle(color: kDarkGreyColor),)),
+                              child: const Text('Dep Name',style: TextStyle(color: kDarkGreyColor),)),
                           Container(
                             width: 50,
                             child: InkWell(

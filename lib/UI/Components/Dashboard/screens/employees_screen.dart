@@ -82,126 +82,137 @@ class EmployeesScreen extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 10,
+            height: 20,
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 15.0, right: 15),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                    width: 40,
-                    child: Text(
-                      'No',
-                      style: TextStyle(color: Colors.blue, fontSize: 12),
-                    )),
-                Container(
-                    width: screenWidth / 4,
-                    child: Text(
-                      'Employee Name',
-                      style: TextStyle(color: kDarkGreyColor, fontSize: 12),
-                    )),
-                Container(
-                    width: screenWidth / 5,
-                    child: Text(
-                      'Department',
-                      style: TextStyle(color: kDarkGreyColor, fontSize: 12),
-                    )),
-                Container(
-                    width: 50,
-                    child: Text(
-                      'Edit',
-                      style: TextStyle(color: kDarkGreyColor, fontSize: 12),
-                    )),
-                Container(
-                    width: 50,
-                    child: Text(
-                      'Delete',
-                      style: TextStyle(color: kDarkGreyColor, fontSize: 12),
-                    )),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            width: screenWidth / 1.1,
-            height: 1,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: kDarkGreyColor,
-            ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Consumer(
-            builder: (context, watch, child) {
-              return Expanded(
-                child: ListView.builder(
-                  itemCount: 4,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin: const EdgeInsets.all(10),
-                      padding: const EdgeInsets.all(20),
-                      width: screenWidth / 1.3,
-                      height: screenHeight / 8,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                              width: 40,
-                              child: Text(
-                                index.toString(),
-                                style:
-                                    TextStyle(color: Colors.blue, fontSize: 12),
-                              )),
-                          SizedBox(
-                              width: screenWidth / 5,
-                              child: Text(
-                                'Employee Name',
-                                style: TextStyle(
-                                    color: kDarkGreyColor, fontSize: 12),
-                              )),
-                          SizedBox(
-                              width: screenWidth / 5,
-                              child: Text(
-                                'Department',
-                                style: TextStyle(color: kDarkGreyColor, fontSize: 12),
-                              )),
-                          Container(
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: SizedBox(
+              width: screenWidth *1.5,
+              height: screenHeight/1.5,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0, right: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                            width: 40,
+                            child: Text(
+                              'No',
+                              style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold),
+                            )),
+                        SizedBox(
+                            width: screenWidth / 3,
+                            child: Text(
+                              'Employee Name',
+                              style: TextStyle(color: kDarkGreyColor,fontWeight: FontWeight.bold),
+                            )),
+                        SizedBox(
+                            width: screenWidth / 3,
+                            child: Text(
+                              'Department',
+                              style: TextStyle(color: kDarkGreyColor,fontWeight: FontWeight.bold),
+                            )),
+                        SizedBox(
                             width: 50,
-                            child: InkWell(
-                                onTap: () {},
-                                child: const Icon(
-                                  Icons.edit,
-                                  color: Colors.blue,
-                                  size: 20,
-                                )),
-                          ),
-                          Container(
+                            child: Text(
+                              'Edit',
+                              style: TextStyle(color: kDarkGreyColor,fontWeight: FontWeight.bold),
+                            )),
+                        SizedBox(
                             width: 50,
-                            child: InkWell(
-                                onTap: () {},
-                                child: const Icon(
-                                  Icons.delete,
-                                  color: Colors.red,
-                                  size: 20,
-                                )),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-              );
-            },
+                            child: Text(
+                              'Delete',
+                              style: TextStyle(color: kDarkGreyColor,fontWeight: FontWeight.bold),
+                            )),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    width: screenWidth *1.4,
+                    height: 1,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: kDarkGreyColor,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Consumer(
+                    builder: (context, watch, child) {
+                      return Expanded(
+                        child: ListView.builder(
+                          itemCount: 4,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              margin: const EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(20),
+                              width: screenWidth / 1.3,
+                              height: screenHeight / 8,
+                              decoration: BoxDecoration(
+                                color: Colors.grey.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                      width: 40,
+                                      child: Text(
+                                        index.toString(),
+                                        style:
+                                        TextStyle(color: Colors.blue),
+                                      )),
+                                  SizedBox(
+                                      width: screenWidth / 3,
+                                      child: Text(
+                                        'Employee Name',
+                                        style: TextStyle(
+                                            color: kDarkGreyColor),
+                                      )),
+                                  SizedBox(
+                                      width: screenWidth / 3,
+                                      child: Text(
+                                        'Department',
+                                        style: TextStyle(color: kDarkGreyColor),
+                                      )),
+                                  SizedBox(
+                                    width: 50,
+                                    child: InkWell(
+                                        onTap: () {},
+                                        child: const Icon(
+                                          Icons.edit,
+                                          color: Colors.blue,
+                                          size: 20,
+                                        )),
+                                  ),
+                                  SizedBox(
+                                    width: 50,
+                                    child: InkWell(
+                                        onTap: () {},
+                                        child: const Icon(
+                                          Icons.delete,
+                                          color: Colors.red,
+                                          size: 20,
+                                        )),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  )
+                ],
+              ),
+            ),
           )
         ],
       )),

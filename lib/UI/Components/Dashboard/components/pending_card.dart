@@ -12,7 +12,6 @@ class PendingCard extends StatelessWidget {
       margin: const EdgeInsets.all(10),
       padding: const EdgeInsets.all(20),
       width: screenWidth / 1.3,
-      height: screenHeight / 6,
       decoration: BoxDecoration(
         color: Colors.grey.withOpacity(0.1),
         borderRadius: BorderRadius.circular(20),

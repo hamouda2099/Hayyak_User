@@ -13,7 +13,6 @@ class DrawerComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CurvedDrawer(
-
       items: const [
         DrawerItem(
             icon: Icon(
@@ -40,11 +39,6 @@ class DrawerComponent extends StatelessWidget {
               Icons.messenger_outline,
             ),
             label: 'Surveys'),
-        DrawerItem(
-            icon: Icon(
-              Icons.book,
-            ),
-            label: 'Books'),
         DrawerItem(
             icon: Icon(
               Icons.book,
