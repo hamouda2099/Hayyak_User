@@ -110,7 +110,7 @@ class ExploreSlider {
     id: json["id"],
     name: json["name"],
     description: json["description"],
-    location: json["location"],
+    location: json["location"]??"",
     image: json["image"],
     start: json["start"],
     end: json["end"],

@@ -12,9 +12,11 @@ import 'package:hayyak/main.dart';
 
 class DashboardScreen extends StatelessWidget {
   final tabsProvider = StateProvider<String>((ref) => 'Incoming');
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       drawer: DrawerComponent(),
       body: SafeArea(
         child: Container(
@@ -28,18 +30,26 @@ class DashboardScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.only(right: 5.0, left: 15, top: 15),
-                    child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          'Dashboard',
-                          style: TextStyle(
-                              color: kDarkGreyColor,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                        )),
-                  ),
+                Row(
+                  children: [
+                    IconButton(onPressed: (){
+                      _scaffoldKey.currentState?.openDrawer();
+
+                    }, icon: Icon(Icons.menu,color: Colors.blue,)),
+                    const Padding(
+                      padding: EdgeInsets.only(right: 5.0, left: 5, top: 5),
+                      child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            'Dashboard',
+                            style: TextStyle(
+                                color: kDarkGreyColor,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                          )),
+                    ),
+                  ],
+                ),
                   InkWell(
                     onTap: (){
                       navigator(context: context,screen: InviteScreen());
@@ -58,7 +68,7 @@ class DashboardScreen extends StatelessWidget {
                 ],
               ),
               const Padding(
-                padding: EdgeInsets.only(left: 15.0),
+                padding: EdgeInsets.only(left: 55.0),
                 child: Align(
                     alignment: Alignment.topLeft,
                     child: Text(

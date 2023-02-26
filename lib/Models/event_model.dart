@@ -82,7 +82,7 @@ class Data {
         prickerEndDate: DateTime.parse(json["pricker_end_date"]),
         time: json["time"],
         latLng: json["lat_lng"],
-        address: json["address"],
+        address: json["address"]??'',
         averageCost: json["average_cost"],
         action: Action.fromJson(json["action"]),
         seats: json["seats"],

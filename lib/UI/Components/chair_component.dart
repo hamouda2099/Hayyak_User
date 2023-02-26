@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/Logic/UI%20Logic/seats_logic.dart';
+import 'package:hayyak/Models/event_seats_model.dart';
 import 'package:hayyak/main.dart';
 
 class ChairComponent extends ConsumerWidget {
+  ChairComponent({required this.tickets});
   late StateProvider provider;
   late int index;
-  final selectedRowProvider = StateProvider<String>((ref) => 'Select Row');
+  final selectedRowProvider = StateProvider<String>((ref) => '');
   final selectedSeatProvider = StateProvider<String>((ref) => 'Select Seat');
   final rebuild = StateProvider<bool>((ref) => false);
+  List tickets;
   List rowsList = ['B1', 'B2', 'Select Row'];
   List seatsList = ['1', '2', 'Select Seat'];
   bool submitted = false;
@@ -70,7 +73,7 @@ class ChairComponent extends ConsumerWidget {
                         underline: SizedBox(),
                         isExpanded: true,
                         iconSize: 20,
-                        value: value,
+                        // value: value,
                         icon: Icon(
                           Icons.arrow_drop_down_sharp,
                           color: Colors.black.withOpacity(0.5),
@@ -85,11 +88,11 @@ class ChairComponent extends ConsumerWidget {
                           context.refresh(selectedRowProvider).state =
                               newValue.toString();
                         },
-                        items: rowsList.map((location) {
+                        items: tickets.map((location) {
                           return DropdownMenuItem(
-                            value: location,
+                            value: location.toString(),
                             child: Text(
-                              location,
+                              location.toString(),
                               style: TextStyle(
                                   color: kLightGreyColor.withOpacity(0.8),
                                   fontSize: 14),

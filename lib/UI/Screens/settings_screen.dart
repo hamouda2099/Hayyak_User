@@ -30,10 +30,10 @@ class SettingsScreen extends StatelessWidget {
                     height: screenWidth/5,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
+                      border: Border.all(color: kLightGreyColor,width: 1),
                       image: DecorationImage(
-
                           fit: BoxFit.cover,
-                          image: AssetImage('assets/images/amr-diab-promo.jpg')),
+                          image: NetworkImage(UserData.imageUrl??'')),
                     ),
                   ),
                   SizedBox(width: 10,),
@@ -41,7 +41,7 @@ class SettingsScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                        Text(UserData.userName??'',style: TextStyle(color: kDarkGreyColor,fontSize: 14,fontWeight: FontWeight.bold)),
-                      const Text('enasss12@gmail.com',style: TextStyle(color: kDarkGreyColor,fontSize: 12)),
+                       Text(UserData.email??'',style: TextStyle(color: kDarkGreyColor,fontSize: 12)),
 
                     ],
                   ),

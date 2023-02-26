@@ -9,10 +9,12 @@ import 'package:hayyak/main.dart';
 
 class SurveysScreen extends StatelessWidget {
   TextEditingController controller = TextEditingController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
+      key: _scaffoldKey,
       drawer: DrawerComponent(),
       backgroundColor: Colors.white,
       body: SafeArea(child: Column(
@@ -21,24 +23,33 @@ class SurveysScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(right: 5.0, left: 15, top: 15),
-                child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Surveys',
-                      style: TextStyle(
-                          color: kDarkGreyColor,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold),
-                    )),
+              Row(
+                children: [
+                  IconButton(onPressed: (){
+                    _scaffoldKey.currentState?.openDrawer();
+
+                  }, icon: Icon(Icons.menu,color: Colors.blue,)),
+                  const Padding(
+                    padding: EdgeInsets.only(right: 5.0, left: 5, top: 5),
+                    child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'Surveys',
+                          style: TextStyle(
+                              color: kDarkGreyColor,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold),
+                        )),
+                  ),
+                ],
               ),
+
               InkWell(
                 onTap: (){
                   navigator(context: context,screen: CreateSurvey());
                 },
                 child: Padding(
-                  padding: const EdgeInsets.only(right: 15.0, left: 15, top: 20),
+                  padding: const EdgeInsets.only(right: 15.0, left: 15, top: 10),
                   child: Row(
                     children: const [
                       Text('Create Survey',style: TextStyle(color: Colors.blue),),
@@ -98,10 +109,10 @@ class SurveysScreen extends StatelessWidget {
                   itemCount: 4,
                   itemBuilder: (context, index) {
                     return  Container(
-                      margin: const EdgeInsets.all(10),
-                      padding: const EdgeInsets.all(20),
+                      margin: const EdgeInsets.all(5),
+                      padding: const EdgeInsets.all(10),
                       width: screenWidth / 1.3,
-                      height: screenHeight / 10,
+                      height: 40,
                       decoration: BoxDecoration(
                         color: Colors.grey.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(20),

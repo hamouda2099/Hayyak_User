@@ -15,7 +15,7 @@ class TicketCard extends StatelessWidget {
       },
       child: Container(
         width: screenWidth/1.2,
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: Row(
           children: [
             Container(
@@ -23,29 +23,29 @@ class TicketCard extends StatelessWidget {
               height: screenWidth / 3,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                image: DecorationImage(
+                image: const DecorationImage(
                   fit: BoxFit.cover,
                     image: AssetImage('assets/images/amr-diab-promo.jpg')),
               ),
             ),
-            SizedBox(width: 10,),
+            const SizedBox(width: 10,),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('AmrDiab',style: TextStyle(color: kDarkGreyColor,fontSize: 14),),
+                const Text('AmrDiab',style: TextStyle(color: kDarkGreyColor,fontSize: 14),),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Icon(Icons.location_on,size: 20,color: kLightGreyColor,),
-                    Text('Riyadh Park، Northern Ring',style: TextStyle(color: Colors.blue,fontSize: 10),),
+                    const Icon(Icons.location_on,size: 20,color: kLightGreyColor,),
+                    const Text('Riyadh Park، Northern Ring',style: TextStyle(color: Colors.blue,fontSize: 10),),
 
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Icon(Icons.calendar_month_outlined,size: 20,color: kLightGreyColor,),
-                    Text('SAT, 19 MAR 7:00 - 10:00 PM',style: TextStyle(color: Colors.blue,fontSize: 10),),
+                    const Icon(Icons.calendar_month_outlined,size: 20,color: kLightGreyColor,),
+                    const Text('SAT, 19 MAR 7:00 - 10:00 PM',style: TextStyle(color: Colors.blue,fontSize: 10),),
 
                   ],
                 ),

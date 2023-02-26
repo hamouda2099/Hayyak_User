@@ -120,11 +120,24 @@ class EventDetails extends StatelessWidget {
                         onTap: () {
                           if (snapShot.data!.data.seats == 'seats') {
                             navigator(
-                                context: context, screen: EventSeatsScreen());
+                                context: context,
+                                screen: DatePickerScreen(
+                                  navigateScreen: 'seats',
+                                  eventId: snapShot.data!.data.id.toString(),
+                                  startDate: snapShot
+                                      ?.data?.data?.pickerStartDate
+                                      .toString() ??
+                                      '',
+                                  endDate: snapShot?.data?.data?.prickerEndDate
+                                      .toString() ??
+                                      '',
+                                ));
+
                           } else if (snapShot.data!.data.seats == 'tickets') {
                             navigator(
                                 context: context,
                                 screen: DatePickerScreen(
+                                  navigateScreen: 'tickets',
                                   eventId: snapShot.data!.data.id.toString(),
                                   startDate: snapShot
                                           ?.data?.data?.pickerStartDate

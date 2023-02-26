@@ -17,6 +17,7 @@ class EventTicketsScreen extends StatelessWidget {
   String selectedDate = '';
   String eventId = '';
   List cart = [];
+  final tabProvider = StateProvider<String>((ref) => 'tickets');
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<EventTicketsModel>(
@@ -68,115 +69,7 @@ class EventTicketsScreen extends StatelessWidget {
                         ],
                       ),
                       InkWell(
-                        onTap: () {
-                          // showDialog(
-                          //   context: context,
-                          //   builder: (context) {
-                          //     return AlertDialog(
-                          //       title: const Text(
-                          //         'Cart',
-                          //         style: TextStyle(color: kDarkGreyColor),
-                          //       ),
-                          //       content: Container(
-                          //         width: screenWidth / 1.2,
-                          //         height: screenHeight / 1.5,
-                          //         child: ListView.builder(
-                          //           itemCount: cart.length,
-                          //           itemBuilder: (context, index) {
-                          //             return Container(
-                          //               child: Row(
-                          //                 crossAxisAlignment:
-                          //                 CrossAxisAlignment.start,
-                          //                 mainAxisAlignment:
-                          //                 MainAxisAlignment.spaceBetween,
-                          //                 children: [
-                          //                   Row(
-                          //                     crossAxisAlignment:
-                          //                     CrossAxisAlignment.start,
-                          //                     children: [
-                          //                       SvgPicture.asset(
-                          //                           color: Color(int.parse(
-                          //                               '0xFF${snapShot.data!.data.event.kinds[index].color.toString().substring(1)}')),
-                          //                           width: 25,
-                          //                           height: 25,
-                          //                           'assets/icon/ticket.svg'),
-                          //                       const SizedBox(
-                          //                         width: 10,
-                          //                       ),
-                          //                       Column(
-                          //                         crossAxisAlignment:
-                          //                         CrossAxisAlignment.start,
-                          //                         children: [
-                          //                           Container(
-                          //                             width:screenWidth/3,
-                          //                             child: Text(
-                          //                               cart[index],
-                          //                               style: TextStyle(
-                          //                                   color: Color(int.parse(
-                          //                                       '0xFF${snapShot.data!.data.event.kinds[index].color.toString().substring(1)}')),
-                          //                                   fontSize: 14),
-                          //                             ),
-                          //                           ),
-                          //                           const SizedBox(
-                          //                             width: 20,
-                          //                           ),
-                          //                           Text(
-                          //                             snapShot
-                          //                                 .data!
-                          //                                 .data
-                          //                                 .event
-                          //                                 .kinds[index]
-                          //                                 .costAfterDiscount,
-                          //                             style: const TextStyle(
-                          //                                 color: kLightGreyColor,
-                          //                                 fontSize: 14,
-                          //                                 fontWeight:
-                          //                                 FontWeight.bold),
-                          //                           )
-                          //                         ],
-                          //                       ),
-                          //                     ],
-                          //                   ),
-                          //                   Row(
-                          //                     children: [
-                          //                       Text(
-                          //                         'counter',
-                          //                         style: const TextStyle(
-                          //                             color: kLightGreyColor,
-                          //                             fontSize: 16),
-                          //                       ),
-                          //                       const SizedBox(
-                          //                         width: 12,
-                          //                       ),
-                          //                       InkWell(
-                          //                         onTap: () {
-                          //                           cart.removeAt(cart[index]);
-                          //                         },
-                          //                         child: Container(
-                          //                           padding: const EdgeInsets.all(5),
-                          //                           decoration: const BoxDecoration(
-                          //                             shape: BoxShape.circle,
-                          //                             color: Colors.red,
-                          //                           ),
-                          //                           child: const Icon(
-                          //                             Icons.remove,
-                          //                             color: Colors.white,
-                          //                             size: 20,
-                          //                           ),
-                          //                         ),
-                          //                       ),
-                          //                     ],
-                          //                   ),
-                          //                 ],
-                          //               ),
-                          //             );
-                          //           },
-                          //         ),
-                          //       ),
-                          //     );
-                          //   },
-                          // );
-                        },
+                        onTap: () {},
                         child: SvgPicture.asset(
                             color: Colors.white,
                             width: 25,
@@ -214,7 +107,8 @@ class EventTicketsScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       SecondAppBar(
-                          title: snapShot.data!.data.event.details.name,shareAndFav: false),
+                          title: snapShot.data!.data.event.details.name,
+                          shareAndFav: false),
                       Container(
                         width: screenWidth / 1.2,
                         height: screenHeight / 5,
@@ -268,434 +162,316 @@ class EventTicketsScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      const Padding(
-                        padding: EdgeInsets.only(
-                            left: 30.0, right: 30, top: 10, bottom: 10),
-                        child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              'Tickets',
-                              style: TextStyle(
-                                  color: kLightGreyColor,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold),
-                            )),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(15),
-                        height: screenHeight / 3.5,
-                        child: ListView.builder(
-                          itemCount: snapShot.data!.data.event.kinds.length,
-                          itemBuilder: (context, index) {
-                            final counterProvider = StateProvider((ref) => 0);
-                            final submittedProvider =
-                                StateProvider<bool>((ref) => false);
-                            return Consumer(
-                              builder: (context, watch, child) {
-                                final counter = watch(counterProvider).state;
-                                final submitted =
-                                    watch(submittedProvider).state;
-                                return Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: submitted
-                                      ? Row(
-                                          children: [
-                                            SvgPicture.asset(
-                                                color: Color(int.parse(
-                                                    '0xFF${snapShot.data!.data.event.kinds[index].color.toString().substring(1)}')),
-                                                width: 25,
-                                                height: 25,
-                                                'assets/icon/ticket.svg'),
-                                            const SizedBox(
-                                              width: 10,
-                                            ),
-                                            Text(
-                                              'Tickets Added to Cart',
-                                              style: TextStyle(
-                                                color: Color(int.parse(
-                                                    '0xFF${snapShot.data!.data.event.kinds[index].color.toString().substring(1)}')),
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      : Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                SvgPicture.asset(
-                                                    color: Color(int.parse(
-                                                        '0xFF${snapShot.data!.data.event.kinds[index].color.toString().substring(1)}')),
-                                                    width: 25,
-                                                    height: 25,
-                                                    'assets/icon/ticket.svg'),
-                                                const SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Container(
-                                                      width: screenWidth / 3,
-                                                      child: Text(
-                                                        snapShot
-                                                            .data!
-                                                            .data
-                                                            .event
-                                                            .kinds[index]
-                                                            .name,
-                                                        style: TextStyle(
-                                                            color: Color(int.parse(
-                                                                '0xFF${snapShot.data!.data.event.kinds[index].color.toString().substring(1)}')),
-                                                            fontSize: 14),
-                                                      ),
-                                                    ),
-                                                    const SizedBox(
-                                                      width: 20,
-                                                    ),
-                                                    Text(
-                                                      snapShot
-                                                          .data!
-                                                          .data
-                                                          .event
-                                                          .kinds[index]
-                                                          .costAfterDiscount,
-                                                      style: const TextStyle(
-                                                          color:
-                                                              kLightGreyColor,
-                                                          fontSize: 14,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    )
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                InkWell(
-                                                  onTap: () {
-                                                    if (counter != 0) {
-                                                      context
-                                                          .read(counterProvider)
-                                                          .state--;
-                                                    }
-                                                  },
-                                                  child: Container(
-                                                    padding:
-                                                        const EdgeInsets.all(5),
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: kLightGreyColor,
-                                                    ),
-                                                    child: const Icon(
-                                                      Icons.remove,
-                                                      color: Colors.white,
-                                                      size: 20,
-                                                    ),
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  width: 12,
-                                                ),
-                                                Text(
-                                                  counter.toString(),
-                                                  style: const TextStyle(
-                                                      color: kLightGreyColor,
-                                                      fontSize: 16),
-                                                ),
-                                                const SizedBox(
-                                                  width: 12,
-                                                ),
-                                                InkWell(
-                                                  onTap: () {
-                                                    if (counter ==
-                                                        snapShot
-                                                            .data!
-                                                            .data
-                                                            .event
-                                                            .kinds[index]
-                                                            .countLimit) {
-                                                    } else {
-                                                      context
-                                                          .read(counterProvider)
-                                                          .state++;
-                                                    }
-                                                  },
-                                                  child: Container(
-                                                    padding:
-                                                        const EdgeInsets.all(5),
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: Colors.blue,
-                                                    ),
-                                                    child: const Icon(
-                                                      Icons.add,
-                                                      color: Colors.white,
-                                                      size: 20,
-                                                    ),
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  width: 12,
-                                                ),
-                                                InkWell(
-                                                  onTap: () {
-                                                    cart.add({
-                                                      "item": snapShot
-                                                          .data!
-                                                          .data
-                                                          .event
-                                                          .kinds[index],
-                                                      "count": counter,
-                                                      "type": "ticket"
-                                                    });
-                                                    context
-                                                        .read(submittedProvider)
-                                                        .state = true;
-                                                    print(cart);
-                                                  },
-                                                  child: Container(
-                                                    padding:
-                                                        const EdgeInsets.all(5),
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: Colors.green,
-                                                    ),
-                                                    child: const Icon(
-                                                      Icons
-                                                          .add_shopping_cart_rounded,
-                                                      color: Colors.white,
-                                                      size: 20,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                );
-                              },
-                            );
-                          },
-                        ),
-                      ),
-                      Container(
-                        width: screenWidth / 1.3,
-                        height: 1,
-                        color: Colors.grey,
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(
-                            left: 30.0, right: 30, top: 10, bottom: 10),
-                        child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              'Services',
-                              style: TextStyle(
-                                  color: kLightGreyColor,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold),
-                            )),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(15),
-                        height: screenHeight / 3.5,
-                        child: ListView.builder(
-                          itemCount: snapShot.data!.data.event.services.length,
-                          itemBuilder: (context, index) {
-                            final counterProvider = StateProvider((ref) => 0);
-                            final submittedProvider =
-                                StateProvider<bool>((ref) => false);
-                            return Consumer(
-                              builder: (context, watch, child) {
-                                final counter = watch(counterProvider).state;
-                                final submitted =
-                                    watch(submittedProvider).state;
-                                return Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: submitted
-                                      ? Row(
-                                          children: [
-                                            SvgPicture.asset(
-                                                color: Colors.grey,
-                                                width: 25,
-                                                height: 25,
-                                                'assets/icon/ticket.svg'),
-                                            const SizedBox(
-                                              width: 10,
-                                            ),
-                                            const Text(
-                                              'Services Added to Cart',
-                                              style: TextStyle(
-                                                color: Colors.grey,
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      : Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                SvgPicture.asset(
-                                                    color: kDarkGreyColor,
-                                                    width: 25,
-                                                    height: 25,
-                                                    'assets/icon/dinner.svg'),
-                                                const SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      snapShot.data!.data.event
-                                                          .services[index].name,
-                                                      style: const TextStyle(
-                                                          color:
-                                                              kLightGreyColor,
-                                                          fontSize: 16),
-                                                    ),
-                                                    const SizedBox(
-                                                      width: 20,
-                                                    ),
-                                                    Text(
-                                                      snapShot
-                                                          .data!
-                                                          .data
-                                                          .event
-                                                          .services[index]
-                                                          .costAfterDiscount,
-                                                      style: const TextStyle(
-                                                          color:
-                                                              kLightGreyColor,
-                                                          fontSize: 14,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    )
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                InkWell(
-                                                  onTap: () {
-                                                    if (counter != 0) {
-                                                      context
-                                                          .read(counterProvider)
-                                                          .state--;
-                                                    }
-                                                  },
-                                                  child: Container(
-                                                    padding:
-                                                        const EdgeInsets.all(5),
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: kLightGreyColor,
-                                                    ),
-                                                    child: const Icon(
-                                                      Icons.remove,
-                                                      color: Colors.white,
-                                                      size: 20,
-                                                    ),
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  width: 12,
-                                                ),
-                                                Text(
-                                                  counter.toString(),
-                                                  style: const TextStyle(
-                                                      color: kLightGreyColor,
-                                                      fontSize: 16),
-                                                ),
-                                                const SizedBox(
-                                                  width: 12,
-                                                ),
-                                                InkWell(
-                                                  onTap: () {
-                                                    context
-                                                        .read(counterProvider)
-                                                        .state++;
-                                                  },
-                                                  child: Container(
-                                                    padding:
-                                                        const EdgeInsets.all(5),
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: Colors.blue,
-                                                    ),
-                                                    child: const Icon(
-                                                      Icons.add,
-                                                      color: Colors.white,
-                                                      size: 20,
-                                                    ),
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  width: 12,
-                                                ),
-                                                InkWell(
-                                                  onTap: () {
-                                                    cart.add({
-                                                      "item": snapShot
-                                                          .data!
-                                                          .data
-                                                          .event
-                                                          .services[index],
-                                                      "count": counter,
-                                                      "type": "service"
-                                                    });
-                                                    context
-                                                        .read(submittedProvider)
-                                                        .state = true;
-                                                    print(cart);
-                                                  },
-                                                  child: Container(
-                                                    padding:
-                                                        const EdgeInsets.all(5),
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: Colors.green,
-                                                    ),
-                                                    child: const Icon(
-                                                      Icons
-                                                          .add_shopping_cart_rounded,
-                                                      color: Colors.white,
-                                                      size: 20,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                );
-                              },
-                            );
-                          },
-                        ),
-                      ),
+                      Consumer(builder: (context, watch, child) {
+                        final tab = watch(tabProvider).state;
+                        return Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children:  [
+                                  InkWell(
+                                    onTap:(){
+                                      context.read(tabProvider).state = 'tickets';
+                                    },
+                                    child: Text(
+                                      'Tickets',
+                                      style: TextStyle(
+                                          color: tab == 'tickets' ? Colors.blue : kLightGreyColor,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap:(){
+                                      context.read(tabProvider).state = 'services';
+                                    },
+                                    child: Text(
+                                      'Services',
+                                      style: TextStyle(
+                                          color: tab == 'services' ? Colors.blue : kLightGreyColor,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+
+                                ],
+                              ),
+                            ),
+                            Container(
+                              width: screenWidth / 1.3,
+                              height: 1,
+                              color: Colors.grey,
+                            ),
+                           tab == 'tickets' ?
+
+                               Column(
+                                 children: List.generate(snapShot.data!.data.event.kinds.length, (index){
+                                   final counterProvider = StateProvider((ref) => 0);
+                                   return Consumer(
+                                     builder: (context, watch, child) {
+                                       final counter = watch(counterProvider).state;
+                                       return Padding(
+                                         padding: const EdgeInsets.all(10.0),
+                                         child: Row(
+                                           crossAxisAlignment:
+                                           CrossAxisAlignment.start,
+                                           mainAxisAlignment:
+                                           MainAxisAlignment.spaceBetween,
+                                           children: [
+                                             Row(
+                                               crossAxisAlignment:
+                                               CrossAxisAlignment.start,
+                                               children: [
+                                                 SvgPicture.asset(
+                                                     color: Color(int.parse(
+                                                         '0xFF${snapShot.data!.data.event.kinds[index].color.toString().substring(1)}')),
+                                                     width: 25,
+                                                     height: 25,
+                                                     'assets/icon/ticket.svg'),
+                                                 const SizedBox(
+                                                   width: 10,
+                                                 ),
+                                                 Column(
+                                                   crossAxisAlignment:
+                                                   CrossAxisAlignment.start,
+                                                   children: [
+                                                     Container(
+                                                       width: screenWidth / 3,
+                                                       child: Text(
+                                                         snapShot.data!.data.event
+                                                             .kinds[index].name,
+                                                         style: TextStyle(
+                                                             color: Color(int.parse(
+                                                                 '0xFF${snapShot.data!.data.event.kinds[index].color.toString().substring(1)}')),
+                                                             fontSize: 14),
+                                                       ),
+                                                     ),
+                                                     const SizedBox(
+                                                       width: 20,
+                                                     ),
+                                                     Text(
+                                                       snapShot
+                                                           .data!
+                                                           .data
+                                                           .event
+                                                           .kinds[index]
+                                                           .costAfterDiscount,
+                                                       style: const TextStyle(
+                                                           color: kLightGreyColor,
+                                                           fontSize: 14,
+                                                           fontWeight:
+                                                           FontWeight.bold),
+                                                     )
+                                                   ],
+                                                 ),
+                                               ],
+                                             ),
+                                             Row(
+                                               children: [
+                                                 InkWell(
+                                                   onTap: () {
+                                                     if (counter != 0) {
+                                                       context
+                                                           .read(counterProvider)
+                                                           .state--;
+                                                     }
+                                                   },
+                                                   child: Container(
+                                                     padding: const EdgeInsets.all(5),
+                                                     decoration: const BoxDecoration(
+                                                       shape: BoxShape.circle,
+                                                       color: kLightGreyColor,
+                                                     ),
+                                                     child: const Icon(
+                                                       Icons.remove,
+                                                       color: Colors.white,
+                                                       size: 20,
+                                                     ),
+                                                   ),
+                                                 ),
+                                                 const SizedBox(
+                                                   width: 12,
+                                                 ),
+                                                 Text(
+                                                   counter.toString(),
+                                                   style: const TextStyle(
+                                                       color: kLightGreyColor,
+                                                       fontSize: 16),
+                                                 ),
+                                                 const SizedBox(
+                                                   width: 12,
+                                                 ),
+                                                 InkWell(
+                                                   onTap: () {
+                                                     if (counter ==
+                                                         snapShot
+                                                             .data!
+                                                             .data
+                                                             .event
+                                                             .kinds[index]
+                                                             .countLimit) {
+                                                     } else {
+                                                       context
+                                                           .read(counterProvider)
+                                                           .state++;
+                                                     }
+                                                   },
+                                                   child: Container(
+                                                     padding: const EdgeInsets.all(5),
+                                                     decoration: const BoxDecoration(
+                                                       shape: BoxShape.circle,
+                                                       color: Colors.blue,
+                                                     ),
+                                                     child: const Icon(
+                                                       Icons.add,
+                                                       color: Colors.white,
+                                                       size: 20,
+                                                     ),
+                                                   ),
+                                                 ),
+                                               ],
+                                             ),
+                                           ],
+                                         ),
+                                       );
+                                     },
+                                   );
+                                 }),
+                               )
+                               :
+                           Column(
+                             children: List.generate(snapShot.data!.data.event.services.length, (index){
+                               final counterProvider = StateProvider((ref) => 0);
+                               return Consumer(
+                                 builder: (context, watch, child) {
+                                   final counter = watch(counterProvider).state;
+                                   return Padding(
+                                     padding: const EdgeInsets.all(10.0),
+                                     child: Row(
+                                       crossAxisAlignment:
+                                       CrossAxisAlignment.start,
+                                       mainAxisAlignment:
+                                       MainAxisAlignment.spaceBetween,
+                                       children: [
+                                         Row(
+                                           crossAxisAlignment:
+                                           CrossAxisAlignment.start,
+                                           children: [
+                                             SvgPicture.asset(
+                                                 color: kDarkGreyColor,
+                                                 width: 25,
+                                                 height: 25,
+                                                 'assets/icon/dinner.svg'),
+                                             const SizedBox(
+                                               width: 10,
+                                             ),
+                                             Column(
+                                               crossAxisAlignment:
+                                               CrossAxisAlignment.start,
+                                               children: [
+                                                 Text(
+                                                   snapShot.data!.data.event
+                                                       .services[index].name,
+                                                   style: const TextStyle(
+                                                       color:
+                                                       kLightGreyColor,
+                                                       fontSize: 16),
+                                                 ),
+                                                 const SizedBox(
+                                                   width: 20,
+                                                 ),
+                                                 Text(
+                                                   snapShot
+                                                       .data!
+                                                       .data
+                                                       .event
+                                                       .services[index]
+                                                       .costAfterDiscount,
+                                                   style: const TextStyle(
+                                                       color:
+                                                       kLightGreyColor,
+                                                       fontSize: 14,
+                                                       fontWeight:
+                                                       FontWeight.bold),
+                                                 )
+                                               ],
+                                             ),
+                                           ],
+                                         ),
+                                         Row(
+                                           children: [
+                                             InkWell(
+                                               onTap: () {
+                                                 if (counter != 0) {
+                                                   context
+                                                       .read(counterProvider)
+                                                       .state--;
+                                                 }
+                                               },
+                                               child: Container(
+                                                 padding:
+                                                 const EdgeInsets.all(5),
+                                                 decoration:
+                                                 const BoxDecoration(
+                                                   shape: BoxShape.circle,
+                                                   color: kLightGreyColor,
+                                                 ),
+                                                 child: const Icon(
+                                                   Icons.remove,
+                                                   color: Colors.white,
+                                                   size: 20,
+                                                 ),
+                                               ),
+                                             ),
+                                             const SizedBox(
+                                               width: 12,
+                                             ),
+                                             Text(
+                                               counter.toString(),
+                                               style: const TextStyle(
+                                                   color: kLightGreyColor,
+                                                   fontSize: 16),
+                                             ),
+                                             const SizedBox(
+                                               width: 12,
+                                             ),
+                                             InkWell(
+                                               onTap: () {
+                                                 context
+                                                     .read(counterProvider)
+                                                     .state++;
+                                               },
+                                               child: Container(
+                                                 padding:
+                                                 const EdgeInsets.all(5),
+                                                 decoration:
+                                                 const BoxDecoration(
+                                                   shape: BoxShape.circle,
+                                                   color: Colors.blue,
+                                                 ),
+                                                 child: const Icon(
+                                                   Icons.add,
+                                                   color: Colors.white,
+                                                   size: 20,
+                                                 ),
+                                               ),
+                                             ),
+                                           ],
+                                         )
+                                       ],
+                                     ),
+                                   );
+                                 },
+                               );
+                             }),
+                           ),
+
+                          ],
+                        );
+                      },),
+
                     ],
                   ),
                 )),

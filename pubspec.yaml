@@ -51,6 +51,8 @@ dependencies:
   add_2_calendar: ^2.2.3
   curved_drawer_fork: ^0.0.1+1
   ticket_widget: ^0.0.1
+  image_picker: ^0.8.5+3
+
 
 dev_dependencies:
   flutter_test:

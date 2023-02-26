@@ -39,6 +39,9 @@ class ProfileModel {
 class Data {
   Data({
     required this.id,
+    required this.name,
+    required this.firstName,
+    required this.lastName,
     required this.email,
     required this.phone,
     required this.image,
@@ -46,6 +49,9 @@ class Data {
   });
 
   int id;
+  String name;
+  String firstName;
+  String lastName;
   String email;
   String phone;
   String image;
@@ -53,6 +59,9 @@ class Data {
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
     id: json["id"],
+    name: json["name"],
+    firstName: json["first_name"],
+    lastName: json["last_name"]??'',
     email: json["email"],
     phone: json["phone"],
     image: json["image"],
@@ -61,6 +70,9 @@ class Data {
 
   Map<String, dynamic> toJson() => {
     "id": id,
+    "name": name,
+    "first_name": firstName,
+    "last_name": lastName,
     "email": email,
     "phone": phone,
     "image": image,

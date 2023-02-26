@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/Config/navigator.dart';
+import 'package:hayyak/UI/Screens/event_seats_screen.dart';
 import 'package:hayyak/UI/Screens/event_tickets_screen.dart';
 import 'package:hayyak/main.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class DatePickerScreen extends StatefulWidget {
-  DatePickerScreen({required this.startDate,required this.endDate,required this.eventId});
+  DatePickerScreen({required this.startDate,required this.endDate,required this.eventId,required this.navigateScreen});
   String startDate ='' ;
   String endDate = '';
   String eventId ='';
+  String navigateScreen ='';
   @override
   State<DatePickerScreen> createState() => _DatePickerScreenState();
 }
@@ -65,10 +67,19 @@ class _DatePickerScreenState extends State<DatePickerScreen> {
             ),
             InkWell(
               onTap: (){
-                navigator(context: context,screen: EventTicketsScreen(
-                  selectedDate: selectedDate,
-                  eventId: widget.eventId,
-                ));
+                if (widget.navigateScreen == 'seats'){
+                  navigator(
+                      context: context, screen: EventSeatsScreen(
+                    selectedDate: selectedDate,
+                    eventId: widget.eventId,
+
+                  ));
+                } else {
+                  navigator(context: context,screen: EventTicketsScreen(
+                    selectedDate: selectedDate,
+                    eventId: widget.eventId,
+                  ));
+                }
               },
               child: Container(
                 alignment: Alignment.center,

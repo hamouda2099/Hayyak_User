@@ -10,8 +10,10 @@ import 'package:ticket_widget/ticket_widget.dart';
 import '../../Config/constants.dart';
 
 class TicketDetails extends StatelessWidget {
-  const TicketDetails({Key? key}) : super(key: key);
-
+   TicketDetails({Key? key}) : super(key: key);
+  final _controller = PageController(
+      initialPage: 0
+  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,19 +35,15 @@ class TicketDetails extends StatelessWidget {
             ),
 
           ),
-          Padding(
-            padding: EdgeInsets.only(top: 30),
-            child: Align(alignment: Alignment.center,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                return Container(
-                    width: screenWidth,
-                    child: TicketSliderItem());
-              },),
-            ),
-          ),
+          PageView.builder(
+            controller: _controller,
+            itemCount: 10,
+            itemBuilder: (context, index) {
+              return  Container(
+                  width: screenWidth,
+                  child: TicketSliderItem());
+            },),
+
           Padding(
             padding: const EdgeInsets.only(top: 20.0),
             child: IconButton(onPressed: (){

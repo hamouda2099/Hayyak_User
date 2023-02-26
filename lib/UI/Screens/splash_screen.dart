@@ -26,6 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
         UserData.id = await Hive.box('user_data').get('id');
         UserData.phone = await Hive.box('user_data').get('phone').toString();
         UserData.email = await Hive.box('user_data').get('email');
+        UserData.userName = await Hive.box('user_data').get('name');
         UserData.imageUrl = await Hive.box('user_data').get('image');
         UserData.role = await Hive.box('user_data').get('role');
         navigator(context: context, screen: HomeScreen(), remove: true);

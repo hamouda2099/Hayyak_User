@@ -9,10 +9,12 @@ import 'package:hayyak/main.dart';
 
 class BookScreen extends StatelessWidget {
   TextEditingController controller = TextEditingController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
+      key: _scaffoldKey,
       drawer: DrawerComponent(),
       backgroundColor: Colors.white,
       body: SafeArea(child: Column(
@@ -21,24 +23,33 @@ class BookScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(right: 5.0, left: 15, top: 15),
-                child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Books',
-                      style: TextStyle(
-                          color: kDarkGreyColor,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold),
-                    )),
+              Row(
+                children: [
+                  IconButton(onPressed: (){
+                    _scaffoldKey.currentState?.openDrawer();
+
+                  }, icon: Icon(Icons.menu,color: Colors.blue,)),
+                  const Padding(
+                    padding: EdgeInsets.only(right: 5.0, left: 5, top: 5),
+                    child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'Books',
+                          style: TextStyle(
+                              color: kDarkGreyColor,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold),
+                        )),
+                  ),
+                ],
               ),
+
               InkWell(
                 onTap: (){
                   navigator(context: context,screen: CreateBook());
                 },
                 child: Padding(
-                  padding: const EdgeInsets.only(right: 15.0, left: 15, top: 20),
+                  padding: const EdgeInsets.only(right: 15.0, left: 15, top: 10),
                   child: Row(
                     children: const [
                       Text('Create Book',style: TextStyle(color: Colors.blue),),

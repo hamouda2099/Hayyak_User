@@ -17,7 +17,7 @@ class TaskCard extends StatelessWidget {
         ),
         Container(
           margin: const EdgeInsets.all(10),
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(10),
           width: screenWidth / 1.1,
           decoration: BoxDecoration(
             color: Colors.grey.withOpacity(0.1),
@@ -41,24 +41,43 @@ class TaskCard extends StatelessWidget {
               const SizedBox(
                 width: 10,
               ),
-              Column(
-                crossAxisAlignment:
-                CrossAxisAlignment.start,
-                children:  [
-                  Text('Job Visit',
-                      style: TextStyle(
-                          color: kDarkGreyColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold)),
-                  Container(
-                    width: screenWidth/1.8,
-                    child: Text('Sameh Agag | 181 | 11-01-2023 | 1:49 PM - 4:49 PM',
-                        maxLines: 3,
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Column(
+                  crossAxisAlignment:
+                  CrossAxisAlignment.start,
+                  children:  [
+                    Text('Job Visit',
                         style: TextStyle(
-                            color: kLightGreyColor,
-                            fontSize: 12)),
-                  ),
-                ],
+                            color: kDarkGreyColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold)),
+                    Container(
+                      width: screenWidth/1.8,
+                      child: Text('Sameh Agag | 181',
+                          maxLines: 3,
+                          style: TextStyle(
+                              color: kLightGreyColor,
+                              fontSize: 12)),
+                    ),
+                    Container(
+                      width: screenWidth/1.8,
+                      child: Text('11-01-2023',
+                          maxLines: 3,
+                          style: TextStyle(
+                              color: kLightGreyColor,
+                              fontSize: 12)),
+                    ),
+                    Container(
+                      width: screenWidth/1.8,
+                      child: Text('1:49 PM - 4:49 PM',
+                          maxLines: 3,
+                          style: TextStyle(
+                              color: kLightGreyColor,
+                              fontSize: 12)),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

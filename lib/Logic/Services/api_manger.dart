@@ -16,6 +16,7 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
+import '../../Models/event_seats_model.dart';
 import '../../UI/Screens/error_screen.dart';
 
 class ApiManger {
@@ -162,6 +163,18 @@ class ApiManger {
       "date": date,
     });
     return EventTicketsModel.fromJson(json.decode(response.body));
+  }
+
+  static Future<EventSeatsModel> getEventSeats({
+    required String eventId,
+    required String date,
+  }) async {
+    Response response =
+    await sendPostRequest('$_eventDetails/tickets', <String, String>{
+      "event_id": eventId,
+      "date": date,
+    });
+    return EventSeatsModel.fromJson(json.decode(response.body));
   }
 
   static Future getTime(BuildContext context) async {

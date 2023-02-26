@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hayyak/Models/event_seats_model.dart';
 import 'package:hayyak/UI/Components/chair_component.dart';
 import 'package:hayyak/main.dart';
 
@@ -8,7 +9,7 @@ import '../../Logic/UI Logic/seats_logic.dart';
 
 class SeatCategoryComponent extends StatelessWidget {
   SeatCategoryComponent({required this.seatCategory});
-  Map seatCategory = {};
+  Kind seatCategory;
   final rebuildProvide = StateProvider<bool>((ref) => false);
   @override
   Widget build(BuildContext context) {
@@ -24,9 +25,10 @@ class SeatCategoryComponent extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  seatCategory['seat_category'],
+                  seatCategory.name,
                   style: TextStyle(
-                      color: seatCategory['color'],
+                      color:Color(int.parse(
+                  '0xFF${seatCategory.color.toString().substring(1)}')),
                       fontSize: 16,
                       fontWeight: FontWeight.bold),
                 ),
@@ -34,10 +36,11 @@ class SeatCategoryComponent extends StatelessWidget {
                   children: [
                     Text(
                       'Price',
-                      style: TextStyle(color: seatCategory['color']),
+                      style: TextStyle( color:Color(int.parse(
+                          '0xFF${seatCategory.color.toString().substring(1)}')),),
                     ),
                     Text(
-                      '${seatCategory['price']} SAR',
+                      '${seatCategory.finalCost} SAR',
                       style: const TextStyle(
                           color: Colors.black, fontWeight: FontWeight.bold),
                     ),
@@ -63,13 +66,14 @@ class SeatCategoryComponent extends StatelessWidget {
               ),
               IconButton(
                   onPressed: () {
-                    SeatsLogic.chairs.add(ChairComponent());
+                    SeatsLogic.chairs.add(ChairComponent(tickets: seatCategory.tickets,));
                     context.refresh(rebuildProvide);
                   },
                   icon: Icon(
                     Icons.add_box_outlined,
-                    color: seatCategory['color'],
-                  ))
+                    color:Color(int.parse(
+                        '0xFF${seatCategory.color.toString().substring(1)}')),
+                  ),),
             ],
           ),
           Consumer(
@@ -81,7 +85,9 @@ class SeatCategoryComponent extends StatelessWidget {
                 child: SeatsLogic.chairs.isEmpty
                     ? InkWell(
                         onTap: () {
-                          SeatsLogic.chairs.add(ChairComponent());
+                          SeatsLogic.chairs.add(ChairComponent(
+                            tickets: seatCategory.tickets,
+                          ));
                           context.refresh(rebuildProvide);
                         },
                         child: Container(
@@ -92,10 +98,10 @@ class SeatCategoryComponent extends StatelessWidget {
                           height: 50,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: seatCategory['color'],
-                          ),
+                            color:Color(int.parse(
+                                '0xFF${seatCategory.color.toString().substring(1)}')),                          ),
                           child: Text(
-                            'Choose chair in this ${seatCategory['seat_category']}',
+                            'Choose chair in this ${seatCategory.name}',
                             style: TextStyle(color: Colors.white, fontSize: 14),
                           ),
                         ),
