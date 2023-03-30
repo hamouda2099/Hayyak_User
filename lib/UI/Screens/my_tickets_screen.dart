@@ -18,7 +18,7 @@ class MyTicketsScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            SecondAppBar(title: 'My Tickets',shareAndFav: false),
+            SecondAppBar(title: 'My Tickets',shareAndFav: false,backToHome: true,),
             Container(
               width: screenWidth/1.2,
               padding: EdgeInsets.all(10),

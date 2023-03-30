@@ -1,3 +1,4 @@
+import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
@@ -9,8 +10,7 @@ import 'package:hayyak/UI/Components/seccond_app_bar.dart';
 import 'package:hayyak/main.dart';
 
 class CheckoutScreen extends StatelessWidget {
-  const CheckoutScreen({Key? key}) : super(key: key);
-
+CountDownController countDownController = CountDownController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,13 +24,24 @@ class CheckoutScreen extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text(
-                  'Total',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold),
+              children:  [
+                Row(
+                  children: [
+                    Text(
+                      'Total',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          ),
+                    ),
+                    Text(
+                      '(Incl. VAT)',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                          ),
+                    ),
+                  ],
                 ),
                 SizedBox(
                   height: 5,
@@ -39,26 +50,37 @@ class CheckoutScreen extends StatelessWidget {
                   '201.0 SAR',
                   style: TextStyle(
                       color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold),
+                      fontSize: 14,),
                 )
               ],
             ),
+            CircularCountDownTimer(
+              controller: countDownController ,
+              width: 40,
+              height: 40,
+              duration: 600,
+              autoStart: true,
+              isReverse: true,
+              textStyle: TextStyle(color: Colors.white,fontSize: 12),
+              fillColor: kPrimaryColor,
+              ringColor: kLightGreyColor,
+              textFormat: CountdownTextFormat.MM_SS,
+            ),
             InkWell(
               onTap: () {
-                navigator(context: context, screen: CheckoutScreen());
+                navigator(context: context, screen:  CheckoutScreen());
               },
               child: Container(
                 alignment: Alignment.center,
-                width: screenWidth / 1.5,
-                height: 50,
-                margin: EdgeInsets.all(10),
+                width: screenWidth / 2,
+                height: 35,
+                margin: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: Colors.green,
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(5),
                 ),
                 child: const Text(
-                  'PAY',
+                  'Pay',
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,
@@ -72,18 +94,19 @@ class CheckoutScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            SecondAppBar(title: 'Checkout',shareAndFav: false),
+            SecondAppBar(title: 'Checkout',shareAndFav: false,backToHome: false),
             Container(
               width: screenWidth,
               height: screenHeight / 1.3,
               child: ListView(
                 children: [
                   Container(
+                    margin: const EdgeInsets.only(left: 20,right: 20),
                     width: screenWidth / 1.2,
-                    height: screenHeight / 6,
+                    height: screenHeight / 7,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                           image:
                               AssetImage('assets/images/amr-diab-promo.jpg')),
                     ),
@@ -96,13 +119,13 @@ class CheckoutScreen extends StatelessWidget {
                       children: [
                         const Text('Amr Diab',
                             style: TextStyle(
-                                color: kLightGreyColor, fontSize: 14)),
+                                color: kDarkGreyColor, fontSize: 12)),
                         Row(
                           children: [
                             SvgPicture.asset(
-                                color: kLightGreyColor,
-                                width: 20,
-                                height: 20,
+                                color: kDarkGreyColor,
+                                width: 15,
+                                height: 15,
                                 'assets/icon/Icon material-event.svg'),
                             const SizedBox(
                               width: 5,
@@ -110,7 +133,7 @@ class CheckoutScreen extends StatelessWidget {
                             const Text(
                               'Sat, Mar 12',
                               style: TextStyle(
-                                  color: kLightGreyColor, fontSize: 14),
+                                  color: kDarkGreyColor, fontSize: 12),
                             )
                           ],
                         ),
@@ -118,8 +141,8 @@ class CheckoutScreen extends StatelessWidget {
                           children: const [
                             Icon(
                               Icons.access_time_outlined,
-                              color: kLightGreyColor,
-                              size: 20,
+                              color: kDarkGreyColor,
+                              size: 15,
                             ),
                             SizedBox(
                               width: 5,
@@ -127,7 +150,7 @@ class CheckoutScreen extends StatelessWidget {
                             Text(
                               '7:00 - 10:00 PM',
                               style: TextStyle(
-                                  color: kLightGreyColor, fontSize: 14),
+                                  color: kDarkGreyColor, fontSize: 12),
                             )
                           ],
                         ),
@@ -136,12 +159,12 @@ class CheckoutScreen extends StatelessWidget {
                   ),
                   Container(
                     width: screenWidth / 1.2,
-                    height: screenHeight / 8,
+                    height: screenHeight / 10,
                     child: ListView.builder(
                       itemCount: 2,
                       itemBuilder: (context, index) {
                         return Padding(
-                          padding: const EdgeInsets.only(top: 10.0),
+                          padding: const EdgeInsets.only(top: 15.0,left: 20.0,right: 20),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -151,24 +174,23 @@ class CheckoutScreen extends StatelessWidget {
                                     '3x',
                                     style: TextStyle(
                                         color: kPrimaryColor,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold),
+                                        fontSize: 12,),
                                   ),
                                   SizedBox(
-                                    width: 10,
+                                    width: 20,
                                   ),
                                   Text(
                                     'VIP Admission',
                                     style: TextStyle(
-                                        color: kLightGreyColor, fontSize: 16),
+                                        color: kDarkGreyColor, fontSize: 12,fontWeight: FontWeight.w500),
                                   )
                                 ],
                               ),
                               const Text(
                                 '50 SAR',
                                 style: TextStyle(
-                                    color: kLightGreyColor,
-                                    fontSize: 16,
+                                    color: kDarkGreyColor,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.bold),
                               )
                             ],
@@ -181,80 +203,75 @@ class CheckoutScreen extends StatelessWidget {
                     builder: (context, watch, child) {
                       final termsAndConditions =
                           watch(termsAndConditionsProvider).state;
-                      return Padding(
-                        padding: const EdgeInsets.only(left: 15.0),
-                        child: Row(
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                if (termsAndConditions == false) {
-                                  context
-                                      .read(termsAndConditionsProvider)
-                                      .state = true;
-                                } else {
-                                  context
-                                      .read(termsAndConditionsProvider)
-                                      .state = false;
-                                }
-                              },
-                              icon: termsAndConditions == false
-                                  ? const Icon(
-                                      Icons.check_box_outline_blank_sharp,
-                                      color: Colors.grey,
-                                      size: 18,
-                                    )
-                                  : const Icon(
-                                      Icons.check_box,
-                                      color: Colors.blue,
-                                      size: 18,
-                                    ),
-                            ),
-                            Text(
-                              'Accept all',
+                      return Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              if (termsAndConditions == false) {
+                                context
+                                    .read(termsAndConditionsProvider)
+                                    .state = true;
+                              } else {
+                                context
+                                    .read(termsAndConditionsProvider)
+                                    .state = false;
+                              }
+                            },
+                            icon: termsAndConditions == false
+                                ? const Icon(
+                                    Icons.check_box_outline_blank_sharp,
+                                    color: Colors.grey,
+                                    size: 18,
+                                  )
+                                : const Icon(
+                                    Icons.check_box,
+                                    color: Colors.blue,
+                                    size: 18,
+                                  ),
+                          ),
+                          const Text(
+                            'I accept the',
+                            style: TextStyle(
+                                color: kLightGreyColor,
+                                fontSize: 10,
+                                fontWeight: FontWeight.w400),
+                          ),
+                          InkWell(
+                            onTap: () {},
+                            child: const Text(
+                              ' terms & conditions',
                               style: TextStyle(
-                                  color: kDarkGreyColor.withOpacity(0.6),
-                                  fontSize: 12,
+                                  color: kLightGreyColor,
+                                  fontSize: 10,
                                   fontWeight: FontWeight.w400),
                             ),
-                            InkWell(
-                              onTap: () {},
-                              child: const Text(
-                                ' terms & conditions',
-                                style: TextStyle(
-                                    color: Colors.blue,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400),
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       );
                     },
                   ),
-                  const Padding(
-                    padding: EdgeInsets.only(
-                        left: 30.0, right: 30, top: 10, bottom: 10),
-                    child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Terms And Conditions',
-                          style: TextStyle(
-                              color: kLightGreyColor,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold),
-                        )),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 30.0, right: 30),
-                    child: Text(
-                      'The big night for Amr Diab The big night for Amr Diab '
-                      ' The big night for Amr Diab',
-                      style: TextStyle(color: kLightGreyColor, fontSize: 14),
+                  InkWell(
+                    onTap: (){
+
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.only(
+                          left: 20.0, right: 20, top: 10, bottom: 10),
+                      child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Terms And Conditions',
+                            style: TextStyle(
+                                color: kPrimaryColor,
+                                fontSize: 12,
+                            ),
+                          )),
                     ),
                   ),
                   Container(
-                    margin: const EdgeInsets.only(top: 20),
+                    margin: const EdgeInsets.only(top: 20,right: 20,left: 20),
                     width: screenWidth / 1.2,
+                    height: 40,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(
@@ -264,19 +281,23 @@ class CheckoutScreen extends StatelessWidget {
                       children: [
                         Container(
                           width: screenWidth / 2,
+                          alignment: Alignment.center,
                           padding: const EdgeInsets.only(left: 10),
                           child: const TextField(
                             decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: 'Enter Promo Code'),
+                                hintText: 'Enter Promo Code',
+                                contentPadding: EdgeInsets.only(bottom: 10),
+                                hintStyle: TextStyle(color: kLightGreyColor,fontSize: 12)
+                            ),
                           ),
                         ),
                         Container(
                           width: screenWidth / 4,
-                          padding: EdgeInsets.all(15),
+                          padding: const EdgeInsets.all(10),
                           alignment: Alignment.center,
                           decoration: const BoxDecoration(
-                              color: Colors.blue,
+                              color: kPrimaryColor,
                               borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(10),
                                 bottomRight: Radius.circular(10),
@@ -285,7 +306,8 @@ class CheckoutScreen extends StatelessWidget {
                             'Apply',
                             style: TextStyle(
                               color: Colors.white,
-                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold
                             ),
                           ),
                         )
@@ -294,20 +316,20 @@ class CheckoutScreen extends StatelessWidget {
                   ),
                   const Padding(
                     padding: EdgeInsets.only(
-                        left: 30.0, right: 30, top: 10, bottom: 10),
+                        left: 30.0, right: 30, top: 20, bottom: 10),
                     child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
                           'Payment Method',
                           style: TextStyle(
-                              color: kLightGreyColor,
-                              fontSize: 16,
+                              color: kDarkGreyColor,
+                              fontSize: 14,
                               fontWeight: FontWeight.bold),
                         )),
                   ),
                   Container(
-                    margin: EdgeInsets.all(20),
-                    padding: EdgeInsets.all(10),
+                    margin: const EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       border: Border.all(
@@ -322,26 +344,27 @@ class CheckoutScreen extends StatelessWidget {
                             Row(
                               children: [
                                 Container(
-                                  width: 30,
-                                  height: 30,
+                                  width: 20,
+                                  height: 20,
                                   decoration: BoxDecoration(
                                       border: Border.all(
                                           color:
                                               kLightGreyColor.withOpacity(0.5),
                                           width: 1),
                                       shape: BoxShape.circle),
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.circle,
                                     color: Colors.blue,
+                                    size: 10,
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
-                                Text(
+                                const Text(
                                   'Card',
                                   style: TextStyle(
-                                      color: kLightGreyColor, fontSize: 14),
+                                      color: kDarkGreyColor, fontSize: 14),
                                 ),
                               ],
                             ),
@@ -367,16 +390,16 @@ class CheckoutScreen extends StatelessWidget {
                           ],
                         ),
                         Container(
-                          margin: EdgeInsets.only(top: 10, left: 5),
-                          padding: EdgeInsets.only(left: 5, right: 5),
+                          margin: const EdgeInsets.only(top: 10, left: 5),
+                          padding: const EdgeInsets.only(left: 10, right: 10),
                           width: screenWidth / 1.2,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
+                            borderRadius: BorderRadius.circular(5),
                             border: Border.all(
                                 color: kLightGreyColor.withOpacity(0.5),
                                 width: 1),
                           ),
-                          child: TextField(
+                          child: const TextField(
                             decoration: InputDecoration(
                                 hintText: 'Card Number',
                                 border: InputBorder.none,
@@ -387,16 +410,16 @@ class CheckoutScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              margin: EdgeInsets.only(top: 10, left: 5),
-                              padding: EdgeInsets.only(left: 5, right: 5),
+                              margin: const EdgeInsets.only(top: 10, left: 5),
+                              padding: const EdgeInsets.only(left: 10, right: 10),
                               width: screenWidth / 4,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
+                                borderRadius: BorderRadius.circular(5),
                                 border: Border.all(
                                     color: kLightGreyColor.withOpacity(0.5),
                                     width: 1),
                               ),
-                              child: TextField(
+                              child: const TextField(
                                 decoration: InputDecoration(
                                     hintText: 'Expiry month',
                                     border: InputBorder.none,
@@ -404,16 +427,16 @@ class CheckoutScreen extends StatelessWidget {
                               ),
                             ),
                             Container(
-                              margin: EdgeInsets.only(top: 10, left: 5),
-                              padding: EdgeInsets.only(left: 5, right: 5),
+                              margin: const EdgeInsets.only(top: 10, left: 5),
+                              padding: const EdgeInsets.only(left: 10, right: 10),
                               width: screenWidth / 4,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
+                                borderRadius: BorderRadius.circular(5),
                                 border: Border.all(
                                     color: kLightGreyColor.withOpacity(0.5),
                                     width: 1),
                               ),
-                              child: TextField(
+                              child: const TextField(
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: 'Expiry year',
@@ -421,16 +444,16 @@ class CheckoutScreen extends StatelessWidget {
                               ),
                             ),
                             Container(
-                              margin: EdgeInsets.only(top: 10, left: 5),
-                              padding: EdgeInsets.only(left: 5, right: 5),
+                              margin: const EdgeInsets.only(top: 10, left: 5),
+                              padding: const EdgeInsets.only(left: 10, right: 10),
                               width: screenWidth / 4,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
+                                borderRadius: BorderRadius.circular(5),
                                 border: Border.all(
                                     color: kLightGreyColor.withOpacity(0.5),
                                     width: 1),
                               ),
-                              child: TextField(
+                              child: const TextField(
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: 'CVV',
@@ -491,8 +514,8 @@ class CheckoutScreen extends StatelessWidget {
                         child: Text(
                           'Additional services',
                           style: TextStyle(
-                              color: kLightGreyColor,
-                              fontSize: 16,
+                              color: kDarkGreyColor,
+                              fontSize: 14,
                               fontWeight: FontWeight.bold),
                         )),
                   ),
@@ -500,38 +523,47 @@ class CheckoutScreen extends StatelessWidget {
                     builder: (context, watch, child) {
                       final refundGuarantee =
                           watch(refundGuaranteeProvider).state;
-                      return Row(
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              if (refundGuarantee == false) {
-                                context.read(refundGuaranteeProvider).state =
-                                    true;
-                              } else {
-                                context.read(refundGuaranteeProvider).state =
-                                    false;
-                              }
-                            },
-                            icon: refundGuarantee == false
-                                ? const Icon(
-                                    Icons.check_box_outline_blank_sharp,
-                                    color: Colors.grey,
-                                    size: 18,
-                                  )
-                                : const Icon(
-                                    Icons.check_box,
-                                    color: Colors.blue,
-                                    size: 18,
-                                  ),
-                          ),
-                          Text(
-                            'Refund Guarantee',
-                            style: TextStyle(
-                                color: kDarkGreyColor.withOpacity(0.6),
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ],
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 20.0,right: 20,bottom: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                           Row(
+                             children: [
+                               InkWell(
+                                 onTap: () {
+                                   if (refundGuarantee == false) {
+                                     context.read(refundGuaranteeProvider).state =
+                                     true;
+                                   } else {
+                                     context.read(refundGuaranteeProvider).state =
+                                     false;
+                                   }
+                                 },
+                                 child: refundGuarantee == false
+                                     ? const Icon(
+                                   Icons.check_box_outline_blank_sharp,
+                                   color: Colors.grey,
+                                   size: 18,
+                                 )
+                                     : const Icon(
+                                   Icons.check_box,
+                                   color: Colors.blue,
+                                   size: 18,
+                                 ),
+                               ),
+                               Text(
+                                 'Refund Guarantee',
+                                 style: TextStyle(
+                                     color: kDarkGreyColor,
+                                     fontSize: 12,
+                                     fontWeight: FontWeight.w400),
+                               ),
+                             ],
+                           ),
+                            Icon(Icons.info,color: kDarkGreyColor,size: 20,),
+                          ],
+                        ),
                       );
                     },
                   ),
@@ -539,40 +571,49 @@ class CheckoutScreen extends StatelessWidget {
                     builder: (context, watch, child) {
                       final sendMeTicketsVisSms =
                           watch(sendMeTicketsVisSmsProvider).state;
-                      return Row(
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              if (sendMeTicketsVisSms == false) {
-                                context
-                                    .read(sendMeTicketsVisSmsProvider)
-                                    .state = true;
-                              } else {
-                                context
-                                    .read(sendMeTicketsVisSmsProvider)
-                                    .state = false;
-                              }
-                            },
-                            icon: sendMeTicketsVisSms == false
-                                ? const Icon(
-                                    Icons.check_box_outline_blank_sharp,
-                                    color: Colors.grey,
-                                    size: 18,
-                                  )
-                                : const Icon(
-                                    Icons.check_box,
-                                    color: Colors.blue,
-                                    size: 18,
-                                  ),
-                          ),
-                          Text(
-                            'Send me tickets vis sms',
-                            style: TextStyle(
-                                color: kDarkGreyColor.withOpacity(0.6),
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ],
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 20.0,right: 20,bottom: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                           Row(
+                             children: [
+                               InkWell(
+                                 onTap: () {
+                                   if (sendMeTicketsVisSms == false) {
+                                     context
+                                         .read(sendMeTicketsVisSmsProvider)
+                                         .state = true;
+                                   } else {
+                                     context
+                                         .read(sendMeTicketsVisSmsProvider)
+                                         .state = false;
+                                   }
+                                 },
+                                 child: sendMeTicketsVisSms == false
+                                     ? const Icon(
+                                   Icons.check_box_outline_blank_sharp,
+                                   color: Colors.grey,
+                                   size: 18,
+                                 )
+                                     : const Icon(
+                                   Icons.check_box,
+                                   color: Colors.blue,
+                                   size: 18,
+                                 ),
+                               ),
+                               Text(
+                                 'Send me tickets vis sms',
+                                 style: TextStyle(
+                                     color: kDarkGreyColor,
+                                     fontSize: 12,
+                                     fontWeight: FontWeight.w400),
+                               ),
+                             ],
+                           ),
+                            Icon(Icons.info,color: kDarkGreyColor,size: 20,),
+                          ],
+                        ),
                       );
                     },
                   ),
@@ -580,40 +621,43 @@ class CheckoutScreen extends StatelessWidget {
                     builder: (context, watch, child) {
                       final sendMeTicketsVisWhatsapp =
                           watch(sendMeTicketsVisWhatsappProvider).state;
-                      return Row(
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              if (sendMeTicketsVisWhatsapp == false) {
-                                context
-                                    .read(sendMeTicketsVisWhatsappProvider)
-                                    .state = true;
-                              } else {
-                                context
-                                    .read(sendMeTicketsVisWhatsappProvider)
-                                    .state = false;
-                              }
-                            },
-                            icon: sendMeTicketsVisWhatsapp == false
-                                ? const Icon(
-                                    Icons.check_box_outline_blank_sharp,
-                                    color: Colors.grey,
-                                    size: 18,
-                                  )
-                                : const Icon(
-                                    Icons.check_box,
-                                    color: Colors.blue,
-                                    size: 18,
-                                  ),
-                          ),
-                          Text(
-                            'Send me tickets vis Whatsapp',
-                            style: TextStyle(
-                                color: kDarkGreyColor.withOpacity(0.6),
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ],
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 20.0,right: 20,bottom: 10),
+                        child: Row(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                if (sendMeTicketsVisWhatsapp == false) {
+                                  context
+                                      .read(sendMeTicketsVisWhatsappProvider)
+                                      .state = true;
+                                } else {
+                                  context
+                                      .read(sendMeTicketsVisWhatsappProvider)
+                                      .state = false;
+                                }
+                              },
+                              child: sendMeTicketsVisWhatsapp == false
+                                  ? const Icon(
+                                      Icons.check_box_outline_blank_sharp,
+                                      color: Colors.grey,
+                                      size: 18,
+                                    )
+                                  : const Icon(
+                                      Icons.check_box,
+                                      color: Colors.blue,
+                                      size: 18,
+                                    ),
+                            ),
+                            Text(
+                              'Send me tickets vis Whatsapp',
+                              style: TextStyle(
+                                  color: kDarkGreyColor,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400),
+                            ),
+                          ],
+                        ),
                       );
                     },
                   ),
@@ -625,13 +669,13 @@ class CheckoutScreen extends StatelessWidget {
                         child: Text(
                           'Summary',
                           style: TextStyle(
-                              color: kLightGreyColor,
-                              fontSize: 16,
+                              color: kDarkGreyColor,
+                              fontSize: 14,
                               fontWeight: FontWeight.bold),
                         )),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                         left: 20.0, right: 20, top: 5, bottom: 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -654,7 +698,7 @@ class CheckoutScreen extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                         left: 20.0, right: 20, top: 5, bottom: 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -677,7 +721,7 @@ class CheckoutScreen extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                         left: 20.0, right: 20, top: 5, bottom: 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -700,7 +744,7 @@ class CheckoutScreen extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                         left: 20.0, right: 20, top: 5, bottom: 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -723,15 +767,15 @@ class CheckoutScreen extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(5),
                     width: screenWidth / 1.2,
-                    child: Divider(
+                    child: const Divider(
                       height: 1,
                       color: kLightGreyColor,
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                         left: 20.0, right: 20, top: 5, bottom: 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -754,7 +798,7 @@ class CheckoutScreen extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                         left: 20.0, right: 20, top: 5, bottom: 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -17,7 +17,7 @@ class ContactUsScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SecondAppBar(title: 'Contact Us',shareAndFav: false),
+              SecondAppBar(title: 'Contact Us',shareAndFav: false,backToHome: false),
               CustomTextField(
                 width: screenWidth/1.2,
                 controller: nameCnt,

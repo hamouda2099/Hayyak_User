@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hayyak/Dialogs/message_dialog.dart';
 import 'package:hayyak/Models/event_seats_model.dart';
 import 'package:hayyak/UI/Components/chair_component.dart';
@@ -19,114 +20,120 @@ class SeatCategoryComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-          border: Border.all(width: 1, color: Colors.grey.withOpacity(0.2))),
+      margin: const EdgeInsets.only(left: 10,right: 10),
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  seatCategory.name,
-                  style: TextStyle(
-                      color: Color(int.parse(
-                          '0xFF${seatCategory.color.toString().substring(1)}')),
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold),
-                ),
-                Column(
-                  children: [
-                    Text(
-                      'Price',
-                      style: TextStyle(
-                        color: Color(int.parse(
-                            '0xFF${seatCategory.color.toString().substring(1)}')),
-                      ),
-                    ),
-                    Text(
-                      '${seatCategory.finalCost} SAR',
-                      style: const TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Container(
-            width: double.infinity,
-            height: 1,
-            color: Colors.grey.withOpacity(0.4),
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 5, right: 5),
-                child: Text(
-                  'Choose your seats',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      SvgPicture.asset(
+                          color: Color(int.parse(
+                              '0xFF${seatCategory.color.toString().substring(1)}')),
+                          width: 25,
+                          'assets/icon/ticket.svg'),
+                      SizedBox(width: 5,),
+                      Text(
+                        seatCategory.name,
+                        style: TextStyle(
+                            color: Color(int.parse(
+                                '0xFF${seatCategory.color.toString().substring(1)}')),
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20.0,right: 30),
+                    child: Row(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(left: 30, right: 30),
+                          child: Text(
+                            'Choose your seats',
+                            style: TextStyle(fontWeight: FontWeight.bold,fontSize: 10),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            print(seatCategory.countLimit);
+                            if (selectedSeats.length == seatCategory.countLimit) {
+                              messageDialog(context,
+                                  'The limits of tickets to this category is ${seatCategory.countLimit}');
+                            } else {
+                              if (chairs.isNotEmpty) {
+                                if (!chairs.last.submitted) {
+                                  messageDialog(
+                                      context, 'Please choose the current seat');
+                                } else {
+                                  List rows = [];
+                                  rows.add('Row');
+                                  seatCategory.tickets.forEach((key, value) {
+                                    rows.add(key.toString());
+                                  });
+                                  chairs.add(ChairComponent(
+                                    rows: rows,
+                                    tickets: seatCategory.tickets,
+                                    chairs: chairs,
+                                    selectedSeats: selectedSeats,
+                                  ));
+                                  context.refresh(rebuildProvide);
+                                }
+                              } else {
+                                List rows = [];
+                                rows.add('Row');
+                                seatCategory.tickets.forEach((key, value) {
+                                  rows.add(key.toString());
+                                });
+                                chairs.add(ChairComponent(
+                                  rows: rows,
+                                  tickets: seatCategory.tickets,
+                                  chairs: chairs,
+                                  selectedSeats: selectedSeats,
+                                ));
+                                context.refresh(rebuildProvide);
+                              }
+                            }
+                          },
+                          child: Icon(
+                            Icons.add_box_outlined,
+                            color: Color(int.parse(
+                                '0xFF${seatCategory.color.toString().substring(1)}'),),
+                            size: 15,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+
+                ],
               ),
-              IconButton(
-                onPressed: () {
-                  print(seatCategory.countLimit);
-                  if (selectedSeats.length == seatCategory.countLimit) {
-                    messageDialog(context,
-                        'The limits of tickets to this category is ${seatCategory.countLimit}');
-                  } else {
-                    if (chairs.isNotEmpty) {
-                      if (!chairs.last.submitted) {
-                        messageDialog(
-                            context, 'Please choose the current seat');
-                      } else {
-                        List rows = [];
-                        rows.add('Row');
-                        seatCategory.tickets.forEach((key, value) {
-                          rows.add(key.toString());
-                        });
-                        chairs.add(ChairComponent(
-                          rows: rows,
-                          tickets: seatCategory.tickets,
-                          chairs: chairs,
-                          selectedSeats: selectedSeats,
-                        ));
-                        context.refresh(rebuildProvide);
-                      }
-                    } else {
-                      List rows = [];
-                      rows.add('Row');
-                      seatCategory.tickets.forEach((key, value) {
-                        rows.add(key.toString());
-                      });
-                      chairs.add(ChairComponent(
-                        rows: rows,
-                        tickets: seatCategory.tickets,
-                        chairs: chairs,
-                        selectedSeats: selectedSeats,
-                      ));
-                      context.refresh(rebuildProvide);
-                    }
-                  }
-                },
-                icon: Icon(
-                  Icons.add_box_outlined,
-                  color: Color(int.parse(
-                      '0xFF${seatCategory.color.toString().substring(1)}')),
-                ),
-              ),
+              Column(
+                children: [
+                  Text(
+                    'Price',
+                    style: TextStyle(
+                      color: Color(int.parse(
+                          '0xFF${seatCategory.color.toString().substring(1)}')),
+                    ),
+                  ),
+                  Text(
+                    '${seatCategory.finalCost} SAR',
+                    style: const TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold,fontSize: 12),
+                  ),
+                ],
+              )
             ],
           ),
           Consumer(
             builder: (context, watch, child) {
               watch(rebuildProvide).state;
-
               return Column(
                 children: List.generate(chairs.length, (index) {
                   chairs[index].index = index;

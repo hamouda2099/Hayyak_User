@@ -38,7 +38,9 @@ class WelcomeScreen extends StatelessWidget {
               SizedBox(height: screenHeight/4,),
               InkWell(
                 onTap: () async {
-                  navigator(context: context,screen: LoginScreen());
+                  navigator(context: context,screen: LoginScreen(
+                    screen: HomeScreen(),
+                  ));
                 },
                 child: Container(
                   alignment: Alignment.center,

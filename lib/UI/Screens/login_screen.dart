@@ -14,9 +14,10 @@ import 'package:hayyak/main.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 // ignore: must_be_immutable
 class LoginScreen extends StatelessWidget {
+  LoginScreen({required this.screen});
+  var screen;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  LoginScreen({Key? key}) : super(key: key);
   _back() {}
   @override
   Widget build(BuildContext context) {
@@ -132,7 +133,9 @@ class LoginScreen extends StatelessWidget {
                   if (result == true) {
                     LoginLogic.login(context,
                         email: emailController.text,
-                        password: passwordController.text);
+                        password: passwordController.text,
+                      screen: screen
+                    );
                   } else {
                     messageDialog(context, 'Check Internet Connection !');
                   }

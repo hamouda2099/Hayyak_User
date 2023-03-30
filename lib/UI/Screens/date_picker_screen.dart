@@ -7,6 +7,8 @@ import 'package:hayyak/UI/Screens/event_tickets_screen.dart';
 import 'package:hayyak/main.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
+import '../../Dialogs/message_dialog.dart';
+
 class DatePickerScreen extends StatefulWidget {
   DatePickerScreen({required this.startDate,required this.endDate,required this.eventId,required this.navigateScreen});
   String startDate ='' ;
@@ -38,9 +40,9 @@ class _DatePickerScreenState extends State<DatePickerScreen> {
         title: Text('Select Day',style: TextStyle(
           color: kDarkGreyColor
         ),),
-        iconTheme: IconThemeData(
-          color: Colors.blue
-        ),
+        leading: IconButton(onPressed: (){
+          Navigator.pop(context);
+        }, icon: Icon(Icons.close,color: Colors.red,)),
 
       ),
         body: SafeArea(
@@ -55,8 +57,20 @@ class _DatePickerScreenState extends State<DatePickerScreen> {
             Container(
               height: screenHeight/1.5,
               child: SfDateRangePicker(
+                headerStyle: DateRangePickerHeaderStyle(
+                  textStyle: TextStyle(
+                    color: kPrimaryColor,
+                    fontWeight: FontWeight.bold
+                  )
+                ),
+                showNavigationArrow: true,
+                toggleDaySelection: true,
+                allowViewNavigation: true,
+                navigationDirection: DateRangePickerNavigationDirection.vertical,
+                navigationMode: DateRangePickerNavigationMode.snap,
                 controller: controller,
                 view: DateRangePickerView.year,
+                extendableRangeSelectionDirection: ExtendableRangeSelectionDirection.both,
                 enablePastDates : false,
                 minDate: DateTime.tryParse(widget.startDate),
                 maxDate: DateTime.tryParse(widget.endDate),
@@ -67,19 +81,23 @@ class _DatePickerScreenState extends State<DatePickerScreen> {
             ),
             InkWell(
               onTap: (){
-                if (widget.navigateScreen == 'seats'){
-                  navigator(
-                      context: context, screen: EventSeatsScreen(
-                    selectedDate: selectedDate,
-                    eventId: widget.eventId,
+               if (selectedDate == ''){
+                 messageDialog(context,'Please select date!');
+               } else {
+                 if (widget.navigateScreen == 'seats'){
+                   navigator(
+                       context: context, screen: EventSeatsScreen(
+                     selectedDate: selectedDate,
+                     eventId: widget.eventId,
 
-                  ));
-                } else {
-                  navigator(context: context,screen: EventTicketsScreen(
-                    selectedDate: selectedDate,
-                    eventId: widget.eventId,
-                  ));
-                }
+                   ));
+                 } else {
+                   navigator(context: context,screen: EventTicketsScreen(
+                     selectedDate: selectedDate,
+                     eventId: widget.eventId,
+                   ));
+                 }
+               }
               },
               child: Container(
                 alignment: Alignment.center,

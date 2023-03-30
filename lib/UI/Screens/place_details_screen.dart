@@ -24,6 +24,7 @@ class PlaceDetails extends StatelessWidget {
               SecondAppBar(
                 title: 'Dammos',
                 shareAndFav: false,
+                backToHome: false,
               ),
               Container(
                 width: screenWidth,

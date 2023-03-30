@@ -22,6 +22,7 @@ class PlacesScreen extends StatelessWidget {
           SecondAppBar(
             title: 'Places',
             shareAndFav: false,
+            backToHome: false,
           ),
           SizedBox(
             width: screenWidth / 1.1,

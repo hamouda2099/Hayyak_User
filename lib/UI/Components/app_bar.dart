@@ -18,14 +18,15 @@ class CustomAppBar extends StatelessWidget {
       padding: const EdgeInsets.all(5.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           IconButton(
             onPressed: () {
               navigator(context: context, screen: SettingsScreen());
             },
             icon: SizedBox(
-              width: 15,
-              height: 15,
+              width: 20,
+              height: 20,
               child: SvgPicture.asset(
                 color: kDarkGreyColor,
                   'assets/icon/profile.svg',),
@@ -40,7 +41,7 @@ class CustomAppBar extends StatelessWidget {
             },
             icon: Icon(Icons.notifications),
             color: kDarkGreyColor,
-            iconSize: 20,
+            iconSize: 25,
           ),
         ],
       ),

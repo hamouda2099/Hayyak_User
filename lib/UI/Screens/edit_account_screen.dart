@@ -26,7 +26,7 @@ class EditAccountScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SecondAppBar(title: 'Edit Account',shareAndFav: false,),
+              SecondAppBar(title: 'Edit Account',shareAndFav: false,backToHome: false),
               FutureBuilder<ProfileModel>(
                 future: ApiManger.getProfileData(),
                 builder:

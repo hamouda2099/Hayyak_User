@@ -20,7 +20,7 @@ class AccountScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            SecondAppBar(title: 'Account',shareAndFav: false,),
+            SecondAppBar(title: 'Account',shareAndFav: false,backToHome: false),
             FutureBuilder<ProfileModel>(
               future: ApiManger.getProfileData(),
               builder:

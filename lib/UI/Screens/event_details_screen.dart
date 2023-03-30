@@ -125,7 +125,7 @@ class EventDetails extends StatelessWidget {
                                   navigateScreen: 'seats',
                                   eventId: snapShot.data!.data.id.toString(),
                                   startDate: snapShot
-                                      ?.data?.data?.pickerStartDate
+                                      .data?.data.pickerStartDate
                                       .toString() ??
                                       '',
                                   endDate: snapShot?.data?.data?.prickerEndDate
@@ -183,6 +183,7 @@ class EventDetails extends StatelessWidget {
                         SecondAppBar(
                           title: snapShot?.data?.data?.name.toString() ?? '',
                           shareAndFav: true,
+                          backToHome: false,
                         ),
                         Column(
                           children: [

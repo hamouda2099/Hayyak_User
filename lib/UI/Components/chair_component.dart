@@ -31,7 +31,7 @@ class ChairComponent extends ConsumerWidget {
   Widget build(BuildContext context, watch) {
     watch(rebuild).state;
     return Container(
-      margin: const EdgeInsets.all(5),
+      margin: const EdgeInsets.only(left: 45,right: 45),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
@@ -40,6 +40,7 @@ class ChairComponent extends ConsumerWidget {
               final value = watch(selectedRowProvider).state;
               watch(selectedSeatProvider).state;
               return Container(
+                height: 30,
                 padding: const EdgeInsets.only(left: 5, right: 5),
                 decoration: BoxDecoration(
                     color: Colors.white,
@@ -61,7 +62,7 @@ class ChairComponent extends ConsumerWidget {
                   hint: const Text(
                     'Select Row',
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 12,
                     ),
                   ),
                   onChanged:
@@ -80,7 +81,7 @@ class ChairComponent extends ConsumerWidget {
                         location.toString(),
                         style: TextStyle(
                             color: kLightGreyColor.withOpacity(0.8),
-                            fontSize: 14),
+                            fontSize: 12),
                       ),
                     );
                   }).toList(),
@@ -169,16 +170,16 @@ class ChairComponent extends ConsumerWidget {
               watch(selectedSeatProvider).state;
               return context.read(selectedSeatProvider).state['number'] == null
                   ? Container(
-                      width: screenWidth / 4,
-                      height: 45,
+                      width: screenWidth / 5,
+                      height: 30,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         color: Colors.blue,
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: const Text(
-                        'Select Seat',
-                        style: TextStyle(color: Colors.white),
+                        'Seat',
+                        style: TextStyle(color: Colors.white,fontSize: 12),
                       ),
                     )
                   : Text(context
