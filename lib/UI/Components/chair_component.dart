@@ -6,6 +6,8 @@ import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/Logic/UI%20Logic/seats_logic.dart';
 import 'package:hayyak/Models/event_seats_model.dart';
 import 'package:hayyak/UI/Components/seat_category_component.dart';
+import 'package:hayyak/UI/Screens/event_seats_screen.dart';
+import 'package:hayyak/UI/Screens/event_tickets_screen.dart';
 import 'package:hayyak/main.dart';
 
 class ChairComponent extends ConsumerWidget {
@@ -14,7 +16,8 @@ class ChairComponent extends ConsumerWidget {
       required this.tickets,
       required this.chairs,
       required this.selectedSeats,
-      });
+      required this.categoryPrice});
+  double categoryPrice;
   List<ChairComponent> chairs = [];
   List selectedSeats = [];
   bool submitted = false;
@@ -31,7 +34,7 @@ class ChairComponent extends ConsumerWidget {
   Widget build(BuildContext context, watch) {
     watch(rebuild).state;
     return Container(
-      margin: const EdgeInsets.only(left: 45,right: 45),
+      margin: const EdgeInsets.only(left: 45, right: 45),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
@@ -126,7 +129,15 @@ class ChairComponent extends ConsumerWidget {
                               selectedSeats.add(context
                                   .read(seatsProvider)
                                   .state[index]['id']);
+                              globalSelectedSeats.add(context
+                                  .read(seatsProvider)
+                                  .state[index]['id']);
+                              context.read(cartCounterProvider).state++;
+                              context.read(totalPriceProvider).state =
+                                  context.read(totalPriceProvider).state +
+                                      categoryPrice;
                               print(selectedSeats);
+                              print('global $globalSelectedSeats');
                               submitted = true;
                               context.refresh(rebuildProvide);
                               Navigator.pop(context);
@@ -179,7 +190,7 @@ class ChairComponent extends ConsumerWidget {
                       ),
                       child: const Text(
                         'Seat',
-                        style: TextStyle(color: Colors.white,fontSize: 12),
+                        style: TextStyle(color: Colors.white, fontSize: 12),
                       ),
                     )
                   : Text(context
@@ -193,13 +204,18 @@ class ChairComponent extends ConsumerWidget {
               chairs.removeAt(index);
               selectedSeats
                   .remove(context.read(selectedSeatProvider).state['id']);
+              globalSelectedSeats
+                  .remove(context.read(selectedSeatProvider).state['id']);
+              context.read(cartCounterProvider).state--;
+              context.read(totalPriceProvider).state =
+                  context.read(totalPriceProvider).state - categoryPrice;
+
               for (int i = 0; showedList.length > i; i++) {
                 if (selectedSeats.contains(showedList[i]['id'])) {
                   showedList.removeAt(i);
                 }
               }
               context.read(seatsProvider).state = showedList;
-
               context.refresh(provider);
             },
             icon: const Icon(

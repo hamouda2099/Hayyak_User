@@ -177,15 +177,15 @@ class EventDetails extends StatelessWidget {
                   ),
                 ),
                 body: SafeArea(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        SecondAppBar(
-                          title: snapShot?.data?.data?.name.toString() ?? '',
-                          shareAndFav: true,
-                          backToHome: false,
-                        ),
-                        Column(
+                  child: Column(
+                    children: [
+                      SecondAppBar(
+                        title: snapShot?.data?.data?.name.toString() ?? '',
+                        shareAndFav: true,
+                        backToHome: false,
+                      ),
+                      Expanded(
+                        child: ListView(
                           children: [
                             Container(
                               width: screenWidth,
@@ -384,9 +384,9 @@ class EventDetails extends StatelessWidget {
                               height: 20,
                             ),
                           ],
-                        )
-                      ],
-                    ),
+                        ),
+                      )
+                    ],
                   ),
                 ),
               );

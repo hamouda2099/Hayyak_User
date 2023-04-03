@@ -10,6 +10,7 @@ import '../../Config/constants.dart';
 import '../../Logic/UI Logic/seats_logic.dart';
 
 final rebuildProvide = StateProvider<bool>((ref) => false);
+List globalSelectedSeats = [];
 
 class SeatCategoryComponent extends StatelessWidget {
   SeatCategoryComponent({required this.seatCategory});
@@ -61,7 +62,6 @@ class SeatCategoryComponent extends StatelessWidget {
                         ),
                         InkWell(
                           onTap: () {
-                            print(seatCategory.countLimit);
                             if (selectedSeats.length == seatCategory.countLimit) {
                               messageDialog(context,
                                   'The limits of tickets to this category is ${seatCategory.countLimit}');
@@ -77,6 +77,7 @@ class SeatCategoryComponent extends StatelessWidget {
                                     rows.add(key.toString());
                                   });
                                   chairs.add(ChairComponent(
+                                    categoryPrice: seatCategory.finalCost.toDouble(),
                                     rows: rows,
                                     tickets: seatCategory.tickets,
                                     chairs: chairs,
@@ -91,6 +92,7 @@ class SeatCategoryComponent extends StatelessWidget {
                                   rows.add(key.toString());
                                 });
                                 chairs.add(ChairComponent(
+                                  categoryPrice: seatCategory.finalCost.toDouble(),
                                   rows: rows,
                                   tickets: seatCategory.tickets,
                                   chairs: chairs,
