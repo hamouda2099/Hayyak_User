@@ -71,7 +71,6 @@ class SignUpLogic {
     ApiManger.verifyOtp(email: email, otp: otp).then((value) {
       if (jsonDecode(value.body)['success'] &&
           jsonDecode(value.body)['code'] == 200) {
-        print(jsonDecode(value.body).toString());
         Navigator.pop(context);
         verifiedAccountDialog(context, jsonDecode(value.body)['message']);
       } else {

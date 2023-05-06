@@ -136,8 +136,6 @@ class ChairComponent extends ConsumerWidget {
                               context.read(totalPriceProvider).state =
                                   context.read(totalPriceProvider).state +
                                       categoryPrice;
-                              print(selectedSeats);
-                              print('global $globalSelectedSeats');
                               submitted = true;
                               context.refresh(rebuildProvide);
                               Navigator.pop(context);

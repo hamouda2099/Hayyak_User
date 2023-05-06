@@ -29,8 +29,6 @@ class EventSeatsScreen extends StatelessWidget {
   String eventId = '';
   @override
   Widget build(BuildContext context) {
-    print(eventId);
-    print(selectedDate);
     return FutureBuilder<EventSeatsModel>(
       future: ApiManger.getEventSeats(
           date: selectedDate.substring(0, 10), eventId: eventId),
@@ -120,7 +118,7 @@ class EventSeatsScreen extends StatelessWidget {
                       ),
                       InkWell(
                         onTap: () {
-                          navigator(context: context, screen: CheckoutScreen());
+                          // navigator(context: context, screen: CheckoutScreen());
                         },
                         child: Container(
                           alignment: Alignment.center,
@@ -287,7 +285,7 @@ class EventSeatsScreen extends StatelessWidget {
                             ),
                             Column(
                               children: List.generate(
-                                  snapShot.data!.data.event.services.length, (index) {
+                                  snapShot.data!.data.event.services!.length, (index) {
                                 final counterProvider = StateProvider((ref) => 0);
                                 return Consumer(
                                   builder: (context, watch, child) {
@@ -318,7 +316,7 @@ class EventSeatsScreen extends StatelessWidget {
                                                 children: [
                                                   Text(
                                                     snapShot.data!.data.event
-                                                        .services[index].name,
+                                                        .services![index].name!,
                                                     style: const TextStyle(
                                                         color: kLightGreyColor,
                                                         fontSize: 12),
@@ -331,8 +329,8 @@ class EventSeatsScreen extends StatelessWidget {
                                                         .data!
                                                         .data
                                                         .event
-                                                        .services[index]
-                                                        .costAfterDiscount,
+                                                        .services![index]
+                                                        .costAfterDiscount!,
                                                     style: const TextStyle(
                                                         color: kLightGreyColor,
                                                         fontSize: 12,
@@ -362,8 +360,8 @@ class EventSeatsScreen extends StatelessWidget {
                                                             .data!
                                                             .data
                                                             .event
-                                                            .services[index]
-                                                            .finalCost;
+                                                            .services![index]
+                                                            .finalCost!;
                                                   }
                                                 },
                                                 child: Container(
@@ -398,8 +396,8 @@ class EventSeatsScreen extends StatelessWidget {
                                                           .data!
                                                           .data
                                                           .event
-                                                          .services[index]
-                                                          .countLimit +
+                                                          .services![index]
+                                                          .countLimit! +
                                                           1) {
                                                   } else {
                                                     context
@@ -417,8 +415,8 @@ class EventSeatsScreen extends StatelessWidget {
                                                             .data!
                                                             .data
                                                             .event
-                                                            .services[index]
-                                                            .finalCost;
+                                                            .services![index]
+                                                            .finalCost!;
                                                   }
                                                 },
                                                 child: Container(

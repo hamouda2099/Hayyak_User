@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hayyak/Config/constants.dart';
+import 'package:hayyak/Dialogs/loading_screen.dart';
+import 'package:hayyak/Logic/Services/api_manger.dart';
+import 'package:hayyak/Models/user_orders_model.dart';
 import 'package:hayyak/UI/Components/seccond_app_bar.dart';
 import 'package:hayyak/UI/Components/ticket_card_component.dart';
 import 'package:hayyak/main.dart';
@@ -7,41 +11,171 @@ import 'package:hayyak/main.dart';
 import '../Components/bottom_nav_bar.dart';
 
 class MyTicketsScreen extends StatelessWidget {
-  const MyTicketsScreen({Key? key}) : super(key: key);
-
+  final tabProvider = StateProvider((ref) => 'Upcoming');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavBar(
-        currentScreen:'Tickets',
+        currentScreen: 'Tickets',
       ),
       body: SafeArea(
         child: Column(
           children: [
-            SecondAppBar(title: 'My Tickets',shareAndFav: false,backToHome: true,),
-            Container(
-              width: screenWidth/1.2,
-              padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: kLightGreyColor,width: 1)
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text('Upcoming',style: TextStyle(color: Colors.blue,fontSize: 12,fontWeight: FontWeight.bold),),
-                  Text('|',style: TextStyle(color: kLightGreyColor,fontSize: 14,fontWeight: FontWeight.w400),),
-                  Text('Past',style: TextStyle(color: kLightGreyColor,fontSize: 12,fontWeight: FontWeight.bold),),
-                ],
-              ),
+            SecondAppBar(
+              title: 'My Tickets',
+              shareAndFav: false,
+              backToHome: true,
             ),
             Container(
-              height: screenHeight/1.5,
-              child: ListView.builder(
-
-                itemBuilder: (context, index) {
-                return TicketCard();
-              },),
+                width: screenWidth / 1.2,
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: kLightGreyColor, width: 1)),
+                child: Consumer(
+                  builder: (context, watch, child) {
+                    watch(tabProvider).state;
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        InkWell(
+                            onTap: () {
+                              context.read(tabProvider).state = 'Upcoming';
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                'Upcoming',
+                                style: TextStyle(
+                                    color: context.read(tabProvider).state ==
+                                            'Upcoming'
+                                        ? Colors.blue
+                                        : kLightGreyColor,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            )),
+                        Text(
+                          '|',
+                          style: TextStyle(
+                              color: kLightGreyColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400),
+                        ),
+                        InkWell(
+                            onTap: () {
+                              context.read(tabProvider).state = 'Past';
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                'Past',
+                                style: TextStyle(
+                                    color: context.read(tabProvider).state ==
+                                            'Past'
+                                        ? Colors.blue
+                                        : kLightGreyColor,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            )),
+                      ],
+                    );
+                  },
+                )),
+            FutureBuilder<UserOrdersModel>(
+              future: ApiManger.getUserOrders(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<UserOrdersModel> snapShot) {
+                switch (snapShot.connectionState) {
+                  case ConnectionState.waiting:
+                    {
+                      return Center(child: ScreenLoading());
+                    }
+                  default:
+                    if (snapShot.hasError) {
+                      return Text('Error: ${snapShot.error}');
+                    } else {
+                      return snapShot.data!.success == true
+                          ? Consumer(
+                              builder: (context, watch, child) {
+                                final tab = watch(tabProvider).state;
+                                return tab == 'Upcoming'
+                                    ? SizedBox(
+                                        height: screenHeight / 1.5,
+                                        child: ListView.builder(
+                                          itemCount: snapShot.data!.data!
+                                              .orders!.upcomingOrders?.length,
+                                          itemBuilder: (context, index) {
+                                            return TicketCard(
+                                              orderId: snapShot
+                                                      .data!
+                                                      .data!
+                                                      .orders
+                                                      ?.upcomingOrders?[index]
+                                                  ['order_id'],
+                                              name: snapShot.data!.data!.orders
+                                                      ?.upcomingOrders?[index]
+                                                  ['event_name'],
+                                              date: snapShot.data!.data!.orders
+                                                      ?.upcomingOrders?[index]
+                                                  ['date'],
+                                              image: snapShot.data!.data!.orders
+                                                      ?.upcomingOrders?[index]
+                                                  ['image'],
+                                              location: snapShot
+                                                      .data!
+                                                      .data!
+                                                      .orders
+                                                      ?.upcomingOrders?[index]
+                                                  ['event_location'],
+                                            );
+                                          },
+                                        ),
+                                      )
+                                    : SizedBox(
+                                        height: screenHeight / 1.5,
+                                        child: ListView.builder(
+                                          itemCount: snapShot.data!.data!
+                                                  .orders!.pastOrders!.length ??
+                                              0,
+                                          itemBuilder: (context, index) {
+                                            return TicketCard(
+                                              orderId: snapShot
+                                                  .data!
+                                                  .data!
+                                                  .orders!
+                                                  .pastOrders![index]
+                                                  .orderId,
+                                              image: snapShot
+                                                  .data!
+                                                  .data!
+                                                  .orders!
+                                                  .pastOrders![index]
+                                                  .image,
+                                              date: snapShot.data!.data!.orders!
+                                                  .pastOrders![index].date,
+                                              name: snapShot.data!.data!.orders!
+                                                  .pastOrders![index].eventName,
+                                              location: snapShot
+                                                  .data!
+                                                  .data!
+                                                  .orders!
+                                                  .pastOrders![index]
+                                                  .eventLocation,
+                                            );
+                                          },
+                                        ),
+                                      );
+                              },
+                            )
+                          : Padding(
+                              padding: EdgeInsets.only(top: screenHeight / 6),
+                              child: Center(child: const Text('No Orders')),
+                            );
+                    }
+                }
+              },
             )
           ],
         ),

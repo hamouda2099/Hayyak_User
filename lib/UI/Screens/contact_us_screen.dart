@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:hayyak/Config/constants.dart';
+import 'package:hayyak/Logic/UI%20Logic/contact_us_logic.dart';
 import 'package:hayyak/UI/Components/box_shadow.dart';
 import 'package:hayyak/UI/Components/seccond_app_bar.dart';
 import 'package:hayyak/UI/Components/text_field.dart';
 import 'package:hayyak/main.dart';
 
 class ContactUsScreen extends StatelessWidget {
-  TextEditingController nameCnt = TextEditingController();
-  TextEditingController phoneCnt = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
+  ContactUsLogic logic = ContactUsLogic();
   @override
   Widget build(BuildContext context) {
+    logic.context = context;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -20,7 +19,7 @@ class ContactUsScreen extends StatelessWidget {
               SecondAppBar(title: 'Contact Us',shareAndFav: false,backToHome: false),
               CustomTextField(
                 width: screenWidth/1.2,
-                controller: nameCnt,
+                controller: logic.nameCnt,
                 hintText: 'Name',
                 obscure: false,
               ),
@@ -42,7 +41,7 @@ class ContactUsScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(5),
                       width: 50,
                       child: TextField(
-                        controller: emailController,
+                        enabled: false,
                         decoration: InputDecoration(
                           hintText: '  +966',
                           hintStyle: TextStyle(
@@ -61,7 +60,7 @@ class ContactUsScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(5),
                       width: screenWidth / 2.5,
                       child: TextField(
-                        controller: phoneCnt,
+                        controller: logic.phoneCnt,
                         keyboardType: TextInputType.phone,
                         decoration: InputDecoration(
                           hintText: 'Phone',
@@ -81,7 +80,7 @@ class ContactUsScreen extends StatelessWidget {
               ),
               CustomTextField(
                 width: screenWidth/1.2,
-                controller: emailController,
+                controller: logic.emailController,
                 hintText: 'Email',
                 obscure: false,
               ),
@@ -90,16 +89,7 @@ class ContactUsScreen extends StatelessWidget {
               ),
               CustomTextField(
                 width: screenWidth/1.2,
-                controller: nameCnt,
-                hintText: 'dd/mm/year',
-                obscure: false,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              CustomTextField(
-                width: screenWidth/1.2,
-                controller: nameCnt,
+                controller: logic.subjectController,
                 hintText: 'Subject',
                 obscure: false,
               ),
@@ -119,7 +109,7 @@ class ContactUsScreen extends StatelessWidget {
                 height: screenHeight / 4.5,
                 child: TextField(
                   obscureText: false,
-                  controller: emailController,
+                  controller: logic.detailsController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     hintText: 'Details',
@@ -136,7 +126,7 @@ class ContactUsScreen extends StatelessWidget {
               ),
               InkWell(
                 onTap: () async {
-                  // navigator(context: context,screen: SignUpScreen());
+                  logic.submitForm();
                 },
                 child: Container(
                   alignment: Alignment.center,
@@ -159,81 +149,61 @@ class ContactUsScreen extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              Column(
                 children: [
-                  Icon(
-                    Icons.phone,
-                    size: 30,
-                    color: kLightGreyColor,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.phone,
+                        size: 30,
+                        color: kLightGreyColor,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        '+92252224',
+                        style: TextStyle(color: kLightGreyColor, fontSize: 15),
+                      ),
+                    ],
                   ),
-                  SizedBox(
-                    width: 10,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.language,
+                        size: 30,
+                        color: kLightGreyColor,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        '+92252224',
+                        style: TextStyle(color: kLightGreyColor, fontSize: 15),
+                      ),
+                    ],
                   ),
-                  Text(
-                    '+92252224',
-                    style: TextStyle(color: kLightGreyColor, fontSize: 15),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.location_on,
+                        size: 30,
+                        color: kLightGreyColor,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'Lorem ipsum',
+                        style: TextStyle(color: kLightGreyColor, fontSize: 15),
+                      ),
+                    ],
                   ),
                 ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.language,
-                    size: 30,
-                    color: kLightGreyColor,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    '+92252224',
-                    style: TextStyle(color: kLightGreyColor, fontSize: 15),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.location_on,
-                    size: 30,
-                    color: kLightGreyColor,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    'Lorem ipsum',
-                    style: TextStyle(color: kLightGreyColor, fontSize: 15),
-                  ),
-                ],
-              ),
-              Container(
-                width: screenWidth / 2,
-                margin: const EdgeInsets.only(top: 20, bottom: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: const [
-                    Icon(
-                      Icons.g_mobiledata,
-                      color: Colors.red,
-                      size: 40,
-                    ),
-                    Icon(
-                      Icons.apple,
-                      color: Colors.black,
-                      size: 40,
-                    ),
-                    Icon(
-                      Icons.facebook,
-                      color: Colors.blue,
-                      size: 40,
-                    ),
-                  ],
-                ),
-              ),
+              )
             ],
           ),
         ),

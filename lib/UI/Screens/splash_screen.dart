@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/Config/user_data.dart';
+import 'package:hayyak/Logic/Services/api_manger.dart';
 import 'package:hayyak/UI/Screens/home_screen.dart';
 import 'package:hayyak/UI/Screens/login_screen.dart';
 import 'package:hayyak/UI/Screens/welcome_screen.dart';
@@ -29,9 +31,16 @@ class _SplashScreenState extends State<SplashScreen> {
         UserData.userName = await Hive.box('user_data').get('name');
         UserData.imageUrl = await Hive.box('user_data').get('image');
         UserData.role = await Hive.box('user_data').get('role');
+        UserData.language = await Hive.box('user_data').get('lang');
+        localLanguage = UserData.language;
         navigator(context: context, screen: HomeScreen(), remove: true);
       } else {
-        navigator(context: context, screen: WelcomeScreen(), remove: true);
+        ApiManger.getTranslationsKeys().then((value) {
+          print(value.data!.toJson());
+          UserData.translation = value;
+          navigator(context: context, screen: WelcomeScreen(), remove: true);
+        });
+
       }
     });
   }

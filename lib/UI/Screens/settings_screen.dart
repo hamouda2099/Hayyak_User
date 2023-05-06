@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/Config/user_data.dart';
-import 'package:hayyak/UI/Components/Dashboard/screens/dashboard_screen.dart';
 import 'package:hayyak/UI/Components/box_shadow.dart';
 import 'package:hayyak/UI/Components/seccond_app_bar.dart';
 import 'package:hayyak/UI/Screens/account_screen.dart';
 import 'package:hayyak/UI/Screens/contact_us_screen.dart';
+import 'package:hayyak/UI/Screens/faqs_screen.dart';
+import 'package:hayyak/UI/Screens/privacy_policy_screen.dart';
+import 'package:hayyak/UI/Screens/terms_and_conditions_screen.dart';
 import 'package:hayyak/main.dart';
 
 import '../../Dialogs/logout_dialog.dart';
@@ -36,12 +38,12 @@ class SettingsScreen extends StatelessWidget {
                           image: NetworkImage(UserData.imageUrl??'')),
                     ),
                   ),
-                  SizedBox(width: 10,),
+                  const SizedBox(width: 10,),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                       Text(UserData.userName??'',style: TextStyle(color: kDarkGreyColor,fontSize: 14,fontWeight: FontWeight.bold)),
-                       Text(UserData.email??'',style: TextStyle(color: kDarkGreyColor,fontSize: 12)),
+                       Text(UserData.userName??'',style: const TextStyle(color: kDarkGreyColor,fontSize: 14,fontWeight: FontWeight.bold)),
+                       Text(UserData.email??'',style: const TextStyle(color: kDarkGreyColor,fontSize: 12)),
 
                     ],
                   ),
@@ -49,12 +51,12 @@ class SettingsScreen extends StatelessWidget {
               ),
               InkWell(
                 onTap: (){
-                  navigator(context: context, screen: AccountScreen());
+                  navigator(context: context, screen: const AccountScreen());
                 },
                 child: Container(
-                  margin: EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(10),
                   width: screenWidth/1.1,
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
@@ -64,7 +66,7 @@ class SettingsScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text('Account',style: TextStyle(color: kLightGreyColor,fontSize: 14,fontWeight: FontWeight.bold)),
-                      Icon(Icons.arrow_forward_ios,color: kDarkGreyColor,size: 20,),
+                      const Icon(Icons.arrow_forward_ios,color: kDarkGreyColor,size: 20,),
                     ],
                   ),
                 ),
@@ -74,9 +76,9 @@ class SettingsScreen extends StatelessWidget {
 
                 },
                 child: Container(
-                  margin: EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(10),
                   width: screenWidth/1.1,
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
@@ -86,19 +88,19 @@ class SettingsScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text('العربية',style: TextStyle(color: kLightGreyColor,fontSize: 14,fontWeight: FontWeight.bold)),
-                      Icon(Icons.arrow_forward_ios,color: kDarkGreyColor,size: 20,),
+                      const Icon(Icons.arrow_forward_ios,color: kDarkGreyColor,size: 20,),
                     ],
                   ),
                 ),
               ),
               InkWell(
                 onTap: (){
-
+                  navigator(context: context,screen: const FAQsScreen());
                 },
                 child: Container(
-                  margin: EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(10),
                   width: screenWidth/1.1,
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
@@ -106,8 +108,8 @@ class SettingsScreen extends StatelessWidget {
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text('FAQs',style: TextStyle(color: kLightGreyColor,fontSize: 14,fontWeight: FontWeight.bold)),
+                    children: const [
+                      Text('FAQs',style: TextStyle(color: kLightGreyColor,fontSize: 14,fontWeight: FontWeight.bold)),
                       Icon(Icons.arrow_forward_ios,color: kDarkGreyColor,size: 20,),
                     ],
                   ),
@@ -115,12 +117,12 @@ class SettingsScreen extends StatelessWidget {
               ),
               InkWell(
                 onTap: (){
-
+                  navigator(context: context,screen: const PrivacyPolicy());
                 },
                 child: Container(
-                  margin: EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(10),
                   width: screenWidth/1.1,
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
@@ -128,8 +130,8 @@ class SettingsScreen extends StatelessWidget {
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text('Privacy & Policy',style: TextStyle(color: kLightGreyColor,fontSize: 14,fontWeight: FontWeight.bold)),
+                    children: const [
+                      Text('Privacy & Policy',style: TextStyle(color: kLightGreyColor,fontSize: 14,fontWeight: FontWeight.bold)),
                       Icon(Icons.arrow_forward_ios,color: kDarkGreyColor,size: 20,),
                     ],
                   ),
@@ -137,12 +139,12 @@ class SettingsScreen extends StatelessWidget {
               ),
               InkWell(
                 onTap: (){
-
+                  navigator(context: context,screen: const TermsAndConditionsScreen());
                 },
                 child: Container(
-                  margin: EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(10),
                   width: screenWidth/1.1,
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
@@ -152,7 +154,7 @@ class SettingsScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text('Terms & Conditions',style: TextStyle(color: kLightGreyColor,fontSize: 14,fontWeight: FontWeight.bold)),
-                      Icon(Icons.arrow_forward_ios,color: kDarkGreyColor,size: 20,),
+                      const Icon(Icons.arrow_forward_ios,color: kDarkGreyColor,size: 20,),
                     ],
                   ),
                 ),
@@ -162,9 +164,9 @@ class SettingsScreen extends StatelessWidget {
                   navigator(context: context,screen: ContactUsScreen());
                 },
                 child: Container(
-                  margin: EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(10),
                   width: screenWidth/1.1,
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
@@ -174,29 +176,7 @@ class SettingsScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text('Contact us',style: TextStyle(color: kLightGreyColor,fontSize: 14,fontWeight: FontWeight.bold)),
-                      Icon(Icons.arrow_forward_ios,color: kDarkGreyColor,size: 20,),
-                    ],
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: (){
-                  navigator(context: context,screen: DashboardScreen());
-                },
-                child: Container(
-                  margin: EdgeInsets.all(10),
-                  width: screenWidth/1.1,
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: boxShadow
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Visits Dashboard',style: TextStyle(color: kLightGreyColor,fontSize: 14,fontWeight: FontWeight.bold)),
-                      Icon(Icons.arrow_forward_ios,color: kDarkGreyColor,size: 20,),
+                      const Icon(Icons.arrow_forward_ios,color: kDarkGreyColor,size: 20,),
                     ],
                   ),
                 ),
@@ -208,9 +188,9 @@ class SettingsScreen extends StatelessWidget {
                   );
                 },
                 child: Container(
-                  margin: EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(10),
                   width: screenWidth/1.1,
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
@@ -220,7 +200,7 @@ class SettingsScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text('Log out',style: TextStyle(color: kLightGreyColor,fontSize: 14,fontWeight: FontWeight.bold)),
-                      Icon(Icons.logout_rounded,color: kDarkGreyColor,size: 20,),
+                      const Icon(Icons.logout_rounded,color: kDarkGreyColor,size: 20,),
                     ],
                   ),
                 ),

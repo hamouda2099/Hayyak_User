@@ -24,7 +24,7 @@ class EventSeatsModel {
 
   factory EventSeatsModel.fromJson(Map<String, dynamic> json) => EventSeatsModel(
     success: json["success"],
-    message: json["message"],
+    message: json["message"]??'',
     data: Data.fromJson(json["data"]),
     code: json["code"],
   );
@@ -62,18 +62,18 @@ class Event {
 
   Details details;
   List<Kind> kinds;
-  List<Service> services;
+  List<Service>? services;
 
   factory Event.fromJson(Map<String, dynamic> json) => Event(
     details: Details.fromJson(json["details"]),
     kinds: List<Kind>.from(json["kinds"].map((x) => Kind.fromJson(x))),
-    services: List<Service>.from(json["services"].map((x) => Service.fromJson(x))),
+    services:json["services"]==null ? [] : List<Service>.from(json["services"].map((x) => Service.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
     "details": details.toJson(),
     "kinds": List<dynamic>.from(kinds.map((x) => x.toJson())),
-    "services": List<dynamic>.from(services.map((x) => x.toJson())),
+    "services": List<dynamic>.from(services!.map((x) => x.toJson())),
   };
 }
 
@@ -279,14 +279,14 @@ class Service {
   });
 
   int id;
-  String name;
-  String description;
-  String type;
-  int countLimit;
-  String costBeforeDiscount;
-  String costAfterDiscount;
+  String? name;
+  String? description;
+  String? type;
+  int? countLimit;
+  String? costBeforeDiscount;
+  String? costAfterDiscount;
   dynamic discountValue;
-  int finalCost;
+  int? finalCost;
 
   factory Service.fromJson(Map<String, dynamic> json) => Service(
     id: json["id"],

@@ -32,11 +32,10 @@ class AccountScreen extends StatelessWidget {
                     }
                   default:
                     if (snapShot.hasError) {
-                      print(snapShot);
                       return Text('Error: ${snapShot.error}');
                     } else {
                       var fetchedOrder = snapShot.data;
-                      print(snapShot.data!.data.image);
+                      print(snapShot.data!.data!.firstName);
                       return SingleChildScrollView(
                         child: Column(
                           children: [
@@ -127,7 +126,7 @@ class AccountScreen extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    snapShot.data!.data.firstName??'',
+                                    snapShot.data!.data!.firstName??'',
                                     style: TextStyle(
                                         color: kLightGreyColor.withOpacity(0.5),
                                         fontWeight: FontWeight.bold,
@@ -160,7 +159,7 @@ class AccountScreen extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    snapShot.data!.data.lastName??'',
+                                    snapShot.data!.data!.lastName??'',
                                     style: TextStyle(
                                         color: kLightGreyColor.withOpacity(0.5),
                                         fontWeight: FontWeight.bold,

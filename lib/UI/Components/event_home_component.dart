@@ -22,7 +22,7 @@ class EventHomeCard extends StatelessWidget {
       required this.id,
       // ignore: non_constant_identifier_names
       required this.is_favourite});
-  num id;
+  int id;
   String eventName;
   String image;
   String location;
@@ -72,7 +72,7 @@ class EventHomeCard extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                     InkWell(
+                      InkWell(
                           onTap: () {
                             Share.share('https://hayyak.net/ar/event/$id',
                                 subject: eventName);
@@ -82,55 +82,59 @@ class EventHomeCard extends StatelessWidget {
                             size: 20,
                             color: kLightGreyColor,
                           )),
-                      UserData.token == '' ? SizedBox():  InkWell(
-                        onTap: () {
-                         if (UserData.id == 0){
-                           messageDialog(context, 'Please Login to Add to Favourites !');
-                         } else {
-                           if (is_favourite) {
-                             loadingDialog(context);
-                             ApiManger.removeFromFav(id: id.toString())
-                                 .then((value) {
-                               Navigator.pop(context);
-                               if (value['success']) {
-                                 navigator(
-                                     context: context,
-                                     screen: HomeScreen(),
-                                     replacement: true);
-                               } else {
-                                 messageDialog(context, 'An error occurred');
-                               }
-                             });
-                           }
-                           else {
-                             loadingDialog(context);
-                             ApiManger.addToFav(eventId: id.toString())
-                                 .then((value) {
-                               Navigator.pop(context);
-                               if (value['success']) {
-                                 navigator(
-                                     context: context,
-                                     screen: HomeScreen(),
-                                     replacement: true);
-                               } else {
-                                 messageDialog(context, 'An Error Occurred');
-                               }
-                             });
-                           }
-                         }
-                        },
-                        child: is_favourite
-                            ? SvgPicture.asset(
-                                color: kLightGreyColor,
-                                width: 20,
-                                height: 20,
-                                'assets/icon/solid_heart.svg')
-                            : SvgPicture.asset(
-                                color: kLightGreyColor,
-                                width: 15,
-                                height: 15,
-                                'assets/icon/Icon feather-heart.svg'),
-                      ),
+                      UserData.token == ''
+                          ? SizedBox()
+                          : InkWell(
+                              onTap: () {
+                                if (UserData.id == 0) {
+                                  messageDialog(context,
+                                      'Please Login to Add to Favourites !');
+                                } else {
+                                  if (is_favourite) {
+                                    loadingDialog(context);
+                                    ApiManger.removeFromFav(id: id.toString())
+                                        .then((value) {
+                                      Navigator.pop(context);
+                                      if (value['success']) {
+                                        navigator(
+                                            context: context,
+                                            screen: HomeScreen(),
+                                            replacement: true);
+                                      } else {
+                                        messageDialog(
+                                            context, 'An error occurred');
+                                      }
+                                    });
+                                  } else {
+                                    loadingDialog(context);
+                                    ApiManger.addToFav(eventId: id.toString())
+                                        .then((value) {
+                                      Navigator.pop(context);
+                                      if (value['success']) {
+                                        navigator(
+                                            context: context,
+                                            screen: HomeScreen(),
+                                            replacement: true);
+                                      } else {
+                                        messageDialog(
+                                            context, 'An Error Occurred');
+                                      }
+                                    });
+                                  }
+                                }
+                              },
+                              child: is_favourite
+                                  ? SvgPicture.asset(
+                                      color: kLightGreyColor,
+                                      width: 20,
+                                      height: 20,
+                                      'assets/icon/solid_heart.svg')
+                                  : SvgPicture.asset(
+                                      color: kLightGreyColor,
+                                      width: 15,
+                                      height: 15,
+                                      'assets/icon/Icon feather-heart.svg'),
+                            ),
                     ],
                   ),
                 ],

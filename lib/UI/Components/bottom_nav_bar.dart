@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/Config/user_data.dart';
-import 'package:hayyak/UI/Components/Dashboard/screens/dashboard_screen.dart';
 import 'package:hayyak/UI/Screens/favourite_list_screen.dart';
 import 'package:hayyak/UI/Screens/home_screen.dart';
 import 'package:hayyak/UI/Screens/login_screen.dart';
 import 'package:hayyak/UI/Screens/my_tickets_screen.dart';
-import 'package:hayyak/UI/Screens/places_screen.dart';
 import 'package:hayyak/UI/Screens/search_screen.dart';
-import 'package:hayyak/main.dart';
 
 import '../../Config/navigator.dart';
 
@@ -18,12 +15,11 @@ class BottomNavBar extends StatelessWidget {
   String currentScreen = '';
   @override
   Widget build(BuildContext context) {
-    print(currentScreen);
     return Container(
       padding: EdgeInsets.all(10),
       alignment: Alignment.center,
       width: double.infinity,
-      height: 70,
+      height: 60,
       color: kDarkGreyColor,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -78,7 +74,7 @@ class BottomNavBar extends StatelessWidget {
                       height: 5,
                     ),
                     Text(
-                      'Tickets',
+                      UserData.translation.data!.tickets.toString(),
                       style: TextStyle(
                           color: currentScreen == 'Tickets'
                               ? Colors.blue

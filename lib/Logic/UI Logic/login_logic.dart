@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/src/provider.dart';
+import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/Config/user_data.dart';
 import 'package:hayyak/Dialogs/loading_dialog.dart';
@@ -32,6 +33,7 @@ class LoginLogic {
           UserData.email = jsonDecode(value.body)['data']['email'];
           UserData.phone = jsonDecode(value.body)['data']['phone'];
           UserData.imageUrl = jsonDecode(value.body)['data']['image'];
+          UserData.language = localLanguage;
           if ( context.read(rememberMeProvider).state == true ){
             Hive.box('user_data').put('logged_in', true);
             Hive.box('user_data').put('token', UserData.token);
@@ -42,9 +44,11 @@ class LoginLogic {
             Hive.box('user_data').put('email', UserData.email);
             Hive.box('user_data').put('lang', UserData.language);
             Hive.box('user_data').put('image', UserData.imageUrl);
+            Hive.box('user_data').put('lang', localLanguage);
           } else {
             null;
           }
+
             navigator(context: context, screen:   screen, remove: true);
 
         } else {

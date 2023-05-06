@@ -57,7 +57,7 @@ class SeatCategoryComponent extends StatelessWidget {
                           padding: EdgeInsets.only(left: 30, right: 30),
                           child: Text(
                             'Choose your seats',
-                            style: TextStyle(fontWeight: FontWeight.bold,fontSize: 10),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontSize: 12),
                           ),
                         ),
                         InkWell(
@@ -102,11 +102,14 @@ class SeatCategoryComponent extends StatelessWidget {
                               }
                             }
                           },
-                          child: Icon(
-                            Icons.add_box_outlined,
-                            color: Color(int.parse(
-                                '0xFF${seatCategory.color.toString().substring(1)}'),),
-                            size: 15,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Icon(
+                              Icons.add_box_outlined,
+                              color: Color(int.parse(
+                                  '0xFF${seatCategory.color.toString().substring(1)}'),),
+                              size: 20,
+                            ),
                           ),
                         ),
                       ],

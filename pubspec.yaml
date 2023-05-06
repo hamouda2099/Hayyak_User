@@ -55,7 +55,7 @@ dependencies:
   photo_view: ^0.14.0
   url_launcher: ^6.1.6
   circular_countdown_timer: ^0.2.3
-
+  urwaypayment: ^1.0.0
 
 
 dev_dependencies:
@@ -84,6 +84,7 @@ flutter:
     - assets/fonts/
     - assets/icon/
     - assets/translations/
+    - assets/appconfig.json
 
   fonts:
     - family: Montserra

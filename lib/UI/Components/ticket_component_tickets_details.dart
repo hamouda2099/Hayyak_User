@@ -2,19 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hayyak/Config/constants.dart';
+import 'package:hayyak/Dialogs/message_dialog.dart';
 import 'package:hayyak/Logic/UI%20Logic/event_tickets_logic.dart';
 import 'package:hayyak/Models/event_tickets_model.dart';
+import 'package:hayyak/UI/Screens/event_tickets_screen.dart';
 import 'package:hayyak/main.dart';
 
 class TicketComponentInTicketDetails extends StatelessWidget {
   TicketComponentInTicketDetails(
-      {required this.kind, required this.cartProvider,required this.logic});
+      {required this.kind,
+      required this.cartProvider,
+      required this.totalProvider,
+      required this.logic});
   Kind kind;
   StateProvider cartProvider;
+  StateProvider totalProvider;
   EventTicketsLogic logic;
+  List allTickets = [];
   @override
   Widget build(BuildContext context) {
     final counterProvider = StateProvider((ref) => 0);
+    allTickets = kind.tickets!.data;
     return Consumer(
       builder: (context, watch, child) {
         final counter = watch(counterProvider).state;
@@ -71,6 +79,12 @@ class TicketComponentInTicketDetails extends StatelessWidget {
                       if (counter != 0) {
                         context.read(counterProvider).state--;
                         context.read(cartProvider).state--;
+                        context.read(totalProvider).state =
+                            context.read(totalProvider).state - kind.finalCost;
+                        allTickets.add(selectedTickets.first);
+                        selectedTickets.removeAt(0);
+                        print('selected tickets : $selectedTickets');
+                        print('all tickets : $allTickets');
                       }
                     },
                     child: Container(
@@ -99,16 +113,22 @@ class TicketComponentInTicketDetails extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      if (counter == kind.countLimit + 1) {
+                      if (counter == kind.countLimit) {
+                        messageDialog(context,
+                            '${kind.countLimit} tickets allowed for this kind !');
                       } else {
-                        context.read(counterProvider).state++;
-                        context.read(cartProvider).state++;
-
-                        logic.addTicket(
-                            ticketId: kind.id.toString(),
-                            ticketKind: kind.name,
-                            ticketPrice: kind.finalCost.toDouble(),
-                            ticketCount: context.read(counterProvider).state);
+                        if (allTickets.isNotEmpty) {
+                          context.read(counterProvider).state++;
+                          context.read(cartProvider).state++;
+                          context.read(totalProvider).state = context.read(totalProvider).state + kind.finalCost;
+                          selectedTickets.add(allTickets.first);
+                          allTickets.removeAt(0);
+                          print('selected tickets : $selectedTickets');
+                          print('all tickets : $allTickets');
+                        } else {
+                          messageDialog(
+                              context, 'this kind tickets was sold !');
+                        }
                       }
                     },
                     child: Container(

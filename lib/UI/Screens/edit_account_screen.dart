@@ -38,7 +38,6 @@ class EditAccountScreen extends StatelessWidget {
                       }
                     default:
                       if (snapShot.hasError) {
-                        print(snapShot);
                         return Text('Error: ${snapShot.error}');
                       } else {
                         logic.init(snapShot);

@@ -10,58 +10,58 @@ String profileModelToJson(ProfileModel data) => json.encode(data.toJson());
 
 class ProfileModel {
   ProfileModel({
-    required this.success,
-    required this.message,
-    required this.data,
-    required this.code,
+    this.success,
+    this.message,
+    this.data,
+    this.code,
   });
 
-  bool success;
-  String message;
-  Data data;
-  int code;
+  bool? success;
+  String? message;
+  Data? data;
+  int? code;
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) => ProfileModel(
     success: json["success"],
     message: json["message"],
-    data: Data.fromJson(json["data"]),
+    data: json["data"] == null ? null : Data.fromJson(json["data"]),
     code: json["code"],
   );
 
   Map<String, dynamic> toJson() => {
     "success": success,
     "message": message,
-    "data": data.toJson(),
+    "data": data?.toJson(),
     "code": code,
   };
 }
 
 class Data {
   Data({
-    required this.id,
-    required this.name,
-    required this.firstName,
-    required this.lastName,
-    required this.email,
-    required this.phone,
-    required this.image,
-    required this.role,
+    this.id,
+    this.name,
+    this.firstName,
+    this.lastName,
+    this.email,
+    this.phone,
+    this.image,
+    this.role,
   });
 
-  int id;
-  String name;
-  String firstName;
-  String lastName;
-  String email;
-  String phone;
-  String image;
-  String role;
+  int? id;
+  String? name;
+  String? firstName;
+  String? lastName;
+  String? email;
+  String? phone;
+  String? image;
+  String? role;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
     id: json["id"],
     name: json["name"],
     firstName: json["first_name"],
-    lastName: json["last_name"]??'',
+    lastName: json["last_name"],
     email: json["email"],
     phone: json["phone"],
     image: json["image"],

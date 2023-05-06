@@ -44,6 +44,7 @@ class SecondAppBar extends StatelessWidget {
           Text(
             title,
             style: const TextStyle(
+                overflow: TextOverflow.ellipsis,
                 color: kDarkGreyColor,
                 fontSize: 16,
                 fontWeight: FontWeight.bold),

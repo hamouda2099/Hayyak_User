@@ -11,14 +11,10 @@ import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/Dialogs/loading_screen.dart';
 import 'package:hayyak/Logic/Services/api_manger.dart';
 import 'package:hayyak/Models/event_model.dart';
-import 'package:hayyak/UI/Components/app_bar.dart';
 import 'package:hayyak/UI/Components/map_view_screen.dart';
 import 'package:hayyak/UI/Components/seccond_app_bar.dart';
 import 'package:hayyak/UI/Components/web_view_screen.dart';
 import 'package:hayyak/UI/Screens/date_picker_screen.dart';
-import 'package:hayyak/UI/Screens/event_seats_screen.dart';
-import 'package:hayyak/UI/Screens/event_tickets_screen.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../main.dart';
 
@@ -43,7 +39,6 @@ class EventDetails extends StatelessWidget {
             }
           default:
             if (snapShot.hasError) {
-              print(snapShot);
               return Scaffold(
                   body: Center(child: Text('Error: ${snapShot.error}')));
             } else {
@@ -78,8 +73,8 @@ class EventDetails extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            snapShot?.data?.data?.averageCost ?? '',
-                            style: TextStyle(color: Colors.white, fontSize: 14),
+                            snapShot.data?.data.averageCost ?? '',
+                            style: const TextStyle(color: Colors.white, fontSize: 14),
                           ),
                           const SizedBox(
                             height: 5,
@@ -159,7 +154,7 @@ class EventDetails extends StatelessWidget {
                           alignment: Alignment.center,
                           width: screenWidth / 2,
                           height: 50,
-                          margin: EdgeInsets.all(10),
+                          margin: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             color: kPrimaryColor,
                             borderRadius: BorderRadius.circular(10),
@@ -209,7 +204,7 @@ class EventDetails extends StatelessWidget {
                                       width: 25,
                                       height: 25,
                                       'assets/icon/Icon material-event.svg'),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   ),
                                   Column(
@@ -220,21 +215,21 @@ class EventDetails extends StatelessWidget {
                                         snapShot?.data?.data?.startDate
                                                 .toString() ??
                                             '',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             color: kDarkGreyColor,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 14),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 5,
                                       ),
                                       Text(
                                         snapShot?.data?.data?.time ?? '',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             color: kLightGreyColor,
                                             fontSize: 14),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 5,
                                       ),
                                       InkWell(
@@ -274,34 +269,34 @@ class EventDetails extends StatelessWidget {
                                       width: 25,
                                       height: 25,
                                       'assets/icon/Icon material-location-on.svg'),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   ),
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(
+                                      const Text(
                                         'Address',
                                         style: TextStyle(
                                             color: kDarkGreyColor,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 14),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 5,
                                       ),
                                       Container(
                                         width: screenWidth / 1.3,
                                         child: Text(
                                           snapShot?.data?.data?.address ?? '',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               color: kLightGreyColor,
                                               fontSize: 14,
                                               overflow: TextOverflow.ellipsis),
                                         ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 5,
                                       ),
                                       InkWell(
@@ -328,15 +323,15 @@ class EventDetails extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 20,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(
+                            const Padding(
+                              padding: EdgeInsets.only(
                                   left: 15.0, right: 15, bottom: 5),
                               child: Align(
                                   alignment: Alignment.centerLeft,
-                                  child: const Text(
+                                  child: Text(
                                     'About This Event',
                                     style: TextStyle(
                                         color: kDarkGreyColor,
@@ -352,15 +347,15 @@ class EventDetails extends StatelessWidget {
                                     child: HtmlWidget(
                                         snapShot?.data?.data?.description ??
                                             ''))),
-                            SizedBox(
+                            const SizedBox(
                               height: 20,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(
+                            const Padding(
+                              padding: EdgeInsets.only(
                                   left: 15.0, right: 15, bottom: 5),
                               child: Align(
                                   alignment: Alignment.centerLeft,
-                                  child: const Text(
+                                  child: Text(
                                     'Location',
                                     style: TextStyle(
                                         color: kDarkGreyColor,
@@ -380,7 +375,7 @@ class EventDetails extends StatelessWidget {
                                 markers: marker,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 20,
                             ),
                           ],

@@ -11,10 +11,10 @@ class ProfileLogic {
   TextEditingController passwordCnt = TextEditingController();
 
   void init(AsyncSnapshot<ProfileModel> snapshot){
-    firstNameCnt.text = snapshot.data!.data.firstName;
-    lastNameCnt.text = snapshot.data!.data.lastName;
-    emailCnt.text = snapshot.data!.data.email;
-    phoneCnt.text = snapshot.data!.data.phone;
+    firstNameCnt.text = snapshot.data!.data!.firstName??'';
+    lastNameCnt.text = snapshot.data!.data!.lastName??'';
+    emailCnt.text = snapshot.data!.data!.email??'';
+    phoneCnt.text = snapshot.data!.data!.phone??'';
   }
 
   void updateProfile(){
