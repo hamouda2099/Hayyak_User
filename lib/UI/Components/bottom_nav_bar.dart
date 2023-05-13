@@ -74,7 +74,7 @@ class BottomNavBar extends StatelessWidget {
                       height: 5,
                     ),
                     Text(
-                      UserData.translation.data!.tickets.toString(),
+                      UserData.translation.data?.tickets?.toString()??'Tickets',
                       style: TextStyle(
                           color: currentScreen == 'Tickets'
                               ? Colors.blue
