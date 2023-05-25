@@ -11,6 +11,7 @@ import 'package:hayyak/Models/fav_list_model.dart';
 import 'package:hayyak/Models/home_model.dart';
 import 'package:hayyak/Models/profile_model.dart';
 import 'package:hayyak/Models/search_model.dart';
+import 'package:hayyak/Models/static_services_model.dart';
 import 'package:hayyak/Models/terms_conditions_model.dart';
 import 'package:hayyak/Models/translation_model.dart';
 import 'package:hayyak/Models/user_orders_model.dart';
@@ -23,8 +24,10 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
+import '../../Models/aviable_for_sale_model.dart';
 import '../../Models/event_seats_model.dart';
 import '../../Models/privacy_policy_model.dart';
+import '../../Models/settings_model.dart';
 import '../../Models/user_order_tickets_model.dart';
 import '../../UI/Screens/error_screen.dart';
 
@@ -37,10 +40,12 @@ class ApiManger {
   static const String _exploreUrl = '$hostUrl/events/explore';
   static const String _eventDetails = '$hostUrl/event';
   static const String _userOrdersUrl = '$hostUrl/orders/get-user-orders';
-  static const String _userOrderTicketsUrl =
-      '$hostUrl/orders/get-order-tickets';
+  static const String _userOrderTicketsUrl = '$hostUrl/orders/get-order-tickets';
   static const String _favUrl = '$hostUrl/favorites';
+  static const String _availableTicketsForSale = '$hostUrl/event/avail-for-sal';
   static const String _faqsUrl = '$hostUrl/faq';
+  static const String _getSettings = '$hostUrl/get-settings';
+  static const String _getStaticServices = '$hostUrl/event/get-static-services';
   static const String _translationUrl = '$hostUrl/translation';
   static const String _policyUrl = '$hostUrl/policy';
   static const String _contactUsUrl = '$hostUrl/contact-us';
@@ -198,6 +203,18 @@ class ApiManger {
     return TranslationModel.fromJson(json.decode(response.body));
   }
 
+  static Future<SettingsModel> getSettings() async {
+    Response response = await sendGetRequest(_getSettings);
+    return SettingsModel.fromJson(json.decode(response.body));
+  }
+
+  static Future<StaticServices> getStaticServices({String? eventId}) async {
+    Response response = await sendGetRequest('$_getStaticServices/$eventId');
+    return StaticServices.fromJson(json.decode(response.body));
+  }
+
+
+
   static Future<FavListModel> getFavList() async {
     Response response = await sendGetRequest('$_favUrl/get-events');
     return FavListModel.fromJson(json.decode(response.body));
@@ -235,6 +252,23 @@ class ApiManger {
     Response response = await sendPostRequest(
         _userOrderTicketsUrl, <String, String>{"order_id": orderId});
     return UserOrderTicketsModel.fromJson(json.decode(response.body));
+  }
+
+  static Future<AvailableTicketsForSaleModel> getAvailableTicketsForSale(
+      {
+        required String eventId,
+        required String date,
+        required String tickets,
+        required String services,
+      }) async {
+    Response response = await sendPostRequest(
+        _availableTicketsForSale, <String, String>{
+          "event_id": eventId,
+          "date": date.substring(0,10),
+          "tickets":tickets,
+          "services":services
+        });
+    return AvailableTicketsForSaleModel.fromJson(json.decode(response.body));
   }
 
   static Future<EventTicketsModel> getEventTickets({

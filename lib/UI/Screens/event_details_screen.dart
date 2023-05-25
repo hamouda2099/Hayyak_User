@@ -23,6 +23,7 @@ class EventDetails extends StatelessWidget {
   num eventId;
   DateTime startDate = DateTime.now();
   DateTime endDate = DateTime.now();
+  DateTime? endDatePicker;
   GoogleMapController? controller;
   Set<Marker> marker = Set();
   @override
@@ -73,7 +74,7 @@ class EventDetails extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            snapShot.data?.data.averageCost ?? '',
+                            snapShot?.data?.data?.averageCost ?? '',
                             style: const TextStyle(color: Colors.white, fontSize: 14),
                           ),
                           const SizedBox(
@@ -113,6 +114,11 @@ class EventDetails extends StatelessWidget {
                       ),
                       InkWell(
                         onTap: () {
+                          if ((snapShot.data?.data.pickerStartDate??'') == (snapShot.data?.data.prickerEndDate??'') ){
+                            endDatePicker = snapShot.data!.data.prickerEndDate.add(const Duration(seconds: 1));
+                          } else {
+                            endDatePicker = snapShot.data!.data.prickerEndDate;
+                          }
                           if (snapShot.data!.data.seats == 'seats') {
                             navigator(
                                 context: context,
@@ -123,8 +129,7 @@ class EventDetails extends StatelessWidget {
                                       .data?.data.pickerStartDate
                                       .toString() ??
                                       '',
-                                  endDate: snapShot?.data?.data?.prickerEndDate
-                                      .toString() ??
+                                  endDate: endDatePicker.toString() ??
                                       '',
                                 ));
 
@@ -135,11 +140,10 @@ class EventDetails extends StatelessWidget {
                                   navigateScreen: 'tickets',
                                   eventId: snapShot.data!.data.id.toString(),
                                   startDate: snapShot
-                                          ?.data?.data?.pickerStartDate
-                                          .toString() ??
+                                      .data?.data.pickerStartDate
+                                      .toString() ??
                                       '',
-                                  endDate: snapShot?.data?.data?.prickerEndDate
-                                          .toString() ??
+                                  endDate: endDatePicker.toString() ??
                                       '',
                                 ));
                           } else {
@@ -175,7 +179,7 @@ class EventDetails extends StatelessWidget {
                   child: Column(
                     children: [
                       SecondAppBar(
-                        title: snapShot?.data?.data?.name.toString() ?? '',
+                        title: snapShot.data?.data.name.toString() ?? '',
                         shareAndFav: true,
                         backToHome: false,
                       ),

@@ -171,8 +171,8 @@ class Kind {
     required this.costBeforeDiscount,
     required this.costAfterDiscount,
     this.discountValue,
-    required this.finalCost,
-    required this.countLimit,
+    this.finalCost,
+    this.countLimit,
     this.color,
     this.tickets,
     this.description,
@@ -184,8 +184,8 @@ class Kind {
   String costBeforeDiscount;
   String costAfterDiscount;
   dynamic discountValue;
-  int finalCost;
-  int countLimit;
+  num? finalCost;
+  num? countLimit;
   String? color;
   Tickets? tickets;
   String? description;
@@ -205,7 +205,7 @@ class Kind {
     type: json["type"],
   );
 
-  Map<String, dynamic> toJson() => {
+  Map<dynamic, dynamic> toJson() => {
     "id": id,
     "name": name,
     "cost_before_discount": costBeforeDiscount,

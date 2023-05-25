@@ -83,8 +83,7 @@ class TicketComponentInTicketDetails extends StatelessWidget {
                             context.read(totalProvider).state - kind.finalCost;
                         allTickets.add(selectedTickets.first);
                         selectedTickets.removeAt(0);
-                        print('selected tickets : $selectedTickets');
-                        print('all tickets : $allTickets');
+
                       }
                     },
                     child: Container(
@@ -122,9 +121,8 @@ class TicketComponentInTicketDetails extends StatelessWidget {
                           context.read(cartProvider).state++;
                           context.read(totalProvider).state = context.read(totalProvider).state + kind.finalCost;
                           selectedTickets.add(allTickets.first);
-                          allTickets.removeAt(0);
-                          print('selected tickets : $selectedTickets');
-                          print('all tickets : $allTickets');
+                          allTickets.remove(allTickets.first);
+                          print(selectedTickets);
                         } else {
                           messageDialog(
                               context, 'this kind tickets was sold !');

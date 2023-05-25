@@ -1,3 +1,4 @@
+import 'package:hayyak/Models/settings_model.dart';
 import 'package:hayyak/Models/translation_model.dart';
 
 class UserData {
@@ -10,4 +11,7 @@ class UserData {
   static String email = '';
   static String language = '';
   static TranslationModel translation = TranslationModel();
+  static SettingsModel settings = SettingsModel();
+  static num reservationTimer = 0;
+  static num vat = 0;
 }

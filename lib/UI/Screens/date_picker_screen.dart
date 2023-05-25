@@ -37,7 +37,7 @@ class _DatePickerScreenState extends State<DatePickerScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
-        title: Text('Select Day',style: TextStyle(
+        title: const Text('Select Day',style: TextStyle(
           color: kDarkGreyColor
         ),),
         leading: IconButton(onPressed: (){

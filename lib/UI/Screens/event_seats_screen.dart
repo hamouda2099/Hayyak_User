@@ -165,9 +165,9 @@ class EventSeatsScreen extends StatelessWidget {
                                       'assets/icon/back.svg'),
                                 ),
                               ),
-                              Text(
+                              const Text(
                                 "Seats",
-                                style: const TextStyle(
+                                style: TextStyle(
                                     color: kDarkGreyColor,
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold),
@@ -285,7 +285,7 @@ class EventSeatsScreen extends StatelessWidget {
                             ),
                             Column(
                               children: List.generate(
-                                  snapShot.data!.data.event.services!.length, (index) {
+                                  snapShot.data?.data.event.services?.length??0, (index) {
                                 final counterProvider = StateProvider((ref) => 0);
                                 return Consumer(
                                   builder: (context, watch, child) {
@@ -316,7 +316,7 @@ class EventSeatsScreen extends StatelessWidget {
                                                 children: [
                                                   Text(
                                                     snapShot.data!.data.event
-                                                        .services![index].name!,
+                                                        .services![index].name??'',
                                                     style: const TextStyle(
                                                         color: kLightGreyColor,
                                                         fontSize: 12),

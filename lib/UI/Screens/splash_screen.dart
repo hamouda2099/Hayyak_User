@@ -22,26 +22,37 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future.delayed(const Duration(seconds: 4), () async {
-      if (await Hive.box('user_data').get('logged_in') == true) {
-        UserData.token = await Hive.box('user_data').get('token');
-        UserData.id = await Hive.box('user_data').get('id');
-        UserData.phone = await Hive.box('user_data').get('phone').toString();
-        UserData.email = await Hive.box('user_data').get('email');
-        UserData.userName = await Hive.box('user_data').get('name');
-        UserData.imageUrl = await Hive.box('user_data').get('image');
-        UserData.role = await Hive.box('user_data').get('role');
-        UserData.language = await Hive.box('user_data').get('lang');
-        localLanguage = UserData.language;
-        navigator(context: context, screen: HomeScreen(), remove: true);
-      } else {
-        ApiManger.getTranslationsKeys().then((value) {
-          print(value.data!.toJson());
-          UserData.translation = value;
-          navigator(context: context, screen: WelcomeScreen(), remove: true);
-        });
+    ApiManger.getSettings().then((value){
+      UserData.settings = value;
+      UserData.settings.data?.forEach((element) {
+        if (element.key == 'reservation_timer'){
+          UserData.reservationTimer = int.parse(element.value.toString());
+        }
+        if(element.key == 'vat'){
+          UserData.vat = int.parse(element.value.toString());
+        }
+      });
+      Future.delayed(const Duration(seconds: 4), () async {
+        if (await Hive.box('user_data').get('logged_in') == true) {
+          UserData.token = await Hive.box('user_data').get('token');
+          UserData.id = await Hive.box('user_data').get('id');
+          UserData.phone = await Hive.box('user_data').get('phone').toString();
+          UserData.email = await Hive.box('user_data').get('email');
+          UserData.userName = await Hive.box('user_data').get('name');
+          UserData.imageUrl = await Hive.box('user_data').get('image');
+          UserData.role = await Hive.box('user_data').get('role');
+          UserData.language = await Hive.box('user_data').get('lang');
+          localLanguage = UserData.language;
+          navigator(context: context, screen: HomeScreen(), remove: true);
+        } else {
+          ApiManger.getTranslationsKeys().then((value) {
+            print(value.data!.toJson());
+            UserData.translation = value;
+            navigator(context: context, screen: WelcomeScreen(), remove: true);
+          });
 
-      }
+        }
+      });
     });
   }
 
