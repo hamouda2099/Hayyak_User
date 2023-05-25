@@ -11,6 +11,8 @@ import 'package:hayyak/UI/Components/home_slider_component.dart';
 import 'package:hayyak/UI/Screens/event_details_screen.dart';
 import 'package:hayyak/main.dart';
 
+import '../../Config/user_data.dart';
+
 
 class HomeScreen extends StatelessWidget {
 
@@ -19,7 +21,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomNavBar(
-        currentScreen: 'Explore',
+        currentScreen: UserData.translation.data?.tickets??'Explore',
       ),
       body: SafeArea(
         child: Column(
