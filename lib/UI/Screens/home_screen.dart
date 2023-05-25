@@ -22,6 +22,7 @@ class HomeScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomNavBar(
         currentScreen: UserData.translation.data?.tickets??'Explore',
+
       ),
       body: SafeArea(
         child: Column(
