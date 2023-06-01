@@ -14,18 +14,20 @@ class TicketComponentInTicketDetails extends StatelessWidget {
       required this.cartProvider,
       required this.totalProvider,
       required this.logic});
+
   Kind kind;
   StateProvider cartProvider;
   StateProvider totalProvider;
   EventTicketsLogic logic;
   List allTickets = [];
+
   @override
   Widget build(BuildContext context) {
     final counterProvider = StateProvider((ref) => 0);
     allTickets = kind.tickets!.data;
     return Consumer(
-      builder: (context, watch, child) {
-        final counter = watch(counterProvider).state;
+      builder: (context, ref, child) {
+        final counter = ref.watch(counterProvider);
         return Padding(
           padding:
               const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
@@ -77,13 +79,13 @@ class TicketComponentInTicketDetails extends StatelessWidget {
                   InkWell(
                     onTap: () {
                       if (counter != 0) {
-                        context.read(counterProvider).state--;
-                        context.read(cartProvider).state--;
-                        context.read(totalProvider).state =
-                            context.read(totalProvider).state - kind.finalCost;
+                        ref.read(counterProvider.notifier).state--;
+                        ref.read(cartProvider.notifier).state--;
+                        ref.read(totalProvider.notifier).state =
+                            ref.read(totalProvider.notifier).state -
+                                kind.finalCost;
                         allTickets.add(selectedTickets.first);
                         selectedTickets.removeAt(0);
-
                       }
                     },
                     child: Container(
@@ -117,9 +119,11 @@ class TicketComponentInTicketDetails extends StatelessWidget {
                             '${kind.countLimit} tickets allowed for this kind !');
                       } else {
                         if (allTickets.isNotEmpty) {
-                          context.read(counterProvider).state++;
-                          context.read(cartProvider).state++;
-                          context.read(totalProvider).state = context.read(totalProvider).state + kind.finalCost;
+                          ref.read(counterProvider.notifier).state++;
+                          ref.read(cartProvider.notifier).state++;
+                          ref.read(totalProvider.notifier).state =
+                              ref.read(totalProvider.notifier).state +
+                                  kind.finalCost;
                           selectedTickets.add(allTickets.first);
                           allTickets.remove(allTickets.first);
                           print(selectedTickets);

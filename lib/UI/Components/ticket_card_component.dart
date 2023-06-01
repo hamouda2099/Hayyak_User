@@ -11,15 +11,19 @@ class TicketCard extends StatelessWidget {
       required this.location,
       required this.image,
       required this.date});
+
   int? orderId;
   String? name, location, date, image;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        navigator(context: context, screen: TicketDetails(
-          orderId: orderId,
-        ));
+        navigator(
+            context: context,
+            screen: TicketDetails(
+              orderId: orderId,
+            ));
       },
       child: Container(
         width: screenWidth / 1.2,

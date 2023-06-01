@@ -6,11 +6,10 @@ import 'package:hayyak/Config/user_data.dart';
 import 'package:hayyak/Dialogs/loading_dialog.dart';
 import 'package:hayyak/Dialogs/message_dialog.dart';
 import 'package:hayyak/Logic/Services/api_manger.dart';
-import 'package:hayyak/Models/home_model.dart';
 import 'package:hayyak/UI/Screens/event_details_screen.dart';
 import 'package:hayyak/UI/Screens/home_screen.dart';
 import 'package:hayyak/main.dart';
-import 'package:share/share.dart';
+// import 'package:share/share.dart';
 
 class EventHomeCard extends StatelessWidget {
   EventHomeCard(
@@ -22,13 +21,16 @@ class EventHomeCard extends StatelessWidget {
       required this.id,
       // ignore: non_constant_identifier_names
       required this.is_favourite});
+
   int id;
   String eventName;
   String image;
   String location;
   String startDate;
+
   // ignore: non_constant_identifier_names
   bool is_favourite;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -74,8 +76,8 @@ class EventHomeCard extends StatelessWidget {
                     children: [
                       InkWell(
                           onTap: () {
-                            Share.share('https://hayyak.net/ar/event/$id',
-                                subject: eventName);
+                            // Share.share('https://hayyak.net/ar/event/$id',
+                            //     subject: eventName);
                           },
                           child: const Icon(
                             Icons.file_upload_outlined,

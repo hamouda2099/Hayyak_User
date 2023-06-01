@@ -12,6 +12,7 @@ import '../Components/bottom_nav_bar.dart';
 
 class MyTicketsScreen extends StatelessWidget {
   final tabProvider = StateProvider((ref) => 'Upcoming');
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,24 +34,25 @@ class MyTicketsScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(color: kLightGreyColor, width: 1)),
                 child: Consumer(
-                  builder: (context, watch, child) {
-                    watch(tabProvider).state;
+                  builder: (context, ref, child) {
+                    ref.watch(tabProvider);
                     return Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         InkWell(
                             onTap: () {
-                              context.read(tabProvider).state = 'Upcoming';
+                              ref.read(tabProvider.notifier).state = 'Upcoming';
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
                                 'Upcoming',
                                 style: TextStyle(
-                                    color: context.read(tabProvider).state ==
-                                            'Upcoming'
-                                        ? Colors.blue
-                                        : kLightGreyColor,
+                                    color:
+                                        ref.read(tabProvider.notifier).state ==
+                                                'Upcoming'
+                                            ? Colors.blue
+                                            : kLightGreyColor,
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold),
                               ),
@@ -64,17 +66,18 @@ class MyTicketsScreen extends StatelessWidget {
                         ),
                         InkWell(
                             onTap: () {
-                              context.read(tabProvider).state = 'Past';
+                              ref.read(tabProvider.notifier).state = 'Past';
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
                                 'Past',
                                 style: TextStyle(
-                                    color: context.read(tabProvider).state ==
-                                            'Past'
-                                        ? Colors.blue
-                                        : kLightGreyColor,
+                                    color:
+                                        ref.read(tabProvider.notifier).state ==
+                                                'Past'
+                                            ? Colors.blue
+                                            : kLightGreyColor,
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold),
                               ),
@@ -98,8 +101,8 @@ class MyTicketsScreen extends StatelessWidget {
                     } else {
                       return snapShot.data!.success == true
                           ? Consumer(
-                              builder: (context, watch, child) {
-                                final tab = watch(tabProvider).state;
+                              builder: (context, ref, child) {
+                                final tab = ref.watch(tabProvider);
                                 return tab == 'Upcoming'
                                     ? SizedBox(
                                         height: screenHeight / 1.5,

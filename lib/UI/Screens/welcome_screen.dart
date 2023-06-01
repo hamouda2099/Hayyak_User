@@ -1,24 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/Config/navigator.dart';
-import 'package:hayyak/Dialogs/message_dialog.dart';
-import 'package:hayyak/Logic/UI%20Logic/login_logic.dart';
-import 'package:hayyak/States/providers.dart';
-import 'package:hayyak/UI/Components/text_field.dart';
 import 'package:hayyak/UI/Screens/contact_us_screen.dart';
 import 'package:hayyak/UI/Screens/home_screen.dart';
 import 'package:hayyak/UI/Screens/login_screen.dart';
-import 'package:hayyak/UI/Screens/sign_up_screen.dart';
 import 'package:hayyak/main.dart';
-
-
-
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 // ignore: must_be_immutable
 class WelcomeScreen extends StatelessWidget {
   WelcomeScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,17 +21,23 @@ class WelcomeScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(height: screenHeight/3,),
+              SizedBox(
+                height: screenHeight / 3,
+              ),
               Image(
                 width: screenWidth / 1.5,
                 image: const AssetImage('assets/images/white_logo.png'),
               ),
-              SizedBox(height: screenHeight/4,),
+              SizedBox(
+                height: screenHeight / 4,
+              ),
               InkWell(
                 onTap: () async {
-                  navigator(context: context,screen: LoginScreen(
-                    screen: HomeScreen(),
-                  ));
+                  navigator(
+                      context: context,
+                      screen: LoginScreen(
+                        screen: HomeScreen(),
+                      ));
                 },
                 child: Container(
                   alignment: Alignment.center,
@@ -60,11 +57,12 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
               InkWell(
                 onTap: () async {
-                  navigator(context: context,screen: ContactUsScreen());
-
+                  navigator(context: context, screen: ContactUsScreen());
                 },
                 child: Container(
                   alignment: Alignment.center,
@@ -84,19 +82,23 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
               InkWell(
-                onTap: (){
+                onTap: () {
                   navigator(
                     context: context,
-                    screen: HomeScreen(
-                    ),
+                    screen: HomeScreen(),
                   );
                 },
-                child: const Text('Skip',style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                ),),
+                child: const Text(
+                  'Skip',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                  ),
+                ),
               )
             ],
           ),

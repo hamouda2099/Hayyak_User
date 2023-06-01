@@ -2,7 +2,6 @@
 //
 //     final eventModel = eventModelFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 EventModel eventModelFromJson(String str) =>
@@ -82,7 +81,7 @@ class Data {
         prickerEndDate: DateTime.parse(json["pricker_end_date"]),
         time: json["time"],
         latLng: json["lat_lng"],
-        address: json["address"]??'',
+        address: json["address"] ?? '',
         averageCost: json["average_cost"],
         action: Action.fromJson(json["action"]),
         seats: json["seats"],
@@ -118,7 +117,7 @@ class Action {
   String color;
 
   factory Action.fromJson(Map<String, dynamic> json) => Action(
-        name: json["name"] == null ? '' : json["name"] ,
+        name: json["name"] == null ? '' : json["name"],
         color: json["color"],
       );
 

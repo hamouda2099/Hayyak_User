@@ -4,16 +4,12 @@ import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/Config/date_formatter.dart';
 import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/Dialogs/message_dialog.dart';
-import 'package:hayyak/Logic/UI%20Logic/login_logic.dart';
 import 'package:hayyak/Logic/UI%20Logic/signUp_logic.dart';
 import 'package:hayyak/States/providers.dart';
 import 'package:hayyak/UI/Components/text_field.dart';
 import 'package:hayyak/UI/Screens/home_screen.dart';
 import 'package:hayyak/UI/Screens/login_screen.dart';
 import 'package:hayyak/main.dart';
-
-import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:intl/intl.dart';
 
 // ignore: must_be_immutable
 class SignUpScreen extends StatelessWidget {
@@ -27,7 +23,9 @@ class SignUpScreen extends StatelessWidget {
   final genderProvider = StateProvider<String>((ref) => 'Male');
   List gender = ['Male', 'Female'];
   DateTime? selectedDate = DateTime(2018);
+
   SignUpScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -111,7 +109,7 @@ class SignUpScreen extends StatelessWidget {
               height: 10,
             ),
             CustomTextField(
-              width: screenWidth/1.2,
+              width: screenWidth / 1.2,
               controller: emailController,
               hintText: 'Email',
               obscure: false,
@@ -188,9 +186,10 @@ class SignUpScreen extends StatelessWidget {
                     onPressed: () async {
                       DateTime? pickedDate = await showDatePicker(
                           context: context,
-                          initialDate: DateTime.now(), //get today's date
-                          firstDate: DateTime(
-                              2000), //DateTime.now() - not to allow to choose before today.
+                          initialDate: DateTime.now(),
+                          //get today's date
+                          firstDate: DateTime(2000),
+                          //DateTime.now() - not to allow to choose before today.
                           lastDate: DateTime(2101));
                       dateOfBirthController.text =
                           dateFormatter(pickedDate.toString());
@@ -212,8 +211,8 @@ class SignUpScreen extends StatelessWidget {
               height: 10,
             ),
             Consumer(
-              builder: (context, watch, child) {
-                final value = watch(genderProvider).state;
+              builder: (context, ref, child) {
+                final value = ref.watch(genderProvider);
                 return Container(
                   padding: EdgeInsets.only(left: 10, right: 10),
                   decoration: BoxDecoration(
@@ -240,7 +239,8 @@ class SignUpScreen extends StatelessWidget {
                       ),
                     ),
                     onChanged: (newValue) {
-                      context.refresh(genderProvider).state = '${newValue}';
+                      ref.refresh(genderProvider.notifier).state =
+                          '${newValue}';
                     },
                     items: gender.map((location) {
                       return DropdownMenuItem(
@@ -262,7 +262,7 @@ class SignUpScreen extends StatelessWidget {
               height: 10,
             ),
             CustomTextField(
-              width: screenWidth/1.2,
+              width: screenWidth / 1.2,
               controller: passwordController,
               hintText: 'Password',
               obscure: true,
@@ -271,15 +271,15 @@ class SignUpScreen extends StatelessWidget {
               height: 10,
             ),
             CustomTextField(
-              width: screenWidth/1.2,
+              width: screenWidth / 1.2,
               controller: confirmPasswordController,
               hintText: 'Confirm Password',
               obscure: true,
             ),
             Consumer(
-              builder: (context, watch, child) {
+              builder: (context, ref, child) {
                 final termsAndConditions =
-                    watch(termsAndConditionsProvider).state;
+                    ref.watch(termsAndConditionsProvider);
                 return Padding(
                   padding: const EdgeInsets.only(left: 15.0),
                   child: Row(
@@ -287,11 +287,13 @@ class SignUpScreen extends StatelessWidget {
                       IconButton(
                         onPressed: () {
                           if (termsAndConditions == false) {
-                            context.read(termsAndConditionsProvider).state =
-                                true;
+                            ref
+                                .read(termsAndConditionsProvider.notifier)
+                                .state = true;
                           } else {
-                            context.read(termsAndConditionsProvider).state =
-                                false;
+                            ref
+                                .read(termsAndConditionsProvider.notifier)
+                                .state = false;
                           }
                         },
                         icon: termsAndConditions == false
@@ -331,48 +333,48 @@ class SignUpScreen extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            InkWell(
-              onTap: () async {
-                // login function
-                bool result = await InternetConnectionChecker().hasConnection;
-                if (result == true) {
-                  if (context.read(termsAndConditionsProvider).state) {
-                    SignUpLogic.signUp(
-                        context: context,
-                        firstName: firstNameController.text,
-                        lastName: lastNameController.text,
-                        phone: phoneController.text,
-                        email: emailController.text,
-                        dateOfBirth: dateOfBirthController.text,
-                        password: passwordController.text,
-                        confirmPassword: confirmPasswordController.text,
-                        gender: context.read(genderProvider).state == 'Male'
-                            ? '1'
-                            : '2');
-                  } else {
-                    messageDialog(context, 'Check terms and conditions');
-                  }
-                } else {
-                  messageDialog(context, 'Check Internet Connection !');
-                }
-              },
-              child: Container(
-                alignment: Alignment.center,
-                width: screenWidth / 1.2,
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                padding: const EdgeInsets.all(15),
-                child: const Text(
-                  'SIGN UP',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w300,
-                    color: Colors.white,
+            Consumer(
+              builder: (context, ref, child) {
+                return InkWell(
+                  onTap: () async {
+                    // login function
+                    if (ref.read(termsAndConditionsProvider.notifier).state) {
+                      SignUpLogic.signUp(
+                          context: context,
+                          firstName: firstNameController.text,
+                          lastName: lastNameController.text,
+                          phone: phoneController.text,
+                          email: emailController.text,
+                          dateOfBirth: dateOfBirthController.text,
+                          password: passwordController.text,
+                          confirmPassword: confirmPasswordController.text,
+                          gender:
+                              ref.read(genderProvider.notifier).state == 'Male'
+                                  ? '1'
+                                  : '2');
+                    } else {
+                      messageDialog(context, 'Check terms and conditions');
+                    }
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: screenWidth / 1.2,
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    padding: const EdgeInsets.all(15),
+                    child: const Text(
+                      'SIGN UP',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w300,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
-                ),
-              ),
+                );
+              },
             ),
             const SizedBox(
               height: 30,
@@ -389,7 +391,11 @@ class SignUpScreen extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    navigator(context: context, screen: LoginScreen(screen: HomeScreen(),));
+                    navigator(
+                        context: context,
+                        screen: LoginScreen(
+                          screen: HomeScreen(),
+                        ));
                   },
                   child: const Text(
                     ' Sign in.',

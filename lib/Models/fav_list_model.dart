@@ -2,10 +2,10 @@
 //
 //     final favListModel = favListModelFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
-FavListModel favListModelFromJson(String str) => FavListModel.fromJson(json.decode(str));
+FavListModel favListModelFromJson(String str) =>
+    FavListModel.fromJson(json.decode(str));
 
 String favListModelToJson(FavListModel data) => json.encode(data.toJson());
 
@@ -23,18 +23,18 @@ class FavListModel {
   int code;
 
   factory FavListModel.fromJson(Map<String, dynamic> json) => FavListModel(
-    success: json["success"],
-    message: json["message"],
-    data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
-    code: json["code"],
-  );
+        success: json["success"],
+        message: json["message"],
+        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+        code: json["code"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "success": success,
-    "message": message,
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
-    "code": code,
-  };
+        "success": success,
+        "message": message,
+        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "code": code,
+      };
 }
 
 class Datum {
@@ -53,18 +53,18 @@ class Datum {
   String address;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-    id: json["id"],
-    name: json["name"],
-    description: json["description"],
-    image: json["image"],
-    address: json["address"],
-  );
+        id: json["id"],
+        name: json["name"],
+        description: json["description"],
+        image: json["image"],
+        address: json["address"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "description": description,
-    "image": image,
-    "address": address,
-  };
+        "id": id,
+        "name": name,
+        "description": description,
+        "image": image,
+        "address": address,
+      };
 }

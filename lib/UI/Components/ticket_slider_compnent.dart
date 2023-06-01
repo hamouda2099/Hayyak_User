@@ -8,10 +8,13 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:ticket_widget/ticket_widget.dart';
 
 class TicketSliderItem extends StatelessWidget {
-  TicketSliderItem({required this.orderTicket,required this.total,required this.index});
+  TicketSliderItem(
+      {required this.orderTicket, required this.total, required this.index});
+
   OrderTicket orderTicket;
   int index;
   int total;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -39,7 +42,7 @@ class TicketSliderItem extends StatelessWidget {
                           fontSize: 20,
                           fontWeight: FontWeight.bold),
                     )),
-                QrImage(
+                QrImageView(
                   data: "https://hayyak.net/${orderTicket.eventName}",
                   version: QrVersions.auto,
                   size: screenWidth / 2,
@@ -61,8 +64,8 @@ class TicketSliderItem extends StatelessWidget {
                         border: Border.all(color: kLightGreyColor),
                         borderRadius: BorderRadius.circular(screenHeight),
                       ),
-                      child:  Text(
-                        'Ticket ${index+1} of ${total}',
+                      child: Text(
+                        'Ticket ${index + 1} of ${total}',
                         style: TextStyle(color: kLightGreyColor, fontSize: 12),
                       ),
                     ),
@@ -114,36 +117,52 @@ class TicketSliderItem extends StatelessWidget {
                         ),
                         Text(
                           orderTicket.kindName.toString(),
-                          style: const TextStyle(color: kDarkGreyColor, fontSize: 14),
+                          style: const TextStyle(
+                              color: kDarkGreyColor, fontSize: 14),
                         ),
                         const SizedBox(
                           height: 10,
                         ),
-                      orderTicket.row == null ? SizedBox() :  Text('ROW : ${orderTicket.row}',style: TextStyle(color: kDarkGreyColor,fontSize: 12),),
-                        SizedBox(height: 5,),
-
-                        orderTicket.number == null ? SizedBox() :   Text('SEAT : ${orderTicket.number}',style: TextStyle(color: kDarkGreyColor,fontSize: 12),),
-                        SizedBox(height: 10,),
+                        orderTicket.row == null
+                            ? SizedBox()
+                            : Text(
+                                'ROW : ${orderTicket.row}',
+                                style: TextStyle(
+                                    color: kDarkGreyColor, fontSize: 12),
+                              ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        orderTicket.number == null
+                            ? SizedBox()
+                            : Text(
+                                'SEAT : ${orderTicket.number}',
+                                style: TextStyle(
+                                    color: kDarkGreyColor, fontSize: 12),
+                              ),
+                        SizedBox(
+                          height: 10,
+                        ),
                         Text(
                           orderTicket.date.toString(),
-                          style: const TextStyle(color: kDarkGreyColor, fontSize: 12),
+                          style: const TextStyle(
+                              color: kDarkGreyColor, fontSize: 12),
                         ),
                         const SizedBox(
                           height: 5,
                         ),
                         Text(
                           'Doors open ${orderTicket.doorsOpen}',
-                          style: const TextStyle(color: kDarkGreyColor, fontSize: 12),
+                          style: const TextStyle(
+                              color: kDarkGreyColor, fontSize: 12),
                         ),
                         const SizedBox(
                           height: 5,
                         ),
-                        
                         const SizedBox(
                           height: 20,
                         ),
-
-                         Align(
+                        Align(
                             alignment: Alignment.bottomLeft,
                             child: Padding(
                               padding: EdgeInsets.all(8.0),
@@ -156,10 +175,11 @@ class TicketSliderItem extends StatelessWidget {
                         Align(
                           alignment: Alignment.bottomLeft,
                           child: Padding(
-                            padding: const EdgeInsets.only(left: 8.0,right: 8),
+                            padding: const EdgeInsets.only(left: 8.0, right: 8),
                             child: Text(
                               'Ticket valid until ${orderTicket.ticketValidUntil}',
-                              style: const TextStyle(color: Colors.green, fontSize: 10),
+                              style: const TextStyle(
+                                  color: Colors.green, fontSize: 10),
                             ),
                           ),
                         ),

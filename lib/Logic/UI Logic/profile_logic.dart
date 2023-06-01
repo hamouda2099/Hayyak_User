@@ -10,22 +10,20 @@ class ProfileLogic {
   TextEditingController phoneCnt = TextEditingController();
   TextEditingController passwordCnt = TextEditingController();
 
-  void init(AsyncSnapshot<ProfileModel> snapshot){
-    firstNameCnt.text = snapshot.data!.data!.firstName??'';
-    lastNameCnt.text = snapshot.data!.data!.lastName??'';
-    emailCnt.text = snapshot.data!.data!.email??'';
-    phoneCnt.text = snapshot.data!.data!.phone??'';
+  void init(AsyncSnapshot<ProfileModel> snapshot) {
+    firstNameCnt.text = snapshot.data!.data!.firstName ?? '';
+    lastNameCnt.text = snapshot.data!.data!.lastName ?? '';
+    emailCnt.text = snapshot.data!.data!.email ?? '';
+    phoneCnt.text = snapshot.data!.data!.phone ?? '';
   }
 
-  void updateProfile(){
-    if (
-    firstNameCnt.text.isEmpty || lastNameCnt.text.isEmpty||
-        phoneCnt.text.isEmpty || emailCnt.text.isEmpty || passwordCnt.text.isEmpty ) {
-    messageDialog(
-      context,'Some fields are required!'
-    );
-    } else {
-
-    }
+  void updateProfile() {
+    if (firstNameCnt.text.isEmpty ||
+        lastNameCnt.text.isEmpty ||
+        phoneCnt.text.isEmpty ||
+        emailCnt.text.isEmpty ||
+        passwordCnt.text.isEmpty) {
+      messageDialog(context, 'Some fields are required!');
+    } else {}
   }
 }

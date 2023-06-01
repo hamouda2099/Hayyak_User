@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hayyak/Config/user_data.dart';
 import 'package:hayyak/Dialogs/message_dialog.dart';
 import 'package:hayyak/UI/Screens/home_screen.dart';
 
@@ -13,6 +12,7 @@ class ContactUsLogic {
   TextEditingController subjectController = TextEditingController();
   TextEditingController detailsController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+
   void submitForm() async {
     await ApiManger.contactUs(
             email: emailController.text,

@@ -1,10 +1,7 @@
-import 'dart:async';
-import 'dart:io';
-
 import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+// import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/Config/navigator.dart';
@@ -13,19 +10,21 @@ import 'package:hayyak/Logic/Services/api_manger.dart';
 import 'package:hayyak/Models/event_model.dart';
 import 'package:hayyak/UI/Components/map_view_screen.dart';
 import 'package:hayyak/UI/Components/seccond_app_bar.dart';
-import 'package:hayyak/UI/Components/web_view_screen.dart';
 import 'package:hayyak/UI/Screens/date_picker_screen.dart';
+import 'package:html_widget/html_widget.dart';
 
 import '../../main.dart';
 
 class EventDetails extends StatelessWidget {
   EventDetails({required this.eventId});
+
   num eventId;
   DateTime startDate = DateTime.now();
   DateTime endDate = DateTime.now();
   DateTime? endDatePicker;
   GoogleMapController? controller;
   Set<Marker> marker = Set();
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<EventModel>(
@@ -75,7 +74,8 @@ class EventDetails extends StatelessWidget {
                         children: [
                           Text(
                             snapShot?.data?.data?.averageCost ?? '',
-                            style: const TextStyle(color: Colors.white, fontSize: 14),
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 14),
                           ),
                           const SizedBox(
                             height: 5,
@@ -114,8 +114,10 @@ class EventDetails extends StatelessWidget {
                       ),
                       InkWell(
                         onTap: () {
-                          if ((snapShot.data?.data.pickerStartDate??'') == (snapShot.data?.data.prickerEndDate??'') ){
-                            endDatePicker = snapShot.data!.data.prickerEndDate.add(const Duration(seconds: 1));
+                          if ((snapShot.data?.data.pickerStartDate ?? '') ==
+                              (snapShot.data?.data.prickerEndDate ?? '')) {
+                            endDatePicker = snapShot.data!.data.prickerEndDate
+                                .add(const Duration(seconds: 1));
                           } else {
                             endDatePicker = snapShot.data!.data.prickerEndDate;
                           }
@@ -125,33 +127,28 @@ class EventDetails extends StatelessWidget {
                                 screen: DatePickerScreen(
                                   navigateScreen: 'seats',
                                   eventId: snapShot.data!.data.id.toString(),
-                                  startDate: snapShot
-                                      .data?.data.pickerStartDate
-                                      .toString() ??
+                                  startDate: snapShot.data?.data.pickerStartDate
+                                          .toString() ??
                                       '',
-                                  endDate: endDatePicker.toString() ??
-                                      '',
+                                  endDate: endDatePicker.toString() ?? '',
                                 ));
-
                           } else if (snapShot.data!.data.seats == 'tickets') {
                             navigator(
                                 context: context,
                                 screen: DatePickerScreen(
                                   navigateScreen: 'tickets',
                                   eventId: snapShot.data!.data.id.toString(),
-                                  startDate: snapShot
-                                      .data?.data.pickerStartDate
-                                      .toString() ??
+                                  startDate: snapShot.data?.data.pickerStartDate
+                                          .toString() ??
                                       '',
-                                  endDate: endDatePicker.toString() ??
-                                      '',
+                                  endDate: endDatePicker.toString() ?? '',
                                 ));
                           } else {
-                            navigator(
-                                context: context,
-                                screen: WebViewScreen(
-                                  link: snapShot.data!.data.seats.toString(),
-                                ));
+                            // navigator(
+                            //     context: context,
+                            //     screen: WebViewScreen(
+                            //       link: snapShot.data!.data.seats.toString(),
+                            //     ));
                           }
                         },
                         child: Container(
@@ -347,10 +344,12 @@ class EventDetails extends StatelessWidget {
                                 padding: const EdgeInsets.only(
                                     left: 15.0, right: 15),
                                 child: Opacity(
-                                    opacity: 0.7,
-                                    child: HtmlWidget(
-                                        snapShot?.data?.data?.description ??
-                                            ''))),
+                                  opacity: 0.7,
+                                  child:
+                                      MyHtmlParser.parseHtmlToListOfTextWidgets(
+                                          snapShot.data?.data.description ??
+                                              '')[0],
+                                )),
                             const SizedBox(
                               height: 20,
                             ),

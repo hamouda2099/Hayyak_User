@@ -4,9 +4,11 @@
 
 import 'dart:convert';
 
-PrivacyPolicyModel privacyPolicyModelFromJson(String str) => PrivacyPolicyModel.fromJson(json.decode(str));
+PrivacyPolicyModel privacyPolicyModelFromJson(String str) =>
+    PrivacyPolicyModel.fromJson(json.decode(str));
 
-String privacyPolicyModelToJson(PrivacyPolicyModel data) => json.encode(data.toJson());
+String privacyPolicyModelToJson(PrivacyPolicyModel data) =>
+    json.encode(data.toJson());
 
 class PrivacyPolicyModel {
   PrivacyPolicyModel({
@@ -21,19 +23,20 @@ class PrivacyPolicyModel {
   Data? data;
   int? code;
 
-  factory PrivacyPolicyModel.fromJson(Map<String, dynamic> json) => PrivacyPolicyModel(
-    success: json["success"],
-    message: json["message"],
-    data: json["data"] == null ? null : Data.fromJson(json["data"]),
-    code: json["code"],
-  );
+  factory PrivacyPolicyModel.fromJson(Map<String, dynamic> json) =>
+      PrivacyPolicyModel(
+        success: json["success"],
+        message: json["message"],
+        data: json["data"] == null ? null : Data.fromJson(json["data"]),
+        code: json["code"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "success": success,
-    "message": message,
-    "data": data?.toJson(),
-    "code": code,
-  };
+        "success": success,
+        "message": message,
+        "data": data?.toJson(),
+        "code": code,
+      };
 }
 
 class Data {
@@ -48,14 +51,14 @@ class Data {
   String? aboutDescription;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-    id: json["id"],
-    aboutName: json["aboutName"],
-    aboutDescription: json["aboutDescription"],
-  );
+        id: json["id"],
+        aboutName: json["aboutName"],
+        aboutDescription: json["aboutDescription"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "aboutName": aboutName,
-    "aboutDescription": aboutDescription,
-  };
+        "id": id,
+        "aboutName": aboutName,
+        "aboutDescription": aboutDescription,
+      };
 }

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_riverpod/src/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/Config/user_data.dart';
@@ -9,15 +9,16 @@ import 'package:hayyak/Dialogs/loading_dialog.dart';
 import 'package:hayyak/Dialogs/message_dialog.dart';
 import 'package:hayyak/Logic/Services/api_manger.dart';
 import 'package:hayyak/States/providers.dart';
-import 'package:hayyak/UI/Screens/favourite_list_screen.dart';
-import 'package:hayyak/UI/Screens/home_screen.dart';
-import 'package:hayyak/UI/Screens/login_screen.dart';
-
 import 'package:hive/hive.dart';
 
 class LoginLogic {
+  late WidgetRef ref;
+
   static void login(BuildContext context,
-      {@required email, @required password, required var screen}) {
+      {@required email,
+      @required password,
+      required var screen,
+      required WidgetRef ref}) {
     if (email == '' || password == '') {
       messageDialog(context, 'Email Or Password Wrong !');
     } else {
@@ -34,7 +35,7 @@ class LoginLogic {
           UserData.phone = jsonDecode(value.body)['data']['phone'];
           UserData.imageUrl = jsonDecode(value.body)['data']['image'];
           UserData.language = localLanguage;
-          if ( context.read(rememberMeProvider).state == true ){
+          if (ref.read(rememberMeProvider.notifier).state == true) {
             Hive.box('user_data').put('logged_in', true);
             Hive.box('user_data').put('token', UserData.token);
             Hive.box('user_data').put('role', UserData.role);
@@ -49,8 +50,7 @@ class LoginLogic {
             null;
           }
 
-            navigator(context: context, screen:   screen, remove: true);
-
+          navigator(context: context, screen: screen, remove: true);
         } else {
           messageDialog(context, '${jsonDecode(value.body)['error']}');
         }

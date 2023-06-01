@@ -4,9 +4,11 @@
 
 import 'dart:convert';
 
-AvailableTicketsForSaleModel availableTicketsForSaleModelFromJson(String str) => AvailableTicketsForSaleModel.fromJson(json.decode(str));
+AvailableTicketsForSaleModel availableTicketsForSaleModelFromJson(String str) =>
+    AvailableTicketsForSaleModel.fromJson(json.decode(str));
 
-String availableTicketsForSaleModelToJson(AvailableTicketsForSaleModel data) => json.encode(data.toJson());
+String availableTicketsForSaleModelToJson(AvailableTicketsForSaleModel data) =>
+    json.encode(data.toJson());
 
 class AvailableTicketsForSaleModel {
   bool? success;
@@ -21,19 +23,20 @@ class AvailableTicketsForSaleModel {
     this.code,
   });
 
-  factory AvailableTicketsForSaleModel.fromJson(Map<String, dynamic> json) => AvailableTicketsForSaleModel(
-    success: json["success"],
-    message: json["message"],
-    data: json["data"] == null ? null : Data.fromJson(json["data"]),
-    code: json["code"],
-  );
+  factory AvailableTicketsForSaleModel.fromJson(Map<String, dynamic> json) =>
+      AvailableTicketsForSaleModel(
+        success: json["success"],
+        message: json["message"],
+        data: json["data"] == null ? null : Data.fromJson(json["data"]),
+        code: json["code"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "success": success,
-    "message": message,
-    "data": data?.toJson(),
-    "code": code,
-  };
+        "success": success,
+        "message": message,
+        "data": data?.toJson(),
+        "code": code,
+      };
 }
 
 class Data {
@@ -46,14 +49,24 @@ class Data {
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-    ticketsInvoice: json["ticketsInvoice"] == null ? [] : List<TicketsInvoice>.from(json["ticketsInvoice"]!.map((x) => TicketsInvoice.fromJson(x))),
-    servicesInvoice: json["servicesInvoice"] == null ? [] : List<ServicesInvoice>.from(json["servicesInvoice"]!.map((x) => ServicesInvoice.fromJson(x))),
-  );
+        ticketsInvoice: json["ticketsInvoice"] == null
+            ? []
+            : List<TicketsInvoice>.from(
+                json["ticketsInvoice"]!.map((x) => TicketsInvoice.fromJson(x))),
+        servicesInvoice: json["servicesInvoice"] == null
+            ? []
+            : List<ServicesInvoice>.from(json["servicesInvoice"]!
+                .map((x) => ServicesInvoice.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "ticketsInvoice": ticketsInvoice == null ? [] : List<dynamic>.from(ticketsInvoice!.map((x) => x.toJson())),
-    "servicesInvoice": servicesInvoice == null ? [] : List<dynamic>.from(servicesInvoice!.map((x) => x.toJson())),
-  };
+        "ticketsInvoice": ticketsInvoice == null
+            ? []
+            : List<dynamic>.from(ticketsInvoice!.map((x) => x.toJson())),
+        "servicesInvoice": servicesInvoice == null
+            ? []
+            : List<dynamic>.from(servicesInvoice!.map((x) => x.toJson())),
+      };
 }
 
 class ServicesInvoice {
@@ -71,21 +84,22 @@ class ServicesInvoice {
     this.currancy,
   });
 
-  factory ServicesInvoice.fromJson(Map<String, dynamic> json) => ServicesInvoice(
-    id: json["id"],
-    count: json["count"],
-    serviceName: json["service_name"],
-    cost: json["cost"],
-    currancy: json["currancy"],
-  );
+  factory ServicesInvoice.fromJson(Map<String, dynamic> json) =>
+      ServicesInvoice(
+        id: json["id"],
+        count: json["count"],
+        serviceName: json["service_name"],
+        cost: json["cost"],
+        currancy: json["currancy"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "count": count,
-    "service_name": serviceName,
-    "cost": cost,
-    "currancy": currancy,
-  };
+        "id": id,
+        "count": count,
+        "service_name": serviceName,
+        "cost": cost,
+        "currancy": currancy,
+      };
 }
 
 class TicketsInvoice {
@@ -108,24 +122,33 @@ class TicketsInvoice {
   });
 
   factory TicketsInvoice.fromJson(Map<String, dynamic> json) => TicketsInvoice(
-    count: json["count"],
-    kindId: json["kind_id"],
-    name: json["name"],
-    currancy: json["currancy"],
-    finalCost: json["final_cost"],
-    availableTickets: json["available_tickets"] == null ? [] : List<AvailableTicket>.from(json["available_tickets"]!.map((x) => AvailableTicket.fromJson(x))),
-    unavailableTickets: json["unavailable_tickets"] == null ? [] : List<dynamic>.from(json["unavailable_tickets"]!.map((x) => x)),
-  );
+        count: json["count"],
+        kindId: json["kind_id"],
+        name: json["name"],
+        currancy: json["currancy"],
+        finalCost: json["final_cost"],
+        availableTickets: json["available_tickets"] == null
+            ? []
+            : List<AvailableTicket>.from(json["available_tickets"]!
+                .map((x) => AvailableTicket.fromJson(x))),
+        unavailableTickets: json["unavailable_tickets"] == null
+            ? []
+            : List<dynamic>.from(json["unavailable_tickets"]!.map((x) => x)),
+      );
 
   Map<String, dynamic> toJson() => {
-    "count": count,
-    "kind_id": kindId,
-    "name": name,
-    "currancy": currancy,
-    "final_cost": finalCost,
-    "available_tickets": availableTickets == null ? [] : List<dynamic>.from(availableTickets!.map((x) => x.toJson())),
-    "unavailable_tickets": unavailableTickets == null ? [] : List<dynamic>.from(unavailableTickets!.map((x) => x)),
-  };
+        "count": count,
+        "kind_id": kindId,
+        "name": name,
+        "currancy": currancy,
+        "final_cost": finalCost,
+        "available_tickets": availableTickets == null
+            ? []
+            : List<dynamic>.from(availableTickets!.map((x) => x.toJson())),
+        "unavailable_tickets": unavailableTickets == null
+            ? []
+            : List<dynamic>.from(unavailableTickets!.map((x) => x)),
+      };
 }
 
 class AvailableTicket {
@@ -163,39 +186,41 @@ class AvailableTicket {
     this.updatedAt,
   });
 
-  factory AvailableTicket.fromJson(Map<String, dynamic> json) => AvailableTicket(
-    id: json["id"],
-    numId: json["num_id"],
-    row: json["row"],
-    number: json["number"],
-    type: json["type"],
-    holdAt: json["hold_at"],
-    date: json["date"] == null ? null : DateTime.parse(json["date"]),
-    kindId: json["kind_id"],
-    eventId: json["event_id"],
-    reservedAt: json["reserved_at"],
-    checkin: json["checkin"],
-    checkout: json["checkout"],
-    deletedAt: json["deleted_at"],
-    createdAt: json["created_at"],
-    updatedAt: json["updated_at"],
-  );
+  factory AvailableTicket.fromJson(Map<String, dynamic> json) =>
+      AvailableTicket(
+        id: json["id"],
+        numId: json["num_id"],
+        row: json["row"],
+        number: json["number"],
+        type: json["type"],
+        holdAt: json["hold_at"],
+        date: json["date"] == null ? null : DateTime.parse(json["date"]),
+        kindId: json["kind_id"],
+        eventId: json["event_id"],
+        reservedAt: json["reserved_at"],
+        checkin: json["checkin"],
+        checkout: json["checkout"],
+        deletedAt: json["deleted_at"],
+        createdAt: json["created_at"],
+        updatedAt: json["updated_at"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "num_id": numId,
-    "row": row,
-    "number": number,
-    "type": type,
-    "hold_at": holdAt,
-    "date": "${date!.year.toString().padLeft(4, '0')}-${date!.month.toString().padLeft(2, '0')}-${date!.day.toString().padLeft(2, '0')}",
-    "kind_id": kindId,
-    "event_id": eventId,
-    "reserved_at": reservedAt,
-    "checkin": checkin,
-    "checkout": checkout,
-    "deleted_at": deletedAt,
-    "created_at": createdAt,
-    "updated_at": updatedAt,
-  };
+        "id": id,
+        "num_id": numId,
+        "row": row,
+        "number": number,
+        "type": type,
+        "hold_at": holdAt,
+        "date":
+            "${date!.year.toString().padLeft(4, '0')}-${date!.month.toString().padLeft(2, '0')}-${date!.day.toString().padLeft(2, '0')}",
+        "kind_id": kindId,
+        "event_id": eventId,
+        "reserved_at": reservedAt,
+        "checkin": checkin,
+        "checkout": checkout,
+        "deleted_at": deletedAt,
+        "created_at": createdAt,
+        "updated_at": updatedAt,
+      };
 }

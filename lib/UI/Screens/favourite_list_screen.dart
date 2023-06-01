@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/Dialogs/loading_screen.dart';
 import 'package:hayyak/Logic/Services/api_manger.dart';
 import 'package:hayyak/Models/fav_list_model.dart';
@@ -17,7 +16,8 @@ class FavListScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            SecondAppBar(title: 'Favourites ',shareAndFav: false,backToHome: true),
+            SecondAppBar(
+                title: 'Favourites ', shareAndFav: false, backToHome: true),
             FutureBuilder<FavListModel>(
               future: ApiManger.getFavList(),
               builder:
@@ -31,21 +31,19 @@ class FavListScreen extends StatelessWidget {
                     if (snapShot.hasError) {
                       return Text('Error: ${snapShot.error}');
                     } else {
-                      return  Expanded(
+                      return Expanded(
                           child: ListView.builder(
-                            itemCount: snapShot.data!.data.length,
-                            itemBuilder: (context, index) {
-                              return FavRow(
-                                item: snapShot.data!.data[index],
-                              );
-                            },
-                          )) ;
+                        itemCount: snapShot.data!.data.length,
+                        itemBuilder: (context, index) {
+                          return FavRow(
+                            item: snapShot.data!.data[index],
+                          );
+                        },
+                      ));
                     }
                 }
               },
             )
-
-
           ],
         ),
       ),

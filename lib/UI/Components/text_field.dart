@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:hayyak/Config/constants.dart';
-import 'package:hayyak/main.dart';
 
 // ignore: must_be_immutable
 class CustomTextField extends StatelessWidget {
-  CustomTextField({
-    Key? key,
-    required this.controller,
-    required this.hintText,
-    required this.obscure,
-    required this.width
-  }) : super(key: key);
+  CustomTextField(
+      {Key? key,
+      required this.controller,
+      required this.hintText,
+      required this.obscure,
+      required this.width})
+      : super(key: key);
   TextEditingController controller = TextEditingController();
   String hintText;
   bool obscure = false;
-  double width ;
+  double width;
+
   @override
   Widget build(BuildContext context) {
     return Container(

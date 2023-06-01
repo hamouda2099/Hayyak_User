@@ -22,18 +22,22 @@ class FaQsModel {
   int? code;
 
   factory FaQsModel.fromJson(Map<String, dynamic> json) => FaQsModel(
-    success: json["success"],
-    message: json["message"],
-    data: json["data"] == null ? [] : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
-    code: json["code"],
-  );
+        success: json["success"],
+        message: json["message"],
+        data: json["data"] == null
+            ? []
+            : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
+        code: json["code"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "success": success,
-    "message": message,
-    "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
-    "code": code,
-  };
+        "success": success,
+        "message": message,
+        "data": data == null
+            ? []
+            : List<dynamic>.from(data!.map((x) => x.toJson())),
+        "code": code,
+      };
 }
 
 class Datum {
@@ -48,14 +52,14 @@ class Datum {
   String? qAnswer;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-    id: json["id"],
-    qName: json["qName"],
-    qAnswer: json["qAnswer"],
-  );
+        id: json["id"],
+        qName: json["qName"],
+        qAnswer: json["qAnswer"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "qName": qName,
-    "qAnswer": qAnswer,
-  };
+        "id": id,
+        "qName": qName,
+        "qAnswer": qAnswer,
+      };
 }

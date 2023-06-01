@@ -7,6 +7,7 @@ import '../Components/bottom_nav_bar.dart';
 
 class NotificationsScreen extends StatelessWidget {
   const NotificationsScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,7 +16,8 @@ class NotificationsScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SecondAppBar(title: 'Notification',shareAndFav: false,backToHome: false),
+              SecondAppBar(
+                  title: 'Notification', shareAndFav: false, backToHome: false),
               Container(
                   height: screenHeight / 1.2,
                   child: ListView.builder(

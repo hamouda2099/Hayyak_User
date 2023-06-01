@@ -4,9 +4,11 @@
 
 import 'dart:convert';
 
-TranslationModel translationModelFromJson(String str) => TranslationModel.fromJson(json.decode(str));
+TranslationModel translationModelFromJson(String str) =>
+    TranslationModel.fromJson(json.decode(str));
 
-String translationModelToJson(TranslationModel data) => json.encode(data.toJson());
+String translationModelToJson(TranslationModel data) =>
+    json.encode(data.toJson());
 
 class TranslationModel {
   bool? success;
@@ -19,17 +21,18 @@ class TranslationModel {
     this.code,
   });
 
-  factory TranslationModel.fromJson(Map<String, dynamic> json) => TranslationModel(
-    success: json["success"],
-    data: json["data"] == null ? null : Data.fromJson(json["data"]),
-    code: json["code"],
-  );
+  factory TranslationModel.fromJson(Map<String, dynamic> json) =>
+      TranslationModel(
+        success: json["success"],
+        data: json["data"] == null ? null : Data.fromJson(json["data"]),
+        code: json["code"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "success": success,
-    "data": data?.toJson(),
-    "code": code,
-  };
+        "success": success,
+        "data": data?.toJson(),
+        "code": code,
+      };
 }
 
 class Data {
@@ -39,18 +42,15 @@ class Data {
   Data({
     this.allEvents,
     this.tickets,
-
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-    allEvents: json["all_events"],
-    tickets: json["tickets"],
-
-  );
+        allEvents: json["all_events"],
+        tickets: json["tickets"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "all_events": allEvents,
-    "tickets": tickets,
-
-  };
+        "all_events": allEvents,
+        "tickets": tickets,
+      };
 }

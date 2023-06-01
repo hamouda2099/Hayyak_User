@@ -4,7 +4,8 @@
 
 import 'dart:convert';
 
-StaticServices staticServicesFromJson(String str) => StaticServices.fromJson(json.decode(str));
+StaticServices staticServicesFromJson(String str) =>
+    StaticServices.fromJson(json.decode(str));
 
 String staticServicesToJson(StaticServices data) => json.encode(data.toJson());
 
@@ -22,18 +23,18 @@ class StaticServices {
   });
 
   factory StaticServices.fromJson(Map<String, dynamic> json) => StaticServices(
-    success: json["success"],
-    message: json["message"],
-    data: json["data"] == null ? null : Data.fromJson(json["data"]),
-    code: json["code"],
-  );
+        success: json["success"],
+        message: json["message"],
+        data: json["data"] == null ? null : Data.fromJson(json["data"]),
+        code: json["code"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "success": success,
-    "message": message,
-    "data": data?.toJson(),
-    "code": code,
-  };
+        "success": success,
+        "message": message,
+        "data": data?.toJson(),
+        "code": code,
+      };
 }
 
 class Data {
@@ -48,16 +49,17 @@ class Data {
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-    sms: json["sms"] == null ? null : Refund.fromJson(json["sms"]),
-    refund: json["refund"] == null ? null : Refund.fromJson(json["refund"]),
-    whatsapp: json["whatsapp"] == null ? null : Refund.fromJson(json["whatsapp"]),
-  );
+        sms: json["sms"] == null ? null : Refund.fromJson(json["sms"]),
+        refund: json["refund"] == null ? null : Refund.fromJson(json["refund"]),
+        whatsapp:
+            json["whatsapp"] == null ? null : Refund.fromJson(json["whatsapp"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "sms": sms?.toJson(),
-    "refund": refund?.toJson(),
-    "whatsapp": whatsapp?.toJson(),
-  };
+        "sms": sms?.toJson(),
+        "refund": refund?.toJson(),
+        "whatsapp": whatsapp?.toJson(),
+      };
 }
 
 class Refund {
@@ -76,18 +78,18 @@ class Refund {
   });
 
   factory Refund.fromJson(Map<String, dynamic> json) => Refund(
-    name: json["name"],
-    descriptionAr: json["description_ar"],
-    descriptionEn: json["description_en"],
-    value: json["value"],
-    valueDisplayed: json["value_displayed"],
-  );
+        name: json["name"],
+        descriptionAr: json["description_ar"],
+        descriptionEn: json["description_en"],
+        value: json["value"],
+        valueDisplayed: json["value_displayed"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "name": name,
-    "description_ar": descriptionAr,
-    "description_en": descriptionEn,
-    "value": value,
-    "value_displayed": valueDisplayed,
-  };
+        "name": name,
+        "description_ar": descriptionAr,
+        "description_en": descriptionEn,
+        "value": value,
+        "value_displayed": valueDisplayed,
+      };
 }

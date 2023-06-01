@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hayyak/Config/navigator.dart';
@@ -7,14 +6,17 @@ import 'package:hayyak/Dialogs/message_dialog.dart';
 import 'package:hayyak/Logic/Services/api_manger.dart';
 import 'package:hayyak/UI/Screens/favourite_list_screen.dart';
 import 'package:hayyak/main.dart';
-import 'package:share/share.dart';
+
+// import 'package:share/share.dart';
 
 import '../../Config/constants.dart';
 import '../../Models/fav_list_model.dart';
 
 class FavRow extends StatelessWidget {
   FavRow({required this.item});
+
   Datum item;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -77,8 +79,8 @@ class FavRow extends StatelessWidget {
                     SizedBox(width: screenWidth / 3),
                     InkWell(
                         onTap: () {
-                          Share.share('https://hayyak.net/ar/event/${item.id}',
-                              subject: item.name);
+                          // Share.share('https://hayyak.net/ar/event/${item.id}',
+                          //     subject: item.name);
                         },
                         child: const Icon(
                           Icons.file_upload_outlined,
@@ -93,7 +95,7 @@ class FavRow extends StatelessWidget {
                         loadingDialog(context);
                         ApiManger.removeFromFav(id: item.id.toString())
                             .then((value) {
-                              Navigator.pop(context);
+                          Navigator.pop(context);
                           if (value['success']) {
                             navigator(
                                 context: context,

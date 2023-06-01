@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/Logic/UI%20Logic/signUp_logic.dart';
-import 'package:hayyak/UI/Components/text_field.dart';
 import 'package:hayyak/UI/Screens/home_screen.dart';
 import 'package:hayyak/UI/Screens/login_screen.dart';
 import 'package:hayyak/main.dart';
 
 class VerifyOtpCodeScreen extends StatelessWidget {
   VerifyOtpCodeScreen({required this.otpCode, required this.email});
+
   String otpCode = '';
   String email = '';
   TextEditingController controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,9 +21,12 @@ class VerifyOtpCodeScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         leading: IconButton(
             onPressed: () {
-              navigator(context: context, screen: LoginScreen(
-                screen: HomeScreen(),
-              ), remove: true);
+              navigator(
+                  context: context,
+                  screen: LoginScreen(
+                    screen: HomeScreen(),
+                  ),
+                  remove: true);
             },
             icon: Icon(
               Icons.arrow_back_ios,

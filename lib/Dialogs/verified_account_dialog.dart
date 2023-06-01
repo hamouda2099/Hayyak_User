@@ -34,8 +34,10 @@ void verifiedAccountDialog(BuildContext context, String message) {
     ),
   );
   Future.delayed(const Duration(seconds: 3), () {
-    navigator(context: context, screen: LoginScreen(
-       screen: HomeScreen(),
-    ));
+    navigator(
+        context: context,
+        screen: LoginScreen(
+          screen: HomeScreen(),
+        ));
   });
 }

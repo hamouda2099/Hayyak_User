@@ -3,9 +3,6 @@ import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/UI/Screens/home_screen.dart';
 import 'package:hayyak/UI/Screens/login_screen.dart';
-
-
-
 import 'package:hive/hive.dart';
 
 import '../main.dart';
@@ -32,9 +29,11 @@ logoutDialog(BuildContext context) {
               onTap: () {
                 Hive.box('user_data').put('logged_in', false);
                 navigator(
-                    context: context, screen: LoginScreen(
-                  screen: HomeScreen(),
-                ), remove: true);
+                    context: context,
+                    screen: LoginScreen(
+                      screen: HomeScreen(),
+                    ),
+                    remove: true);
               },
               child: Container(
                 alignment: Alignment.center,

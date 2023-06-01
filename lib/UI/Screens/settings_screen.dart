@@ -23,189 +23,242 @@ class SettingsScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SecondAppBar(title: 'Settings',shareAndFav: false,backToHome: false),
+              SecondAppBar(
+                  title: 'Settings', shareAndFav: false, backToHome: false),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    width: screenWidth/5,
-                    height: screenWidth/5,
+                    width: screenWidth / 5,
+                    height: screenWidth / 5,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      border: Border.all(color: kLightGreyColor,width: 1),
+                      border: Border.all(color: kLightGreyColor, width: 1),
                       image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: NetworkImage(UserData.imageUrl??'')),
+                          image: NetworkImage(UserData.imageUrl ?? '')),
                     ),
                   ),
-                  const SizedBox(width: 10,),
+                  const SizedBox(
+                    width: 10,
+                  ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                       Text(UserData.userName??'',style: const TextStyle(color: kDarkGreyColor,fontSize: 14,fontWeight: FontWeight.bold)),
-                       Text(UserData.email??'',style: const TextStyle(color: kDarkGreyColor,fontSize: 12)),
-
+                      Text(UserData.userName ?? '',
+                          style: const TextStyle(
+                              color: kDarkGreyColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold)),
+                      Text(UserData.email ?? '',
+                          style: const TextStyle(
+                              color: kDarkGreyColor, fontSize: 12)),
                     ],
                   ),
                 ],
               ),
               InkWell(
-                onTap: (){
+                onTap: () {
                   navigator(context: context, screen: const AccountScreen());
                 },
                 child: Container(
                   margin: const EdgeInsets.all(10),
-                  width: screenWidth/1.1,
+                  width: screenWidth / 1.1,
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: boxShadow
-                  ),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: boxShadow),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Account',style: TextStyle(color: kLightGreyColor,fontSize: 14,fontWeight: FontWeight.bold)),
-                      const Icon(Icons.arrow_forward_ios,color: kDarkGreyColor,size: 20,),
+                      const Text('Account',
+                          style: TextStyle(
+                              color: kLightGreyColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold)),
+                      const Icon(
+                        Icons.arrow_forward_ios,
+                        color: kDarkGreyColor,
+                        size: 20,
+                      ),
                     ],
                   ),
                 ),
               ),
               InkWell(
-                onTap: (){
-
-                },
+                onTap: () {},
                 child: Container(
                   margin: const EdgeInsets.all(10),
-                  width: screenWidth/1.1,
+                  width: screenWidth / 1.1,
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: boxShadow
-                  ),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: boxShadow),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('العربية',style: TextStyle(color: kLightGreyColor,fontSize: 14,fontWeight: FontWeight.bold)),
-                      const Icon(Icons.arrow_forward_ios,color: kDarkGreyColor,size: 20,),
+                      const Text('العربية',
+                          style: TextStyle(
+                              color: kLightGreyColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold)),
+                      const Icon(
+                        Icons.arrow_forward_ios,
+                        color: kDarkGreyColor,
+                        size: 20,
+                      ),
                     ],
                   ),
                 ),
               ),
               InkWell(
-                onTap: (){
-                  navigator(context: context,screen: const FAQsScreen());
+                onTap: () {
+                  navigator(context: context, screen: const FAQsScreen());
                 },
                 child: Container(
                   margin: const EdgeInsets.all(10),
-                  width: screenWidth/1.1,
+                  width: screenWidth / 1.1,
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: boxShadow
-                  ),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: boxShadow),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
-                      Text('FAQs',style: TextStyle(color: kLightGreyColor,fontSize: 14,fontWeight: FontWeight.bold)),
-                      Icon(Icons.arrow_forward_ios,color: kDarkGreyColor,size: 20,),
+                      Text('FAQs',
+                          style: TextStyle(
+                              color: kLightGreyColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold)),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        color: kDarkGreyColor,
+                        size: 20,
+                      ),
                     ],
                   ),
                 ),
               ),
               InkWell(
-                onTap: (){
-                  navigator(context: context,screen: const PrivacyPolicy());
+                onTap: () {
+                  navigator(context: context, screen: PrivacyPolicy());
                 },
                 child: Container(
                   margin: const EdgeInsets.all(10),
-                  width: screenWidth/1.1,
+                  width: screenWidth / 1.1,
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: boxShadow
-                  ),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: boxShadow),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
-                      Text('Privacy & Policy',style: TextStyle(color: kLightGreyColor,fontSize: 14,fontWeight: FontWeight.bold)),
-                      Icon(Icons.arrow_forward_ios,color: kDarkGreyColor,size: 20,),
+                      Text('Privacy & Policy',
+                          style: TextStyle(
+                              color: kLightGreyColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold)),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        color: kDarkGreyColor,
+                        size: 20,
+                      ),
                     ],
                   ),
                 ),
               ),
               InkWell(
-                onTap: (){
-                  navigator(context: context,screen: const TermsAndConditionsScreen());
+                onTap: () {
+                  navigator(
+                      context: context, screen: TermsAndConditionsScreen());
                 },
                 child: Container(
                   margin: const EdgeInsets.all(10),
-                  width: screenWidth/1.1,
+                  width: screenWidth / 1.1,
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: boxShadow
-                  ),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: boxShadow),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Terms & Conditions',style: TextStyle(color: kLightGreyColor,fontSize: 14,fontWeight: FontWeight.bold)),
-                      const Icon(Icons.arrow_forward_ios,color: kDarkGreyColor,size: 20,),
+                      const Text('Terms & Conditions',
+                          style: TextStyle(
+                              color: kLightGreyColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold)),
+                      const Icon(
+                        Icons.arrow_forward_ios,
+                        color: kDarkGreyColor,
+                        size: 20,
+                      ),
                     ],
                   ),
                 ),
               ),
               InkWell(
-                onTap: (){
-                  navigator(context: context,screen: ContactUsScreen());
+                onTap: () {
+                  navigator(context: context, screen: ContactUsScreen());
                 },
                 child: Container(
                   margin: const EdgeInsets.all(10),
-                  width: screenWidth/1.1,
+                  width: screenWidth / 1.1,
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: boxShadow
-                  ),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: boxShadow),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Contact us',style: TextStyle(color: kLightGreyColor,fontSize: 14,fontWeight: FontWeight.bold)),
-                      const Icon(Icons.arrow_forward_ios,color: kDarkGreyColor,size: 20,),
+                      const Text('Contact us',
+                          style: TextStyle(
+                              color: kLightGreyColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold)),
+                      const Icon(
+                        Icons.arrow_forward_ios,
+                        color: kDarkGreyColor,
+                        size: 20,
+                      ),
                     ],
                   ),
                 ),
               ),
               InkWell(
-                onTap: (){
-                  logoutDialog(
-                    context
-                  );
+                onTap: () {
+                  logoutDialog(context);
                 },
                 child: Container(
                   margin: const EdgeInsets.all(10),
-                  width: screenWidth/1.1,
+                  width: screenWidth / 1.1,
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: kLightGreyColor,width: 1)
-                  ),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: kLightGreyColor, width: 1)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text('Log out',style: TextStyle(color: kLightGreyColor,fontSize: 14,fontWeight: FontWeight.bold)),
-                      const Icon(Icons.logout_rounded,color: kDarkGreyColor,size: 20,),
+                      const Text('Log out',
+                          style: TextStyle(
+                              color: kLightGreyColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold)),
+                      const Icon(
+                        Icons.logout_rounded,
+                        color: kDarkGreyColor,
+                        size: 20,
+                      ),
                     ],
                   ),
                 ),
               ),
-
             ],
           ),
         ),

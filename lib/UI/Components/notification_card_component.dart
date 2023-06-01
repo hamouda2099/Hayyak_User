@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hayyak/UI/Components/box_shadow.dart';
 import 'package:hayyak/main.dart';
 
 import '../../Config/constants.dart';
@@ -12,25 +11,21 @@ class NotificationCard extends StatelessWidget {
     return Container(
       margin: EdgeInsets.all(10),
       padding: EdgeInsets.all(10),
-      width: screenWidth/1.2,
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.blue.withOpacity(
-              0.2,
-            ),
-            spreadRadius: 1,
-            blurRadius: 2,
+      width: screenWidth / 1.2,
+      decoration: BoxDecoration(boxShadow: [
+        BoxShadow(
+          color: Colors.blue.withOpacity(
+            0.2,
           ),
-        ],
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10)
-      ),
+          spreadRadius: 1,
+          blurRadius: 2,
+        ),
+      ], color: Colors.white, borderRadius: BorderRadius.circular(10)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-            width: screenWidth/1.5,
+            width: screenWidth / 1.5,
             child: Text(
               'The big night for Amr Diab The big night for Amr Diab '
               ' The big night for Amr Diab',

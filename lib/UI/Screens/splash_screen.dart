@@ -4,10 +4,8 @@ import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/Config/user_data.dart';
 import 'package:hayyak/Logic/Services/api_manger.dart';
 import 'package:hayyak/UI/Screens/home_screen.dart';
-import 'package:hayyak/UI/Screens/login_screen.dart';
 import 'package:hayyak/UI/Screens/welcome_screen.dart';
 import 'package:hayyak/main.dart';
-
 import 'package:hive/hive.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -22,13 +20,13 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    ApiManger.getSettings().then((value){
+    ApiManger.getSettings().then((value) {
       UserData.settings = value;
       UserData.settings.data?.forEach((element) {
-        if (element.key == 'reservation_timer'){
+        if (element.key == 'reservation_timer') {
           UserData.reservationTimer = int.parse(element.value.toString());
         }
-        if(element.key == 'vat'){
+        if (element.key == 'vat') {
           UserData.vat = int.parse(element.value.toString());
         }
       });
@@ -50,7 +48,6 @@ class _SplashScreenState extends State<SplashScreen> {
             UserData.translation = value;
             navigator(context: context, screen: WelcomeScreen(), remove: true);
           });
-
         }
       });
     });

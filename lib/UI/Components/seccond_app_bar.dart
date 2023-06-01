@@ -5,17 +5,18 @@ import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/Config/user_data.dart';
 import 'package:hayyak/UI/Screens/home_screen.dart';
 import 'package:hayyak/UI/Screens/notifications_screen.dart';
-import 'package:hayyak/main.dart';
-import 'package:share/share.dart';
+// import 'package:share/share.dart';
 
 class SecondAppBar extends StatelessWidget {
   SecondAppBar(
       {required this.title,
       required this.shareAndFav,
       required this.backToHome});
+
   String title;
   bool shareAndFav = false;
   late bool backToHome = false;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -54,7 +55,7 @@ class SecondAppBar extends StatelessWidget {
                   children: [
                     InkWell(
                         onTap: () {
-                          Share.share('https://hayyak.net/', subject: title);
+                          // Share.share('https://hayyak.net/', subject: title);
                         },
                         child: const Icon(
                           Icons.file_upload_outlined,
@@ -82,7 +83,8 @@ class SecondAppBar extends StatelessWidget {
                 )
               : IconButton(
                   onPressed: () {
-                    navigator(context: context, screen: const NotificationsScreen());
+                    navigator(
+                        context: context, screen: const NotificationsScreen());
                   },
                   icon: const Icon(Icons.notifications),
                   color: kDarkGreyColor,

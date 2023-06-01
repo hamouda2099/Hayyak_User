@@ -6,8 +6,6 @@ import 'package:hayyak/Dialogs/loading_dialog.dart';
 import 'package:hayyak/main.dart';
 import 'package:hive/hive.dart';
 
-import '../Config/user_data.dart';
-
 void languageDialog({
   required BuildContext context,
   required Widget screen,

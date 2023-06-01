@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/Models/user_order_tickets_model.dart';
@@ -7,10 +8,13 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:ticket_widget/ticket_widget.dart';
 
 class ServiceSliderItem extends StatelessWidget {
-  ServiceSliderItem({required this.orderService,required this.total,required this.index});
+  ServiceSliderItem(
+      {required this.orderService, required this.total, required this.index});
+
   OrderService orderService;
   int index;
   int total;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -38,7 +42,7 @@ class ServiceSliderItem extends StatelessWidget {
                           fontSize: 20,
                           fontWeight: FontWeight.bold),
                     )),
-                QrImage(
+                QrImageView(
                   data: "https://hayyak.net/${orderService.serviceName}",
                   version: QrVersions.auto,
                   size: screenWidth / 2,
@@ -60,8 +64,8 @@ class ServiceSliderItem extends StatelessWidget {
                         border: Border.all(color: kLightGreyColor),
                         borderRadius: BorderRadius.circular(screenHeight),
                       ),
-                      child:  Text(
-                        'Ticket ${index+1} of ${total}',
+                      child: Text(
+                        'Ticket ${index + 1} of ${total}',
                         style: TextStyle(color: kLightGreyColor, fontSize: 12),
                       ),
                     ),
@@ -90,8 +94,8 @@ class ServiceSliderItem extends StatelessWidget {
                             borderRadius: BorderRadius.circular(15),
                             image: DecorationImage(
                                 fit: BoxFit.fill,
-                                image:
-                                NetworkImage(orderService.image.toString())),
+                                image: NetworkImage(
+                                    orderService.image.toString())),
                           ),
                         ),
                         const SizedBox(
@@ -111,10 +115,13 @@ class ServiceSliderItem extends StatelessWidget {
                         const SizedBox(
                           height: 10,
                         ),
-                      orderService.serviceName == null ? SizedBox() :  Text(
-                          orderService.serviceName.toString(),
-                          style: const TextStyle(color: kDarkGreyColor, fontSize: 14),
-                        ),
+                        orderService.serviceName == null
+                            ? SizedBox()
+                            : Text(
+                                orderService.serviceName.toString(),
+                                style: const TextStyle(
+                                    color: kDarkGreyColor, fontSize: 14),
+                              ),
                         // Text('ROW : 34',style: TextStyle(color: kDarkGreyColor,fontSize: 12),),
                         // SizedBox(height: 5,),
                         //
@@ -122,21 +129,24 @@ class ServiceSliderItem extends StatelessWidget {
                         // SizedBox(height: 10,),
                         Text(
                           orderService.date.toString(),
-                          style: const TextStyle(color: kDarkGreyColor, fontSize: 12),
+                          style: const TextStyle(
+                              color: kDarkGreyColor, fontSize: 12),
                         ),
                         const SizedBox(
                           height: 5,
                         ),
                         Text(
                           'Doors open ${orderService.doorsOpen}',
-                          style: const TextStyle(color: kDarkGreyColor, fontSize: 12),
+                          style: const TextStyle(
+                              color: kDarkGreyColor, fontSize: 12),
                         ),
                         const SizedBox(
                           height: 5,
                         ),
                         Text(
                           'Service valid until ${orderService.serviceValidUntil}',
-                          style: const TextStyle(color: kDarkGreyColor, fontSize: 12),
+                          style: const TextStyle(
+                              color: kDarkGreyColor, fontSize: 12),
                         ),
                         const SizedBox(
                           height: 20,
@@ -154,23 +164,23 @@ class ServiceSliderItem extends StatelessWidget {
           Platform.isAndroid
               ? const SizedBox()
               : InkWell(
-            onTap: () {},
-            child: Container(
-              alignment: Alignment.center,
-              width: screenWidth / 1.3,
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: const Text(
-                'Add to wallet',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          )
+                  onTap: () {},
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: screenWidth / 1.3,
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: const Text(
+                      'Add to wallet',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                )
         ],
       ),
     );

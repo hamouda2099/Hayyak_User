@@ -11,6 +11,7 @@ import 'package:hayyak/UI/Components/seccond_app_bar.dart';
 import 'package:hayyak/UI/Components/ticket_component_tickets_details.dart';
 import 'package:hayyak/UI/Screens/checkout_screen.dart';
 import 'package:hayyak/main.dart';
+
 import '../../Config/constants.dart';
 import '../../Config/date_formatter.dart';
 import '../Components/services_component_tickets_details.dart';
@@ -22,6 +23,7 @@ List selectedServices = [];
 class EventTicketsScreen extends StatelessWidget {
   EventTicketsScreen(
       {super.key, required this.selectedDate, required this.eventId});
+
   EventTicketsLogic logic = EventTicketsLogic();
   String selectedDate = '';
   String eventId = '';
@@ -29,11 +31,12 @@ class EventTicketsScreen extends StatelessWidget {
   final cartCounterProvider = StateProvider<int>((ref) => 0);
   final tabProvider = StateProvider<String>((ref) => 'tickets');
   final totalPriceProvider = StateProvider<double>((ref) => 0.0);
+
   @override
   Widget build(BuildContext context) {
     return Consumer(
-      builder: (context, watch, child) {
-        final page = watch(pageProvider).state;
+      builder: (context, ref, child) {
+        final page = ref.watch(pageProvider);
         return FutureBuilder<EventTicketsModel>(
           future: ApiManger.getEventTickets(
               page: page,
@@ -80,10 +83,10 @@ class EventTicketsScreen extends StatelessWidget {
                                 height: 5,
                               ),
                               Consumer(
-                                builder: (context, watch, child) {
-                                  watch(totalPriceProvider).state;
+                                builder: (context, ref, child) {
+                                  ref.watch(totalPriceProvider);
                                   return Text(
-                                    '${context.read(totalPriceProvider).state} SAR',
+                                    '${ref.read(totalPriceProvider.notifier).state} SAR',
                                     style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 12,
@@ -106,9 +109,9 @@ class EventTicketsScreen extends StatelessWidget {
                                     'assets/icon/Icon feather-shopping-cart.svg'),
                               ),
                               Consumer(
-                                builder: (context, watch, child) {
+                                builder: (context, ref, child) {
                                   final cartCounter =
-                                      watch(cartCounterProvider).state;
+                                      ref.watch(cartCounterProvider);
                                   return Container(
                                     alignment: Alignment.center,
                                     width: 15,
@@ -129,29 +132,31 @@ class EventTicketsScreen extends StatelessWidget {
                           ),
                           InkWell(
                             onTap: () {
-                             if (selectedTickets.isEmpty){
-                                messageDialog(context, 'Please select one ticket at least');
-                             } else {
-                               navigator(
-                                   context: context,
-                                   screen: CheckoutScreen(
-                                     total: totalPriceProvider,
-                                     selectedDate: selectedDate,
-                                     eventId: eventId,
-                                     eventName: snapShot
-                                         .data?.data.event.details.name ??
-                                         '',
-                                     eventDate: dateFormatter(selectedDate),
-                                     eventTime: snapShot
-                                         .data?.data.event.details.time ??
-                                         '',
-                                     eventImage: snapShot
-                                         .data?.data.event.details.image ??
-                                         '',
-                                     selectedTickets: selectedTickets,
-                                     selectedServices: selectedServices,
-                                   ));
-                             }
+                              if (selectedTickets.isEmpty) {
+                                messageDialog(context,
+                                    'Please select one ticket at least');
+                              } else {
+                                navigator(
+                                    context: context,
+                                    screen: CheckoutScreen(
+                                      receitType: 'tickets',
+                                      total: totalPriceProvider,
+                                      selectedDate: selectedDate,
+                                      eventId: eventId,
+                                      eventName: snapShot
+                                              .data?.data.event.details.name ??
+                                          '',
+                                      eventDate: dateFormatter(selectedDate),
+                                      eventTime: snapShot
+                                              .data?.data.event.details.time ??
+                                          '',
+                                      eventImage: snapShot
+                                              .data?.data.event.details.image ??
+                                          '',
+                                      selectedTickets: selectedTickets ?? [],
+                                      selectedServices: selectedServices ?? [],
+                                    ));
+                              }
                             },
                             child: Container(
                               alignment: Alignment.center,

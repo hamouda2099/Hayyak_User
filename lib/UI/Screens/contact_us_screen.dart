@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/Logic/UI%20Logic/contact_us_logic.dart';
-import 'package:hayyak/UI/Components/box_shadow.dart';
 import 'package:hayyak/UI/Components/seccond_app_bar.dart';
 import 'package:hayyak/UI/Components/text_field.dart';
 import 'package:hayyak/main.dart';
 
 class ContactUsScreen extends StatelessWidget {
   ContactUsLogic logic = ContactUsLogic();
+
   @override
   Widget build(BuildContext context) {
     logic.context = context;
@@ -16,9 +16,10 @@ class ContactUsScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SecondAppBar(title: 'Contact Us',shareAndFav: false,backToHome: false),
+              SecondAppBar(
+                  title: 'Contact Us', shareAndFav: false, backToHome: false),
               CustomTextField(
-                width: screenWidth/1.2,
+                width: screenWidth / 1.2,
                 controller: logic.nameCnt,
                 hintText: 'Name',
                 obscure: false,
@@ -79,7 +80,7 @@ class ContactUsScreen extends StatelessWidget {
                 height: 10,
               ),
               CustomTextField(
-                width: screenWidth/1.2,
+                width: screenWidth / 1.2,
                 controller: logic.emailController,
                 hintText: 'Email',
                 obscure: false,
@@ -88,7 +89,7 @@ class ContactUsScreen extends StatelessWidget {
                 height: 10,
               ),
               CustomTextField(
-                width: screenWidth/1.2,
+                width: screenWidth / 1.2,
                 controller: logic.subjectController,
                 hintText: 'Subject',
                 obscure: false,

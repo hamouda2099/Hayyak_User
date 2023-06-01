@@ -4,24 +4,22 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hayyak/Dialogs/message_dialog.dart';
 import 'package:hayyak/Models/event_seats_model.dart';
 import 'package:hayyak/UI/Components/chair_component.dart';
-import 'package:hayyak/main.dart';
 
-import '../../Config/constants.dart';
-import '../../Logic/UI Logic/seats_logic.dart';
-
-final rebuildProvide = StateProvider<bool>((ref) => false);
+final rebuildProvide = StateProvider<String>((ref) => '');
 List globalSelectedSeats = [];
+List globalSelectedSeatsServices = [];
 
-class SeatCategoryComponent extends StatelessWidget {
+class SeatCategoryComponent extends ConsumerWidget {
   SeatCategoryComponent({required this.seatCategory});
+
   Kind seatCategory;
   List<ChairComponent> chairs = [];
   List selectedSeats = [];
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      margin: const EdgeInsets.only(left: 10,right: 10),
+      margin: const EdgeInsets.only(left: 10, right: 10),
       child: Column(
         children: [
           Row(
@@ -38,7 +36,9 @@ class SeatCategoryComponent extends StatelessWidget {
                               '0xFF${seatCategory.color.toString().substring(1)}')),
                           width: 25,
                           'assets/icon/ticket.svg'),
-                      SizedBox(width: 5,),
+                      SizedBox(
+                        width: 5,
+                      ),
                       Text(
                         seatCategory.name,
                         style: TextStyle(
@@ -50,26 +50,28 @@ class SeatCategoryComponent extends StatelessWidget {
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 20.0,right: 30),
+                    padding: const EdgeInsets.only(left: 20.0, right: 30),
                     child: Row(
                       children: [
                         const Padding(
                           padding: EdgeInsets.only(left: 30, right: 30),
                           child: Text(
                             'Choose your seats',
-                            style: TextStyle(fontWeight: FontWeight.bold,fontSize: 12),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 12),
                           ),
                         ),
                         InkWell(
                           onTap: () {
-                            if (selectedSeats.length == seatCategory.countLimit) {
+                            if (selectedSeats.length ==
+                                seatCategory.countLimit) {
                               messageDialog(context,
                                   'The limits of tickets to this category is ${seatCategory.countLimit}');
                             } else {
                               if (chairs.isNotEmpty) {
                                 if (!chairs.last.submitted) {
-                                  messageDialog(
-                                      context, 'Please choose the current seat');
+                                  messageDialog(context,
+                                      'Please choose the current seat');
                                 } else {
                                   List rows = [];
                                   rows.add('Row');
@@ -77,13 +79,15 @@ class SeatCategoryComponent extends StatelessWidget {
                                     rows.add(key.toString());
                                   });
                                   chairs.add(ChairComponent(
-                                    categoryPrice: seatCategory.finalCost.toDouble(),
+                                    categoryPrice:
+                                        seatCategory.finalCost.toDouble(),
                                     rows: rows,
                                     tickets: seatCategory.tickets,
                                     chairs: chairs,
                                     selectedSeats: selectedSeats,
                                   ));
-                                  context.refresh(rebuildProvide);
+                                  ref.read(rebuildProvide.notifier).state =
+                                      DateTime.now().toString();
                                 }
                               } else {
                                 List rows = [];
@@ -92,13 +96,15 @@ class SeatCategoryComponent extends StatelessWidget {
                                   rows.add(key.toString());
                                 });
                                 chairs.add(ChairComponent(
-                                  categoryPrice: seatCategory.finalCost.toDouble(),
+                                  categoryPrice:
+                                      seatCategory.finalCost.toDouble(),
                                   rows: rows,
                                   tickets: seatCategory.tickets,
                                   chairs: chairs,
                                   selectedSeats: selectedSeats,
                                 ));
-                                context.refresh(rebuildProvide);
+                                ref.read(rebuildProvide.notifier).state =
+                                    DateTime.now().toString();
                               }
                             }
                           },
@@ -106,8 +112,10 @@ class SeatCategoryComponent extends StatelessWidget {
                             padding: const EdgeInsets.all(8.0),
                             child: Icon(
                               Icons.add_box_outlined,
-                              color: Color(int.parse(
-                                  '0xFF${seatCategory.color.toString().substring(1)}'),),
+                              color: Color(
+                                int.parse(
+                                    '0xFF${seatCategory.color.toString().substring(1)}'),
+                              ),
                               size: 20,
                             ),
                           ),
@@ -115,7 +123,6 @@ class SeatCategoryComponent extends StatelessWidget {
                       ],
                     ),
                   )
-
                 ],
               ),
               Column(
@@ -130,15 +137,17 @@ class SeatCategoryComponent extends StatelessWidget {
                   Text(
                     '${seatCategory.finalCost} SAR',
                     style: const TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.bold,fontSize: 12),
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12),
                   ),
                 ],
               )
             ],
           ),
           Consumer(
-            builder: (context, watch, child) {
-              watch(rebuildProvide).state;
+            builder: (context, ref, child) {
+              ref.watch(rebuildProvide);
               return Column(
                 children: List.generate(chairs.length, (index) {
                   chairs[index].index = index;

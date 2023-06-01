@@ -1,8 +1,8 @@
 import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_riverpod/src/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hayyak/Config/constants.dart';
-import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/Config/user_data.dart';
 import 'package:hayyak/Models/event_model.dart';
 import 'package:hayyak/Models/event_tickets_model.dart';
@@ -16,20 +16,14 @@ import 'package:hayyak/Models/terms_conditions_model.dart';
 import 'package:hayyak/Models/translation_model.dart';
 import 'package:hayyak/Models/user_orders_model.dart';
 import 'package:hayyak/States/providers.dart';
-import 'package:hayyak/UI/Screens/favourite_list_screen.dart';
-import 'package:hayyak/UI/Screens/privacy_policy_screen.dart';
-
 import 'package:http/http.dart' as http;
-
 import 'package:http/http.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 import '../../Models/aviable_for_sale_model.dart';
 import '../../Models/event_seats_model.dart';
 import '../../Models/privacy_policy_model.dart';
 import '../../Models/settings_model.dart';
 import '../../Models/user_order_tickets_model.dart';
-import '../../UI/Screens/error_screen.dart';
 
 class ApiManger {
   static const String hostUrl = 'https://testing.hayyak.net/api';
@@ -40,7 +34,8 @@ class ApiManger {
   static const String _exploreUrl = '$hostUrl/events/explore';
   static const String _eventDetails = '$hostUrl/event';
   static const String _userOrdersUrl = '$hostUrl/orders/get-user-orders';
-  static const String _userOrderTicketsUrl = '$hostUrl/orders/get-order-tickets';
+  static const String _userOrderTicketsUrl =
+      '$hostUrl/orders/get-order-tickets';
   static const String _favUrl = '$hostUrl/favorites';
   static const String _availableTicketsForSale = '$hostUrl/event/avail-for-sal';
   static const String _faqsUrl = '$hostUrl/faq';
@@ -143,7 +138,7 @@ class ApiManger {
   }
 
   static Future<Response> applyCoupon({
-    required double total,
+    required num total,
     required String coupon,
   }) async {
     return await sendPostRequest(_applyCouponUrl, <String, dynamic>{
@@ -213,8 +208,6 @@ class ApiManger {
     return StaticServices.fromJson(json.decode(response.body));
   }
 
-
-
   static Future<FavListModel> getFavList() async {
     Response response = await sendGetRequest('$_favUrl/get-events');
     return FavListModel.fromJson(json.decode(response.body));
@@ -254,20 +247,19 @@ class ApiManger {
     return UserOrderTicketsModel.fromJson(json.decode(response.body));
   }
 
-  static Future<AvailableTicketsForSaleModel> getAvailableTicketsForSale(
-      {
-        required String eventId,
-        required String date,
-        required String tickets,
-        required String services,
-      }) async {
-    Response response = await sendPostRequest(
-        _availableTicketsForSale, <String, String>{
-          "event_id": eventId,
-          "date": date.substring(0,10),
-          "tickets":tickets,
-          "services":services
-        });
+  static Future<AvailableTicketsForSaleModel> getAvailableTicketsForSale({
+    required String eventId,
+    required String date,
+    required String tickets,
+    required String services,
+  }) async {
+    Response response =
+        await sendPostRequest(_availableTicketsForSale, <String, String>{
+      "event_id": eventId,
+      "date": date.substring(0, 10),
+      "tickets": tickets,
+      "services": services
+    });
     return AvailableTicketsForSaleModel.fromJson(json.decode(response.body));
   }
 
@@ -296,14 +288,9 @@ class ApiManger {
     return EventSeatsModel.fromJson(json.decode(response.body));
   }
 
-  static Future getTime(BuildContext context) async {
-    bool result = await InternetConnectionChecker().hasConnection;
-    if (result == true) {
-      final response = await sendGetRequest(_timeDateUrl);
-      context.read(dateTimeProvider).state = jsonDecode(response.body);
-      return jsonDecode(response.body);
-    } else {
-      navigator(context: context, screen: const ErrorScreen());
-    }
+  static Future getTime(BuildContext context, WidgetRef ref) async {
+    final response = await sendGetRequest(_timeDateUrl);
+    ref.read(dateTimeProvider.notifier).state = jsonDecode(response.body);
+    return jsonDecode(response.body);
   }
 }

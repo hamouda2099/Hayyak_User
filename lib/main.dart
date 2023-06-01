@@ -1,13 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
-import 'UI/Screens/splash_screen.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
+
+import 'UI/Screens/splash_screen.dart';
 
 double screenWidth = 0.0;
 double screenHeight = 0.0;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final directory = await path_provider.getApplicationDocumentsDirectory();
@@ -35,7 +36,7 @@ class App extends StatelessWidget {
         title: 'Hayyak',
         home: const SplashScreen(),
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(fontFamily: 'TisaSansPro'),
+        // theme: ThemeData(fontFamily: 'TisaSansPro'),
       ),
     );
   }

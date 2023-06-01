@@ -1,13 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hayyak/Config/constants.dart';
-import 'package:hayyak/Logic/UI%20Logic/seats_logic.dart';
-import 'package:hayyak/Models/event_seats_model.dart';
 import 'package:hayyak/UI/Components/seat_category_component.dart';
 import 'package:hayyak/UI/Screens/event_seats_screen.dart';
-import 'package:hayyak/UI/Screens/event_tickets_screen.dart';
 import 'package:hayyak/main.dart';
 
 class ChairComponent extends ConsumerWidget {
@@ -17,6 +12,7 @@ class ChairComponent extends ConsumerWidget {
       required this.chairs,
       required this.selectedSeats,
       required this.categoryPrice});
+
   double categoryPrice;
   List<ChairComponent> chairs = [];
   List selectedSeats = [];
@@ -25,23 +21,24 @@ class ChairComponent extends ConsumerWidget {
   late StateProvider provider;
   final selectedRowProvider = StateProvider<String>((ref) => 'Row');
   final selectedSeatProvider = StateProvider<Map>((ref) => {});
-  final rebuild = StateProvider<bool>((ref) => false);
+  final rebuild = StateProvider<String>((ref) => '');
   dynamic showedList = [];
   dynamic tickets;
   List rows = [];
   final seatsProvider = StateProvider<List>((ref) => []);
+
   @override
-  Widget build(BuildContext context, watch) {
-    watch(rebuild).state;
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(rebuild);
     return Container(
       margin: const EdgeInsets.only(left: 45, right: 45),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Consumer(
-            builder: (context, watch, child) {
-              final value = watch(selectedRowProvider).state;
-              watch(selectedSeatProvider).state;
+            builder: (context, ref, child) {
+              final value = ref.watch(selectedRowProvider);
+              ref.watch(selectedSeatProvider);
               return Container(
                 height: 30,
                 padding: const EdgeInsets.only(left: 5, right: 5),
@@ -69,10 +66,11 @@ class ChairComponent extends ConsumerWidget {
                     ),
                   ),
                   onChanged:
-                      context.read(selectedSeatProvider).state['number'] != null
+                      ref.read(selectedSeatProvider.notifier).state['number'] !=
+                              null
                           ? null
                           : (newValue) {
-                              context.refresh(selectedRowProvider).state =
+                              ref.read(selectedRowProvider.notifier).state =
                                   newValue.toString();
                               showedList = [];
                               showedList = tickets['$newValue'];
@@ -93,14 +91,15 @@ class ChairComponent extends ConsumerWidget {
             },
           ),
           InkWell(onTap: () {
-            if (context.read(selectedSeatProvider).state['number'] == null &&
-                context.read(selectedRowProvider).state != 'Row') {
+            if (ref.read(selectedSeatProvider.notifier).state['number'] ==
+                    null &&
+                ref.read(selectedRowProvider.notifier).state != 'Row') {
               for (int i = 0; showedList.length > i; i++) {
                 if (selectedSeats.contains(showedList[i]['id'])) {
                   showedList.removeAt(i);
                 }
               }
-              context.read(seatsProvider).state = showedList;
+              ref.read(seatsProvider.notifier).state = showedList;
               showDialog(
                 context: context,
                 builder: (context) {
@@ -120,24 +119,26 @@ class ChairComponent extends ConsumerWidget {
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 3,
                         ),
-                        itemCount: context.read(seatsProvider).state.length,
+                        itemCount:
+                            ref.read(seatsProvider.notifier).state.length,
                         itemBuilder: (context, index) {
                           return InkWell(
                             onTap: () {
-                              context.read(selectedSeatProvider).state =
-                                  context.read(seatsProvider).state[index];
-                              selectedSeats.add(context
-                                  .read(seatsProvider)
+                              ref.read(selectedSeatProvider.notifier).state =
+                                  ref.read(seatsProvider.notifier).state[index];
+                              selectedSeats.add(ref
+                                  .read(seatsProvider.notifier)
                                   .state[index]['id']);
-                              globalSelectedSeats.add(context
-                                  .read(seatsProvider)
+                              globalSelectedSeats.add(ref
+                                  .read(seatsProvider.notifier)
                                   .state[index]['id']);
-                              context.read(cartCounterProvider).state++;
-                              context.read(totalPriceProvider).state =
-                                  context.read(totalPriceProvider).state +
+                              ref.read(cartCounterProvider.notifier).state++;
+                              ref.read(totalPriceProvider.notifier).state =
+                                  ref.read(totalPriceProvider.notifier).state +
                                       categoryPrice;
                               submitted = true;
-                              context.refresh(rebuildProvide);
+                              ref.read(rebuildProvide.notifier).state =
+                                  DateTime.now().toString();
                               Navigator.pop(context);
                             },
                             child: Container(
@@ -157,8 +158,8 @@ class ChairComponent extends ConsumerWidget {
                               child: Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: Text(
-                                  context
-                                      .read(seatsProvider)
+                                  ref
+                                      .read(seatsProvider.notifier)
                                       .state[index]['number']
                                       .toString(),
                                   style: const TextStyle(
@@ -175,9 +176,10 @@ class ChairComponent extends ConsumerWidget {
               );
             }
           }, child: Consumer(
-            builder: (context, watch, child) {
-              watch(selectedSeatProvider).state;
-              return context.read(selectedSeatProvider).state['number'] == null
+            builder: (context, ref, child) {
+              ref.watch(selectedSeatProvider);
+              return ref.read(selectedSeatProvider.notifier).state['number'] ==
+                      null
                   ? Container(
                       width: screenWidth / 5,
                       height: 30,
@@ -191,8 +193,8 @@ class ChairComponent extends ConsumerWidget {
                         style: TextStyle(color: Colors.white, fontSize: 12),
                       ),
                     )
-                  : Text(context
-                      .read(selectedSeatProvider)
+                  : Text(ref
+                      .read(selectedSeatProvider.notifier)
                       .state['number']
                       .toString());
             },
@@ -201,20 +203,20 @@ class ChairComponent extends ConsumerWidget {
             onPressed: () {
               chairs.removeAt(index);
               selectedSeats
-                  .remove(context.read(selectedSeatProvider).state['id']);
+                  .remove(ref.read(selectedSeatProvider.notifier).state['id']);
               globalSelectedSeats
-                  .remove(context.read(selectedSeatProvider).state['id']);
-              context.read(cartCounterProvider).state--;
-              context.read(totalPriceProvider).state =
-                  context.read(totalPriceProvider).state - categoryPrice;
+                  .remove(ref.read(selectedSeatProvider.notifier).state['id']);
+              ref.read(cartCounterProvider.notifier).state--;
+              ref.read(totalPriceProvider.notifier).state =
+                  ref.read(totalPriceProvider.notifier).state - categoryPrice;
 
               for (int i = 0; showedList.length > i; i++) {
                 if (selectedSeats.contains(showedList[i]['id'])) {
                   showedList.removeAt(i);
                 }
               }
-              context.read(seatsProvider).state = showedList;
-              context.refresh(provider);
+              ref.read(seatsProvider.notifier).state = showedList;
+              ref.read(provider.notifier).state = DateTime.now().toString();
             },
             icon: const Icon(
               Icons.remove_circle_outline_rounded,

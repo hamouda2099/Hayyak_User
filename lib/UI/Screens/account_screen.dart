@@ -4,7 +4,6 @@ import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/Dialogs/loading_screen.dart';
 import 'package:hayyak/Models/profile_model.dart';
 import 'package:hayyak/UI/Components/box_shadow.dart';
-import 'package:hayyak/UI/Components/custom_app_bar.dart';
 import 'package:hayyak/UI/Components/seccond_app_bar.dart';
 import 'package:hayyak/UI/Screens/edit_account_screen.dart';
 import 'package:hayyak/main.dart';
@@ -20,7 +19,8 @@ class AccountScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            SecondAppBar(title: 'Account',shareAndFav: false,backToHome: false),
+            SecondAppBar(
+                title: 'Account', shareAndFav: false, backToHome: false),
             FutureBuilder<ProfileModel>(
               future: ApiManger.getProfileData(),
               builder:
@@ -45,31 +45,34 @@ class AccountScreen extends StatelessWidget {
                                 width: 80,
                                 height: 80,
                                 decoration: BoxDecoration(
-                                  border: Border.all(width: 1,color: Colors.blue),
-                                  shape: BoxShape.circle,
+                                    border: Border.all(
+                                        width: 1, color: Colors.blue),
+                                    shape: BoxShape.circle,
                                     image: DecorationImage(
                                         image: NetworkImage(
-                                        snapShot?.data?.data?.image??''
-                                    ))                                    ),
+                                            snapShot?.data?.data?.image ??
+                                                ''))),
                               ),
                             ),
-                             Text(
-                              snapShot.data?.data?.name??'',
+                            Text(
+                              snapShot.data?.data?.name ?? '',
                               style: const TextStyle(
                                   color: Colors.blue,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16),
                             ),
-                             Text(
-                              snapShot.data?.data?.email??'',
+                            Text(
+                              snapShot.data?.data?.email ?? '',
                               style: const TextStyle(
                                   color: kLightGreyColor,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15),
                             ),
                             InkWell(
-                              onTap:(){
-                                navigator(context: context,screen: EditAccountScreen());
+                              onTap: () {
+                                navigator(
+                                    context: context,
+                                    screen: EditAccountScreen());
                               },
                               child: Container(
                                 margin: const EdgeInsets.all(10),
@@ -80,7 +83,8 @@ class AccountScreen extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(10),
                                     boxShadow: boxShadow),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(
                                       children: const [
@@ -112,7 +116,8 @@ class AccountScreen extends StatelessWidget {
                               height: 20,
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(right: 15.0, left: 15),
+                              padding:
+                                  const EdgeInsets.only(right: 15.0, left: 15),
                               child: Row(
                                 children: [
                                   Container(
@@ -126,7 +131,7 @@ class AccountScreen extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    snapShot.data!.data!.firstName??'',
+                                    snapShot.data!.data!.firstName ?? '',
                                     style: TextStyle(
                                         color: kLightGreyColor.withOpacity(0.5),
                                         fontWeight: FontWeight.bold,
@@ -136,7 +141,8 @@ class AccountScreen extends StatelessWidget {
                               ),
                             ),
                             Container(
-                              margin: const EdgeInsets.only(top: 10, right: 15, left: 15),
+                              margin: const EdgeInsets.only(
+                                  top: 10, right: 15, left: 15),
                               width: double.infinity,
                               height: 1,
                               color: kLightGreyColor.withOpacity(0.5),
@@ -145,7 +151,8 @@ class AccountScreen extends StatelessWidget {
                               height: 20,
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(right: 15.0, left: 15),
+                              padding:
+                                  const EdgeInsets.only(right: 15.0, left: 15),
                               child: Row(
                                 children: [
                                   Container(
@@ -159,7 +166,7 @@ class AccountScreen extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    snapShot.data!.data!.lastName??'',
+                                    snapShot.data!.data!.lastName ?? '',
                                     style: TextStyle(
                                         color: kLightGreyColor.withOpacity(0.5),
                                         fontWeight: FontWeight.bold,
@@ -169,7 +176,8 @@ class AccountScreen extends StatelessWidget {
                               ),
                             ),
                             Container(
-                              margin: const EdgeInsets.only(top: 10, right: 15, left: 15),
+                              margin: const EdgeInsets.only(
+                                  top: 10, right: 15, left: 15),
                               width: double.infinity,
                               height: 1,
                               color: kLightGreyColor.withOpacity(0.5),
@@ -178,7 +186,8 @@ class AccountScreen extends StatelessWidget {
                               height: 20,
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(right: 15.0, left: 15),
+                              padding:
+                                  const EdgeInsets.only(right: 15.0, left: 15),
                               child: Row(
                                 children: [
                                   Container(
@@ -192,7 +201,7 @@ class AccountScreen extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                      snapShot.data?.data?.email??'',
+                                    snapShot.data?.data?.email ?? '',
                                     style: TextStyle(
                                         color: kLightGreyColor.withOpacity(0.5),
                                         fontWeight: FontWeight.bold,
@@ -202,7 +211,8 @@ class AccountScreen extends StatelessWidget {
                               ),
                             ),
                             Container(
-                              margin: const EdgeInsets.only(top: 10, right: 15, left: 15),
+                              margin: const EdgeInsets.only(
+                                  top: 10, right: 15, left: 15),
                               width: double.infinity,
                               height: 1,
                               color: kLightGreyColor.withOpacity(0.5),
@@ -211,7 +221,8 @@ class AccountScreen extends StatelessWidget {
                               height: 20,
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(right: 15.0, left: 15),
+                              padding:
+                                  const EdgeInsets.only(right: 15.0, left: 15),
                               child: Row(
                                 children: [
                                   Container(
@@ -225,7 +236,7 @@ class AccountScreen extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                      snapShot.data?.data?.phone??'',
+                                    snapShot.data?.data?.phone ?? '',
                                     style: TextStyle(
                                         color: kLightGreyColor.withOpacity(0.5),
                                         fontWeight: FontWeight.bold,
@@ -235,7 +246,8 @@ class AccountScreen extends StatelessWidget {
                               ),
                             ),
                             Container(
-                              margin: const EdgeInsets.only(top: 10, right: 15, left: 15),
+                              margin: const EdgeInsets.only(
+                                  top: 10, right: 15, left: 15),
                               width: double.infinity,
                               height: 1,
                               color: kLightGreyColor.withOpacity(0.5),
@@ -253,7 +265,6 @@ class AccountScreen extends StatelessWidget {
                 }
               },
             ),
-
           ],
         ),
       ),

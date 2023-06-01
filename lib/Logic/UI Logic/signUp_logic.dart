@@ -2,16 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:hayyak/Config/navigator.dart';
-import 'package:hayyak/Config/user_data.dart';
 import 'package:hayyak/Dialogs/loading_dialog.dart';
 import 'package:hayyak/Dialogs/message_dialog.dart';
 import 'package:hayyak/Dialogs/verified_account_dialog.dart';
 import 'package:hayyak/Logic/Services/api_manger.dart';
-import 'package:hayyak/UI/Screens/home_screen.dart';
 import 'package:hayyak/UI/Screens/verify_otp_code_screen.dart';
 
 class SignUpLogic {
   static String otpCode = '';
+
   static void signUp({
     required BuildContext context,
     required String firstName,

@@ -4,26 +4,29 @@ import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/main.dart';
 
 class MapViewScreen extends StatefulWidget {
-  MapViewScreen({required this.lat, required this.lng,required this.title,required this.desc});
+  MapViewScreen(
+      {required this.lat,
+      required this.lng,
+      required this.title,
+      required this.desc});
+
   double lat = 0.0;
   double lng = 0.0;
-  String title , desc = '';
+  String title, desc = '';
+
   @override
   State<MapViewScreen> createState() => _MapViewScreenState();
 }
 
 class _MapViewScreenState extends State<MapViewScreen> {
   Set<Marker> markers = Set();
+
   @override
   void initState() {
     markers.add(Marker(
         markerId: const MarkerId('location'),
         position: LatLng(widget.lat, widget.lng),
-      infoWindow: InfoWindow(
-        title: "",
-        snippet: ''
-      )
-    ));
+        infoWindow: InfoWindow(title: "", snippet: '')));
     super.initState();
   }
 
