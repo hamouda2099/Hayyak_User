@@ -120,6 +120,9 @@ class EventSeatsScreen extends StatelessWidget {
                           navigator(
                               context: context,
                               screen: CheckoutScreen(
+                                vat: snapShot.data?.data.event.details.vat,
+                                fees:
+                                    snapShot.data?.data.event.details.eventFees,
                                 receitType: 'seats',
                                 total: totalPriceProvider,
                                 selectedDate: selectedDate,

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hayyak/Dialogs/loading_dialog.dart';
 import 'package:hayyak/Dialogs/message_dialog.dart';
 import 'package:hayyak/Models/aviable_for_sale_model.dart';
+import 'package:urwaypayment/urwaypayment.dart';
 
 // import 'package:urwaypayment/urwaypayment.dart';
 
@@ -19,62 +20,56 @@ class CheckoutLogic {
   String services = '';
   num discount = 0;
   num smsServiceValue = 0, refundServiceValue = 0, whatsAppServiceValue = 0;
+  num totalTickets = 0;
+  num totalServices = 0;
+  num totalExclVat = 0;
+  num totalVatVal = 0;
+  num totalFeesVal = 0;
   final totalAfterCoupon = StateProvider((ref) => 0);
   final couponApplied = StateProvider((ref) => false);
   TextEditingController couponCnt = TextEditingController();
 
   onlinePayment({required BuildContext context}) {
-    // bool validateSuccess;
-    // validateEmail =  Payment.isValidEmailchk(UserData.email);
-    // if (validateEmail){
-    //   validateSuccess = Payment.isValidationSucess(context, '10', UserData.email, 'A', 'SA', 'SAR', 'Flutter_76376', 'A', '5123450000000009');
-    //   if (validateSuccess){
-    //     print('validate success');
-    //
-    //   }
-    // }
-    // Payment.makepaymentService(
-    //         context: context,
-    //         country: 'SA',
-    //         action: '4',
-    //         currency: 'SAR',
-    //         amt: '1000',
-    //         customerEmail: 'sameh.agag.2010@gmail.com',
-    //         trackid: 'FLUTTER_456353577432',
-    //         udf1: 'sjdhkas',
-    //         udf2: '',
-    //         udf3: 'EN',
-    //         udf4: '',
-    //         udf5: 'Text6',
-    //         tokenizationType: '2',
-    //         address: '',
-    //         cardToken: '',
-    //         city: '',
-    //         state: '',
-    //         tokenOperation: 'A',
-    //         zipCode: '21442',
-    //         )
-    //     .then((value) {
-    //   print(value);
-    // });
+    Payment.makepaymentService(
+      context: context,
+      country: 'SA',
+      action: '4',
+      currency: 'SAR',
+      amt: '1000',
+      customerEmail: UserData.email,
+      trackid: 'FLUTTER_456353577432',
+      udf1: 'text',
+      udf2: '',
+      udf3: 'EN',
+      udf4: '',
+      udf5: 'Text6',
+      tokenizationType: '2',
+      address: '',
+      cardToken: '',
+      city: '',
+      state: '',
+      tokenOperation: 'A',
+      zipCode: '21442',
+    ).then((value) {});
   }
 
   initStaticServices(
       {required AsyncSnapshot<StaticServices> snapShot,
-      required BuildContext context}) {
-    smsServiceValue = snapShot?.data?.data?.sms?.value ?? 0;
-    refundServiceValue = snapShot?.data?.data?.refund?.value ?? 0;
-    whatsAppServiceValue = snapShot.data?.data?.whatsapp?.value ?? 0;
+      required BuildContext context,
+      required List tickets}) {
+    smsServiceValue = (snapShot.data?.data?.sms?.value ?? 0) * tickets.length;
+    refundServiceValue =
+        (snapShot.data?.data?.refund?.value ?? 0) * tickets.length;
+    whatsAppServiceValue =
+        (snapShot.data?.data?.whatsapp?.value ?? 0) * tickets.length;
   }
 
   applyCoupon(
       {required num total,
       required BuildContext context,
       required WidgetRef ref}) {
-    print("total $total");
     loadingDialog(context);
     ApiManger.applyCoupon(total: total, coupon: couponCnt.text).then((value) {
-      print(jsonDecode(value.body)['data']['total_value_after_coupon']);
       Navigator.pop(context);
       if (value.statusCode == 200) {
         ref.read(couponApplied.notifier).state = true;
@@ -86,7 +81,7 @@ class CheckoutLogic {
     });
   }
 
-  String countTicketsPrice({required List<TicketsInvoice> tickets}) {
+  num countTicketsPrice({required List<TicketsInvoice> tickets}) {
     double total = 0;
     if (tickets == []) {
       total = 0.0;
@@ -95,10 +90,11 @@ class CheckoutLogic {
         total = total + element.finalCost!.toDouble();
       }
     }
-    return total.toString();
+    totalTickets = total;
+    return total;
   }
 
-  String countServicesPrice({required List<ServicesInvoice> services}) {
+  num countServicesPrice({required List<ServicesInvoice> services}) {
     double total = 0;
     if (services == []) {
       total = 0.0;
@@ -107,7 +103,8 @@ class CheckoutLogic {
         total = total + element.cost!.toDouble();
       }
     }
-    return total.toString();
+    totalServices = total;
+    return total;
   }
 
   String countTotalExclVat(
@@ -118,20 +115,48 @@ class CheckoutLogic {
     } else {
       total = totalAfterCoupon + sms + whatsapp + refund;
     }
+    totalExclVat = total;
     return '$total';
   }
 
-  String countVatValue(
-      {required num totalNet, totalAfterCoupon, sms, whatsapp, refund}) {
+  num countVatValue(
+      {required num? totalNet,
+      totalAfterCoupon,
+      sms,
+      whatsapp,
+      refund,
+      vat,
+      fees}) {
+    num vatVal = 0;
+    if (totalAfterCoupon == 0) {
+      vatVal = (totalNet?.toInt())! + sms + whatsapp + refund + fees;
+      vatVal = ((vatVal * vat) / 100);
+    } else {
+      vatVal = totalAfterCoupon + sms + whatsapp + refund + fees;
+      vatVal = ((vatVal * vat) / 100);
+    }
+    totalVatVal = vatVal;
+    return vatVal;
+  }
+
+  num countFeesValue(
+      {required num totalNet, totalAfterCoupon, sms, whatsapp, refund, vat}) {
     num vatVal = 0;
     if (totalAfterCoupon == 0) {
       vatVal = totalNet + sms + whatsapp + refund;
-      vatVal = ((vatVal * UserData.vat) / 100);
+      vatVal = ((vatVal * vat) / 100);
     } else {
       vatVal = totalAfterCoupon + sms + whatsapp + refund;
-      vatVal = ((vatVal * UserData.vat) / 100);
+      vatVal = ((vatVal * vat) / 100);
     }
-    return vatVal.toStringAsFixed(2);
+    totalFeesVal = vatVal;
+    return vatVal;
+  }
+
+  num countFinalTotal() {
+    num total = 0;
+    total = total + totalExclVat + totalFeesVal + totalVatVal;
+    return total;
   }
 
   initDataToCheckAvailable(
@@ -151,7 +176,6 @@ class CheckoutLogic {
               '$services${element['service']['id']},${element['count']},';
         }
         services = services.substring(0, services.length - 1);
-        print(services);
       } else {
         for (var element in selectedTickets) {
           tickets = '$tickets${element['id']},';
@@ -161,7 +185,6 @@ class CheckoutLogic {
               '$services${element['service']['id']},${element['count']},';
         }
         services = services.substring(0, services.length - 1);
-        print(services);
       }
     }
   }

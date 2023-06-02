@@ -96,6 +96,8 @@ class Details {
     required this.seats,
     required this.vat,
     required this.vatDisplayed,
+    required this.eventFees,
+    required this.eventFeesDisplayed,
   });
 
   int id;
@@ -110,8 +112,10 @@ class Details {
   String averageCost;
   Action action;
   String seats;
-  int vat;
+  num vat;
   String vatDisplayed;
+  num eventFees;
+  String eventFeesDisplayed;
 
   factory Details.fromJson(Map<String, dynamic> json) => Details(
         id: json["id"],
@@ -128,6 +132,8 @@ class Details {
         seats: json["seats"],
         vat: json["vat"],
         vatDisplayed: json["vat_displayed"],
+        eventFees: json["event_fees"],
+        eventFeesDisplayed: json["event_fees_displayed"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -145,6 +151,8 @@ class Details {
         "seats": seats,
         "vat": vat,
         "vat_displayed": vatDisplayed,
+        "event_fees": eventFees,
+        "event_fees_displayed": eventFeesDisplayed
       };
 }
 

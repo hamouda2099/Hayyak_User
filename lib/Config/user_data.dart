@@ -13,5 +13,4 @@ class UserData {
   static TranslationModel translation = TranslationModel();
   static SettingsModel settings = SettingsModel();
   static num reservationTimer = 0;
-  static num vat = 0;
 }

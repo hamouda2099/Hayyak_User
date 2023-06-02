@@ -1,3 +1,5 @@
+import 'dart:ui' as ui;
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/Config/navigator.dart';
@@ -7,9 +9,11 @@ import 'package:hayyak/UI/Components/seccond_app_bar.dart';
 import 'package:hayyak/UI/Screens/account_screen.dart';
 import 'package:hayyak/UI/Screens/contact_us_screen.dart';
 import 'package:hayyak/UI/Screens/faqs_screen.dart';
+import 'package:hayyak/UI/Screens/home_screen.dart';
 import 'package:hayyak/UI/Screens/privacy_policy_screen.dart';
 import 'package:hayyak/UI/Screens/terms_and_conditions_screen.dart';
 import 'package:hayyak/main.dart';
+import 'package:hive/hive.dart';
 
 import '../../Dialogs/logout_dialog.dart';
 
@@ -69,15 +73,15 @@ class SettingsScreen extends StatelessWidget {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: boxShadow),
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Account',
+                      Text('Account',
                           style: TextStyle(
                               color: kLightGreyColor,
                               fontSize: 14,
                               fontWeight: FontWeight.bold)),
-                      const Icon(
+                      Icon(
                         Icons.arrow_forward_ios,
                         color: kDarkGreyColor,
                         size: 20,
@@ -87,7 +91,26 @@ class SettingsScreen extends StatelessWidget {
                 ),
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  if (localLanguage == 'en') {
+                    localLanguage = 'ar';
+                    UserData.language = localLanguage;
+                    Hive.box('user_data').put('lang', localLanguage);
+                    context.setLocale(const Locale('ar'));
+                    textDirection = ui.TextDirection.rtl;
+                  } else {
+                    localLanguage = 'en';
+                    UserData.language = localLanguage;
+                    Hive.box('user_data').put('lang', localLanguage);
+                    context.setLocale(const Locale('en'));
+                    textDirection = ui.TextDirection.ltr;
+                  }
+                  navigator(
+                    context: context,
+                    replacement: true,
+                    screen: HomeScreen(),
+                  );
+                },
                 child: Container(
                   margin: const EdgeInsets.all(10),
                   width: screenWidth / 1.1,
@@ -99,12 +122,12 @@ class SettingsScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('العربية',
-                          style: TextStyle(
+                      Text(localLanguage == 'ar' ? "English" : 'العربية',
+                          style: const TextStyle(
                               color: kLightGreyColor,
                               fontSize: 14,
                               fontWeight: FontWeight.bold)),
-                      const Icon(
+                      Icon(
                         Icons.arrow_forward_ios,
                         color: kDarkGreyColor,
                         size: 20,
@@ -125,9 +148,9 @@ class SettingsScreen extends StatelessWidget {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: boxShadow),
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
+                    children: [
                       Text('FAQs',
                           style: TextStyle(
                               color: kLightGreyColor,
@@ -154,9 +177,9 @@ class SettingsScreen extends StatelessWidget {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: boxShadow),
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
+                    children: [
                       Text('Privacy & Policy',
                           style: TextStyle(
                               color: kLightGreyColor,

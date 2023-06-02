@@ -33,7 +33,6 @@ class HomeScreen extends StatelessWidget {
                       }
                     default:
                       if (snapShot.hasError) {
-                        print(snapShot);
                         return Text('Error: ${snapShot.error}');
                       } else {
                         return ListView(
@@ -48,7 +47,9 @@ class HomeScreen extends StatelessWidget {
                                           Padding(
                                             padding: const EdgeInsets.all(5.0),
                                             child: Align(
-                                                alignment: Alignment.centerLeft,
+                                                alignment: localLanguage == 'en'
+                                                    ? Alignment.centerLeft
+                                                    : Alignment.centerRight,
                                                 child: Text(
                                                   snapShot
                                                           .data

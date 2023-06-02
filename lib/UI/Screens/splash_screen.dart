@@ -1,3 +1,6 @@
+import 'dart:ui' as ui;
+
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/Config/navigator.dart';
@@ -26,9 +29,6 @@ class _SplashScreenState extends State<SplashScreen> {
         if (element.key == 'reservation_timer') {
           UserData.reservationTimer = int.parse(element.value.toString());
         }
-        if (element.key == 'vat') {
-          UserData.vat = int.parse(element.value.toString());
-        }
       });
       Future.delayed(const Duration(seconds: 4), () async {
         if (await Hive.box('user_data').get('logged_in') == true) {
@@ -41,6 +41,16 @@ class _SplashScreenState extends State<SplashScreen> {
           UserData.role = await Hive.box('user_data').get('role');
           UserData.language = await Hive.box('user_data').get('lang');
           localLanguage = UserData.language;
+          print(localLanguage);
+          if (localLanguage == 'en') {
+            textDirection = ui.TextDirection.ltr;
+            localLanguage = 'en';
+            context.setLocale(Locale('en'));
+          } else {
+            textDirection = ui.TextDirection.rtl;
+            localLanguage = 'ar';
+            context.setLocale(const Locale('ar'));
+          }
           navigator(context: context, screen: HomeScreen(), remove: true);
         } else {
           ApiManger.getTranslationsKeys().then((value) {
