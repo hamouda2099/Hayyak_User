@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/Config/user_data.dart';
@@ -13,7 +15,6 @@ import 'package:hive/hive.dart';
 
 class LoginLogic {
   late WidgetRef ref;
-
   static void login(BuildContext context,
       {@required email,
       @required password,
@@ -56,5 +57,15 @@ class LoginLogic {
         }
       });
     }
+  }
+
+  googleLogin({required BuildContext context})async {
+    final GoogleSignInAccount? gUser = await GoogleSignIn().signIn();
+    final GoogleSignInAuthentication? gAuth = await gUser?.authentication;
+    final credential = GoogleAuthProvider.credential(
+      accessToken: gAuth?.accessToken,
+      idToken: gAuth?.idToken
+    );
+    return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 }

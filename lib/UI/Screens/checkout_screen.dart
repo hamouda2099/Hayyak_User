@@ -10,6 +10,7 @@ import 'package:hayyak/States/providers.dart';
 import 'package:hayyak/UI/Components/seccond_app_bar.dart';
 import 'package:hayyak/main.dart';
 import '../../Dialogs/loading_screen.dart';
+import '../../Dialogs/message_dialog.dart';
 import '../../Dialogs/static_services_info_dialog.dart';
 import '../../Logic/Services/api_manger.dart';
 import '../../Models/aviable_for_sale_model.dart';
@@ -45,6 +46,7 @@ class CheckoutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    logic.context = context;
     return FutureBuilder(
       future: logic.initDataToCheckAvailable(
           receiptType: receitType,
@@ -81,6 +83,7 @@ class CheckoutScreen extends StatelessWidget {
                       if (snapShot.hasError) {
                         return Text('Error: ${snapShot.error}');
                       } else {
+                        print(snapShot.data?.toJson());
                         return Scaffold(
                           bottomNavigationBar: Container(
                             width: screenWidth / 1,
@@ -309,28 +312,196 @@ class CheckoutScreen extends StatelessWidget {
                                   ringColor: kLightGreyColor,
                                   textFormat: CountdownTextFormat.MM_SS,
                                 ),
-                                InkWell(
-                                  onTap: () {
-                                    logic.onlinePayment(context: context);
-                                  },
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    width: screenWidth / 2,
-                                    height: 50,
-                                    margin: const EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                      color: Colors.green,
-                                      borderRadius: BorderRadius.circular(5),
+                                Consumer(builder: (context, ref, child) {
+                                  return InkWell(
+                                    onTap: () {
+                                      if(snapShot.data?.data?.ticketsInvoice == []){
+                                        messageDialog(context,'No Ticket Available');
+                                      } else {
+                                        logic.createOrder(
+                                            eventId: eventId,
+                                            sms: 'on',
+                                            refund: 'on',
+                                            whatsapp: 'on',
+                                            // amount: '1000',
+                                            // (double.parse(logic
+                                            //     .countTotalExclVat(
+                                            //   totalNet: (logic.countTicketsPrice(
+                                            //       tickets: snapShot
+                                            //           .data
+                                            //           ?.data
+                                            //           ?.ticketsInvoice ??
+                                            //           []) +
+                                            //       logic.countServicesPrice(
+                                            //           services: snapShot
+                                            //               .data
+                                            //               ?.data
+                                            //               ?.servicesInvoice ??
+                                            //               [])),
+                                            //   totalAfterCoupon: ref
+                                            //       .read(logic
+                                            //       .totalAfterCoupon
+                                            //       .notifier)
+                                            //       .state,
+                                            //   refund: ref
+                                            //       .read(refundGuaranteeProvider
+                                            //       .notifier)
+                                            //       .state
+                                            //       ? logic
+                                            //       .refundServiceValue
+                                            //       : 0.0,
+                                            //   sms: ref
+                                            //       .read(sendMeTicketsVisSmsProvider
+                                            //       .notifier)
+                                            //       .state
+                                            //       ? logic
+                                            //       .smsServiceValue
+                                            //       : 0.0,
+                                            //   whatsapp: ref
+                                            //       .read(sendMeTicketsVisWhatsappProvider
+                                            //       .notifier)
+                                            //       .state
+                                            //       ? logic
+                                            //       .whatsAppServiceValue
+                                            //       : 0.0,
+                                            // )) +
+                                            //     logic.countFeesValue(
+                                            //       vat: fees,
+                                            //       totalNet: (logic.countTicketsPrice(
+                                            //           tickets: snapShot
+                                            //               .data
+                                            //               ?.data
+                                            //               ?.ticketsInvoice ??
+                                            //               []) +
+                                            //           logic.countServicesPrice(
+                                            //               services: snapShot
+                                            //                   .data
+                                            //                   ?.data
+                                            //                   ?.servicesInvoice ??
+                                            //                   [])),
+                                            //       totalAfterCoupon: ref
+                                            //           .read(logic
+                                            //           .totalAfterCoupon
+                                            //           .notifier)
+                                            //           .state,
+                                            //       refund: ref
+                                            //           .read(refundGuaranteeProvider
+                                            //           .notifier)
+                                            //           .state
+                                            //           ? logic
+                                            //           .refundServiceValue
+                                            //           : 0,
+                                            //       sms: ref
+                                            //           .read(sendMeTicketsVisSmsProvider
+                                            //           .notifier)
+                                            //           .state
+                                            //           ? logic
+                                            //           .smsServiceValue
+                                            //           : 0,
+                                            //       whatsapp: ref
+                                            //           .read(sendMeTicketsVisWhatsappProvider
+                                            //           .notifier)
+                                            //           .state
+                                            //           ? logic
+                                            //           .whatsAppServiceValue
+                                            //           : 0,
+                                            //     ) +
+                                            //     logic.countVatValue(
+                                            //       vat: vat,
+                                            //       fees: logic
+                                            //           .countFeesValue(
+                                            //         vat: fees,
+                                            //         totalNet: (logic.countTicketsPrice(
+                                            //             tickets: snapShot
+                                            //                 .data
+                                            //                 ?.data
+                                            //                 ?.ticketsInvoice ??
+                                            //                 []) +
+                                            //             logic.countServicesPrice(
+                                            //                 services: snapShot
+                                            //                     .data
+                                            //                     ?.data
+                                            //                     ?.servicesInvoice ??
+                                            //                     [])),
+                                            //         totalAfterCoupon: ref
+                                            //             .read(logic
+                                            //             .totalAfterCoupon
+                                            //             .notifier)
+                                            //             .state,
+                                            //         refund: ref
+                                            //             .read(refundGuaranteeProvider
+                                            //             .notifier)
+                                            //             .state
+                                            //             ? logic
+                                            //             .refundServiceValue
+                                            //             : 0,
+                                            //         sms: ref
+                                            //             .read(sendMeTicketsVisSmsProvider
+                                            //             .notifier)
+                                            //             .state
+                                            //             ? logic
+                                            //             .smsServiceValue
+                                            //             : 0,
+                                            //         whatsapp: ref
+                                            //             .read(sendMeTicketsVisWhatsappProvider
+                                            //             .notifier)
+                                            //             .state
+                                            //             ? logic
+                                            //             .whatsAppServiceValue
+                                            //             : 0,
+                                            //       ),
+                                            //       totalNet: (logic.countTicketsPrice(
+                                            //           tickets: snapShot
+                                            //               .data
+                                            //               ?.data
+                                            //               ?.ticketsInvoice ??
+                                            //               []) +
+                                            //           logic.countServicesPrice(services: snapShot.data?.data?.servicesInvoice ?? [])),
+                                            //       totalAfterCoupon: ref.read(logic.totalAfterCoupon.notifier).state,
+                                            //       refund: ref.read(refundGuaranteeProvider
+                                            //           .notifier)
+                                            //           .state
+                                            //           ? logic
+                                            //           .refundServiceValue
+                                            //           : 0,
+                                            //       sms: ref
+                                            //           .read(sendMeTicketsVisSmsProvider
+                                            //           .notifier)
+                                            //           .state
+                                            //           ? logic
+                                            //           .smsServiceValue
+                                            //           : 0,
+                                            //       whatsapp: ref
+                                            //           .read(sendMeTicketsVisWhatsappProvider
+                                            //           .notifier)
+                                            //           .state
+                                            //           ? logic
+                                            //           .whatsAppServiceValue
+                                            //           : 0,
+                                            //     )).toString()
+                                            date: selectedDate,
+                                            couponId: '');
+                                      }
+                                    },
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      width: screenWidth / 2,
+                                      height: 50,
+                                      margin: const EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                        color: Colors.green,
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      child: const Text(
+                                        'Pay',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
-                                    child: const Text(
-                                      'Pay',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                )
+                                  );
+                                }),
                               ],
                             ),
                           ),

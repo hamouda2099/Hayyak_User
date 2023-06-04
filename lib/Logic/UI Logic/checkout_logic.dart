@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hayyak/Dialogs/loading_dialog.dart';
@@ -10,12 +11,44 @@ import 'package:urwaypayment/urwaypayment.dart';
 // import 'package:urwaypayment/urwaypayment.dart';
 
 import '../../Config/user_data.dart';
+import '../../Dialogs/order_created_successfully.dart';
 import '../../Models/static_services_model.dart';
 import '../Services/api_manger.dart';
 
 class CheckoutLogic {
   late BuildContext context;
   late bool validateEmail;
+  String? orderId;
+  String? terminalId;
+  String? customerEmail;
+  String? udf1;
+  String? udf2;
+  String? udf3;
+  String? udf4;
+  String? udf5;
+  String? requestHash;
+  String? paymentId;
+  String? transId;
+  String? eci;
+  String? result;
+  String? trackId;
+  String? authCode;
+  String? responseCode;
+  String? rrn;
+  String? responseHash;
+  String? cardBrand;
+  String? amount;
+  String? userField1;
+  String? userField2;
+  String? userField3;
+  String? userField4;
+  String? userField5;
+  String? cardToken;
+  String? maskedBan;
+  String? payFor;
+  String? subscriptionId;
+  String? paymentType;
+
   String tickets = '';
   String services = '';
   num discount = 0;
@@ -28,14 +61,53 @@ class CheckoutLogic {
   final totalAfterCoupon = StateProvider((ref) => 0);
   final couponApplied = StateProvider((ref) => false);
   TextEditingController couponCnt = TextEditingController();
+  createOrder({
+    required String eventId,
+    required String sms,
+    required String refund,
+    required String whatsapp,
+    // required String amount,
+    required String date,
+    required String couponId,
+  }) {
+    loadingDialog(context);
+    ApiManger.createOrder(
+            eventId: eventId,
+            tickets: tickets,
+            services: services,
+            sms: sms,
+            refund: refund,
+            whatsapp: whatsapp,
+            amount: '1000',
+            date: date,
+            userId: UserData.id.toString(),
+            couponId: couponId,
+            userRole: UserData.role,
+            token: UserData.token)
+        .then((value) {
+      Navigator.pop(context);
+      if (value['code'] == 200) {
+        orderId = value['data']['order']['order_id'] ?? '';
+        if (UserData.role == 'member') {
+          orderCreatedSuccessfully(context: context);
+        } else {
+          onlinePayment(context: context, amount: int.parse('1000'));
+        }
+      } else {
+        messageDialog(context, 'An error occurred');
+      }
+      print(value);
+    });
+  }
 
-  onlinePayment({required BuildContext context}) {
+  onlinePayment({required BuildContext context, required int amount}) {
+    loadingDialog(context);
     Payment.makepaymentService(
       context: context,
       country: 'SA',
       action: '4',
       currency: 'SAR',
-      amt: '1000',
+      amt: amount.toString(),
       customerEmail: UserData.email,
       trackid: 'FLUTTER_456353577432',
       udf1: 'text',
@@ -50,7 +122,57 @@ class CheckoutLogic {
       state: '',
       tokenOperation: 'A',
       zipCode: '21442',
-    ).then((value) {});
+    ).then((value) {
+      Navigator.pop(context);
+      print('response');
+      print(jsonDecode(value)['terminalId']);
+      ApiManger.payOrder(
+              orderId: orderId,
+              payStatus: '',
+              paymentId: paymentId,
+              tranId: transId,
+              eci: eci,
+              result: result,
+              trackId: trackId,
+              authCode: authCode,
+              responseCode: responseCode,
+              rrn: rrn,
+              responseHash: responseHash,
+              amount: amount.toString(),
+              cardBrand: cardBrand,
+              userField1: userField1,
+              userField2: userField2,
+              userField3: userField3,
+              userField4: userField4,
+              userField5: userField5,
+              maskedPAN: maskedBan,
+              cardToken: cardToken,
+              subscriptionId: subscriptionId,
+              email: UserData.email,
+              payFor: payFor,
+              payId: paymentId,
+              terminalid: terminalId,
+              udf1: udf1,
+              udf2: udf2,
+              udf3: udf3,
+              udf4: udf4,
+              udf5: udf5,
+              tranDate: '',
+              tranType: '',
+              integrationModule: '',
+              integrationData: '',
+              targetUrl: '',
+              postData: '',
+              intUrl: '',
+              linkBasedUrl: '',
+              sadadNumber: '',
+              billNumber: '',
+              responseMsg: '')
+          .then((value) {
+        print(value);
+      });
+      print(value);
+    });
   }
 
   initStaticServices(
@@ -186,6 +308,12 @@ class CheckoutLogic {
         }
         services = services.substring(0, services.length - 1);
       }
+      print('tickets');
+      print(tickets);
+      print(services);
+      print(UserData.id);
+      print(UserData.role);
+      print(UserData.token);
     }
   }
 }

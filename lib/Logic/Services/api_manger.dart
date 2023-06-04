@@ -26,7 +26,7 @@ import '../../Models/settings_model.dart';
 import '../../Models/user_order_tickets_model.dart';
 
 class ApiManger {
-  static const String hostUrl = 'https://testing.hayyak.net/api';
+  static const String hostUrl = 'https://hayyak.net/api';
   static const String _loginUrl = '$hostUrl/auth/login';
   static const String _signupUrl = '$hostUrl/auth/signup';
   static const String _requestOtpUrl = '$hostUrl/auth/request-otp';
@@ -37,6 +37,8 @@ class ApiManger {
   static const String _userOrderTicketsUrl =
       '$hostUrl/orders/get-order-tickets';
   static const String _favUrl = '$hostUrl/favorites';
+  static const String _createOrderUrl = '$hostUrl/orders/create-order';
+  static const String _payOrderUrl = '$hostUrl/orders/pay-order';
   static const String _availableTicketsForSale = '$hostUrl/event/avail-for-sal';
   static const String _faqsUrl = '$hostUrl/faq';
   static const String _getSettings = '$hostUrl/get-settings';
@@ -224,6 +226,128 @@ class ApiManger {
     Response response =
         await sendPostRequest('$_favUrl/add-event', <String, String>{
       "event_id": eventId,
+    });
+    return json.decode(response.body);
+  }
+
+  static Future createOrder({
+    required String eventId,
+    required String tickets,
+    required String services,
+    required String sms,
+    required String refund,
+    required String whatsapp,
+    required String amount,
+    required String date,
+    required String userId,
+    required String couponId,
+    required String userRole,
+    required String token,
+  }) async {
+    Response response =
+    await sendPostRequest(_createOrderUrl, <String, String>{
+      "event_id": eventId,
+      "tickets": tickets,
+      "services":services,
+      "sms":sms,
+      "refund":refund,
+      "whatsapp":whatsapp,
+      "allamount":amount,
+      "date":date,
+      "user_id":userId,
+      "cobon_id":couponId,
+      "user_role":userRole,
+      "token":token
+    });
+    return json.decode(response.body);
+  }
+
+  static Future payOrder({
+     String? orderId,
+     String? payStatus,
+     String? paymentId,
+     String? tranId,
+     String? eci,
+     String? result,
+     String? trackId,
+     String? authCode,
+     String? responseCode,
+     String? rrn,
+     String? responseHash,
+     String? amount,
+     String? cardBrand,
+     String? userField1,
+     String? userField2,
+     String? userField3,
+     String? userField4,
+     String? userField5,
+     String? maskedPAN,
+     String? cardToken,
+     String? subscriptionId,
+     String? email,
+     String? payFor,
+     String? payId,
+     String? terminalid,
+     String? udf1,
+     String? udf2,
+     String? udf3,
+     String? udf4,
+     String? udf5,
+     String? tranDate,
+     String? tranType,
+     String? integrationModule,
+     String? integrationData,
+     String? targetUrl,
+     String? postData,
+     String? intUrl,
+     String? linkBasedUrl,
+     String? sadadNumber,
+     String? billNumber,
+     String? responseMsg,
+  }) async {
+    Response response =
+    await sendPostRequest(_payOrderUrl, <String, String?>{
+      "order_id": orderId,
+      "pay_status": payStatus,
+      "PaymentId":paymentId,
+      "TranId":tranId,
+      "ECI":eci,
+      "Result":result,
+      "TrackId":trackId,
+      "AuthCode":authCode,
+      "ResponseCode":responseCode,
+      "RRN":rrn,
+      "responseHash":responseHash,
+      "amount":amount,
+      "cardBrand":cardBrand,
+      "UserField1":userField1,
+      "UserField2":userField2,
+      "UserField3":userField3,
+      "UserField4":userField4,
+      "UserField5":userField5,
+      "maskedPAN":maskedPAN,
+      "cardToken":cardToken,
+      "SubscriptionId":subscriptionId,
+      "email":email,
+      "payFor":payFor,
+      "terminalid":terminalid,
+      "udf1":udf1,
+      "udf2":udf2,
+      "udf3":udf3,
+      "udf4":udf4,
+      "udf5":udf5,
+      "trandate":tranDate,
+      "tranType":tranType,
+      "integrationModule":integrationModule,
+      "integrationData":integrationData,
+      "payid":payId,
+      "targetUrl":targetUrl,
+      "postData":postData,
+      "intUrl":intUrl,
+      "linkBasedUrl":linkBasedUrl,
+      "sadadNumber":sadadNumber,
+      "billNumber":billNumber,
+      "ResponseMsg":responseMsg,
     });
     return json.decode(response.body);
   }

@@ -190,18 +190,23 @@ class LoginScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(5),
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: boxShadow),
-                      child: SvgPicture.asset(
-                          width: 30,
-                          height: 30,
-                          'assets/icon/Icon awesome-google.svg'),
+                    InkWell(
+                      onTap: (){
+                        logic.googleLogin(context: context);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(5),
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: boxShadow),
+                        child: SvgPicture.asset(
+                            width: 30,
+                            height: 30,
+                            'assets/icon/Icon awesome-google.svg'),
+                      ),
                     ),
                     Container(
                       width: 40,
