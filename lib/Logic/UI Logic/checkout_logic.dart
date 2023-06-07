@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/Dialogs/loading_dialog.dart';
 import 'package:hayyak/Dialogs/message_dialog.dart';
 import 'package:hayyak/Models/aviable_for_sale_model.dart';
@@ -13,11 +14,14 @@ import 'package:urwaypayment/urwaypayment.dart';
 import '../../Config/user_data.dart';
 import '../../Dialogs/order_created_successfully.dart';
 import '../../Models/static_services_model.dart';
+import '../../UI/Screens/home_screen.dart';
 import '../Services/api_manger.dart';
 
 class CheckoutLogic {
   late BuildContext context;
   late bool validateEmail;
+  StaticServices? staticServices;
+  String? eventId;
   String? orderId;
   String? terminalId;
   String? customerEmail;
@@ -48,25 +52,40 @@ class CheckoutLogic {
   String? payFor;
   String? subscriptionId;
   String? paymentType;
-
   String tickets = '';
   String services = '';
   num discount = 0;
-  num smsServiceValue = 0, refundServiceValue = 0, whatsAppServiceValue = 0;
+  num? vat = 0 , fees = 0;
+  num smsServiceValue = 0,
+      refundServiceValue = 0,
+      whatsAppServiceValue = 0;
   num totalTickets = 0;
   num totalServices = 0;
   num totalExclVat = 0;
   num totalVatVal = 0;
   num totalFeesVal = 0;
+  num totalAfterCouponValue = 0;
+  num generalTotal = 0;
   final totalAfterCoupon = StateProvider((ref) => 0);
+  final refresh = StateProvider<String>((ref) => '');
   final couponApplied = StateProvider((ref) => false);
   TextEditingController couponCnt = TextEditingController();
+
+ Future init(AsyncSnapshot<AvailableTicketsForSaleModel> snapshot)async{
+     totalTickets =  countTicketsPrice(tickets: snapshot.data?.data?.ticketsInvoice??[]);
+     totalServices =  countServicesPrice(services: snapshot.data?.data?.servicesInvoice??[]);
+     totalExclVat =  countTotalExclVat(sms: false,refund: false,whatsapp:false);
+     totalFeesVal =  countFeesValue(sms: false,refund: false,whatsapp:false,fees:fees??0 );
+     totalVatVal =  countVatValue(sms: false,refund: false,whatsapp:false,vat: vat,fees: totalFeesVal);
+     generalTotal = totalExclVat + totalFeesVal + totalVatVal;
+ }
+
   createOrder({
     required String eventId,
     required String sms,
     required String refund,
     required String whatsapp,
-    // required String amount,
+    required String amount,
     required String date,
     required String couponId,
   }) {
@@ -78,29 +97,48 @@ class CheckoutLogic {
             sms: sms,
             refund: refund,
             whatsapp: whatsapp,
-            amount: '1000',
+            amount: amount,
             date: date,
             userId: UserData.id.toString(),
             couponId: couponId,
             userRole: UserData.role,
             token: UserData.token)
         .then((value) {
+          print(value);
       Navigator.pop(context);
       if (value['code'] == 200) {
-        orderId = value['data']['order']['order_id'] ?? '';
+        orderId = value['data']['order']['order_id'].toString() ?? '';
         if (UserData.role == 'member') {
           orderCreatedSuccessfully(context: context);
         } else {
-          onlinePayment(context: context, amount: int.parse('1000'));
+          onlinePayment(context: context, amount: double.parse(amount));
         }
       } else {
         messageDialog(context, 'An error occurred');
       }
-      print(value);
     });
   }
 
-  onlinePayment({required BuildContext context, required int amount}) {
+  String _convertToJsonStringQuotes({required String raw}) {
+    String jsonString = raw.replaceAll(" ", "");
+
+    jsonString = jsonString.replaceAll('{', '{"');
+    jsonString = jsonString.replaceAll(':', '": "');
+    jsonString = jsonString.replaceAll(',', '", "');
+    jsonString = jsonString.replaceAll('}', '"}');
+
+    jsonString = jsonString.replaceAll('"{"', '{"');
+    jsonString = jsonString.replaceAll('"}"', '"}');
+
+    jsonString = jsonString.replaceAll('"[{', '[{');
+    jsonString = jsonString.replaceAll('}]"', '}]');
+
+    return jsonString;
+  }
+
+
+
+  onlinePayment({required BuildContext context, required double amount}) {
     loadingDialog(context);
     Payment.makepaymentService(
       context: context,
@@ -124,54 +162,90 @@ class CheckoutLogic {
       zipCode: '21442',
     ).then((value) {
       Navigator.pop(context);
-      print('response');
-      print(jsonDecode(value)['terminalId']);
-      ApiManger.payOrder(
-              orderId: orderId,
-              payStatus: '',
-              paymentId: paymentId,
-              tranId: transId,
-              eci: eci,
-              result: result,
-              trackId: trackId,
-              authCode: authCode,
-              responseCode: responseCode,
-              rrn: rrn,
-              responseHash: responseHash,
-              amount: amount.toString(),
-              cardBrand: cardBrand,
-              userField1: userField1,
-              userField2: userField2,
-              userField3: userField3,
-              userField4: userField4,
-              userField5: userField5,
-              maskedPAN: maskedBan,
-              cardToken: cardToken,
-              subscriptionId: subscriptionId,
-              email: UserData.email,
-              payFor: payFor,
-              payId: paymentId,
-              terminalid: terminalId,
-              udf1: udf1,
-              udf2: udf2,
-              udf3: udf3,
-              udf4: udf4,
-              udf5: udf5,
-              tranDate: '',
-              tranType: '',
-              integrationModule: '',
-              integrationData: '',
-              targetUrl: '',
-              postData: '',
-              intUrl: '',
-              linkBasedUrl: '',
-              sadadNumber: '',
-              billNumber: '',
-              responseMsg: '')
-          .then((value) {
-        print(value);
-      });
-      print(value);
+      try {
+        String res = _convertToJsonStringQuotes(raw: value);
+        Map decodedRes = jsonDecode(res);
+        paymentId = decodedRes['PaymentId'];
+        transId = decodedRes['TranId'];
+        eci = decodedRes['ECI'];
+        result = decodedRes['Result'];
+        trackId = decodedRes['TrackId'];
+        responseCode = decodedRes['ResponseCode'];
+        rrn = decodedRes['RRN'];
+        responseHash = decodedRes['responseHash'];
+        cardBrand = decodedRes['MASTER'];
+        userField1 = decodedRes['UserField1'];
+        userField2 = decodedRes['UserField2'];
+        userField3 = decodedRes['UserField3'];
+        userField4 = decodedRes['UserField4'];
+        userField5 = decodedRes['UserField5'];
+        cardToken = decodedRes['cardToken'];
+        maskedBan = decodedRes['maskedPAN'];
+        payFor = decodedRes['payFor'];
+        subscriptionId = decodedRes['SubscriptionId'];
+        paymentType = decodedRes['PaymentType'];
+      } catch (e){
+        print("*************************");
+      }
+      print("order");
+      print(orderId);
+      if (result == 'Successful'){
+        ApiManger.payOrder(
+          orderId: orderId,
+          payStatus: 'success',
+          // paymentId: paymentId,
+          // tranId: transId,
+          // eci: eci,
+          // result: result,
+          // trackId: trackId,
+          // authCode: authCode??'',
+          // responseCode: responseCode,
+          // rrn: rrn,
+          // responseHash: responseHash,
+          // amount: amount.toString(),
+          // cardBrand: cardBrand,
+          // userField1: userField1,
+          // userField2: userField2,
+          // userField3: userField3,
+          // userField4: userField4,
+          // userField5: userField5,
+          // maskedPAN: maskedBan,
+          // cardToken: cardToken,
+          // subscriptionId: subscriptionId,
+          // email: UserData.email,
+          // payFor: payFor,
+          // payId: paymentId,
+          // terminalid: terminalId,
+          // udf1: udf1,
+          // udf2: udf2,
+          // udf3: udf3,
+          // udf4: udf4,
+          // udf5: udf5,
+          // tranDate: '',
+          // tranType: '',
+          // integrationModule: '',
+          // integrationData: '',
+          // targetUrl: '',
+          // postData: '',
+          // intUrl: '',
+          // linkBasedUrl: '',
+          // sadadNumber: '',
+          // billNumber: '',
+          // responseMsg: '',
+        )
+            .then((value) {
+          print(value);
+          if (value['success'] == true) {
+            navigator(context: context,screen: HomeScreen(),remove: true);
+            messageDialog(context, "Orders created successfully!");
+          } else {
+            messageDialog(context, "an error occured, please contact us");
+          }
+        });
+      } else {
+        messageDialog(context, "an error occured, please contact us");
+      }
+
     });
   }
 
@@ -180,10 +254,8 @@ class CheckoutLogic {
       required BuildContext context,
       required List tickets}) {
     smsServiceValue = (snapShot.data?.data?.sms?.value ?? 0) * tickets.length;
-    refundServiceValue =
-        (snapShot.data?.data?.refund?.value ?? 0) * tickets.length;
-    whatsAppServiceValue =
-        (snapShot.data?.data?.whatsapp?.value ?? 0) * tickets.length;
+    refundServiceValue = (snapShot.data?.data?.refund?.value ?? 0) * tickets.length;
+    whatsAppServiceValue = (snapShot.data?.data?.whatsapp?.value ?? 0) * tickets.length;
   }
 
   applyCoupon(
@@ -195,8 +267,8 @@ class CheckoutLogic {
       Navigator.pop(context);
       if (value.statusCode == 200) {
         ref.read(couponApplied.notifier).state = true;
-        ref.read(totalAfterCoupon.notifier).state =
-            jsonDecode(value.body)['data']['total_value_after_coupon'];
+        ref.read(totalAfterCoupon.notifier).state = jsonDecode(value.body)['data']['total_value_after_coupon'];
+        totalAfterCouponValue = jsonDecode(value.body)['data']['total_value_after_coupon'];
       } else {
         messageDialog(context, 'Coupon not valid !');
       }
@@ -212,7 +284,6 @@ class CheckoutLogic {
         total = total + element.finalCost!.toDouble();
       }
     }
-    totalTickets = total;
     return total;
   }
 
@@ -225,66 +296,66 @@ class CheckoutLogic {
         total = total + element.cost!.toDouble();
       }
     }
-    totalServices = total;
     return total;
   }
 
-  String countTotalExclVat(
-      {required num totalNet, totalAfterCoupon, sms, whatsapp, refund}) {
+  num? countReceipt(bool sms,bool whats, bool refund){
+   num? total = 0;
+   total = total + countTotalExclVat(sms: sms,whatsapp: whats,refund: refund);
+   total = total + countFeesValue(sms: sms,whatsapp: whats ,refund: refund, fees: fees??0);
+   total = total + countVatValue(sms: sms, fees: totalFeesVal,whatsapp: whats,refund: refund,vat: vat);
+   return total;
+  }
+
+  num countTotalExclVat(
+      {required bool sms, whatsapp, refund}) {
     num total = 0;
-    if (totalAfterCoupon == 0) {
-      total = totalNet + sms + whatsapp + refund;
+    if (totalAfterCouponValue == 0) {
+      total = (totalTickets + totalServices) + ((sms?smsServiceValue :0) + (whatsapp?whatsAppServiceValue:0) + (refund?refundServiceValue:0));
     } else {
-      total = totalAfterCoupon + sms + whatsapp + refund;
+      total = totalAfterCouponValue + ((sms?smsServiceValue :0) + (whatsapp?whatsAppServiceValue:0) + (refund?refundServiceValue:0));
     }
     totalExclVat = total;
-    return '$total';
+    return total;
   }
 
   num countVatValue(
-      {required num? totalNet,
-      totalAfterCoupon,
+      {required bool
       sms,
       whatsapp,
       refund,
       vat,
-      fees}) {
+      required num fees}) {
     num vatVal = 0;
-    if (totalAfterCoupon == 0) {
-      vatVal = (totalNet?.toInt())! + sms + whatsapp + refund + fees;
+    if (totalAfterCouponValue == 0) {
+      vatVal = (totalTickets+totalServices) + (sms?smsServiceValue :0) + (whatsapp?whatsAppServiceValue:0) + (refund?refundServiceValue:0)+ fees;
       vatVal = ((vatVal * vat) / 100);
     } else {
-      vatVal = totalAfterCoupon + sms + whatsapp + refund + fees;
+      vatVal = totalAfterCouponValue + (sms?smsServiceValue :0) + (whatsapp?whatsAppServiceValue:0) + (refund?refundServiceValue:0)+ fees;
       vatVal = ((vatVal * vat) / 100);
     }
     totalVatVal = vatVal;
     return vatVal;
   }
 
-  num countFeesValue(
-      {required num totalNet, totalAfterCoupon, sms, whatsapp, refund, vat}) {
+  num countFeesValue({ required bool sms, whatsapp, refund,required num fees}) {
     num vatVal = 0;
-    if (totalAfterCoupon == 0) {
-      vatVal = totalNet + sms + whatsapp + refund;
-      vatVal = ((vatVal * vat) / 100);
+    if (totalAfterCouponValue == 0) {
+      vatVal = (totalTickets + totalServices) + (sms?smsServiceValue :0) + (whatsapp?whatsAppServiceValue:0) + (refund?refundServiceValue:0);
+      vatVal = ((vatVal * fees) / 100);
     } else {
-      vatVal = totalAfterCoupon + sms + whatsapp + refund;
-      vatVal = ((vatVal * vat) / 100);
+      vatVal = totalAfterCouponValue + (sms?smsServiceValue :0) + (whatsapp?whatsAppServiceValue:0) + (refund?refundServiceValue:0);
+      vatVal = ((vatVal * fees) / 100);
     }
     totalFeesVal = vatVal;
     return vatVal;
   }
 
-  num countFinalTotal() {
-    num total = 0;
-    total = total + totalExclVat + totalFeesVal + totalVatVal;
-    return total;
-  }
 
   initDataToCheckAvailable(
       {required List selectedTickets,
       required List selectedServices,
-      required String receiptType}) {
+      required String receiptType}) async {
     if (selectedTickets.isEmpty || selectedServices.isEmpty) {
     } else {
       tickets = '';
@@ -308,12 +379,14 @@ class CheckoutLogic {
         }
         services = services.substring(0, services.length - 1);
       }
-      print('tickets');
-      print(tickets);
-      print(services);
-      print(UserData.id);
-      print(UserData.role);
-      print(UserData.token);
+      await ApiManger.getStaticServices(
+        eventId: eventId
+      ).then((value) {
+        staticServices = value;
+        smsServiceValue = (value.data?.sms?.value ?? 0) * selectedTickets.length;
+        refundServiceValue = (value.data?.refund?.value ?? 0) * selectedTickets.length;
+        whatsAppServiceValue = (value.data?.whatsapp?.value ?? 0) * selectedTickets.length;
+      });
     }
   }
 }
