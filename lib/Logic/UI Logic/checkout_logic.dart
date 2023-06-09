@@ -55,10 +55,8 @@ class CheckoutLogic {
   String tickets = '';
   String services = '';
   num discount = 0;
-  num? vat = 0 , fees = 0;
-  num smsServiceValue = 0,
-      refundServiceValue = 0,
-      whatsAppServiceValue = 0;
+  num? vat = 0, fees = 0;
+  num smsServiceValue = 0, refundServiceValue = 0, whatsAppServiceValue = 0;
   num totalTickets = 0;
   num totalServices = 0;
   num totalExclVat = 0;
@@ -71,14 +69,23 @@ class CheckoutLogic {
   final couponApplied = StateProvider((ref) => false);
   TextEditingController couponCnt = TextEditingController();
 
- Future init(AsyncSnapshot<AvailableTicketsForSaleModel> snapshot)async{
-     totalTickets =  countTicketsPrice(tickets: snapshot.data?.data?.ticketsInvoice??[]);
-     totalServices =  countServicesPrice(services: snapshot.data?.data?.servicesInvoice??[]);
-     totalExclVat =  countTotalExclVat(sms: false,refund: false,whatsapp:false);
-     totalFeesVal =  countFeesValue(sms: false,refund: false,whatsapp:false,fees:fees??0 );
-     totalVatVal =  countVatValue(sms: false,refund: false,whatsapp:false,vat: vat,fees: totalFeesVal);
-     generalTotal = totalExclVat + totalFeesVal + totalVatVal;
- }
+  Future init(AsyncSnapshot<AvailableTicketsForSaleModel> snapshot) async {
+    totalTickets =
+        countTicketsPrice(tickets: snapshot.data?.data?.ticketsInvoice ?? []);
+    totalServices = countServicesPrice(
+        services: snapshot.data?.data?.servicesInvoice ?? []);
+    totalExclVat =
+        countTotalExclVat(sms: false, refund: false, whatsapp: false);
+    totalFeesVal = countFeesValue(
+        sms: false, refund: false, whatsapp: false, fees: fees ?? 0);
+    totalVatVal = countVatValue(
+        sms: false,
+        refund: false,
+        whatsapp: false,
+        vat: vat,
+        fees: totalFeesVal);
+    generalTotal = totalExclVat + totalFeesVal + totalVatVal;
+  }
 
   createOrder({
     required String eventId,
@@ -104,7 +111,7 @@ class CheckoutLogic {
             userRole: UserData.role,
             token: UserData.token)
         .then((value) {
-          print(value);
+      print(value);
       Navigator.pop(context);
       if (value['code'] == 200) {
         orderId = value['data']['order']['order_id'].toString() ?? '';
@@ -135,8 +142,6 @@ class CheckoutLogic {
 
     return jsonString;
   }
-
-
 
   onlinePayment({required BuildContext context, required double amount}) {
     loadingDialog(context);
@@ -184,12 +189,10 @@ class CheckoutLogic {
         payFor = decodedRes['payFor'];
         subscriptionId = decodedRes['SubscriptionId'];
         paymentType = decodedRes['PaymentType'];
-      } catch (e){
+      } catch (e) {
         print("*************************");
       }
-      print("order");
-      print(orderId);
-      if (result == 'Successful'){
+      if (result == 'Successful') {
         ApiManger.payOrder(
           orderId: orderId,
           payStatus: 'success',
@@ -232,11 +235,10 @@ class CheckoutLogic {
           // sadadNumber: '',
           // billNumber: '',
           // responseMsg: '',
-        )
-            .then((value) {
+        ).then((value) {
           print(value);
           if (value['success'] == true) {
-            navigator(context: context,screen: HomeScreen(),remove: true);
+            navigator(context: context, screen: HomeScreen(), remove: true);
             messageDialog(context, "Orders created successfully!");
           } else {
             messageDialog(context, "an error occured, please contact us");
@@ -245,7 +247,6 @@ class CheckoutLogic {
       } else {
         messageDialog(context, "an error occured, please contact us");
       }
-
     });
   }
 
@@ -254,8 +255,10 @@ class CheckoutLogic {
       required BuildContext context,
       required List tickets}) {
     smsServiceValue = (snapShot.data?.data?.sms?.value ?? 0) * tickets.length;
-    refundServiceValue = (snapShot.data?.data?.refund?.value ?? 0) * tickets.length;
-    whatsAppServiceValue = (snapShot.data?.data?.whatsapp?.value ?? 0) * tickets.length;
+    refundServiceValue =
+        (snapShot.data?.data?.refund?.value ?? 0) * tickets.length;
+    whatsAppServiceValue =
+        (snapShot.data?.data?.whatsapp?.value ?? 0) * tickets.length;
   }
 
   applyCoupon(
@@ -267,8 +270,10 @@ class CheckoutLogic {
       Navigator.pop(context);
       if (value.statusCode == 200) {
         ref.read(couponApplied.notifier).state = true;
-        ref.read(totalAfterCoupon.notifier).state = jsonDecode(value.body)['data']['total_value_after_coupon'];
-        totalAfterCouponValue = jsonDecode(value.body)['data']['total_value_after_coupon'];
+        ref.read(totalAfterCoupon.notifier).state =
+            jsonDecode(value.body)['data']['total_value_after_coupon'];
+        totalAfterCouponValue =
+            jsonDecode(value.body)['data']['total_value_after_coupon'];
       } else {
         messageDialog(context, 'Coupon not valid !');
       }
@@ -299,58 +304,80 @@ class CheckoutLogic {
     return total;
   }
 
-  num? countReceipt(bool sms,bool whats, bool refund){
-   num? total = 0;
-   total = total + countTotalExclVat(sms: sms,whatsapp: whats,refund: refund);
-   total = total + countFeesValue(sms: sms,whatsapp: whats ,refund: refund, fees: fees??0);
-   total = total + countVatValue(sms: sms, fees: totalFeesVal,whatsapp: whats,refund: refund,vat: vat);
-   return total;
+  num? countReceipt(bool sms, bool whats, bool refund) {
+    num? total = 0;
+    total =
+        total + countTotalExclVat(sms: sms, whatsapp: whats, refund: refund);
+    total = total +
+        countFeesValue(
+            sms: sms, whatsapp: whats, refund: refund, fees: fees ?? 0);
+    total = total +
+        countVatValue(
+            sms: sms,
+            fees: totalFeesVal,
+            whatsapp: whats,
+            refund: refund,
+            vat: vat);
+    return total;
   }
 
-  num countTotalExclVat(
-      {required bool sms, whatsapp, refund}) {
+  num countTotalExclVat({required bool sms, whatsapp, refund}) {
     num total = 0;
     if (totalAfterCouponValue == 0) {
-      total = (totalTickets + totalServices) + ((sms?smsServiceValue :0) + (whatsapp?whatsAppServiceValue:0) + (refund?refundServiceValue:0));
+      total = (totalTickets + totalServices) +
+          ((sms ? smsServiceValue : 0) +
+              (whatsapp ? whatsAppServiceValue : 0) +
+              (refund ? refundServiceValue : 0));
     } else {
-      total = totalAfterCouponValue + ((sms?smsServiceValue :0) + (whatsapp?whatsAppServiceValue:0) + (refund?refundServiceValue:0));
+      total = totalAfterCouponValue +
+          ((sms ? smsServiceValue : 0) +
+              (whatsapp ? whatsAppServiceValue : 0) +
+              (refund ? refundServiceValue : 0));
     }
     totalExclVat = total;
     return total;
   }
 
   num countVatValue(
-      {required bool
-      sms,
-      whatsapp,
-      refund,
-      vat,
-      required num fees}) {
+      {required bool sms, whatsapp, refund, vat, required num fees}) {
     num vatVal = 0;
     if (totalAfterCouponValue == 0) {
-      vatVal = (totalTickets+totalServices) + (sms?smsServiceValue :0) + (whatsapp?whatsAppServiceValue:0) + (refund?refundServiceValue:0)+ fees;
+      vatVal = (totalTickets + totalServices) +
+          (sms ? smsServiceValue : 0) +
+          (whatsapp ? whatsAppServiceValue : 0) +
+          (refund ? refundServiceValue : 0) +
+          fees;
       vatVal = ((vatVal * vat) / 100);
     } else {
-      vatVal = totalAfterCouponValue + (sms?smsServiceValue :0) + (whatsapp?whatsAppServiceValue:0) + (refund?refundServiceValue:0)+ fees;
+      vatVal = totalAfterCouponValue +
+          (sms ? smsServiceValue : 0) +
+          (whatsapp ? whatsAppServiceValue : 0) +
+          (refund ? refundServiceValue : 0) +
+          fees;
       vatVal = ((vatVal * vat) / 100);
     }
     totalVatVal = vatVal;
     return vatVal;
   }
 
-  num countFeesValue({ required bool sms, whatsapp, refund,required num fees}) {
+  num countFeesValue({required bool sms, whatsapp, refund, required num fees}) {
     num vatVal = 0;
     if (totalAfterCouponValue == 0) {
-      vatVal = (totalTickets + totalServices) + (sms?smsServiceValue :0) + (whatsapp?whatsAppServiceValue:0) + (refund?refundServiceValue:0);
+      vatVal = (totalTickets + totalServices) +
+          (sms ? smsServiceValue : 0) +
+          (whatsapp ? whatsAppServiceValue : 0) +
+          (refund ? refundServiceValue : 0);
       vatVal = ((vatVal * fees) / 100);
     } else {
-      vatVal = totalAfterCouponValue + (sms?smsServiceValue :0) + (whatsapp?whatsAppServiceValue:0) + (refund?refundServiceValue:0);
+      vatVal = totalAfterCouponValue +
+          (sms ? smsServiceValue : 0) +
+          (whatsapp ? whatsAppServiceValue : 0) +
+          (refund ? refundServiceValue : 0);
       vatVal = ((vatVal * fees) / 100);
     }
     totalFeesVal = vatVal;
     return vatVal;
   }
-
 
   initDataToCheckAvailable(
       {required List selectedTickets,
@@ -379,13 +406,14 @@ class CheckoutLogic {
         }
         services = services.substring(0, services.length - 1);
       }
-      await ApiManger.getStaticServices(
-        eventId: eventId
-      ).then((value) {
+      await ApiManger.getStaticServices(eventId: eventId).then((value) {
         staticServices = value;
-        smsServiceValue = (value.data?.sms?.value ?? 0) * selectedTickets.length;
-        refundServiceValue = (value.data?.refund?.value ?? 0) * selectedTickets.length;
-        whatsAppServiceValue = (value.data?.whatsapp?.value ?? 0) * selectedTickets.length;
+        smsServiceValue =
+            (value.data?.sms?.value ?? 0) * selectedTickets.length;
+        refundServiceValue =
+            (value.data?.refund?.value ?? 0) * selectedTickets.length;
+        whatsAppServiceValue =
+            (value.data?.whatsapp?.value ?? 0) * selectedTickets.length;
       });
     }
   }

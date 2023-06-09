@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "459368261115",
+    "project_id": "hayyak-events-7cfe6",
+    "storage_bucket": "hayyak-events-7cfe6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:459368261115:android:2b1c2ea9f865012e61d75e",
+        "android_client_info": {
+          "package_name": "com.example.hayyak"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "459368261115-md3jqlngj0ide4eshrh99sfemh8ifdvc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hayyak",
+            "certificate_hash": "434def7246f8b1571b7ae6166740d719875d376f"
+          }
+        },
+        {
+          "client_id": "459368261115-ebi924e2tv50k1e8k4b5umgfa9c8rc23.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJy1Nk7JdQfS0FHgXNptUnVeeu9y5hLSk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "459368261115-ebi924e2tv50k1e8k4b5umgfa9c8rc23.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
