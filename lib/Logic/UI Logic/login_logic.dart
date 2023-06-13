@@ -19,6 +19,7 @@ class LoginLogic {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final FacebookAuth facebookAuth = FacebookAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
+
   static void login(BuildContext context,
       {@required email,
       @required password,
@@ -30,6 +31,10 @@ class LoginLogic {
       loadingDialog(context);
       ApiManger.userLogin(email: email, password: password).then((value) async {
         Navigator.pop(context);
+        ApiManger.getTranslationsKeys().then((value) {
+          print(value.data!.toJson());
+          UserData.translation = value;
+        });
         if (jsonDecode(value.body)['success'] == true ||
             jsonDecode(value.body)['code'] == 200) {
           UserData.token = jsonDecode(value.body)['data']['token'];
@@ -43,6 +48,7 @@ class LoginLogic {
           if (ref.read(rememberMeProvider.notifier).state == true) {
             Hive.box('user_data').put('logged_in', true);
             Hive.box('user_data').put('token', UserData.token);
+            Hive.box('user_data').put('translation', UserData.translation);
             Hive.box('user_data').put('role', UserData.role);
             Hive.box('user_data').put('id', UserData.id);
             Hive.box('user_data').put('name', UserData.userName);
@@ -63,16 +69,18 @@ class LoginLogic {
     }
   }
 
-  googleLogin({required BuildContext context})async {
-    final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
-        final GoogleSignInAuthentication? googleSignInAuthentication = await googleSignInAccount?.authentication;
-        final credential = GoogleAuthProvider.credential(
-            accessToken: googleSignInAuthentication?.accessToken,
-            idToken: googleSignInAuthentication?.idToken
-        );
-        final UserCredential user = await firebaseAuth.signInWithCredential(credential);
-        print(user.user?.email);
-        messageDialog(context, "Signed");
+  googleLogin({required BuildContext context}) async {
+    final GoogleSignInAccount? googleSignInAccount =
+        await googleSignIn.signIn();
+    final GoogleSignInAuthentication? googleSignInAuthentication =
+        await googleSignInAccount?.authentication;
+    final credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication?.accessToken,
+        idToken: googleSignInAuthentication?.idToken);
+    final UserCredential user =
+        await firebaseAuth.signInWithCredential(credential);
+    print(user.user?.email);
+    messageDialog(context, "Signed");
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 }

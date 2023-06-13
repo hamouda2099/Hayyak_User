@@ -132,8 +132,8 @@ class Details {
         seats: json["seats"],
         vat: json["vat"],
         vatDisplayed: json["vat_displayed"],
-        eventFees: json["event_fees"]??0,
-        eventFeesDisplayed: json["event_fees_displayed"]??'',
+        eventFees: json["event_fees"] ?? 0,
+        eventFeesDisplayed: json["event_fees_displayed"] ?? '',
       );
 
   Map<String, dynamic> toJson() => {

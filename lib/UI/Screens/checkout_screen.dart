@@ -29,6 +29,7 @@ class CheckoutScreen extends StatelessWidget {
       required this.receitType,
       required this.vat,
       required this.fees});
+
   CheckoutLogic logic = CheckoutLogic();
   late String eventName,
       eventImage,
@@ -65,7 +66,11 @@ class CheckoutScreen extends StatelessWidget {
             }
           default:
             if (snapShot.hasError) {
-              return Text('Error: ${snapShot.error}');
+              return Scaffold(
+                body: Center(
+                  child: Text('Error: ${snapShot.error}'),
+                ),
+              );
             } else {
               return FutureBuilder<AvailableTicketsForSaleModel>(
                 future: ApiManger.getAvailableTicketsForSale(

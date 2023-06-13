@@ -1,15 +1,7 @@
-import 'dart:ui' as ui;
-
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:hayyak/Config/constants.dart';
-import 'package:hayyak/Config/navigator.dart';
-import 'package:hayyak/Config/user_data.dart';
-import 'package:hayyak/Logic/Services/api_manger.dart';
-import 'package:hayyak/UI/Screens/home_screen.dart';
-import 'package:hayyak/UI/Screens/welcome_screen.dart';
 import 'package:hayyak/main.dart';
-import 'package:hive/hive.dart';
+
+import '../../Logic/UI Logic/splash_logic.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -23,44 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    ApiManger.getSettings().then((value) {
-      UserData.settings = value;
-      UserData.settings.data?.forEach((element) {
-        if (element.key == 'reservation_timer') {
-          UserData.reservationTimer = int.parse(element.value.toString());
-        }
-      });
-      Future.delayed(const Duration(seconds: 4), () async {
-        if (await Hive.box('user_data').get('logged_in') == true) {
-          UserData.token = await Hive.box('user_data').get('token');
-          UserData.id = await Hive.box('user_data').get('id');
-          UserData.phone = await Hive.box('user_data').get('phone').toString();
-          UserData.email = await Hive.box('user_data').get('email');
-          UserData.userName = await Hive.box('user_data').get('name');
-          UserData.imageUrl = await Hive.box('user_data').get('image');
-          UserData.role = await Hive.box('user_data').get('role');
-          UserData.language = await Hive.box('user_data').get('lang');
-          localLanguage = UserData.language;
-          print(localLanguage);
-          if (localLanguage == 'en') {
-            textDirection = ui.TextDirection.ltr;
-            localLanguage = 'en';
-            context.setLocale(Locale('en'));
-          } else {
-            textDirection = ui.TextDirection.rtl;
-            localLanguage = 'ar';
-            context.setLocale(const Locale('ar'));
-          }
-          navigator(context: context, screen: HomeScreen(), remove: true);
-        } else {
-          ApiManger.getTranslationsKeys().then((value) {
-            print(value.data!.toJson());
-            UserData.translation = value;
-            navigator(context: context, screen: WelcomeScreen(), remove: true);
-          });
-        }
-      });
-    });
+    SplashLogic().splash(context);
   }
 
   @override
