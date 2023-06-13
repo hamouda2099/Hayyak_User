@@ -12,6 +12,7 @@ import 'package:hayyak/UI/Components/seat_category_component.dart';
 import 'package:hayyak/UI/Screens/checkout_screen.dart';
 import 'package:hayyak/UI/Screens/notifications_screen.dart';
 import 'package:hayyak/main.dart';
+import 'package:share/share.dart';
 // import 'package:share/share.dart';
 
 final cartCounterProvider = StateProvider<int>((ref) => 0);
@@ -56,8 +57,8 @@ class EventSeatsScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Total Price',
+                           Text(
+                            UserData.translation.data?.totalPrice?.toString() ??'Total Price',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 12,
@@ -115,8 +116,6 @@ class EventSeatsScreen extends StatelessWidget {
                       ),
                       InkWell(
                         onTap: () {
-                          print(globalSelectedSeats);
-
                           navigator(
                               context: context,
                               screen: CheckoutScreen(
@@ -152,8 +151,8 @@ class EventSeatsScreen extends StatelessWidget {
                             color: kPrimaryColor,
                             borderRadius: BorderRadius.circular(5),
                           ),
-                          child: const Text(
-                            'Checkout',
+                          child: Text(
+                            UserData.translation.data?.checkout?.toString() ?? 'Checkout',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 14,
@@ -192,8 +191,8 @@ class EventSeatsScreen extends StatelessWidget {
                                       'assets/icon/back.svg'),
                                 ),
                               ),
-                              const Text(
-                                "Seats",
+                               Text(
+                                 UserData.translation.data?.seats?.toString() ?? "Seats",
                                 style: TextStyle(
                                     color: kDarkGreyColor,
                                     fontSize: 16,
@@ -204,7 +203,7 @@ class EventSeatsScreen extends StatelessWidget {
                                       children: [
                                         InkWell(
                                             onTap: () {
-                                              // Share.share('https://hayyak.net/', subject: 'Seats');
+                                              Share.share('https://hayyak.net/', subject: 'Seats');
                                             },
                                             child: const Icon(
                                               Icons.file_upload_outlined,
@@ -271,12 +270,12 @@ class EventSeatsScreen extends StatelessWidget {
                         const SizedBox(
                           height: 10,
                         ),
-                        const Align(
+                        Align(
                           alignment: Alignment.topLeft,
                           child: Padding(
                             padding: EdgeInsets.only(left: 20.0, top: 10),
                             child: Text(
-                              'Tickets',
+                              UserData.translation.data?.tickets?.toString() ??'Tickets',
                               style: TextStyle(
                                   color: kDarkGreyColor,
                                   fontSize: 14,
@@ -304,12 +303,12 @@ class EventSeatsScreen extends StatelessWidget {
                           height: 1,
                           color: Colors.grey,
                         ),
-                        const Align(
+                         Align(
                           alignment: Alignment.topLeft,
                           child: Padding(
                             padding: EdgeInsets.only(left: 20.0, top: 10),
                             child: Text(
-                              'Services',
+                              UserData.translation.data?.services?.toString() ?? 'Services',
                               style: TextStyle(
                                   color: kDarkGreyColor,
                                   fontSize: 14,

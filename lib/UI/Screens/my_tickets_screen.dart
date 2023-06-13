@@ -8,6 +8,7 @@ import 'package:hayyak/UI/Components/seccond_app_bar.dart';
 import 'package:hayyak/UI/Components/ticket_card_component.dart';
 import 'package:hayyak/main.dart';
 
+import '../../Config/user_data.dart';
 import '../Components/bottom_nav_bar.dart';
 
 class MyTicketsScreen extends StatelessWidget {
@@ -23,7 +24,8 @@ class MyTicketsScreen extends StatelessWidget {
         child: Column(
           children: [
             SecondAppBar(
-              title: 'My Tickets',
+              title: UserData.translation.data?.tickets?.toString() ??
+                  'My Tickets',
               shareAndFav: false,
               backToHome: true,
             ),
@@ -46,7 +48,9 @@ class MyTicketsScreen extends StatelessWidget {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                'Upcoming',
+                                UserData.translation.data?.upcoming
+                                        ?.toString() ??
+                                    'Upcoming',
                                 style: TextStyle(
                                     color:
                                         ref.read(tabProvider.notifier).state ==
@@ -71,7 +75,8 @@ class MyTicketsScreen extends StatelessWidget {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                'Past',
+                                UserData.translation.data?.past?.toString() ??
+                                    'Past',
                                 style: TextStyle(
                                     color:
                                         ref.read(tabProvider.notifier).state ==
@@ -174,7 +179,7 @@ class MyTicketsScreen extends StatelessWidget {
                             )
                           : Padding(
                               padding: EdgeInsets.only(top: screenHeight / 6),
-                              child: Center(child: const Text('No Orders')),
+                              child: const Center(child: Text('No Orders')),
                             );
                     }
                 }

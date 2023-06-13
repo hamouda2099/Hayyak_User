@@ -1,4 +1,5 @@
 import 'dart:ui' as ui;
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hayyak/Config/constants.dart';
@@ -28,7 +29,10 @@ class SettingsScreen extends StatelessWidget {
           child: Column(
             children: [
               SecondAppBar(
-                  title: 'Settings', shareAndFav: false, backToHome: false),
+                  title: UserData.translation.data?.settings?.toString() ??
+                      'Settings',
+                  shareAndFav: false,
+                  backToHome: false),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -73,10 +77,12 @@ class SettingsScreen extends StatelessWidget {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: boxShadow),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Account',
+                      Text(
+                          UserData.translation.data?.account?.toString() ??
+                              'Account',
                           style: TextStyle(
                               color: kLightGreyColor,
                               fontSize: 14,
@@ -148,10 +154,11 @@ class SettingsScreen extends StatelessWidget {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: boxShadow),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('FAQs',
+                      Text(
+                          UserData.translation.data?.faqs?.toString() ?? 'FAQs',
                           style: TextStyle(
                               color: kLightGreyColor,
                               fontSize: 14,
@@ -177,10 +184,13 @@ class SettingsScreen extends StatelessWidget {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: boxShadow),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Privacy & Policy',
+                      Text(
+                          UserData.translation.data?.privacyPolicy
+                                  ?.toString() ??
+                              'Privacy & Policy',
                           style: TextStyle(
                               color: kLightGreyColor,
                               fontSize: 14,
@@ -210,7 +220,10 @@ class SettingsScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Terms & Conditions',
+                      Text(
+                          UserData.translation.data?.termsAndConditions
+                                  ?.toString() ??
+                              'Terms & Conditions',
                           style: TextStyle(
                               color: kLightGreyColor,
                               fontSize: 14,
@@ -239,7 +252,9 @@ class SettingsScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Contact us',
+                      Text(
+                          UserData.translation.data?.contactUs?.toString() ??
+                              'Contact us',
                           style: TextStyle(
                               color: kLightGreyColor,
                               fontSize: 14,
@@ -268,7 +283,9 @@ class SettingsScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text('Log out',
+                      Text(
+                          UserData.translation.data?.logOut?.toString() ??
+                              'Log out',
                           style: TextStyle(
                               color: kLightGreyColor,
                               fontSize: 14,

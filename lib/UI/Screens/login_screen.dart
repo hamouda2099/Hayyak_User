@@ -10,6 +10,8 @@ import 'package:hayyak/UI/Components/text_field.dart';
 import 'package:hayyak/UI/Screens/sign_up_screen.dart';
 import 'package:hayyak/main.dart';
 
+import '../../Config/user_data.dart';
+
 // ignore: must_be_immutable
 class LoginScreen extends StatelessWidget {
   LoginScreen({required this.screen});
@@ -45,7 +47,8 @@ class LoginScreen extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Welcome back!',
+                    UserData.translation.data?.welcomeBack?.toString() ??
+                        'Welcome back!',
                     style: TextStyle(
                       color: Colors.black.withOpacity(0.8),
                       fontSize: 14,
@@ -60,7 +63,8 @@ class LoginScreen extends StatelessWidget {
               CustomTextField(
                 width: screenWidth / 1.2,
                 controller: emailController,
-                hintText: 'Email',
+                hintText:
+                    UserData.translation.data?.email?.toString() ?? 'Email',
                 obscure: false,
               ),
               const SizedBox(
@@ -69,7 +73,8 @@ class LoginScreen extends StatelessWidget {
               CustomTextField(
                 width: screenWidth / 1.2,
                 controller: passwordController,
-                hintText: 'Password',
+                hintText: UserData.translation.data?.password?.toString() ??
+                    'Password',
                 obscure: true,
               ),
               Consumer(
@@ -103,7 +108,8 @@ class LoginScreen extends StatelessWidget {
                                 ),
                         ),
                         Text(
-                          'Remember me',
+                          UserData.translation.data?.rememberMe?.toString() ??
+                              'Remember me',
                           style: TextStyle(
                               color: kDarkGreyColor.withOpacity(0.6),
                               fontSize: 12,
@@ -121,8 +127,9 @@ class LoginScreen extends StatelessWidget {
                   alignment: Alignment.bottomRight,
                   child: InkWell(
                       onTap: () {},
-                      child: const Text(
-                        'Forget Password ?',
+                      child: Text(
+                        UserData.translation.data?.forgetPassword?.toString() ??
+                            'Forget Password ?',
                         style:
                             const TextStyle(color: Colors.blue, fontSize: 12),
                       )),
@@ -149,8 +156,9 @@ class LoginScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       padding: const EdgeInsets.all(15),
-                      child: const Text(
-                        'SIGN IN',
+                      child: Text(
+                        UserData.translation.data?.signIn?.toString() ??
+                            'SIGN IN',
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w300,
@@ -171,8 +179,9 @@ class LoginScreen extends StatelessWidget {
                       height: 1,
                       color: kLightGreyColor,
                     ),
-                    const Text(
-                      ' Or login with ',
+                    Text(
+                      UserData.translation.data?.orLoginWith?.toString() ??
+                          ' Or login with ',
                       style:
                           const TextStyle(color: kLightGreyColor, fontSize: 14),
                     ),
@@ -191,7 +200,7 @@ class LoginScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     InkWell(
-                      onTap: (){
+                      onTap: () {
                         logic.googleLogin(context: context);
                       },
                       child: Container(
@@ -238,8 +247,9 @@ class LoginScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
-                    "Don\'t have an account?",
+                  Text(
+                    UserData.translation.data?.dontHaveAccount?.toString() ??
+                        "Don\'t have an account?",
                     style: TextStyle(
                       color: kLightGreyColor,
                       fontSize: 14,
@@ -252,8 +262,9 @@ class LoginScreen extends StatelessWidget {
                       onTap: () {
                         navigator(context: context, screen: SignUpScreen());
                       },
-                      child: const Text(
-                        "Create One",
+                      child: Text(
+                        UserData.translation.data?.createOne?.toString() ??
+                            "Create One",
                         style: TextStyle(
                           color: Colors.blue,
                           fontSize: 14,

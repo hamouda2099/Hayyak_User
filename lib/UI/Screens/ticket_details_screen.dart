@@ -9,6 +9,8 @@ import 'package:hayyak/UI/Components/service_slider_component.dart';
 import 'package:hayyak/UI/Components/ticket_slider_compnent.dart';
 import 'package:hayyak/main.dart';
 
+import '../../Config/user_data.dart';
+
 class TicketDetails extends StatelessWidget {
   TicketDetails({required this.orderId});
 
@@ -130,8 +132,10 @@ class TicketDetails extends StatelessWidget {
                                               : Colors.white.withOpacity(0.3),
                                           borderRadius:
                                               BorderRadius.circular(10)),
-                                      child: const Text(
-                                        'Tickets',
+                                      child: Text(
+                                        UserData.translation.data?.tickets
+                                                ?.toString() ??
+                                            'Tickets',
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold),
@@ -155,9 +159,11 @@ class TicketDetails extends StatelessWidget {
                                               : Colors.white.withOpacity(0.3),
                                           borderRadius:
                                               BorderRadius.circular(10)),
-                                      child: const Text(
-                                        'Services',
-                                        style: TextStyle(
+                                      child: Text(
+                                        UserData.translation.data?.services
+                                                ?.toString() ??
+                                            'Services',
+                                        style: const TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold),
                                       )),

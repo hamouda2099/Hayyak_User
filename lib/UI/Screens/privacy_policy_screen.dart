@@ -6,6 +6,8 @@ import 'package:hayyak/Models/privacy_policy_model.dart';
 import 'package:hayyak/UI/Components/seccond_app_bar.dart';
 import 'package:html_widget/html_widget.dart';
 
+import '../../Config/user_data.dart';
+
 class PrivacyPolicy extends StatelessWidget {
   List<Widget> _outputHtml = [];
 
@@ -16,7 +18,10 @@ class PrivacyPolicy extends StatelessWidget {
       child: Column(
         children: [
           SecondAppBar(
-              title: 'Privacy Policy', shareAndFav: false, backToHome: false),
+              title: UserData.translation.data?.privacyPolicy?.toString() ??
+                  'Privacy Policy',
+              shareAndFav: false,
+              backToHome: false),
           FutureBuilder<PrivacyPolicyModel>(
             future: ApiManger.getPrivacyPolicy(),
             builder: (BuildContext context,

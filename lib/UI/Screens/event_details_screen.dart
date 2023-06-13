@@ -13,6 +13,7 @@ import 'package:hayyak/UI/Components/seccond_app_bar.dart';
 import 'package:hayyak/UI/Screens/date_picker_screen.dart';
 import 'package:html_widget/html_widget.dart';
 
+import '../../Config/user_data.dart';
 import '../../main.dart';
 
 class EventDetails extends StatelessWidget {
@@ -160,8 +161,9 @@ class EventDetails extends StatelessWidget {
                             color: kPrimaryColor,
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: const Text(
-                            'Tickets',
+                          child: Text(
+                            UserData.translation.data?.tickets?.toString() ??
+                                'Tickets',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 14,
@@ -248,8 +250,11 @@ class EventDetails extends StatelessWidget {
                                           );
                                           Add2Calendar.addEvent2Cal(event);
                                         },
-                                        child: const Text(
-                                          'Add to calender',
+                                        child: Text(
+                                          UserData.translation.data
+                                                  ?.addToCalender
+                                                  ?.toString() ??
+                                              'Add to calender',
                                           style: TextStyle(
                                               color: kPrimaryColor,
                                               fontSize: 14),
@@ -277,8 +282,10 @@ class EventDetails extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      const Text(
-                                        'Address',
+                                      Text(
+                                        UserData.translation.data?.address
+                                                ?.toString() ??
+                                            'Address',
                                         style: TextStyle(
                                             color: kDarkGreyColor,
                                             fontWeight: FontWeight.bold,
@@ -312,8 +319,10 @@ class EventDetails extends StatelessWidget {
                                                     .data!.data.description,
                                               ));
                                         },
-                                        child: const Text(
-                                          'View Map',
+                                        child: Text(
+                                          UserData.translation.data?.viewMap
+                                                  ?.toString() ??
+                                              'View Map',
                                           style: TextStyle(
                                               color: kPrimaryColor,
                                               fontSize: 14),
@@ -353,13 +362,15 @@ class EventDetails extends StatelessWidget {
                             const SizedBox(
                               height: 20,
                             ),
-                            const Padding(
+                            Padding(
                               padding: EdgeInsets.only(
                                   left: 15.0, right: 15, bottom: 5),
                               child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
-                                    'Location',
+                                    UserData.translation.data?.location
+                                            ?.toString() ??
+                                        'Location',
                                     style: TextStyle(
                                         color: kDarkGreyColor,
                                         fontSize: 16,

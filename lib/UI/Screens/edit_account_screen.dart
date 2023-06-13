@@ -9,6 +9,7 @@ import 'package:hayyak/main.dart';
 
 // import 'package:image_picker/image_picker.dart';
 
+import '../../Config/user_data.dart';
 import '../../Logic/Services/api_manger.dart';
 
 class EditAccountScreen extends StatelessWidget {
@@ -24,7 +25,10 @@ class EditAccountScreen extends StatelessWidget {
           child: Column(
             children: [
               SecondAppBar(
-                  title: 'Edit Account', shareAndFav: false, backToHome: false),
+                  title: UserData.translation.data?.account?.toString() ??
+                      'Edit Account',
+                  shareAndFav: false,
+                  backToHome: false),
               FutureBuilder<ProfileModel>(
                 future: ApiManger.getProfileData(),
                 builder: (BuildContext context,
@@ -97,8 +101,10 @@ class EditAccountScreen extends StatelessWidget {
                                   children: [
                                     Container(
                                       width: screenWidth / 4,
-                                      child: const Text(
-                                        'First Name',
+                                      child: Text(
+                                        UserData.translation.data?.firstName
+                                                ?.toString() ??
+                                            'First Name',
                                         style: TextStyle(
                                             color: kLightGreyColor,
                                             fontWeight: FontWeight.bold,
@@ -139,8 +145,10 @@ class EditAccountScreen extends StatelessWidget {
                                   children: [
                                     Container(
                                       width: screenWidth / 4,
-                                      child: const Text(
-                                        'Last Name',
+                                      child: Text(
+                                        UserData.translation.data?.lastName
+                                                ?.toString() ??
+                                            'Last Name',
                                         style: TextStyle(
                                             color: kLightGreyColor,
                                             fontWeight: FontWeight.bold,
@@ -171,7 +179,6 @@ class EditAccountScreen extends StatelessWidget {
                                   ],
                                 ),
                               ),
-
                               const SizedBox(
                                 height: 20,
                               ),
@@ -182,8 +189,10 @@ class EditAccountScreen extends StatelessWidget {
                                   children: [
                                     Container(
                                       width: screenWidth / 4,
-                                      child: const Text(
-                                        'Email',
+                                      child: Text(
+                                        UserData.translation.data?.email
+                                                ?.toString() ??
+                                            'Email',
                                         style: TextStyle(
                                             color: kLightGreyColor,
                                             fontWeight: FontWeight.bold,
@@ -214,7 +223,6 @@ class EditAccountScreen extends StatelessWidget {
                                   ],
                                 ),
                               ),
-
                               const SizedBox(
                                 height: 20,
                               ),
@@ -225,8 +233,10 @@ class EditAccountScreen extends StatelessWidget {
                                   children: [
                                     Container(
                                       width: screenWidth / 4,
-                                      child: const Text(
-                                        'Phone',
+                                      child: Text(
+                                        UserData.translation.data?.phone
+                                                ?.toString() ??
+                                            'Phone',
                                         style: TextStyle(
                                             color: kLightGreyColor,
                                             fontWeight: FontWeight.bold,
@@ -257,7 +267,6 @@ class EditAccountScreen extends StatelessWidget {
                                   ],
                                 ),
                               ),
-
                               const SizedBox(
                                 height: 20,
                               ),
@@ -268,8 +277,10 @@ class EditAccountScreen extends StatelessWidget {
                                   children: [
                                     Container(
                                       width: screenWidth / 4,
-                                      child: const Text(
-                                        'Password',
+                                      child: Text(
+                                        UserData.translation.data?.password
+                                                ?.toString() ??
+                                            'Password',
                                         style: TextStyle(
                                             color: kLightGreyColor,
                                             fontWeight: FontWeight.bold,
@@ -300,34 +311,9 @@ class EditAccountScreen extends StatelessWidget {
                                   ],
                                 ),
                               ),
-
                               const SizedBox(
                                 height: 20,
                               ),
-                              // Padding(
-                              //   padding: const EdgeInsets.only(right: 15.0, left: 15),
-                              //   child: Row(
-                              //     children: [
-                              //       Container(
-                              //         width: screenWidth / 2,
-                              //         child: const Text(
-                              //           'Location',
-                              //           style: TextStyle(
-                              //               color: kLightGreyColor,
-                              //               fontWeight: FontWeight.bold,
-                              //               fontSize: 15),
-                              //         ),
-                              //       ),
-                              //       Text(
-                              //         'Egypt Cairo',
-                              //         style: TextStyle(
-                              //             color: kLightGreyColor.withOpacity(0.5),
-                              //             fontWeight: FontWeight.bold,
-                              //             fontSize: 15),
-                              //       ),
-                              //     ],
-                              //   ),
-                              // ),
                               InkWell(
                                 onTap: () {
                                   logic.updateProfile();
@@ -343,9 +329,11 @@ class EditAccountScreen extends StatelessWidget {
                                         color: kLightGreyColor.withOpacity(0.5),
                                         width: 1),
                                   ),
-                                  child: const Text(
-                                    'Save',
-                                    style: TextStyle(
+                                  child: Text(
+                                    UserData.translation.data?.save
+                                            ?.toString() ??
+                                        'Save',
+                                    style: const TextStyle(
                                         color: Colors.blue, fontSize: 14),
                                   ),
                                 ),

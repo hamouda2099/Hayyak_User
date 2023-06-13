@@ -6,6 +6,7 @@ import 'package:hayyak/UI/Screens/event_tickets_screen.dart';
 import 'package:hayyak/main.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
+import '../../Config/user_data.dart';
 import '../../Dialogs/message_dialog.dart';
 
 class DatePickerScreen extends StatefulWidget {
@@ -43,8 +44,8 @@ class _DatePickerScreenState extends State<DatePickerScreen> {
           backgroundColor: Colors.white,
           elevation: 0,
           centerTitle: true,
-          title: const Text(
-            'Select Day',
+          title: Text(
+            UserData.translation.data?.selectDay?.toString() ?? 'Select Day',
             style: TextStyle(color: kDarkGreyColor),
           ),
           leading: IconButton(
@@ -119,8 +120,9 @@ class _DatePickerScreenState extends State<DatePickerScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     padding: const EdgeInsets.all(15),
-                    child: const Text(
-                      'Confirm',
+                    child: Text(
+                      UserData.translation.data?.confirm?.toString() ??
+                          'Confirm',
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w300,

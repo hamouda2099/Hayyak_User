@@ -6,6 +6,8 @@ import 'package:hayyak/UI/Screens/home_screen.dart';
 import 'package:hayyak/UI/Screens/login_screen.dart';
 import 'package:hayyak/main.dart';
 
+import '../../Config/user_data.dart';
+
 // ignore: must_be_immutable
 class WelcomeScreen extends StatelessWidget {
   WelcomeScreen({Key? key}) : super(key: key);
@@ -47,8 +49,11 @@ class WelcomeScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   padding: const EdgeInsets.all(15),
-                  child: const Text(
-                    'SIGN IN',
+                  child: Text(
+                    UserData.translation.data?.signIn
+                            ?.toString()
+                            .toUpperCase() ??
+                        'SIGN IN',
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w300,
@@ -72,8 +77,11 @@ class WelcomeScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   padding: const EdgeInsets.all(15),
-                  child: const Text(
-                    'CONTACT US',
+                  child: Text(
+                    UserData.translation.data?.contactUs
+                            ?.toString()
+                            .toUpperCase() ??
+                        'CONTACT US',
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w300,
@@ -92,8 +100,8 @@ class WelcomeScreen extends StatelessWidget {
                     screen: HomeScreen(),
                   );
                 },
-                child: const Text(
-                  'Skip',
+                child: Text(
+                  UserData.translation.data?.skip?.toString() ?? 'Skip',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 14,

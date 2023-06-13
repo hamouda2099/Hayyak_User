@@ -5,6 +5,8 @@ import 'package:hayyak/Models/faqs_model.dart';
 import 'package:hayyak/UI/Components/faq_component.dart';
 import 'package:hayyak/UI/Components/seccond_app_bar.dart';
 
+import '../../Config/user_data.dart';
+
 class FAQsScreen extends StatelessWidget {
   const FAQsScreen({Key? key}) : super(key: key);
 
@@ -14,7 +16,10 @@ class FAQsScreen extends StatelessWidget {
         body: SafeArea(
       child: Column(
         children: [
-          SecondAppBar(title: 'FAQs', shareAndFav: false, backToHome: true),
+          SecondAppBar(
+              title: UserData.translation.data?.faqs?.toString() ?? 'FAQs',
+              shareAndFav: false,
+              backToHome: true),
           FutureBuilder<FaQsModel>(
             future: ApiManger.getFAQs(),
             builder: (BuildContext context, AsyncSnapshot<FaQsModel> snapShot) {

@@ -8,6 +8,7 @@ import 'package:hayyak/UI/Components/seccond_app_bar.dart';
 import 'package:hayyak/UI/Screens/edit_account_screen.dart';
 import 'package:hayyak/main.dart';
 
+import '../../Config/user_data.dart';
 import '../../Logic/Services/api_manger.dart';
 
 class AccountScreen extends StatelessWidget {
@@ -20,7 +21,10 @@ class AccountScreen extends StatelessWidget {
         child: Column(
           children: [
             SecondAppBar(
-                title: 'Account', shareAndFav: false, backToHome: false),
+                title:
+                    UserData.translation.data?.account?.toString() ?? 'Account',
+                shareAndFav: false,
+                backToHome: false),
             FutureBuilder<ProfileModel>(
               future: ApiManger.getProfileData(),
               builder:
@@ -87,7 +91,7 @@ class AccountScreen extends StatelessWidget {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(
-                                      children: const [
+                                      children: [
                                         Icon(
                                           Icons.person,
                                           color: kDarkGreyColor,
@@ -96,14 +100,18 @@ class AccountScreen extends StatelessWidget {
                                         SizedBox(
                                           width: 10,
                                         ),
-                                        Text('Personal Info',
+                                        Text(
+                                            UserData.translation.data
+                                                    ?.personalInfo
+                                                    ?.toString() ??
+                                                'Personal Info',
                                             style: TextStyle(
                                                 color: kLightGreyColor,
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.bold)),
                                       ],
                                     ),
-                                    const Icon(
+                                    Icon(
                                       Icons.mode_edit_outlined,
                                       color: kDarkGreyColor,
                                       size: 20,
@@ -122,8 +130,10 @@ class AccountScreen extends StatelessWidget {
                                 children: [
                                   Container(
                                     width: screenWidth / 2,
-                                    child: const Text(
-                                      'First Name',
+                                    child: Text(
+                                      UserData.translation.data?.firstName
+                                              ?.toString() ??
+                                          'First Name',
                                       style: TextStyle(
                                           color: kLightGreyColor,
                                           fontWeight: FontWeight.bold,
@@ -157,8 +167,10 @@ class AccountScreen extends StatelessWidget {
                                 children: [
                                   Container(
                                     width: screenWidth / 2,
-                                    child: const Text(
-                                      'Last Name',
+                                    child: Text(
+                                      UserData.translation.data?.lastName
+                                              ?.toString() ??
+                                          'Last Name',
                                       style: TextStyle(
                                           color: kLightGreyColor,
                                           fontWeight: FontWeight.bold,
@@ -192,8 +204,10 @@ class AccountScreen extends StatelessWidget {
                                 children: [
                                   Container(
                                     width: screenWidth / 2,
-                                    child: const Text(
-                                      'Email',
+                                    child: Text(
+                                      UserData.translation.data?.email
+                                              ?.toString() ??
+                                          'Email',
                                       style: TextStyle(
                                           color: kLightGreyColor,
                                           fontWeight: FontWeight.bold,
@@ -227,8 +241,10 @@ class AccountScreen extends StatelessWidget {
                                 children: [
                                   Container(
                                     width: screenWidth / 2,
-                                    child: const Text(
-                                      'Phone',
+                                    child: Text(
+                                      UserData.translation.data?.phone
+                                              ?.toString() ??
+                                          'Phone',
                                       style: TextStyle(
                                           color: kLightGreyColor,
                                           fontWeight: FontWeight.bold,

@@ -5,6 +5,8 @@ import 'package:hayyak/UI/Components/seccond_app_bar.dart';
 import 'package:hayyak/UI/Components/text_field.dart';
 import 'package:hayyak/main.dart';
 
+import '../../Config/user_data.dart';
+
 class ContactUsScreen extends StatelessWidget {
   ContactUsLogic logic = ContactUsLogic();
 
@@ -17,11 +19,15 @@ class ContactUsScreen extends StatelessWidget {
           child: Column(
             children: [
               SecondAppBar(
-                  title: 'Contact Us', shareAndFav: false, backToHome: false),
+                  title: UserData.translation.data?.contactUs?.toString() ??
+                      'Contact Us',
+                  shareAndFav: false,
+                  backToHome: false),
               CustomTextField(
                 width: screenWidth / 1.2,
                 controller: logic.nameCnt,
-                hintText: 'Name',
+                hintText:
+                    UserData.translation.data?.firstName?.toString() ?? 'Name',
                 obscure: false,
               ),
               const SizedBox(
@@ -53,7 +59,7 @@ class ContactUsScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Text(
+                    const Text(
                       '|',
                       style: TextStyle(color: kLightGreyColor, fontSize: 14),
                     ),
@@ -64,7 +70,9 @@ class ContactUsScreen extends StatelessWidget {
                         controller: logic.phoneCnt,
                         keyboardType: TextInputType.phone,
                         decoration: InputDecoration(
-                          hintText: 'Phone',
+                          hintText:
+                              UserData.translation.data?.phone?.toString() ??
+                                  'Phone',
                           hintStyle: TextStyle(
                               color: kLightGreyColor.withOpacity(0.8),
                               fontWeight: FontWeight.bold,
@@ -82,7 +90,8 @@ class ContactUsScreen extends StatelessWidget {
               CustomTextField(
                 width: screenWidth / 1.2,
                 controller: logic.emailController,
-                hintText: 'Email',
+                hintText:
+                    UserData.translation.data?.email?.toString() ?? 'Email',
                 obscure: false,
               ),
               const SizedBox(
@@ -147,10 +156,10 @@ class ContactUsScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              Column(
+              const Column(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

@@ -5,6 +5,8 @@ import 'package:hayyak/Models/terms_conditions_model.dart';
 import 'package:hayyak/UI/Components/seccond_app_bar.dart';
 import 'package:html_widget/html_widget.dart';
 
+import '../../Config/user_data.dart';
+
 class TermsAndConditionsScreen extends StatelessWidget {
   List<Widget> _outputHtml = [];
 
@@ -15,7 +17,9 @@ class TermsAndConditionsScreen extends StatelessWidget {
       child: Column(
         children: [
           SecondAppBar(
-              title: 'Terms & Conditions',
+              title:
+                  UserData.translation.data?.termsAndConditions?.toString() ??
+                      'Terms & Conditions',
               shareAndFav: false,
               backToHome: false),
           FutureBuilder<TermsAndConditionsModel>(

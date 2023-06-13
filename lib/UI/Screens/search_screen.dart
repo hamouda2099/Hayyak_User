@@ -7,10 +7,12 @@ import 'package:hayyak/UI/Components/bottom_nav_bar.dart';
 import 'package:hayyak/UI/Components/seccond_app_bar.dart';
 import 'package:hayyak/UI/Screens/event_details_screen.dart';
 import 'package:hayyak/main.dart';
+import 'package:share/share.dart';
 
 // import 'package:share/share.dart';
 
 import '../../Config/navigator.dart';
+import '../../Config/user_data.dart';
 import '../../Logic/Services/api_manger.dart';
 
 class SearchScreen extends ConsumerWidget {
@@ -25,7 +27,10 @@ class SearchScreen extends ConsumerWidget {
         child: Column(
           children: [
             SecondAppBar(
-                title: 'Search', shareAndFav: false, backToHome: false),
+                title:
+                    UserData.translation.data?.search?.toString() ?? 'Search',
+                shareAndFav: false,
+                backToHome: false),
             Container(
               width: screenWidth / 1.1,
               decoration: BoxDecoration(
@@ -39,22 +44,23 @@ class SearchScreen extends ConsumerWidget {
                   ref.read(rebuildProvider.notifier).state =
                       DateTime.now().toString();
                 },
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   border: InputBorder.none,
                   prefixIcon: Icon(
                     Icons.search,
                     color: kLightGreyColor,
                   ),
-                  hintText: 'Search',
+                  hintText:
+                      UserData.translation.data?.search?.toString() ?? 'Search',
                 ),
               ),
             ),
-            const Align(
+            Align(
               alignment: Alignment.topLeft,
               child: Padding(
                 padding: EdgeInsets.all(20.0),
                 child: Text(
-                  'Recently',
+                  UserData.translation.data?.recently?.toString() ?? 'Recently',
                   style: TextStyle(
                     color: kDarkGreyColor,
                     fontSize: 14,
@@ -146,8 +152,14 @@ class SearchScreen extends ConsumerWidget {
                                                     children: [
                                                       InkWell(
                                                           onTap: () {
-                                                            // Share.share('https://hayyak.net/ar/event/${snapShot.data!.data![index].id}',
-                                                            //     subject: snapShot.data!.data![index].name.toString());
+                                                            Share.share(
+                                                                'https://hayyak.net/ar/event/${snapShot.data!.data![index].id}',
+                                                                subject: snapShot
+                                                                    .data!
+                                                                    .data![
+                                                                        index]
+                                                                    .name
+                                                                    .toString());
                                                           },
                                                           child: const Icon(
                                                             Icons
@@ -264,8 +276,10 @@ class SearchScreen extends ConsumerWidget {
                                     );
                                   },
                                 ))
-                              : const Text(
-                                  'Search for events',
+                              : Text(
+                                  UserData.translation.data?.searchForEvents
+                                          ?.toString() ??
+                                      'Search for events',
                                   style: TextStyle(
                                       color: kLightGreyColor, fontSize: 14),
                                 );

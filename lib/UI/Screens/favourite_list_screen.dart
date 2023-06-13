@@ -6,6 +6,8 @@ import 'package:hayyak/UI/Components/bottom_nav_bar.dart';
 import 'package:hayyak/UI/Components/fav_row_component.dart';
 import 'package:hayyak/UI/Components/seccond_app_bar.dart';
 
+import '../../Config/user_data.dart';
+
 class FavListScreen extends StatelessWidget {
   const FavListScreen({Key? key}) : super(key: key);
 
@@ -17,7 +19,10 @@ class FavListScreen extends StatelessWidget {
         child: Column(
           children: [
             SecondAppBar(
-                title: 'Favourites ', shareAndFav: false, backToHome: true),
+                title: UserData.translation.data?.favourites?.toString() ??
+                    'Favourites ',
+                shareAndFav: false,
+                backToHome: true),
             FutureBuilder<FavListModel>(
               future: ApiManger.getFavList(),
               builder:

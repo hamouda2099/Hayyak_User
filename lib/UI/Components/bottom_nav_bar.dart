@@ -43,7 +43,7 @@ class BottomNavBar extends StatelessWidget {
                   height: 5,
                 ),
                 Text(
-                  'Explore',
+                  UserData.translation.data?.explore?.toString() ?? 'Explore',
                   style: TextStyle(
                       color: currentScreen == 'Explore'
                           ? Colors.blue
@@ -112,7 +112,8 @@ class BottomNavBar extends StatelessWidget {
                   height: 5,
                 ),
                 Text(
-                  'Favourites',
+                  UserData.translation.data?.favourites?.toString() ??
+                      'Favourites',
                   style: TextStyle(
                       color: currentScreen == 'Favourites'
                           ? Colors.blue
@@ -138,7 +139,7 @@ class BottomNavBar extends StatelessWidget {
                   height: 5,
                 ),
                 Text(
-                  'Search',
+                  UserData.translation.data?.search?.toString() ?? 'Search',
                   style: TextStyle(
                       color: currentScreen == 'Search'
                           ? Colors.blue

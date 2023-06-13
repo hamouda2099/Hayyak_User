@@ -11,6 +11,8 @@ import 'package:hayyak/UI/Screens/home_screen.dart';
 import 'package:hayyak/UI/Screens/login_screen.dart';
 import 'package:hayyak/main.dart';
 
+import '../../Config/user_data.dart';
+
 // ignore: must_be_immutable
 class SignUpScreen extends StatelessWidget {
   TextEditingController firstNameController = TextEditingController();
@@ -74,7 +76,9 @@ class SignUpScreen extends StatelessWidget {
                     child: TextField(
                       controller: firstNameController,
                       decoration: InputDecoration(
-                        hintText: 'First',
+                        hintText:
+                            UserData.translation.data?.firstName?.toString() ??
+                                'First',
                         hintStyle: TextStyle(
                             color: kLightGreyColor.withOpacity(0.8),
                             fontWeight: FontWeight.bold,
@@ -93,7 +97,9 @@ class SignUpScreen extends StatelessWidget {
                     child: TextField(
                       controller: lastNameController,
                       decoration: InputDecoration(
-                        hintText: 'Last',
+                        hintText:
+                            UserData.translation.data?.lastName?.toString() ??
+                                'Last',
                         hintStyle: TextStyle(
                             color: kLightGreyColor.withOpacity(0.8),
                             fontWeight: FontWeight.bold,
@@ -111,7 +117,7 @@ class SignUpScreen extends StatelessWidget {
             CustomTextField(
               width: screenWidth / 1.2,
               controller: emailController,
-              hintText: 'Email',
+              hintText: UserData.translation.data?.email?.toString() ?? 'Email',
               obscure: false,
             ),
             const SizedBox(
@@ -153,7 +159,9 @@ class SignUpScreen extends StatelessWidget {
                     child: TextField(
                       controller: phoneController,
                       decoration: InputDecoration(
-                        hintText: 'Phone',
+                        hintText:
+                            UserData.translation.data?.phone?.toString() ??
+                                'Phone',
                         hintStyle: TextStyle(
                             color: kLightGreyColor.withOpacity(0.8),
                             fontWeight: FontWeight.bold,
@@ -264,7 +272,8 @@ class SignUpScreen extends StatelessWidget {
             CustomTextField(
               width: screenWidth / 1.2,
               controller: passwordController,
-              hintText: 'Password',
+              hintText:
+                  UserData.translation.data?.password?.toString() ?? 'Password',
               obscure: true,
             ),
             const SizedBox(
@@ -273,7 +282,9 @@ class SignUpScreen extends StatelessWidget {
             CustomTextField(
               width: screenWidth / 1.2,
               controller: confirmPasswordController,
-              hintText: 'Confirm Password',
+              hintText:
+                  UserData.translation.data?.confirmPassword?.toString() ??
+                      'Confirm Password',
               obscure: true,
             ),
             Consumer(
@@ -309,7 +320,9 @@ class SignUpScreen extends StatelessWidget {
                               ),
                       ),
                       Text(
-                        'Accept all',
+                        UserData.translation.data?.acceptAllTermsAndConditions
+                                ?.toString() ??
+                            'Accept all',
                         style: TextStyle(
                             color: kDarkGreyColor.withOpacity(0.6),
                             fontSize: 12,
@@ -317,8 +330,10 @@ class SignUpScreen extends StatelessWidget {
                       ),
                       InkWell(
                         onTap: () {},
-                        child: const Text(
-                          ' terms & conditions',
+                        child: Text(
+                          UserData.translation.data?.termsAndConditions
+                                  ?.toString() ??
+                              ' terms & conditions',
                           style: TextStyle(
                               color: Colors.blue,
                               fontSize: 12,
@@ -383,7 +398,8 @@ class SignUpScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Already a member',
+                  UserData.translation.data?.alreadyMember?.toString() ??
+                      'Already a member',
                   style: TextStyle(
                       color: kDarkGreyColor.withOpacity(0.6),
                       fontSize: 14,
@@ -397,8 +413,9 @@ class SignUpScreen extends StatelessWidget {
                           screen: HomeScreen(),
                         ));
                   },
-                  child: const Text(
-                    ' Sign in.',
+                  child: Text(
+                    UserData.translation.data?.signIn?.toString() ??
+                        ' Sign in.',
                     style: TextStyle(
                         color: Colors.blue,
                         fontSize: 14,

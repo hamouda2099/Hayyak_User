@@ -14,6 +14,7 @@ import 'package:hayyak/main.dart';
 
 import '../../Config/constants.dart';
 import '../../Config/date_formatter.dart';
+import '../../Config/user_data.dart';
 import '../Components/services_component_tickets_details.dart';
 
 final pageProvider = StateProvider<int>((ref) => 1);
@@ -72,8 +73,10 @@ class EventTicketsScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
-                                'Total Price',
+                              Text(
+                                UserData.translation.data?.totalPrice
+                                        ?.toString() ??
+                                    'Total Price',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 12,
@@ -171,8 +174,10 @@ class EventTicketsScreen extends StatelessWidget {
                                 color: kPrimaryColor,
                                 borderRadius: BorderRadius.circular(5),
                               ),
-                              child: const Text(
-                                'Checkout',
+                              child: Text(
+                                UserData.translation.data?.checkout
+                                        ?.toString() ??
+                                    'Checkout',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 14,
@@ -256,13 +261,15 @@ class EventTicketsScreen extends StatelessWidget {
                               ),
                               snapShot.data!.data.event.kinds.isEmpty
                                   ? const SizedBox()
-                                  : const Align(
+                                  : Align(
                                       alignment: Alignment.topLeft,
                                       child: Padding(
                                         padding: EdgeInsets.only(
                                             left: 20.0, top: 10),
                                         child: Text(
-                                          'Tickets',
+                                          UserData.translation.data?.tickets
+                                                  ?.toString() ??
+                                              'Tickets',
                                           style: TextStyle(
                                               color: kDarkGreyColor,
                                               fontSize: 12,
@@ -292,13 +299,15 @@ class EventTicketsScreen extends StatelessWidget {
                                   ? const SizedBox(
                                       height: 20,
                                     )
-                                  : const Align(
+                                  : Align(
                                       alignment: Alignment.topLeft,
                                       child: Padding(
                                         padding: EdgeInsets.only(
                                             left: 20.0, top: 10),
                                         child: Text(
-                                          'Services',
+                                          UserData.translation.data?.services
+                                                  ?.toString() ??
+                                              'Services',
                                           style: TextStyle(
                                               color: kDarkGreyColor,
                                               fontSize: 12,
