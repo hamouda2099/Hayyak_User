@@ -7,20 +7,12 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:459368261115:android:2b1c2ea9f865012e61d75e",
+        "mobilesdk_app_id": "1:459368261115:android:4a7aaad435bc4d6a61d75e",
         "android_client_info": {
-          "package_name": "com.example.hayyak"
+          "package_name": "com.hayyak.events"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "459368261115-md3jqlngj0ide4eshrh99sfemh8ifdvc.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.hayyak",
-            "certificate_hash": "434def7246f8b1571b7ae6166740d719875d376f"
-          }
-        },
         {
           "client_id": "459368261115-ebi924e2tv50k1e8k4b5umgfa9c8rc23.apps.googleusercontent.com",
           "client_type": 3

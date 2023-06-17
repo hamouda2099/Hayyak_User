@@ -9,7 +9,7 @@ class UserData {
   static String imageUrl = '';
   static String role = '';
   static String email = '';
-  static String language = '';
+  static String language = 'en';
   static TranslationModel translation = TranslationModel();
   static SettingsModel settings = SettingsModel();
   static num reservationTimer = 0;

@@ -1,6 +1,9 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/Dialogs/loading_dialog.dart';
 import 'package:hayyak/Dialogs/message_dialog.dart';
@@ -10,7 +13,9 @@ import 'package:hayyak/UI/Screens/verify_otp_code_screen.dart';
 
 class SignUpLogic {
   static String otpCode = '';
-
+  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  final FacebookAuth facebookAuth = FacebookAuth.instance;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
   static void signUp({
     required BuildContext context,
     required String firstName,
@@ -96,5 +101,32 @@ class SignUpLogic {
         messageDialog(context, '${jsonDecode(value.body)['error']}');
       }
     });
+  }
+
+  signUpWithGoogle({required BuildContext context}) async {
+    final GoogleSignInAccount? googleSignInAccount =
+        await googleSignIn.signIn();
+    final GoogleSignInAuthentication? googleSignInAuthentication =
+        await googleSignInAccount?.authentication;
+    final credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication?.accessToken,
+        idToken: googleSignInAuthentication?.idToken);
+    final UserCredential user =
+        await firebaseAuth.signInWithCredential(credential);
+    print(user.user.toString());
+    ApiManger.registerUser(
+            firstName: user.user?.displayName ?? '',
+            lastName: user.user?.displayName ?? '',
+            phone: user.user?.phoneNumber ?? '',
+            email: user.user?.email ?? '',
+            dateOfBirth: '2000-01-01',
+            password: '000',
+            confirmPassword: '000',
+            gender: 'male')
+        .then((value) {
+      print(value.body);
+    });
+    messageDialog(context, "Signed");
+    return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/Config/date_formatter.dart';
 import 'package:hayyak/Config/navigator.dart';
@@ -12,6 +13,7 @@ import 'package:hayyak/UI/Screens/login_screen.dart';
 import 'package:hayyak/main.dart';
 
 import '../../Config/user_data.dart';
+import '../Components/box_shadow.dart';
 
 // ignore: must_be_immutable
 class SignUpScreen extends StatelessWidget {
@@ -22,7 +24,7 @@ class SignUpScreen extends StatelessWidget {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController dateOfBirthController = TextEditingController();
-  final genderProvider = StateProvider<String>((ref) => 'Male');
+  final genderProvider = StateProvider<String?>((ref) => null);
   List gender = ['Male', 'Female'];
   DateTime? selectedDate = DateTime(2018);
 
@@ -392,7 +394,58 @@ class SignUpScreen extends StatelessWidget {
               },
             ),
             const SizedBox(
-              height: 30,
+              height: 10,
+            ),
+            Container(
+              width: screenWidth / 1.2,
+              margin: const EdgeInsets.only(top: 20, bottom: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      SignUpLogic().signUpWithGoogle(context: context);
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(5),
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: boxShadow),
+                      child: SvgPicture.asset(
+                          width: 30,
+                          height: 30,
+                          'assets/icon/Icon awesome-google.svg'),
+                    ),
+                  ),
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: boxShadow),
+                    child: const Icon(
+                      Icons.apple,
+                      color: Colors.black,
+                      size: 40,
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(5),
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: boxShadow),
+                    child: SvgPicture.asset(
+                        width: 30, height: 30, 'assets/icon/facebook.svg'),
+                  ),
+                ],
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

@@ -230,16 +230,21 @@ class LoginScreen extends StatelessWidget {
                         size: 40,
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(5),
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: boxShadow),
-                      child: SvgPicture.asset(
-                          width: 30, height: 30, 'assets/icon/facebook.svg'),
+                    InkWell(
+                      onTap: () {
+                        logic.facebookLogin(context: context);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(5),
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: boxShadow),
+                        child: SvgPicture.asset(
+                            width: 30, height: 30, 'assets/icon/facebook.svg'),
+                      ),
                     ),
                   ],
                 ),
