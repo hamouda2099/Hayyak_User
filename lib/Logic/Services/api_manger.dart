@@ -93,10 +93,12 @@ class ApiManger {
   static Future<Response> userLogin({
     required String email,
     required String password,
+    required String signType,
   }) async {
     return await sendPostRequest(_loginUrl, <String, String>{
       'email': email,
       'password': password,
+      "sign_type": signType
     });
   }
 

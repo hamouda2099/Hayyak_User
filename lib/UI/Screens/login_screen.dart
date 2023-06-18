@@ -146,6 +146,7 @@ class LoginScreen extends StatelessWidget {
                           email: emailController.text,
                           password: passwordController.text,
                           screen: screen,
+                          signType: 'normal',
                           ref: ref);
                     },
                     child: Container(
@@ -193,62 +194,70 @@ class LoginScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                width: screenWidth / 1.2,
-                margin: const EdgeInsets.only(top: 20, bottom: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        logic.googleLogin(context: context);
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(5),
+              Consumer(builder: (context, ref, child) {
+                return Container(
+                  width: screenWidth / 1.2,
+                  margin: const EdgeInsets.only(top: 20, bottom: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          logic.googleLogin(
+                            context: context,
+                            screen: screen,
+                            ref: ref,
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(5),
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: boxShadow),
+                          child: SvgPicture.asset(
+                              width: 30,
+                              height: 30,
+                              'assets/icon/Icon awesome-google.svg'),
+                        ),
+                      ),
+                      Container(
                         width: 40,
                         height: 40,
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(10),
                             boxShadow: boxShadow),
-                        child: SvgPicture.asset(
-                            width: 30,
-                            height: 30,
-                            'assets/icon/Icon awesome-google.svg'),
+                        child: const Icon(
+                          Icons.apple,
+                          color: Colors.black,
+                          size: 40,
+                        ),
                       ),
-                    ),
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: boxShadow),
-                      child: const Icon(
-                        Icons.apple,
-                        color: Colors.black,
-                        size: 40,
+                      InkWell(
+                        onTap: () {
+                          logic.facebookLogin(context: context);
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(5),
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: boxShadow),
+                          child: SvgPicture.asset(
+                              width: 30,
+                              height: 30,
+                              'assets/icon/facebook.svg'),
+                        ),
                       ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        logic.facebookLogin(context: context);
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(5),
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: boxShadow),
-                        child: SvgPicture.asset(
-                            width: 30, height: 30, 'assets/icon/facebook.svg'),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+                    ],
+                  ),
+                );
+              }),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

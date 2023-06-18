@@ -25,12 +25,16 @@ class LoginLogic {
       {@required email,
       @required password,
       required var screen,
-      required WidgetRef ref}) {
+      required WidgetRef ref,
+      required String signType}) {
     if (email == '' || password == '') {
       messageDialog(context, 'Email Or Password Wrong !');
     } else {
       loadingDialog(context);
-      ApiManger.userLogin(email: email, password: password).then((value) async {
+      ApiManger.userLogin(email: email, password: password, signType: signType)
+          .then((value) async {
+        print("login response");
+        print(value.body);
         Navigator.pop(context);
         ApiManger.getTranslationsKeys().then((value) {
           print(value.data!.toJson());
@@ -70,7 +74,10 @@ class LoginLogic {
     }
   }
 
-  googleLogin({required BuildContext context}) async {
+  googleLogin(
+      {required BuildContext context,
+      required var screen,
+      required WidgetRef ref}) async {
     final GoogleSignInAccount? googleSignInAccount =
         await googleSignIn.signIn();
     final GoogleSignInAuthentication? googleSignInAuthentication =
@@ -80,10 +87,21 @@ class LoginLogic {
         idToken: googleSignInAuthentication?.idToken);
     final UserCredential user =
         await firebaseAuth.signInWithCredential(credential);
-    print('************************');
-    print(user.user?.email);
-    messageDialog(context, "Signed");
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+    return await FirebaseAuth.instance
+        .signInWithCredential(credential)
+        .then((value) {
+      print(value);
+      if (user.user?.emailVerified ?? false) {
+        login(context,
+            email: value.user?.email,
+            password: 'null',
+            screen: screen,
+            ref: ref,
+            signType: 'social');
+      } else {
+        print('object');
+      }
+    });
   }
 
   facebookLogin({required BuildContext context}) async {
