@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hayyak/Config/constants.dart';
@@ -13,12 +12,11 @@ import 'package:hayyak/Dialogs/message_dialog.dart';
 import 'package:hayyak/Logic/Services/api_manger.dart';
 import 'package:hayyak/States/providers.dart';
 import 'package:hive/hive.dart';
-import 'package:http/http.dart' as http;
 
 class LoginLogic {
   late WidgetRef ref;
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  final FacebookAuth facebookAuth = FacebookAuth.instance;
+  // final FacebookAuth facebookAuth = FacebookAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
   static void login(BuildContext context,
@@ -104,21 +102,21 @@ class LoginLogic {
     });
   }
 
-  facebookLogin({required BuildContext context}) async {
-    final LoginResult loginResult = await facebookAuth.login();
-    final graphResponse = await http.get(Uri.parse(
-        'https://graph.facebook.com/v2.12/me?fields=name,picture.width(800).height(800),first_name,last_name,email&access_token=${loginResult.accessToken?.token}'));
-    // final profile = jsonDecode(graphResponse.body);
-    final OAuthCredential credential =
-        FacebookAuthProvider.credential(loginResult.accessToken!.token);
-    final UserCredential user =
-        await firebaseAuth.signInWithCredential(credential);
-    print(user.user);
-    print('************************');
-    print(user.user?.email);
-    messageDialog(context, "Signed");
-    return await FirebaseAuth.instance.signInWithCredential(credential);
-  }
+  // facebookLogin({required BuildContext context}) async {
+  //   final LoginResult loginResult = await facebookAuth.login();
+  //   final graphResponse = await http.get(Uri.parse(
+  //       'https://graph.facebook.com/v2.12/me?fields=name,picture.width(800).height(800),first_name,last_name,email&access_token=${loginResult.accessToken?.token}'));
+  //   // final profile = jsonDecode(graphResponse.body);
+  //   final OAuthCredential credential =
+  //       FacebookAuthProvider.credential(loginResult.accessToken!.token);
+  //   final UserCredential user =
+  //       await firebaseAuth.signInWithCredential(credential);
+  //   print(user.user);
+  //   print('************************');
+  //   print(user.user?.email);
+  //   messageDialog(context, "Signed");
+  //   return await FirebaseAuth.instance.signInWithCredential(credential);
+  // }
 
   // appleLogin({required BuildContext context}) async {
   //   final LoginResult loginResult = await app.login();

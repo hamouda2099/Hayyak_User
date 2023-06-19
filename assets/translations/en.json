@@ -61,5 +61,8 @@
   "total_price": "Total Price",
   "sar": "SAR",
   "enter_promo_code": "Enter promo code",
-  "doors_open": "Doors open"
+  "doors_open": "Doors open",
+
+  "about_this_event": "About this event",
+  ""
 }

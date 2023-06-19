@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+// import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/Dialogs/loading_dialog.dart';
@@ -14,7 +14,7 @@ import 'package:hayyak/UI/Screens/verify_otp_code_screen.dart';
 class SignUpLogic {
   static String otpCode = '';
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  final FacebookAuth facebookAuth = FacebookAuth.instance;
+  // final FacebookAuth facebookAuth = FacebookAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
   static void signUp({
     required BuildContext context,
