@@ -1,4 +1,4 @@
-package com.example.hayyak
+package com.hayyak.events
 
 import io.flutter.embedding.android.FlutterActivity
 

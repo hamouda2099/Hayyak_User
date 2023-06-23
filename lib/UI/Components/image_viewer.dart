@@ -23,7 +23,7 @@ class ImageViewer extends StatelessWidget {
               color: kDarkGreyColor,
             )),
       ),
-      body: Container(
+      body: SizedBox(
         width: screenWidth,
         height: screenHeight,
         child: PhotoView(

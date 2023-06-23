@@ -10,7 +10,8 @@ import 'package:hayyak/main.dart';
 
 class TicketComponentInTicketDetails extends StatelessWidget {
   TicketComponentInTicketDetails(
-      {required this.kind,
+      {super.key,
+      required this.kind,
       required this.cartProvider,
       required this.totalProvider,
       required this.logic});

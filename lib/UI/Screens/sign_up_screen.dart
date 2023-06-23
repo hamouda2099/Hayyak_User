@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/Config/date_formatter.dart';
 import 'package:hayyak/Config/navigator.dart';
@@ -15,19 +16,7 @@ import '../../Config/user_data.dart';
 
 // ignore: must_be_immutable
 class SignUpScreen extends StatelessWidget {
-  TextEditingController firstNameController = TextEditingController();
-  TextEditingController lastNameController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmPasswordController = TextEditingController();
-  TextEditingController dateOfBirthController = TextEditingController();
-  final genderProvider = StateProvider<String>((ref) => 'Male');
-  List gender = ['Male', 'Female'];
-  DateTime? selectedDate = DateTime(2018);
-
-  SignUpScreen({Key? key}) : super(key: key);
-
+  SignUpLogic logic = SignUpLogic();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,7 +63,7 @@ class SignUpScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(5),
                     width: screenWidth / 2.5,
                     child: TextField(
-                      controller: firstNameController,
+                      controller: logic.firstNameController,
                       decoration: InputDecoration(
                         hintText:
                             UserData.translation.data?.firstName?.toString() ??
@@ -95,7 +84,7 @@ class SignUpScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(5),
                     width: screenWidth / 2.5,
                     child: TextField(
-                      controller: lastNameController,
+                      controller: logic.lastNameController,
                       decoration: InputDecoration(
                         hintText:
                             UserData.translation.data?.lastName?.toString() ??
@@ -116,7 +105,7 @@ class SignUpScreen extends StatelessWidget {
             ),
             CustomTextField(
               width: screenWidth / 1.2,
-              controller: emailController,
+              controller: logic.emailController,
               hintText: UserData.translation.data?.email?.toString() ?? 'Email',
               obscure: false,
             ),
@@ -157,7 +146,7 @@ class SignUpScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(5),
                     width: screenWidth / 2.5,
                     child: TextField(
-                      controller: phoneController,
+                      controller: logic.phoneController,
                       decoration: InputDecoration(
                         hintText:
                             UserData.translation.data?.phone?.toString() ??
@@ -187,7 +176,7 @@ class SignUpScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5),
               ),
               child: TextField(
-                controller: dateOfBirthController,
+                controller: logic.dateOfBirthController,
                 decoration: InputDecoration(
                   hintText: 'dd/mm/yy',
                   suffixIcon: IconButton(
@@ -199,10 +188,10 @@ class SignUpScreen extends StatelessWidget {
                           firstDate: DateTime(2000),
                           //DateTime.now() - not to allow to choose before today.
                           lastDate: DateTime(2101));
-                      dateOfBirthController.text =
+                      logic.dateOfBirthController.text =
                           dateFormatter(pickedDate.toString());
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.calendar_month,
                       color: kLightGreyColor,
                     ),
@@ -220,9 +209,9 @@ class SignUpScreen extends StatelessWidget {
             ),
             Consumer(
               builder: (context, ref, child) {
-                final value = ref.watch(genderProvider);
+                final value = ref.watch(logic.genderProvider);
                 return Container(
-                  padding: EdgeInsets.only(left: 10, right: 10),
+                  padding: const EdgeInsets.only(left: 10, right: 10),
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(5),
@@ -232,7 +221,7 @@ class SignUpScreen extends StatelessWidget {
                       )),
                   width: screenWidth / 1.2,
                   child: DropdownButton(
-                    underline: SizedBox(),
+                    underline: const SizedBox(),
                     isExpanded: true,
                     iconSize: 20,
                     icon: Icon(
@@ -247,10 +236,10 @@ class SignUpScreen extends StatelessWidget {
                       ),
                     ),
                     onChanged: (newValue) {
-                      ref.refresh(genderProvider.notifier).state =
+                      ref.refresh(logic.genderProvider.notifier).state =
                           '${newValue}';
                     },
-                    items: gender.map((location) {
+                    items: logic.gender.map((location) {
                       return DropdownMenuItem(
                         child: Text(
                           location,
@@ -271,7 +260,7 @@ class SignUpScreen extends StatelessWidget {
             ),
             CustomTextField(
               width: screenWidth / 1.2,
-              controller: passwordController,
+              controller: logic.passwordController,
               hintText:
                   UserData.translation.data?.password?.toString() ?? 'Password',
               obscure: true,
@@ -281,7 +270,7 @@ class SignUpScreen extends StatelessWidget {
             ),
             CustomTextField(
               width: screenWidth / 1.2,
-              controller: confirmPasswordController,
+              controller: logic.confirmPasswordController,
               hintText:
                   UserData.translation.data?.confirmPassword?.toString() ??
                       'Confirm Password',
@@ -334,7 +323,7 @@ class SignUpScreen extends StatelessWidget {
                           UserData.translation.data?.termsAndConditions
                                   ?.toString() ??
                               ' terms & conditions',
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: Colors.blue,
                               fontSize: 12,
                               fontWeight: FontWeight.w400),
@@ -355,16 +344,18 @@ class SignUpScreen extends StatelessWidget {
                     // login function
                     if (ref.read(termsAndConditionsProvider.notifier).state) {
                       SignUpLogic.signUp(
+                          signType: 'normal',
                           context: context,
-                          firstName: firstNameController.text,
-                          lastName: lastNameController.text,
-                          phone: phoneController.text,
-                          email: emailController.text,
-                          dateOfBirth: dateOfBirthController.text,
-                          password: passwordController.text,
-                          confirmPassword: confirmPasswordController.text,
+                          firstName: logic.firstNameController.text,
+                          lastName: logic.lastNameController.text,
+                          phone: logic.phoneController.text,
+                          email: logic.emailController.text,
+                          dateOfBirth: logic.dateOfBirthController.text,
+                          password: logic.passwordController.text,
+                          confirmPassword: logic.confirmPasswordController.text,
                           gender:
-                              ref.read(genderProvider.notifier).state == 'Male'
+                              ref.read(logic.genderProvider.notifier).state ==
+                                      'Male'
                                   ? '1'
                                   : '2');
                     } else {
@@ -392,6 +383,37 @@ class SignUpScreen extends StatelessWidget {
               },
             ),
             const SizedBox(
+              height: 20,
+            ),
+            InkWell(
+              onTap: () {
+                logic.googleSignUp(context: context);
+              },
+              child: Container(
+                  width: screenWidth / 1.2,
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(100)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                          color: Colors.white,
+                          width: 30,
+                          height: 30,
+                          'assets/icon/Icon awesome-google.svg'),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      const Text(
+                        'Sign up with google account',
+                        style: TextStyle(color: Colors.white),
+                      )
+                    ],
+                  )),
+            ),
+            const SizedBox(
               height: 30,
             ),
             Row(
@@ -416,7 +438,7 @@ class SignUpScreen extends StatelessWidget {
                   child: Text(
                     UserData.translation.data?.signIn?.toString() ??
                         ' Sign in.',
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: Colors.blue,
                         fontSize: 14,
                         fontWeight: FontWeight.bold),

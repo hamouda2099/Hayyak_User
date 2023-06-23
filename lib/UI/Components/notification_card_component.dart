@@ -9,8 +9,8 @@ class NotificationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(10),
-      padding: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       width: screenWidth / 1.2,
       decoration: BoxDecoration(boxShadow: [
         BoxShadow(

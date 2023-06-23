@@ -127,10 +127,10 @@ class TicketSliderItem extends StatelessWidget {
                             ? SizedBox()
                             : Text(
                                 'ROW : ${orderTicket.row}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: kDarkGreyColor, fontSize: 12),
                               ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         orderTicket.number == null

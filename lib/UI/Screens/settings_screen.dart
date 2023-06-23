@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/Config/user_data.dart';
+import 'package:hayyak/Dialogs/loading_dialog.dart';
 import 'package:hayyak/UI/Components/box_shadow.dart';
 import 'package:hayyak/UI/Components/seccond_app_bar.dart';
 import 'package:hayyak/UI/Screens/account_screen.dart';
@@ -17,6 +18,7 @@ import 'package:hayyak/main.dart';
 import 'package:hive/hive.dart';
 
 import '../../Dialogs/logout_dialog.dart';
+import '../../Logic/Services/api_manger.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -98,16 +100,35 @@ class SettingsScreen extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
+                  loadingDialog(context);
                   if (localLanguage == 'en') {
                     localLanguage = 'ar';
                     UserData.language = localLanguage;
                     Hive.box('user_data').put('lang', localLanguage);
+                    ApiManger.getTranslationsKeys().then((value) async {
+                      Navigator.pop(context);
+                      if (value.success ?? false) {
+                        UserData.translation = value;
+                      } else {
+                        UserData.translation =
+                            await Hive.box('user_data').get('translation');
+                      }
+                    });
                     context.setLocale(const Locale('ar'));
                     textDirection = ui.TextDirection.rtl;
                   } else {
                     localLanguage = 'en';
                     UserData.language = localLanguage;
                     Hive.box('user_data').put('lang', localLanguage);
+                    ApiManger.getTranslationsKeys().then((value) async {
+                      Navigator.pop(context);
+                      if (value.success ?? false) {
+                        UserData.translation = value;
+                      } else {
+                        UserData.translation =
+                            await Hive.box('user_data').get('translation');
+                      }
+                    });
                     context.setLocale(const Locale('en'));
                     textDirection = ui.TextDirection.ltr;
                   }

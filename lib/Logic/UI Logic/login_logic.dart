@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+// import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hayyak/Config/constants.dart';
@@ -17,19 +17,21 @@ import 'package:hive/hive.dart';
 class LoginLogic {
   late WidgetRef ref;
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  final FacebookAuth facebookAuth = FacebookAuth.instance;
+  // final FacebookAuth facebookAuth = FacebookAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
   static void login(BuildContext context,
       {@required email,
       @required password,
       required var screen,
-      required WidgetRef ref}) {
+      required WidgetRef ref,
+      required String signType}) {
     if (email == '' || password == '') {
       messageDialog(context, 'Email Or Password Wrong !');
     } else {
       loadingDialog(context);
-      ApiManger.userLogin(email: email, password: password).then((value) async {
+      ApiManger.userLogin(email: email, password: password, signType: signType)
+          .then((value) async {
         Navigator.pop(context);
         ApiManger.getTranslationsKeys().then((value) {
           print(value.data!.toJson());
@@ -60,16 +62,20 @@ class LoginLogic {
           } else {
             null;
           }
-
           navigator(context: context, screen: screen, remove: true);
         } else {
-          messageDialog(context, '${jsonDecode(value.body)['error']}');
+          messageDialog(context,
+              '${jsonDecode(value.body)['error'] ?? 'An error occurred'}');
         }
       });
     }
   }
 
-  googleLogin({required BuildContext context}) async {
+  googleLogin({
+    required BuildContext context,
+    required var screen,
+  }) async {
+    loadingDialog(context);
     final GoogleSignInAccount? googleSignInAccount =
         await googleSignIn.signIn();
     final GoogleSignInAuthentication? googleSignInAuthentication =
@@ -79,8 +85,20 @@ class LoginLogic {
         idToken: googleSignInAuthentication?.idToken);
     final UserCredential user =
         await firebaseAuth.signInWithCredential(credential);
-    print(user.user?.email);
-    messageDialog(context, "Signed");
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+    return await FirebaseAuth.instance
+        .signInWithCredential(credential)
+        .then((value) {
+      Navigator.pop(context);
+      if (user.user?.emailVerified ?? false) {
+        login(context,
+            email: value.user?.email,
+            password: 'null',
+            screen: screen,
+            ref: ref,
+            signType: 'social');
+      } else {
+        print('object');
+      }
+    });
   }
 }

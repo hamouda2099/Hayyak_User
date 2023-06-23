@@ -47,7 +47,7 @@ class TicketCard extends StatelessWidget {
               children: [
                 Text(
                   name.toString() + orderId.toString(),
-                  style: TextStyle(color: kDarkGreyColor, fontSize: 14),
+                  style: const TextStyle(color: kDarkGreyColor, fontSize: 14),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,

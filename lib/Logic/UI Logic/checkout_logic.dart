@@ -107,8 +107,8 @@ class CheckoutLogic {
             date: date,
             userId: UserData.id.toString(),
             couponId: couponId,
-            userRole: UserData.role,
-            token: UserData.token)
+            userRole: UserData.role!,
+            token: UserData.token!)
         .then((value) {
       print(value);
       Navigator.pop(context);
@@ -150,7 +150,7 @@ class CheckoutLogic {
       action: '4',
       currency: 'SAR',
       amt: amount.toString(),
-      customerEmail: UserData.email,
+      customerEmail: UserData.email ?? '',
       trackid: 'FLUTTER_456353577432',
       udf1: 'text',
       udf2: '',

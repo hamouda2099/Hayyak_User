@@ -24,7 +24,7 @@ class ScreenLoading extends StatelessWidget {
         SizedBox(
           width: 10,
         ),
-        Text('برجاء الإنتظار...'),
+        Text('please wait'),
       ],
     );
   }

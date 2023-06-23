@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/Models/user_order_tickets_model.dart';
@@ -65,7 +66,7 @@ class ServiceSliderItem extends StatelessWidget {
                         borderRadius: BorderRadius.circular(screenHeight),
                       ),
                       child: Text(
-                        'Ticket ${index + 1} of ${total}',
+                        '${'Ticket'.tr()}${index + 1} of $total',
                         style: TextStyle(color: kLightGreyColor, fontSize: 12),
                       ),
                     ),
@@ -79,7 +80,7 @@ class ServiceSliderItem extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                Container(
+                SizedBox(
                   height: screenHeight / 3,
                   child: SingleChildScrollView(
                     child: Column(

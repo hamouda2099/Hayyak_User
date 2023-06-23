@@ -35,7 +35,7 @@ class App extends StatelessWidget {
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,
-        title: 'Hayyak',
+        title: 'Hayyak Events',
         home: const SplashScreen(),
         debugShowCheckedModeBanner: false,
         // theme: ThemeData(fontFamily: 'TisaSansPro'),

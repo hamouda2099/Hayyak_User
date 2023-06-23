@@ -5,7 +5,6 @@ import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/Logic/UI%20Logic/login_logic.dart';
 import 'package:hayyak/States/providers.dart';
-import 'package:hayyak/UI/Components/box_shadow.dart';
 import 'package:hayyak/UI/Components/text_field.dart';
 import 'package:hayyak/UI/Screens/sign_up_screen.dart';
 import 'package:hayyak/main.dart';
@@ -146,6 +145,7 @@ class LoginScreen extends StatelessWidget {
                           email: emailController.text,
                           password: passwordController.text,
                           screen: screen,
+                          signType: 'normal',
                           ref: ref);
                     },
                     child: Container(
@@ -159,7 +159,7 @@ class LoginScreen extends StatelessWidget {
                       child: Text(
                         UserData.translation.data?.signIn?.toString() ??
                             'SIGN IN',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w300,
                           color: Colors.white,
@@ -173,9 +173,11 @@ class LoginScreen extends StatelessWidget {
                 margin: const EdgeInsets.only(top: 20),
                 width: screenWidth / 1.2,
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      width: screenWidth / 3.6,
+                      margin: EdgeInsets.only(left: 5, right: 5),
+                      width: screenWidth / 5,
                       height: 1,
                       color: kLightGreyColor,
                     ),
@@ -186,63 +188,47 @@ class LoginScreen extends StatelessWidget {
                           const TextStyle(color: kLightGreyColor, fontSize: 14),
                     ),
                     Container(
-                      width: screenWidth / 3.6,
+                      margin: EdgeInsets.only(left: 5, right: 5),
+                      width: screenWidth / 5,
                       height: 1,
                       color: kLightGreyColor,
                     ),
                   ],
                 ),
               ),
-              Container(
-                width: screenWidth / 1.2,
-                margin: const EdgeInsets.only(top: 20, bottom: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        logic.googleLogin(context: context);
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(5),
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
+              const SizedBox(
+                height: 10,
+              ),
+              InkWell(
+                onTap: () {
+                  logic.googleLogin(context: context, screen: screen);
+                },
+                child: Container(
+                    width: screenWidth / 1.2,
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(100)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
                             color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: boxShadow),
-                        child: SvgPicture.asset(
                             width: 30,
                             height: 30,
                             'assets/icon/Icon awesome-google.svg'),
-                      ),
-                    ),
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: boxShadow),
-                      child: const Icon(
-                        Icons.apple,
-                        color: Colors.black,
-                        size: 40,
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(5),
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: boxShadow),
-                      child: SvgPicture.asset(
-                          width: 30, height: 30, 'assets/icon/facebook.svg'),
-                    ),
-                  ],
-                ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        const Text(
+                          'Sign in with google account',
+                          style: TextStyle(color: Colors.white),
+                        )
+                      ],
+                    )),
+              ),
+              const SizedBox(
+                height: 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -250,7 +236,7 @@ class LoginScreen extends StatelessWidget {
                   Text(
                     UserData.translation.data?.dontHaveAccount?.toString() ??
                         "Don\'t have an account?",
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: kLightGreyColor,
                       fontSize: 14,
                     ),
@@ -265,7 +251,7 @@ class LoginScreen extends StatelessWidget {
                       child: Text(
                         UserData.translation.data?.createOne?.toString() ??
                             "Create One",
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.blue,
                           fontSize: 14,
                         ),

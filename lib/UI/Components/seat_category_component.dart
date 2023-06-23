@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hayyak/Config/user_data.dart';
 import 'package:hayyak/Dialogs/message_dialog.dart';
 import 'package:hayyak/Models/event_seats_model.dart';
 import 'package:hayyak/UI/Components/chair_component.dart';
@@ -53,11 +54,12 @@ class SeatCategoryComponent extends ConsumerWidget {
                     padding: const EdgeInsets.only(left: 20.0, right: 30),
                     child: Row(
                       children: [
-                        const Padding(
+                        Padding(
                           padding: EdgeInsets.only(left: 30, right: 30),
                           child: Text(
-                            'Choose your seats',
-                            style: TextStyle(
+                            UserData.translation.data?.chooseYourSeat ??
+                                'Choose your seats',
+                            style: const TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 12),
                           ),
                         ),

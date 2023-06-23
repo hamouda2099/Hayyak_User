@@ -38,8 +38,7 @@ class SplashLogic {
           UserData.imageUrl = await Hive.box('user_data').get('image');
           UserData.role = await Hive.box('user_data').get('role');
           UserData.language = await Hive.box('user_data').get('lang');
-          localLanguage = UserData.language;
-          print(localLanguage);
+          localLanguage = UserData.language ?? 'en';
           if (localLanguage == 'en') {
             textDirection = ui.TextDirection.ltr;
             localLanguage = 'en';
