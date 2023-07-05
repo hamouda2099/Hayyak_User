@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/Dialogs/loading_screen.dart';
-import 'package:hayyak/Dialogs/message_dialog.dart';
 import 'package:hayyak/Logic/Services/api_manger.dart';
 import 'package:hayyak/Logic/UI%20Logic/event_tickets_logic.dart';
 import 'package:hayyak/Models/event_tickets_model.dart';
 import 'package:hayyak/UI/Components/seccond_app_bar.dart';
 import 'package:hayyak/UI/Components/ticket_component_tickets_details.dart';
-import 'package:hayyak/UI/Screens/checkout_screen.dart';
 import 'package:hayyak/main.dart';
 
 import '../../Config/constants.dart';
 import '../../Config/date_formatter.dart';
+import '../../Config/navigator.dart';
 import '../../Config/user_data.dart';
+import '../../Dialogs/message_dialog.dart';
 import '../Components/services_component_tickets_details.dart';
+import 'checkout_screen.dart';
 
 final pageProvider = StateProvider<int>((ref) => 1);
 List selectedTickets = [];
@@ -58,6 +58,8 @@ class EventTicketsScreen extends StatelessWidget {
                   return Scaffold(
                       body: Center(child: Text('Error: ${snapShot.error}')));
                 } else {
+                  selectedTickets = [];
+                  selectedServices = [];
                   return Scaffold(
                     bottomNavigationBar: Container(
                       width: screenWidth / 1,

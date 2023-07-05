@@ -382,38 +382,41 @@ class CheckoutLogic {
       {required List selectedTickets,
       required List selectedServices,
       required String receiptType}) async {
-    if (selectedTickets.isEmpty || selectedServices.isEmpty) {
-    } else {
-      tickets = '';
-      services = '';
-      if (receiptType == 'seats') {
-        for (var element in selectedTickets) {
-          tickets = '$tickets$element,';
-        }
-        for (var element in selectedServices) {
-          services =
-              '$services${element['service']['id']},${element['count']},';
-        }
-        services = services.substring(0, services.length - 1);
-      } else {
-        for (var element in selectedTickets) {
-          tickets = '$tickets${element['id']},';
-        }
+    // if (selectedTickets.isEmpty && selectedServices.isEmpty) {
+    // } else {
+    tickets = '';
+    services = '';
+    if (receiptType == 'seats') {
+      for (var element in selectedTickets) {
+        tickets = '$tickets$element,';
+      }
+      if (selectedServices.isNotEmpty) {
         for (var element in selectedServices) {
           services =
               '$services${element['service']['id']},${element['count']},';
         }
         services = services.substring(0, services.length - 1);
       }
-      await ApiManger.getStaticServices(eventId: eventId).then((value) {
-        staticServices = value;
-        smsServiceValue =
-            (value.data?.sms?.value ?? 0) * selectedTickets.length;
-        refundServiceValue =
-            (value.data?.refund?.value ?? 0) * selectedTickets.length;
-        whatsAppServiceValue =
-            (value.data?.whatsapp?.value ?? 0) * selectedTickets.length;
-      });
+    } else {
+      for (var element in selectedTickets) {
+        tickets = '$tickets${element['id']},';
+      }
+      if (selectedServices.isNotEmpty) {
+        for (var element in selectedServices) {
+          services =
+              '$services${element['service']['id']},${element['count']},';
+        }
+        services = services.substring(0, services.length - 1);
+      }
     }
+    await ApiManger.getStaticServices(eventId: eventId).then((value) {
+      staticServices = value;
+      smsServiceValue = (value.data?.sms?.value ?? 0) * selectedTickets.length;
+      refundServiceValue =
+          (value.data?.refund?.value ?? 0) * selectedTickets.length;
+      whatsAppServiceValue =
+          (value.data?.whatsapp?.value ?? 0) * selectedTickets.length;
+    });
+    // }
   }
 }

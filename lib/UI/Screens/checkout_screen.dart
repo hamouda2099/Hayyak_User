@@ -51,6 +51,10 @@ class CheckoutScreen extends StatelessWidget {
     logic.vat = vat;
     logic.fees = fees;
     logic.eventId = eventId;
+
+    print('********************');
+    print(selectedTickets);
+    print(selectedServices);
     return FutureBuilder(
       future: logic.initDataToCheckAvailable(
           receiptType: receitType,
@@ -66,6 +70,7 @@ class CheckoutScreen extends StatelessWidget {
             }
           default:
             if (snapShot.hasError) {
+              print(snapShot);
               return Scaffold(
                 body: Center(
                   child: Text('Error: ${snapShot.error}'),
