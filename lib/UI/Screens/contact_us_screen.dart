@@ -142,7 +142,7 @@ class ContactUsScreen extends StatelessWidget {
                   alignment: Alignment.center,
                   width: screenWidth / 1.2,
                   decoration: BoxDecoration(
-                    color: Colors.blue,
+                    color: kPrimaryColor,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   padding: const EdgeInsets.all(15),

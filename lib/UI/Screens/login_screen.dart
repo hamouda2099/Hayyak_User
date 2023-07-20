@@ -102,7 +102,7 @@ class LoginScreen extends StatelessWidget {
                                 )
                               : const Icon(
                                   Icons.check_circle,
-                                  color: Colors.blue,
+                                  color: kPrimaryColor,
                                   size: 18,
                                 ),
                         ),
@@ -130,7 +130,7 @@ class LoginScreen extends StatelessWidget {
                         UserData.translation.data?.forgetPassword?.toString() ??
                             'Forget Password ?',
                         style:
-                            const TextStyle(color: Colors.blue, fontSize: 12),
+                            const TextStyle(color: kPrimaryColor, fontSize: 12),
                       )),
                 ),
               ),
@@ -152,7 +152,7 @@ class LoginScreen extends StatelessWidget {
                       alignment: Alignment.center,
                       width: screenWidth / 1.2,
                       decoration: BoxDecoration(
-                        color: Colors.blue,
+                        color: kPrimaryColor,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       padding: const EdgeInsets.all(15),
@@ -252,7 +252,7 @@ class LoginScreen extends StatelessWidget {
                         UserData.translation.data?.createOne?.toString() ??
                             "Create One",
                         style: const TextStyle(
-                          color: Colors.blue,
+                          color: kPrimaryColor,
                           fontSize: 14,
                         ),
                       )),

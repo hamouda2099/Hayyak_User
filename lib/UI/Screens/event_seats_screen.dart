@@ -44,7 +44,6 @@ class EventSeatsScreen extends StatelessWidget {
               return Scaffold(
                   body: Center(child: Text('Error: ${snapShot.error}')));
             } else {
-              print(snapShot.data!.data.event.kinds[0].tickets["A"][0]);
               return Scaffold(
                 bottomNavigationBar: Container(
                   width: screenWidth / 1,
@@ -120,9 +119,9 @@ class EventSeatsScreen extends StatelessWidget {
                           navigator(
                               context: context,
                               screen: CheckoutScreen(
-                                vat: snapShot.data?.data.event.details.vat,
-                                fees:
-                                    snapShot.data?.data.event.details.eventFees,
+                                vat: snapShot.data?.data?.event?.details?.vat,
+                                fees: snapShot
+                                    .data?.data?.event?.details?.eventFees,
                                 receitType: 'seats',
                                 total: totalPriceProvider,
                                 selectedDate: selectedDate,
@@ -130,17 +129,17 @@ class EventSeatsScreen extends StatelessWidget {
                                 selectedTickets: globalSelectedSeats,
                                 selectedServices: globalSelectedSeatsServices,
                                 eventTime:
-                                    snapShot.data?.data.event.details.time ??
+                                    snapShot.data?.data?.event?.details?.time ??
                                         '',
-                                eventDate: snapShot
-                                        .data?.data.event.details.startDate ??
+                                eventDate: snapShot.data?.data?.event?.details
+                                        ?.startDate ??
                                     '',
                                 eventName:
-                                    snapShot.data?.data.event.details.name ??
+                                    snapShot.data?.data?.event?.details?.name ??
                                         '',
-                                eventImage:
-                                    snapShot.data?.data.event.details.image ??
-                                        '',
+                                eventImage: snapShot
+                                        .data?.data?.event?.details?.image ??
+                                    '',
                               ));
                         },
                         child: Container(
@@ -258,7 +257,9 @@ class EventSeatsScreen extends StatelessWidget {
                             navigator(
                                 context: context,
                                 screen: ImageViewer(
-                                  url: snapShot.data!.data.event.details.image,
+                                  url: snapShot
+                                          .data!.data?.event?.details?.image ??
+                                      '',
                                 ));
                           },
                           child: Container(
@@ -267,8 +268,9 @@ class EventSeatsScreen extends StatelessWidget {
                             decoration: BoxDecoration(
                                 image: DecorationImage(
                                     fit: BoxFit.fill,
-                                    image: NetworkImage(snapShot
-                                        .data!.data.event.details.image))),
+                                    image: NetworkImage(snapShot.data!.data
+                                            ?.event?.details?.image ??
+                                        ''))),
                           ),
                         ),
                         const SizedBox(
@@ -290,12 +292,13 @@ class EventSeatsScreen extends StatelessWidget {
                         ),
                         Column(
                           children: List.generate(
-                              snapShot.data!.data.event.kinds.length, (index) {
+                              snapShot.data!.data!.event!.kinds!.length,
+                              (index) {
                             return Padding(
                               padding: const EdgeInsets.only(bottom: 10.0),
                               child: SeatCategoryComponent(
                                 seatCategory:
-                                    snapShot.data!.data.event.kinds[index],
+                                    snapShot.data!.data!.event!.kinds![index],
                               ),
                             );
                           }),
@@ -324,7 +327,7 @@ class EventSeatsScreen extends StatelessWidget {
                         ),
                         Column(
                           children: List.generate(
-                              snapShot.data?.data.event.services?.length ?? 0,
+                              snapShot.data?.data?.event?.services?.length ?? 0,
                               (index) {
                             final counterProvider = StateProvider((ref) => 0);
                             return Consumer(
@@ -358,8 +361,8 @@ class EventSeatsScreen extends StatelessWidget {
                                               Text(
                                                 snapShot
                                                         .data!
-                                                        .data
-                                                        .event
+                                                        .data!
+                                                        .event!
                                                         .services![index]
                                                         .name ??
                                                     '',
@@ -373,8 +376,8 @@ class EventSeatsScreen extends StatelessWidget {
                                               Text(
                                                 snapShot
                                                     .data!
-                                                    .data
-                                                    .event
+                                                    .data!
+                                                    .event!
                                                     .services![index]
                                                     .costAfterDiscount!,
                                                 style: const TextStyle(
@@ -409,20 +412,18 @@ class EventSeatsScreen extends StatelessWidget {
                                                         .state -
                                                     snapShot
                                                         .data!
-                                                        .data
-                                                        .event
+                                                        .data!
+                                                        .event!
                                                         .services![index]
                                                         .finalCost!;
-                                                print(snapShot.data!.data.event
-                                                    .services![index].id);
                                                 globalSelectedSeatsServices
                                                     .removeWhere((element) =>
                                                         element['service']
                                                             ['id'] ==
                                                         snapShot
                                                             .data!
-                                                            .data
-                                                            .event
+                                                            .data!
+                                                            .event!
                                                             .services![index]
                                                             .id);
                                                 if (ref
@@ -434,8 +435,8 @@ class EventSeatsScreen extends StatelessWidget {
                                                       .add({
                                                     "service": snapShot
                                                         .data!
-                                                        .data
-                                                        .event
+                                                        .data!
+                                                        .event!
                                                         .services![index]
                                                         .toJson(),
                                                     "count": ref
@@ -476,8 +477,8 @@ class EventSeatsScreen extends StatelessWidget {
                                               if (counter ==
                                                   snapShot
                                                           .data!
-                                                          .data
-                                                          .event
+                                                          .data!
+                                                          .event!
                                                           .services![index]
                                                           .countLimit! +
                                                       1) {
@@ -499,8 +500,8 @@ class EventSeatsScreen extends StatelessWidget {
                                                         .state +
                                                     snapShot
                                                         .data!
-                                                        .data
-                                                        .event
+                                                        .data!
+                                                        .event!
                                                         .services![index]
                                                         .finalCost!;
                                                 if (globalSelectedSeatsServices
@@ -509,8 +510,8 @@ class EventSeatsScreen extends StatelessWidget {
                                                       .add({
                                                     "service": snapShot
                                                         .data!
-                                                        .data
-                                                        .event
+                                                        .data!
+                                                        .event!
                                                         .services![index]
                                                         .toJson(),
                                                     "count": ref
@@ -525,8 +526,8 @@ class EventSeatsScreen extends StatelessWidget {
                                                               ['id'] ==
                                                           snapShot
                                                               .data!
-                                                              .data
-                                                              .event
+                                                              .data!
+                                                              .event!
                                                               .services![index]
                                                               .id);
                                                   if (ref
@@ -538,8 +539,8 @@ class EventSeatsScreen extends StatelessWidget {
                                                         .add({
                                                       "service": snapShot
                                                           .data!
-                                                          .data
-                                                          .event
+                                                          .data!
+                                                          .event!
                                                           .services![index]
                                                           .toJson(),
                                                       "count": ref

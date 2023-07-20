@@ -59,7 +59,8 @@ class TicketCard extends StatelessWidget {
                     ),
                     Text(
                       location.toString(),
-                      style: const TextStyle(color: Colors.blue, fontSize: 10),
+                      style:
+                          const TextStyle(color: kPrimaryColor, fontSize: 10),
                     ),
                   ],
                 ),
@@ -73,7 +74,8 @@ class TicketCard extends StatelessWidget {
                     ),
                     Text(
                       date.toString(),
-                      style: const TextStyle(color: Colors.blue, fontSize: 10),
+                      style:
+                          const TextStyle(color: kPrimaryColor, fontSize: 10),
                     ),
                   ],
                 ),

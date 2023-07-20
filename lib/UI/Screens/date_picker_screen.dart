@@ -69,7 +69,7 @@ class _DatePickerScreenState extends State<DatePickerScreen> {
                 Container(
                   height: screenHeight / 1.5,
                   child: SfDateRangePicker(
-                    headerStyle: DateRangePickerHeaderStyle(
+                    headerStyle: const DateRangePickerHeaderStyle(
                         textStyle: TextStyle(
                             color: kPrimaryColor, fontWeight: FontWeight.bold)),
                     showNavigationArrow: true,
@@ -79,10 +79,18 @@ class _DatePickerScreenState extends State<DatePickerScreen> {
                         DateRangePickerNavigationDirection.vertical,
                     navigationMode: DateRangePickerNavigationMode.snap,
                     controller: controller,
-                    view: DateRangePickerView.year,
+                    view: DateTime.tryParse(widget.endDate)?.month ==
+                            DateTime.tryParse(widget.endDate)?.month
+                        ? DateRangePickerView.month
+                        : DateRangePickerView.year,
                     extendableRangeSelectionDirection:
                         ExtendableRangeSelectionDirection.both,
                     enablePastDates: false,
+                    initialSelectedDate:
+                        DateTime.tryParse(widget.startDate)?.day ==
+                                DateTime.tryParse(widget.endDate)?.day
+                            ? DateTime.tryParse(widget.startDate)
+                            : null,
                     minDate: DateTime.tryParse(widget.startDate),
                     maxDate: DateTime.tryParse(widget.endDate),
                     onSelectionChanged: (value) {
@@ -92,6 +100,11 @@ class _DatePickerScreenState extends State<DatePickerScreen> {
                 ),
                 InkWell(
                   onTap: () {
+                    if (DateTime.tryParse(widget.startDate)?.day ==
+                        DateTime.tryParse(widget.endDate)?.day) {
+                      selectedDate =
+                          DateTime.tryParse(widget.startDate).toString();
+                    }
                     if (selectedDate == '') {
                       messageDialog(context, 'Please select date!');
                     } else {
@@ -123,9 +136,9 @@ class _DatePickerScreenState extends State<DatePickerScreen> {
                     child: Text(
                       UserData.translation.data?.confirm?.toString() ??
                           'Confirm',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14,
-                        fontWeight: FontWeight.w300,
+                        fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                     ),

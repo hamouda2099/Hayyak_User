@@ -5,15 +5,18 @@ import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/Config/user_data.dart';
 import 'package:hayyak/UI/Screens/home_screen.dart';
 import 'package:hayyak/UI/Screens/notifications_screen.dart';
+import 'package:share/share.dart';
 // import 'package:share/share.dart';
 
 class SecondAppBar extends StatelessWidget {
   SecondAppBar(
       {required this.title,
       required this.shareAndFav,
-      required this.backToHome});
+      required this.backToHome,
+      this.eventId});
 
   String title;
+  String? eventId;
   bool shareAndFav = false;
   late bool backToHome = false;
 
@@ -53,35 +56,40 @@ class SecondAppBar extends StatelessWidget {
                 fontWeight: FontWeight.bold),
           ),
           shareAndFav || UserData.token == ''
-              ? Row(
-                  children: [
-                    InkWell(
-                        onTap: () {
-                          // Share.share('https://hayyak.net/', subject: title);
-                        },
-                        child: const Icon(
-                          Icons.file_upload_outlined,
-                          size: 20,
-                          color: kDarkGreyColor,
-                        )),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        navigator(
-                            context: context,
-                            screen: const NotificationsScreen());
-                      },
-                      child: SizedBox(
-                        width: 15,
-                        height: 15,
-                        child: SvgPicture.asset(
+              ? Padding(
+                  padding: const EdgeInsets.only(left: 10.0, right: 10),
+                  child: Row(
+                    children: [
+                      InkWell(
+                          onTap: () {
+                            Share.share(
+                                'https://hayyak.net/$localLanguage/event/$eventId',
+                                subject: title);
+                          },
+                          child: const Icon(
+                            Icons.file_upload_outlined,
+                            size: 20,
                             color: kDarkGreyColor,
-                            'assets/icon/Icon feather-heart.svg'),
+                          )),
+                      const SizedBox(
+                        width: 10,
                       ),
-                    ),
-                  ],
+                      InkWell(
+                        onTap: () {
+                          navigator(
+                              context: context,
+                              screen: const NotificationsScreen());
+                        },
+                        child: SizedBox(
+                          width: 15,
+                          height: 15,
+                          child: SvgPicture.asset(
+                              color: kDarkGreyColor,
+                              'assets/icon/Icon feather-heart.svg'),
+                        ),
+                      ),
+                    ],
+                  ),
                 )
               : IconButton(
                   onPressed: () {

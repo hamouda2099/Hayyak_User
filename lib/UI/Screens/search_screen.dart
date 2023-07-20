@@ -264,7 +264,7 @@ class SearchScreen extends ConsumerWidget {
                                                         .start
                                                         .toString(),
                                                     style: const TextStyle(
-                                                        color: Colors.blue,
+                                                        color: kPrimaryColor,
                                                         fontSize: 12),
                                                   ),
                                                 ],

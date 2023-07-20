@@ -6,6 +6,7 @@ import 'package:hayyak/Config/user_data.dart';
 import 'package:hayyak/Dialogs/loading_dialog.dart';
 import 'package:hayyak/Dialogs/message_dialog.dart';
 import 'package:hayyak/Logic/Services/api_manger.dart';
+import 'package:hayyak/Models/home_model.dart';
 import 'package:hayyak/UI/Screens/event_details_screen.dart';
 import 'package:hayyak/UI/Screens/home_screen.dart';
 import 'package:hayyak/main.dart';
@@ -19,6 +20,7 @@ class EventHomeCard extends StatelessWidget {
       required this.location,
       required this.startDate,
       required this.id,
+      required this.action,
       // ignore: non_constant_identifier_names
       required this.is_favourite});
 
@@ -27,7 +29,7 @@ class EventHomeCard extends StatelessWidget {
   String image;
   String location;
   String startDate;
-
+  ActionHome? action;
   // ignore: non_constant_identifier_names
   bool is_favourite;
 
@@ -65,11 +67,14 @@ class EventHomeCard extends StatelessWidget {
                 children: [
                   SizedBox(
                     width: screenWidth / 2.8,
-                    child: Text(
-                      eventName,
-                      overflow: TextOverflow.ellipsis,
-                      style:
-                          const TextStyle(color: kLightGreyColor, fontSize: 12),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 5.0, right: 5),
+                      child: Text(
+                        eventName,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                            color: kLightGreyColor, fontSize: 12),
+                      ),
                     ),
                   ),
                   Row(
@@ -150,13 +155,13 @@ class EventHomeCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      const Icon(
-                        Icons.location_on,
-                        size: 20,
+                      Icon(
+                        Icons.location_on_sharp,
+                        size: 15,
+                        fill: 0.2,
                         color: kLightGreyColor,
                       ),
                       SizedBox(
-                        width: screenWidth / 4,
                         child: Text(
                           location,
                           overflow: TextOverflow.ellipsis,
@@ -166,13 +171,31 @@ class EventHomeCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    startDate,
-                    style: const TextStyle(color: Colors.blue, fontSize: 12),
-                  ),
+                  action?.name == null
+                      ? const SizedBox()
+                      : Row(
+                          children: [
+                            Icon(
+                              Icons.electric_bolt_rounded,
+                              color: action?.color == ''
+                                  ? Colors.transparent
+                                  : Color(int.parse(
+                                      '0xFF${action?.color.toString().substring(1)}')),
+                              size: 20,
+                            ),
+                            Text(
+                              action?.name ?? '',
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: action?.color == ''
+                                    ? Colors.transparent
+                                    : Color(int.parse(
+                                        '0xFF${action?.color.toString().substring(1)}')),
+                              ),
+                            ),
+                          ],
+                        )
                 ],
               )
             ],

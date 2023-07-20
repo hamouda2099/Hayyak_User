@@ -51,10 +51,6 @@ class CheckoutScreen extends StatelessWidget {
     logic.vat = vat;
     logic.fees = fees;
     logic.eventId = eventId;
-
-    print('********************');
-    print(selectedTickets);
-    print(selectedServices);
     return FutureBuilder(
       future: logic.initDataToCheckAvailable(
           receiptType: receitType,
@@ -479,7 +475,7 @@ class CheckoutScreen extends StatelessWidget {
                                                         )
                                                       : const Icon(
                                                           Icons.check_box,
-                                                          color: Colors.blue,
+                                                          color: kPrimaryColor,
                                                           size: 18,
                                                         ),
                                                 ),
@@ -588,19 +584,33 @@ class CheckoutScreen extends StatelessWidget {
                                                               },
                                                               child: refund ==
                                                                       false
-                                                                  ? const Icon(
-                                                                      Icons
-                                                                          .check_box_outline_blank_sharp,
-                                                                      color: Colors
-                                                                          .grey,
-                                                                      size: 18,
+                                                                  ? const Padding(
+                                                                      padding:
+                                                                          EdgeInsets.all(
+                                                                              5.0),
+                                                                      child:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .check_box_outline_blank_sharp,
+                                                                        color: Colors
+                                                                            .grey,
+                                                                        size:
+                                                                            18,
+                                                                      ),
                                                                     )
-                                                                  : const Icon(
-                                                                      Icons
-                                                                          .check_box,
-                                                                      color: Colors
-                                                                          .blue,
-                                                                      size: 18,
+                                                                  : const Padding(
+                                                                      padding:
+                                                                          EdgeInsets.all(
+                                                                              5.0),
+                                                                      child:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .check_box,
+                                                                        color: Colors
+                                                                            .blue,
+                                                                        size:
+                                                                            18,
+                                                                      ),
                                                                     ),
                                                             ),
                                                             Text(
@@ -681,19 +691,33 @@ class CheckoutScreen extends StatelessWidget {
                                                               },
                                                               child: sms ==
                                                                       false
-                                                                  ? const Icon(
-                                                                      Icons
-                                                                          .check_box_outline_blank_sharp,
-                                                                      color: Colors
-                                                                          .grey,
-                                                                      size: 18,
+                                                                  ? const Padding(
+                                                                      padding:
+                                                                          EdgeInsets.all(
+                                                                              8.0),
+                                                                      child:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .check_box_outline_blank_sharp,
+                                                                        color: Colors
+                                                                            .grey,
+                                                                        size:
+                                                                            18,
+                                                                      ),
                                                                     )
-                                                                  : const Icon(
-                                                                      Icons
-                                                                          .check_box,
-                                                                      color: Colors
-                                                                          .blue,
-                                                                      size: 18,
+                                                                  : const Padding(
+                                                                      padding:
+                                                                          EdgeInsets.all(
+                                                                              5.0),
+                                                                      child:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .check_box,
+                                                                        color: Colors
+                                                                            .blue,
+                                                                        size:
+                                                                            18,
+                                                                      ),
                                                                     ),
                                                             ),
                                                             const Text(
@@ -744,19 +768,31 @@ class CheckoutScreen extends StatelessWidget {
                                                             }
                                                           },
                                                           child: whats == false
-                                                              ? const Icon(
-                                                                  Icons
-                                                                      .check_box_outline_blank_sharp,
-                                                                  color: Colors
-                                                                      .grey,
-                                                                  size: 18,
+                                                              ? const Padding(
+                                                                  padding:
+                                                                      EdgeInsets
+                                                                          .all(
+                                                                              5.0),
+                                                                  child: Icon(
+                                                                    Icons
+                                                                        .check_box_outline_blank_sharp,
+                                                                    color: Colors
+                                                                        .grey,
+                                                                    size: 18,
+                                                                  ),
                                                                 )
-                                                              : const Icon(
-                                                                  Icons
-                                                                      .check_box,
-                                                                  color: Colors
-                                                                      .blue,
-                                                                  size: 18,
+                                                              : const Padding(
+                                                                  padding:
+                                                                      EdgeInsets
+                                                                          .all(
+                                                                              5.0),
+                                                                  child: Icon(
+                                                                    Icons
+                                                                        .check_box,
+                                                                    color: Colors
+                                                                        .blue,
+                                                                    size: 18,
+                                                                  ),
                                                                 ),
                                                         ),
                                                         const Text(
@@ -798,14 +834,20 @@ class CheckoutScreen extends StatelessWidget {
                                                     child: TextField(
                                                       controller:
                                                           logic.couponCnt,
-                                                      decoration: const InputDecoration(
+                                                      decoration: InputDecoration(
                                                           border:
                                                               InputBorder.none,
-                                                          hintText:
+                                                          hintText: UserData
+                                                                  .translation
+                                                                  .data
+                                                                  ?.enterPromoCode
+                                                                  ?.toString() ??
                                                               'Enter Promo Code',
                                                           contentPadding:
                                                               EdgeInsets.only(
-                                                                  bottom: 10),
+                                                                  bottom: 10,
+                                                                  right: 5,
+                                                                  left: 5),
                                                           hintStyle: TextStyle(
                                                               color:
                                                                   kLightGreyColor,
@@ -833,20 +875,32 @@ class CheckoutScreen extends StatelessWidget {
                                                                   .all(10),
                                                           alignment:
                                                               Alignment.center,
-                                                          decoration:
-                                                              const BoxDecoration(
-                                                                  color:
-                                                                      kPrimaryColor,
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .only(
-                                                                    topRight: Radius
-                                                                        .circular(
-                                                                            10),
-                                                                    bottomRight:
-                                                                        Radius.circular(
-                                                                            10),
-                                                                  )),
+                                                          decoration: BoxDecoration(
+                                                              color:
+                                                                  kPrimaryColor,
+                                                              borderRadius: BorderRadius.only(
+                                                                  topRight: localLanguage ==
+                                                                          'en'
+                                                                      ? Radius.circular(
+                                                                          10)
+                                                                      : Radius.circular(
+                                                                          0),
+                                                                  topLeft: localLanguage ==
+                                                                          'ar'
+                                                                      ? Radius.circular(
+                                                                          10)
+                                                                      : Radius.circular(
+                                                                          0),
+                                                                  bottomRight: localLanguage ==
+                                                                          'en'
+                                                                      ? Radius.circular(
+                                                                          10)
+                                                                      : Radius.circular(
+                                                                          0),
+                                                                  bottomLeft: localLanguage ==
+                                                                          'ar'
+                                                                      ? Radius.circular(10)
+                                                                      : Radius.circular(0))),
                                                           child: Text(
                                                             UserData.translation
                                                                     .data?.apply
@@ -874,8 +928,10 @@ class CheckoutScreen extends StatelessWidget {
                                                   top: 10,
                                                   bottom: 10),
                                               child: Align(
-                                                  alignment:
-                                                      Alignment.centerLeft,
+                                                  alignment: localLanguage ==
+                                                          'en'
+                                                      ? Alignment.centerLeft
+                                                      : Alignment.centerRight,
                                                   child: Text(
                                                     UserData.translation.data
                                                             ?.summery

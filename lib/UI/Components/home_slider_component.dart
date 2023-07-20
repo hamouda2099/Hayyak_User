@@ -54,7 +54,7 @@ class HomeAds extends ConsumerWidget {
           : Padding(
               padding: const EdgeInsets.all(10),
               child: AspectRatio(
-                aspectRatio: 1 / 0.8,
+                aspectRatio: 4 / 3,
                 child: Stack(
                   children: [
                     PageView.builder(

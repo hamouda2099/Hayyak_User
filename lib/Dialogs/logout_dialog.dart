@@ -40,7 +40,7 @@ logoutDialog(BuildContext context) {
                 width: screenWidth / 4,
                 height: 40,
                 decoration: BoxDecoration(
-                  color: Colors.blue,
+                  color: kPrimaryColor,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 padding: const EdgeInsets.all(5),

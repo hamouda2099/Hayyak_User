@@ -55,7 +55,7 @@ class MyTicketsScreen extends StatelessWidget {
                                     color:
                                         ref.read(tabProvider.notifier).state ==
                                                 'Upcoming'
-                                            ? Colors.blue
+                                            ? kPrimaryColor
                                             : kLightGreyColor,
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold),
@@ -81,7 +81,7 @@ class MyTicketsScreen extends StatelessWidget {
                                     color:
                                         ref.read(tabProvider.notifier).state ==
                                                 'Past'
-                                            ? Colors.blue
+                                            ? kPrimaryColor
                                             : kLightGreyColor,
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold),

@@ -78,6 +78,12 @@ class HomeScreen extends StatelessWidget {
                                                   .length,
                                               itemBuilder: (context, i) {
                                                 return EventHomeCard(
+                                                  action: snapShot
+                                                      .data
+                                                      ?.data
+                                                      .categories[index]
+                                                      .events[i]
+                                                      .action,
                                                   id: snapShot
                                                           .data
                                                           ?.data

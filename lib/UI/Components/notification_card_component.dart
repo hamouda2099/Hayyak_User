@@ -14,7 +14,7 @@ class NotificationCard extends StatelessWidget {
       width: screenWidth / 1.2,
       decoration: BoxDecoration(boxShadow: [
         BoxShadow(
-          color: Colors.blue.withOpacity(
+          color: kPrimaryColor.withOpacity(
             0.2,
           ),
           spreadRadius: 1,

@@ -64,7 +64,7 @@ class EditAccountScreen extends StatelessWidget {
                                             decoration: BoxDecoration(
                                                 border: Border.all(
                                                     width: 1,
-                                                    color: Colors.blue),
+                                                    color: kPrimaryColor),
                                                 shape: BoxShape.circle,
                                                 image: DecorationImage(
                                                     image: NetworkImage(snapShot
@@ -79,7 +79,8 @@ class EditAccountScreen extends StatelessWidget {
                                           height: 30,
                                           decoration: BoxDecoration(
                                             shape: BoxShape.circle,
-                                            color: Colors.blue.withOpacity(0.5),
+                                            color:
+                                                kPrimaryColor.withOpacity(0.5),
                                           ),
                                           child: const Icon(
                                             Icons.camera_alt_outlined,
@@ -334,7 +335,7 @@ class EditAccountScreen extends StatelessWidget {
                                             ?.toString() ??
                                         'Save',
                                     style: const TextStyle(
-                                        color: Colors.blue, fontSize: 14),
+                                        color: kPrimaryColor, fontSize: 14),
                                   ),
                                 ),
                               )

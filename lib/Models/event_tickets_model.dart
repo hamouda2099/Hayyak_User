@@ -12,16 +12,16 @@ String eventTicketsModelToJson(EventTicketsModel data) =>
 
 class EventTicketsModel {
   EventTicketsModel({
-    required this.success,
-    required this.message,
-    required this.data,
-    required this.code,
+    this.success,
+    this.message,
+    this.data,
+    this.code,
   });
 
-  bool success;
-  String message;
-  Data data;
-  int code;
+  bool? success;
+  String? message;
+  Data? data;
+  int? code;
 
   factory EventTicketsModel.fromJson(Map<String, dynamic> json) =>
       EventTicketsModel(
@@ -34,24 +34,24 @@ class EventTicketsModel {
   Map<String, dynamic> toJson() => {
         "success": success,
         "message": message,
-        "data": data.toJson(),
+        "data": data!.toJson(),
         "code": code,
       };
 }
 
 class Data {
   Data({
-    required this.event,
+    this.event,
   });
 
-  Event event;
+  Event? event;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         event: Event.fromJson(json["event"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "event": event.toJson(),
+        "event": event!.toJson(),
       };
 }
 

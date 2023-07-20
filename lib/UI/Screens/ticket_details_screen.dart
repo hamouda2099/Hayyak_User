@@ -9,6 +9,7 @@ import 'package:hayyak/UI/Components/service_slider_component.dart';
 import 'package:hayyak/UI/Components/ticket_slider_compnent.dart';
 import 'package:hayyak/main.dart';
 
+import '../../Config/constants.dart';
 import '../../Config/user_data.dart';
 
 class TicketDetails extends StatelessWidget {
@@ -128,7 +129,7 @@ class TicketDetails extends StatelessWidget {
                                       padding: const EdgeInsets.all(10),
                                       decoration: BoxDecoration(
                                           color: tab == 0
-                                              ? Colors.blue
+                                              ? kPrimaryColor
                                               : Colors.white.withOpacity(0.3),
                                           borderRadius:
                                               BorderRadius.circular(10)),
@@ -155,7 +156,7 @@ class TicketDetails extends StatelessWidget {
                                       padding: EdgeInsets.all(10),
                                       decoration: BoxDecoration(
                                           color: tab == 1
-                                              ? Colors.blue
+                                              ? kPrimaryColor
                                               : Colors.white.withOpacity(0.3),
                                           borderRadius:
                                               BorderRadius.circular(10)),

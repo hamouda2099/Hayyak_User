@@ -24,7 +24,7 @@ class BottomNavBar extends StatelessWidget {
       height: 60,
       color: kDarkGreyColor,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         // crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           InkWell(
@@ -36,8 +36,9 @@ class BottomNavBar extends StatelessWidget {
               children: [
                 SvgPicture.asset(
                     width: 20,
-                    color:
-                        currentScreen == 'Explore' ? Colors.blue : Colors.white,
+                    color: currentScreen == 'Explore'
+                        ? kPrimaryColor
+                        : Colors.white,
                     'assets/icon/explore.svg'),
                 SizedBox(
                   height: 5,
@@ -46,7 +47,7 @@ class BottomNavBar extends StatelessWidget {
                   UserData.translation.data?.explore?.toString() ?? 'Explore',
                   style: TextStyle(
                       color: currentScreen == 'Explore'
-                          ? Colors.blue
+                          ? kPrimaryColor
                           : Colors.white,
                       fontSize: 9),
                 ),
@@ -70,8 +71,9 @@ class BottomNavBar extends StatelessWidget {
               children: [
                 SvgPicture.asset(
                     width: 12,
-                    color:
-                        currentScreen == 'Tickets' ? Colors.blue : Colors.white,
+                    color: currentScreen == 'Tickets'
+                        ? kPrimaryColor
+                        : Colors.white,
                     'assets/icon/blue-ticket.svg'),
                 SizedBox(
                   height: 5,
@@ -80,7 +82,7 @@ class BottomNavBar extends StatelessWidget {
                   UserData.translation.data?.tickets?.toString() ?? 'Tickets',
                   style: TextStyle(
                       color: currentScreen == 'Tickets'
-                          ? Colors.blue
+                          ? kPrimaryColor
                           : Colors.white,
                       fontSize: 9),
                 ),
@@ -105,7 +107,7 @@ class BottomNavBar extends StatelessWidget {
                 SvgPicture.asset(
                     width: 20,
                     color: currentScreen == 'Favourites'
-                        ? Colors.blue
+                        ? kPrimaryColor
                         : Colors.white,
                     'assets/icon/Icon feather-heart.svg'),
                 const SizedBox(
@@ -116,7 +118,7 @@ class BottomNavBar extends StatelessWidget {
                       'Favourites',
                   style: TextStyle(
                       color: currentScreen == 'Favourites'
-                          ? Colors.blue
+                          ? kPrimaryColor
                           : Colors.white,
                       fontSize: 9),
                 ),
@@ -132,8 +134,9 @@ class BottomNavBar extends StatelessWidget {
               children: [
                 SvgPicture.asset(
                     width: 20,
-                    color:
-                        currentScreen == 'Search' ? Colors.blue : Colors.white,
+                    color: currentScreen == 'Search'
+                        ? kPrimaryColor
+                        : Colors.white,
                     'assets/icon/Icon feather-search.svg'),
                 SizedBox(
                   height: 5,
@@ -142,7 +145,7 @@ class BottomNavBar extends StatelessWidget {
                   UserData.translation.data?.search?.toString() ?? 'Search',
                   style: TextStyle(
                       color: currentScreen == 'Search'
-                          ? Colors.blue
+                          ? kPrimaryColor
                           : Colors.white,
                       fontSize: 9),
                 ),

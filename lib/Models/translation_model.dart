@@ -67,7 +67,7 @@ class Data {
   String? logOut;
   String? personalInfo;
   String? save;
-  String? pleaseWait;
+  String? dataPleaseWait;
   String? recently;
   String? searchForEvents;
   String? upcoming;
@@ -81,10 +81,10 @@ class Data {
   String? seats;
   String? price;
   String? chooseYourSeat;
-  String? seat;
+  String? dataSeat;
   String? services;
   String? checkout;
-  String? selectSeat;
+  String? dataSelectSeat;
   String? additionalServices;
   String? refundGuarantee;
   String? summery;
@@ -99,6 +99,31 @@ class Data {
   String? sar;
   String? enterPromoCode;
   String? doorsOpen;
+  String? male;
+  String? female;
+  String? signUp;
+  String? signInWithGoogle;
+  String? signUpWithGoogle;
+  String? aboutThisEvent;
+  String? currency;
+  String? youMailOrPasswordWrong;
+  String? theLimitsOfTicketsToThisCategoryIs;
+  String? pleaseChooseTheCurrentSeat;
+  String? selectRow;
+  String? selectSeat;
+  String? seat;
+  String? changeLanguage;
+  String? arabic;
+  String? english;
+  String? waiting;
+  String? pleaseWait;
+  String? doYouWantToLogOut;
+  String? ok;
+  String? cancel;
+  String? orderCreatedSuccessfully;
+  String? yourAccountIsVerified;
+  String? anErrorOccurred;
+  String? row;
 
   Data({
     this.signIn,
@@ -132,7 +157,7 @@ class Data {
     this.logOut,
     this.personalInfo,
     this.save,
-    this.pleaseWait,
+    this.dataPleaseWait,
     this.recently,
     this.searchForEvents,
     this.upcoming,
@@ -146,10 +171,10 @@ class Data {
     this.seats,
     this.price,
     this.chooseYourSeat,
-    this.seat,
+    this.dataSeat,
     this.services,
     this.checkout,
-    this.selectSeat,
+    this.dataSelectSeat,
     this.additionalServices,
     this.refundGuarantee,
     this.summery,
@@ -164,6 +189,31 @@ class Data {
     this.sar,
     this.enterPromoCode,
     this.doorsOpen,
+    this.male,
+    this.female,
+    this.signUp,
+    this.signInWithGoogle,
+    this.signUpWithGoogle,
+    this.aboutThisEvent,
+    this.currency,
+    this.youMailOrPasswordWrong,
+    this.theLimitsOfTicketsToThisCategoryIs,
+    this.pleaseChooseTheCurrentSeat,
+    this.selectRow,
+    this.selectSeat,
+    this.seat,
+    this.changeLanguage,
+    this.arabic,
+    this.english,
+    this.waiting,
+    this.pleaseWait,
+    this.doYouWantToLogOut,
+    this.ok,
+    this.cancel,
+    this.orderCreatedSuccessfully,
+    this.yourAccountIsVerified,
+    this.anErrorOccurred,
+    this.row,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -198,7 +248,7 @@ class Data {
         logOut: json["log_out"],
         personalInfo: json["personal_info"],
         save: json["save"],
-        pleaseWait: json["please_wait"],
+        dataPleaseWait: json["please_wait"],
         recently: json["recently"],
         searchForEvents: json["search_for_events"],
         upcoming: json["upcoming"],
@@ -212,10 +262,10 @@ class Data {
         seats: json["seats"],
         price: json["price"],
         chooseYourSeat: json["choose_your_seat"],
-        seat: json["seat"],
+        dataSeat: json["seat"],
         services: json["services"],
         checkout: json["checkout"],
-        selectSeat: json["select_seat"],
+        dataSelectSeat: json["select_seat"],
         additionalServices: json["additional_services"],
         refundGuarantee: json["refund_guarantee"],
         summery: json["summery"],
@@ -230,6 +280,32 @@ class Data {
         sar: json["sar"],
         enterPromoCode: json["enter_promo_code"],
         doorsOpen: json["doors_open"],
+        male: json["male"],
+        female: json["female"],
+        signUp: json["sign_up"],
+        signInWithGoogle: json["sign_in_with_google"],
+        signUpWithGoogle: json["sign_up_with_google"],
+        aboutThisEvent: json["about_this_event"],
+        currency: json["currency"],
+        youMailOrPasswordWrong: json["you_mail_or_password_wrong"],
+        theLimitsOfTicketsToThisCategoryIs:
+            json["The limits of tickets to this category is"],
+        pleaseChooseTheCurrentSeat: json["Please choose the current seat"],
+        selectRow: json["Select Row"],
+        selectSeat: json["Select Seat"],
+        seat: json["Seat"],
+        changeLanguage: json["Change Language"],
+        arabic: json["Arabic"],
+        english: json["English"],
+        waiting: json["Waiting"],
+        pleaseWait: json["please wait"],
+        doYouWantToLogOut: json["Do you want to log out ?"],
+        ok: json["Ok"],
+        cancel: json["Cancel"],
+        orderCreatedSuccessfully: json["Order Created Successfully"],
+        yourAccountIsVerified: json["Your account is verified"],
+        anErrorOccurred: json["An error occurred"],
+        row: json["row"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -264,7 +340,7 @@ class Data {
         "log_out": logOut,
         "personal_info": personalInfo,
         "save": save,
-        "please_wait": pleaseWait,
+        "please_wait": dataPleaseWait,
         "recently": recently,
         "search_for_events": searchForEvents,
         "upcoming": upcoming,
@@ -278,10 +354,10 @@ class Data {
         "seats": seats,
         "price": price,
         "choose_your_seat": chooseYourSeat,
-        "seat": seat,
+        "seat": dataSeat,
         "services": services,
         "checkout": checkout,
-        "select_seat": selectSeat,
+        "select_seat": dataSelectSeat,
         "additional_services": additionalServices,
         "refund_guarantee": refundGuarantee,
         "summery": summery,
@@ -296,5 +372,31 @@ class Data {
         "sar": sar,
         "enter_promo_code": enterPromoCode,
         "doors_open": doorsOpen,
+        "male": male,
+        "female": female,
+        "sign_up": signUp,
+        "sign_in_with_google": signInWithGoogle,
+        "sign_up_with_google": signUpWithGoogle,
+        "about_this_event": aboutThisEvent,
+        "currency": currency,
+        "you_mail_or_password_wrong": youMailOrPasswordWrong,
+        "The limits of tickets to this category is":
+            theLimitsOfTicketsToThisCategoryIs,
+        "Please choose the current seat": pleaseChooseTheCurrentSeat,
+        "Select Row": selectRow,
+        "Select Seat": selectSeat,
+        "Seat": seat,
+        "Change Language": changeLanguage,
+        "Arabic": arabic,
+        "English": english,
+        "Waiting": waiting,
+        "please wait": pleaseWait,
+        "Do you want to log out ?": doYouWantToLogOut,
+        "Ok": ok,
+        "Cancel": cancel,
+        "Order Created Successfully": orderCreatedSuccessfully,
+        "Your account is verified": yourAccountIsVerified,
+        "An error occurred": anErrorOccurred,
+        "row": row,
       };
 }

@@ -41,7 +41,7 @@ class SeatCategoryComponent extends ConsumerWidget {
                         width: 5,
                       ),
                       Text(
-                        seatCategory.name,
+                        seatCategory.name ?? '',
                         style: TextStyle(
                             color: Color(int.parse(
                                 '0xFF${seatCategory.color.toString().substring(1)}')),
@@ -81,8 +81,7 @@ class SeatCategoryComponent extends ConsumerWidget {
                                     rows.add(key.toString());
                                   });
                                   chairs.add(ChairComponent(
-                                    categoryPrice:
-                                        seatCategory.finalCost.toDouble(),
+                                    categoryPrice: seatCategory.finalCost ?? 0,
                                     rows: rows,
                                     tickets: seatCategory.tickets,
                                     chairs: chairs,
@@ -98,8 +97,7 @@ class SeatCategoryComponent extends ConsumerWidget {
                                   rows.add(key.toString());
                                 });
                                 chairs.add(ChairComponent(
-                                  categoryPrice:
-                                      seatCategory.finalCost.toDouble(),
+                                  categoryPrice: seatCategory.finalCost ?? 0,
                                   rows: rows,
                                   tickets: seatCategory.tickets,
                                   chairs: chairs,

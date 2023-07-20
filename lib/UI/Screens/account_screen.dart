@@ -50,7 +50,7 @@ class AccountScreen extends StatelessWidget {
                                 height: 80,
                                 decoration: BoxDecoration(
                                     border: Border.all(
-                                        width: 1, color: Colors.blue),
+                                        width: 1, color: kPrimaryColor),
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
                                         image: NetworkImage(
@@ -61,7 +61,7 @@ class AccountScreen extends StatelessWidget {
                             Text(
                               snapShot.data?.data?.name ?? '',
                               style: const TextStyle(
-                                  color: Colors.blue,
+                                  color: kPrimaryColor,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16),
                             ),

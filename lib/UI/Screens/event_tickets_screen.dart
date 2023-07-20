@@ -79,7 +79,7 @@ class EventTicketsScreen extends StatelessWidget {
                                 UserData.translation.data?.totalPrice
                                         ?.toString() ??
                                     'Total Price',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 12,
                                 ),
@@ -145,22 +145,22 @@ class EventTicketsScreen extends StatelessWidget {
                                     context: context,
                                     screen: CheckoutScreen(
                                       fees: snapShot
-                                          .data?.data.event.details.eventFees,
-                                      vat:
-                                          snapShot.data?.data.event.details.vat,
+                                          .data?.data?.event?.details.eventFees,
+                                      vat: snapShot
+                                          .data?.data?.event?.details.vat,
                                       receitType: 'tickets',
                                       total: totalPriceProvider,
                                       selectedDate: selectedDate,
                                       eventId: eventId,
-                                      eventName: snapShot
-                                              .data?.data.event.details.name ??
+                                      eventName: snapShot.data?.data?.event
+                                              ?.details.name ??
                                           '',
                                       eventDate: dateFormatter(selectedDate),
-                                      eventTime: snapShot
-                                              .data?.data.event.details.time ??
+                                      eventTime: snapShot.data?.data?.event
+                                              ?.details.time ??
                                           '',
-                                      eventImage: snapShot
-                                              .data?.data.event.details.image ??
+                                      eventImage: snapShot.data?.data?.event
+                                              ?.details.image ??
                                           '',
                                       selectedTickets: selectedTickets ?? [],
                                       selectedServices: selectedServices ?? [],
@@ -194,7 +194,8 @@ class EventTicketsScreen extends StatelessWidget {
                         child: Column(
                       children: [
                         SecondAppBar(
-                            title: snapShot.data!.data.event.details.name,
+                            title:
+                                snapShot.data?.data?.event?.details.name ?? '',
                             shareAndFav: false,
                             backToHome: false),
                         Expanded(
@@ -206,8 +207,9 @@ class EventTicketsScreen extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
                                       fit: BoxFit.fill,
-                                      image: NetworkImage(snapShot
-                                          .data!.data.event.details.image)),
+                                      image: NetworkImage(snapShot.data?.data
+                                              ?.event?.details?.image ??
+                                          '')),
                                 ),
                               ),
                               Container(
@@ -249,8 +251,9 @@ class EventTicketsScreen extends StatelessWidget {
                                           width: 5,
                                         ),
                                         Text(
-                                          snapShot
-                                              .data!.data.event.details.time,
+                                          snapShot.data?.data?.event?.details
+                                                  ?.time ??
+                                              '',
                                           style: const TextStyle(
                                               color: kDarkGreyColor,
                                               fontSize: 10,
@@ -261,7 +264,7 @@ class EventTicketsScreen extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              snapShot.data!.data.event.kinds.isEmpty
+                              snapShot.data!.data!.event!.kinds.isEmpty
                                   ? const SizedBox()
                                   : Align(
                                       alignment: Alignment.topLeft,
@@ -281,14 +284,14 @@ class EventTicketsScreen extends StatelessWidget {
                                     ),
                               Column(
                                 children: List.generate(
-                                    snapShot.data!.data.event.kinds.length,
+                                    snapShot.data!.data!.event!.kinds.length,
                                     (index) {
                                   return TicketComponentInTicketDetails(
                                     totalProvider: totalPriceProvider,
                                     logic: logic,
                                     cartProvider: cartCounterProvider,
-                                    kind:
-                                        snapShot.data!.data.event.kinds[index],
+                                    kind: snapShot
+                                        .data!.data!.event!.kinds[index],
                                   );
                                 }),
                               ),
@@ -297,7 +300,7 @@ class EventTicketsScreen extends StatelessWidget {
                                 height: 1,
                                 color: Colors.grey,
                               ),
-                              snapShot.data!.data.event.services.isEmpty
+                              snapShot.data!.data!.event!.services.isEmpty
                                   ? const SizedBox(
                                       height: 20,
                                     )
@@ -319,14 +322,14 @@ class EventTicketsScreen extends StatelessWidget {
                                     ),
                               Column(
                                 children: List.generate(
-                                    snapShot.data!.data.event.services.length,
+                                    snapShot.data!.data!.event!.services.length,
                                     (index) {
                                   return ServicesComponentInTicketDetails(
                                     totalProvider: totalPriceProvider,
                                     logic: logic,
                                     cartProvider: cartCounterProvider,
                                     service: snapShot
-                                        .data!.data.event.services[index],
+                                        .data!.data!.event!.services[index],
                                   );
                                 }),
                               )

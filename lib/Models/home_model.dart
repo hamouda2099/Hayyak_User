@@ -36,6 +36,26 @@ class HomeModel {
       };
 }
 
+class ActionHome {
+  String? name;
+  String? color;
+
+  ActionHome({
+    this.name,
+    this.color,
+  });
+
+  factory ActionHome.fromJson(Map<String, dynamic> json) => ActionHome(
+        name: json["name"],
+        color: json["color"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "name": name,
+        "color": color,
+      };
+}
+
 class Data {
   Data({
     required this.slider,
@@ -94,7 +114,8 @@ class ExploreSlider {
       required this.end,
       required this.price,
       required this.latLng,
-      required this.is_favourite});
+      required this.is_favourite,
+      required this.action});
 
   int id;
   String name;
@@ -106,6 +127,7 @@ class ExploreSlider {
   String price;
   String latLng;
   bool is_favourite;
+  ActionHome? action;
 
   factory ExploreSlider.fromJson(Map<String, dynamic> json) => ExploreSlider(
         id: json["id"],
@@ -118,6 +140,8 @@ class ExploreSlider {
         price: json["price"],
         latLng: json["lat_lng"],
         is_favourite: json["is_favourite"],
+        action:
+            json["action"] == null ? null : ActionHome.fromJson(json["action"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -130,6 +154,7 @@ class ExploreSlider {
         "end": end,
         "price": price,
         "lat_lng": latLng,
-        "is_favourite": is_favourite
+        "is_favourite": is_favourite,
+        "action": action?.toJson(),
       };
 }

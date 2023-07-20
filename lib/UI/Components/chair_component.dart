@@ -108,7 +108,7 @@ class ChairComponent extends ConsumerWidget {
                     title: const Center(
                         child: Text(
                       'Select Seat',
-                      style: TextStyle(color: Colors.blue, fontSize: 14),
+                      style: TextStyle(color: kPrimaryColor, fontSize: 14),
                     )),
                     content: Container(
                       margin: const EdgeInsets.only(top: 10),
@@ -185,7 +185,7 @@ class ChairComponent extends ConsumerWidget {
                       height: 30,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                        color: Colors.blue,
+                        color: kPrimaryColor,
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: const Text(

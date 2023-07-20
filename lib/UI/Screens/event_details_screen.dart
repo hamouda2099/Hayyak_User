@@ -11,6 +11,7 @@ import 'package:hayyak/Models/event_model.dart';
 import 'package:hayyak/UI/Components/map_view_screen.dart';
 import 'package:hayyak/UI/Components/seccond_app_bar.dart';
 import 'package:hayyak/UI/Screens/date_picker_screen.dart';
+import 'package:hayyak/UI/Screens/event_tickets_screen.dart';
 import 'package:html_widget/html_widget.dart';
 
 import '../../Config/user_data.dart';
@@ -43,19 +44,19 @@ class EventDetails extends StatelessWidget {
               return Scaffold(
                   body: Center(child: Text('Error: ${snapShot.error}')));
             } else {
-              double? lat = double.tryParse(snapShot.data!.data.latLng
-                  .substring(0, snapShot.data?.data.latLng.indexOf(','))
+              double? lat = double.tryParse(snapShot.data!.data!.latLng!
+                  .substring(0, snapShot.data?.data!.latLng!.indexOf(','))
                   .toString());
-              double? lng = double.tryParse(snapShot.data!.data.latLng
-                  .substring(snapShot.data!.data.latLng.indexOf(',') + 1,
-                      snapShot.data!.data.latLng.length));
+              double? lng = double.tryParse(snapShot.data!.data!.latLng!
+                  .substring(snapShot.data!.data!.latLng!.indexOf(',') + 1,
+                      snapShot.data!.data!.latLng!.length));
               marker.add(
                 Marker(
                   markerId: const MarkerId('Location'),
                   position: LatLng(lat!, lng!),
                   infoWindow: InfoWindow(
-                    title: snapShot.data!.data.name,
-                    snippet: snapShot.data!.data.description,
+                    title: snapShot.data!.data?.name ?? '',
+                    snippet: snapShot.data!.data?.description ?? '',
                   ),
                 ),
               );
@@ -87,11 +88,12 @@ class EventDetails extends StatelessWidget {
                                   children: [
                                     Icon(
                                       Icons.electric_bolt_rounded,
-                                      color: snapShot.data!.data.action.color ==
+                                      color: snapShot
+                                                  .data?.data?.action?.color ==
                                               ''
                                           ? Colors.transparent
                                           : Color(int.parse(
-                                              '0xFF${snapShot.data!.data.action.color.toString().substring(1)}')),
+                                              '0xFF${snapShot.data?.data?.action?.color.toString().substring(1)}')),
                                       size: 20,
                                     ),
                                     const SizedBox(
@@ -101,12 +103,12 @@ class EventDetails extends StatelessWidget {
                                       snapShot?.data?.data?.action?.name ?? '',
                                       style: TextStyle(
                                         fontSize: 14,
-                                        color: snapShot
-                                                    .data!.data.action.color ==
+                                        color: snapShot.data?.data?.action
+                                                    ?.color ==
                                                 ''
                                             ? Colors.transparent
                                             : Color(int.parse(
-                                                '0xFF${snapShot.data!.data.action.color.toString().substring(1)}')),
+                                                '0xFF${snapShot.data?.data?.action?.color.toString().substring(1)}')),
                                       ),
                                     ),
                                   ],
@@ -115,35 +117,65 @@ class EventDetails extends StatelessWidget {
                       ),
                       InkWell(
                         onTap: () {
-                          if ((snapShot.data?.data.pickerStartDate ?? '') ==
-                              (snapShot.data?.data.prickerEndDate ?? '')) {
-                            endDatePicker = snapShot.data!.data.prickerEndDate
-                                .add(const Duration(seconds: 1));
+                          if ((snapShot.data?.data?.pickerStartDate ?? '') ==
+                              (snapShot.data?.data?.prickerEndDate ?? '')) {
+                            endDatePicker = snapShot.data?.data?.prickerEndDate
+                                ?.add(const Duration(seconds: 1));
                           } else {
-                            endDatePicker = snapShot.data!.data.prickerEndDate;
+                            endDatePicker = snapShot.data?.data?.prickerEndDate;
                           }
-                          if (snapShot.data!.data.seats == 'seats') {
-                            navigator(
-                                context: context,
-                                screen: DatePickerScreen(
-                                  navigateScreen: 'seats',
-                                  eventId: snapShot.data!.data.id.toString(),
-                                  startDate: snapShot.data?.data.pickerStartDate
-                                          .toString() ??
-                                      '',
-                                  endDate: endDatePicker.toString() ?? '',
-                                ));
-                          } else if (snapShot.data!.data.seats == 'tickets') {
-                            navigator(
-                                context: context,
-                                screen: DatePickerScreen(
-                                  navigateScreen: 'tickets',
-                                  eventId: snapShot.data!.data.id.toString(),
-                                  startDate: snapShot.data?.data.pickerStartDate
-                                          .toString() ??
-                                      '',
-                                  endDate: endDatePicker.toString() ?? '',
-                                ));
+                          if (snapShot.data?.data?.seats == 'seats') {
+                            if ((snapShot.data?.data?.pickerStartDate ?? '') ==
+                                (snapShot.data?.data?.prickerEndDate ?? '')) {
+                              navigator(
+                                  context: context,
+                                  screen: EventTicketsScreen(
+                                      selectedDate: snapShot
+                                              .data?.data?.pickerStartDate
+                                              ?.toString() ??
+                                          '',
+                                      eventId: eventId.toString()));
+                            } else {
+                              navigator(
+                                  context: context,
+                                  screen: DatePickerScreen(
+                                    navigateScreen: 'seats',
+                                    eventId:
+                                        snapShot.data?.data?.id?.toString() ??
+                                            '',
+                                    startDate: snapShot
+                                            .data?.data?.pickerStartDate
+                                            .toString() ??
+                                        '',
+                                    endDate: endDatePicker.toString() ?? '',
+                                  ));
+                            }
+                          } else if (snapShot.data?.data?.seats == 'tickets') {
+                            if ((snapShot.data?.data?.pickerStartDate ?? '') ==
+                                (snapShot.data?.data?.prickerEndDate ?? '')) {
+                              navigator(
+                                  context: context,
+                                  screen: EventTicketsScreen(
+                                      selectedDate: snapShot
+                                              .data?.data?.pickerStartDate
+                                              ?.toString() ??
+                                          '',
+                                      eventId: eventId.toString()));
+                            } else {
+                              navigator(
+                                  context: context,
+                                  screen: DatePickerScreen(
+                                    navigateScreen: 'tickets',
+                                    eventId:
+                                        snapShot.data?.data?.id?.toString() ??
+                                            '',
+                                    startDate: snapShot
+                                            .data?.data?.pickerStartDate
+                                            .toString() ??
+                                        '',
+                                    endDate: endDatePicker.toString() ?? '',
+                                  ));
+                            }
                           } else {
                             // navigator(
                             //     context: context,
@@ -154,7 +186,7 @@ class EventDetails extends StatelessWidget {
                         },
                         child: Container(
                           alignment: Alignment.center,
-                          width: screenWidth / 2,
+                          width: screenWidth / 1.5,
                           height: 50,
                           margin: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
@@ -163,7 +195,7 @@ class EventDetails extends StatelessWidget {
                           ),
                           child: Text(
                             UserData.translation.data?.tickets?.toString() ??
-                                'Tickets',
+                                'Book',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 14,
@@ -178,9 +210,10 @@ class EventDetails extends StatelessWidget {
                   child: Column(
                     children: [
                       SecondAppBar(
-                        title: snapShot.data?.data.name.toString() ?? '',
+                        title: snapShot.data?.data?.name.toString() ?? '',
                         shareAndFav: true,
                         backToHome: false,
+                        eventId: eventId.toString(),
                       ),
                       Expanded(
                         child: ListView(
@@ -238,15 +271,16 @@ class EventDetails extends StatelessWidget {
                                       InkWell(
                                         onTap: () {
                                           final Event event = Event(
-                                            title: snapShot.data!.data.name,
-                                            description:
-                                                snapShot.data!.data.description,
+                                            title:
+                                                snapShot.data?.data?.name ?? '',
+                                            description: snapShot
+                                                .data?.data?.description,
                                             location:
-                                                snapShot.data!.data.address,
+                                                snapShot.data?.data?.address,
                                             startDate: snapShot
-                                                .data!.data.pickerStartDate,
+                                                .data!.data!.pickerStartDate!,
                                             endDate: snapShot
-                                                .data!.data.prickerEndDate,
+                                                .data!.data!.prickerEndDate!,
                                           );
                                           Add2Calendar.addEvent2Cal(event);
                                         },
@@ -314,9 +348,12 @@ class EventDetails extends StatelessWidget {
                                               screen: MapViewScreen(
                                                 lat: lat!,
                                                 lng: lng!,
-                                                title: snapShot.data!.data.name,
-                                                desc: snapShot
-                                                    .data!.data.description,
+                                                title:
+                                                    snapShot.data?.data?.name ??
+                                                        '',
+                                                desc: snapShot.data?.data
+                                                        ?.description ??
+                                                    '',
                                               ));
                                         },
                                         child: Text(
@@ -336,13 +373,17 @@ class EventDetails extends StatelessWidget {
                             const SizedBox(
                               height: 20,
                             ),
-                            const Padding(
-                              padding: EdgeInsets.only(
+                            Padding(
+                              padding: const EdgeInsets.only(
                                   left: 15.0, right: 15, bottom: 5),
                               child: Align(
-                                  alignment: Alignment.centerLeft,
+                                  alignment: localLanguage == 'en'
+                                      ? Alignment.centerLeft
+                                      : Alignment.centerRight,
                                   child: Text(
-                                    'About This Event',
+                                    UserData.translation.data?.aboutThisEvent
+                                            ?.toString() ??
+                                        'About This Event',
                                     style: TextStyle(
                                         color: kDarkGreyColor,
                                         fontSize: 16,
@@ -356,7 +397,7 @@ class EventDetails extends StatelessWidget {
                                   opacity: 0.7,
                                   child:
                                       MyHtmlParser.parseHtmlToListOfTextWidgets(
-                                          snapShot.data?.data.description ??
+                                          snapShot.data?.data?.description ??
                                               '')[0],
                                 )),
                             const SizedBox(
@@ -366,7 +407,9 @@ class EventDetails extends StatelessWidget {
                               padding: EdgeInsets.only(
                                   left: 15.0, right: 15, bottom: 5),
                               child: Align(
-                                  alignment: Alignment.centerLeft,
+                                  alignment: localLanguage == 'en'
+                                      ? Alignment.centerLeft
+                                      : Alignment.centerRight,
                                   child: Text(
                                     UserData.translation.data?.location
                                             ?.toString() ??

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hayyak/Config/constants.dart';
 
 class ScreenLoading extends StatelessWidget {
   @override
@@ -16,15 +17,13 @@ class ScreenLoading extends StatelessWidget {
           child: Platform.isIOS
               ? CupertinoActivityIndicator(
                   radius: 10,
+                  color: kPrimaryColor,
                 )
               : CircularProgressIndicator(
                   strokeWidth: 2,
+                  color: kPrimaryColor,
                 ),
         ),
-        SizedBox(
-          width: 10,
-        ),
-        Text('please wait'),
       ],
     );
   }

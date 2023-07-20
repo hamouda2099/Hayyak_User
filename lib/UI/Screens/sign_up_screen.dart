@@ -304,7 +304,7 @@ class SignUpScreen extends StatelessWidget {
                               )
                             : const Icon(
                                 Icons.check_box,
-                                color: Colors.blue,
+                                color: kPrimaryColor,
                                 size: 18,
                               ),
                       ),
@@ -324,7 +324,7 @@ class SignUpScreen extends StatelessWidget {
                                   ?.toString() ??
                               ' terms & conditions',
                           style: const TextStyle(
-                              color: Colors.blue,
+                              color: kPrimaryColor,
                               fontSize: 12,
                               fontWeight: FontWeight.w400),
                         ),
@@ -366,7 +366,7 @@ class SignUpScreen extends StatelessWidget {
                     alignment: Alignment.center,
                     width: screenWidth / 1.2,
                     decoration: BoxDecoration(
-                      color: Colors.blue,
+                      color: kPrimaryColor,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     padding: const EdgeInsets.all(15),
@@ -439,7 +439,7 @@ class SignUpScreen extends StatelessWidget {
                     UserData.translation.data?.signIn?.toString() ??
                         ' Sign in.',
                     style: const TextStyle(
-                        color: Colors.blue,
+                        color: kPrimaryColor,
                         fontSize: 14,
                         fontWeight: FontWeight.bold),
                   ),
