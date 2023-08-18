@@ -15,6 +15,7 @@ import 'package:hayyak/UI/Screens/event_tickets_screen.dart';
 import 'package:html_widget/html_widget.dart';
 
 import '../../Config/user_data.dart';
+import '../../Dialogs/message_dialog.dart';
 import '../../main.dart';
 
 class EventDetails extends StatelessWidget {
@@ -117,71 +118,80 @@ class EventDetails extends StatelessWidget {
                       ),
                       InkWell(
                         onTap: () {
-                          if ((snapShot.data?.data?.pickerStartDate ?? '') ==
-                              (snapShot.data?.data?.prickerEndDate ?? '')) {
-                            endDatePicker = snapShot.data?.data?.prickerEndDate
-                                ?.add(const Duration(seconds: 1));
+                          if (UserData.token == '') {
+                            messageDialog(context, 'Please Login First');
                           } else {
-                            endDatePicker = snapShot.data?.data?.prickerEndDate;
-                          }
-                          if (snapShot.data?.data?.seats == 'seats') {
                             if ((snapShot.data?.data?.pickerStartDate ?? '') ==
                                 (snapShot.data?.data?.prickerEndDate ?? '')) {
-                              navigator(
-                                  context: context,
-                                  screen: EventTicketsScreen(
-                                      selectedDate: snapShot
-                                              .data?.data?.pickerStartDate
-                                              ?.toString() ??
-                                          '',
-                                      eventId: eventId.toString()));
+                              endDatePicker = snapShot
+                                  .data?.data?.prickerEndDate
+                                  ?.add(const Duration(seconds: 1));
                             } else {
-                              navigator(
-                                  context: context,
-                                  screen: DatePickerScreen(
-                                    navigateScreen: 'seats',
-                                    eventId:
-                                        snapShot.data?.data?.id?.toString() ??
-                                            '',
-                                    startDate: snapShot
-                                            .data?.data?.pickerStartDate
-                                            .toString() ??
-                                        '',
-                                    endDate: endDatePicker.toString() ?? '',
-                                  ));
+                              endDatePicker =
+                                  snapShot.data?.data?.prickerEndDate;
                             }
-                          } else if (snapShot.data?.data?.seats == 'tickets') {
-                            if ((snapShot.data?.data?.pickerStartDate ?? '') ==
-                                (snapShot.data?.data?.prickerEndDate ?? '')) {
-                              navigator(
-                                  context: context,
-                                  screen: EventTicketsScreen(
-                                      selectedDate: snapShot
+                            if (snapShot.data?.data?.seats == 'seats') {
+                              if ((snapShot.data?.data?.pickerStartDate ??
+                                      '') ==
+                                  (snapShot.data?.data?.prickerEndDate ?? '')) {
+                                navigator(
+                                    context: context,
+                                    screen: EventTicketsScreen(
+                                        selectedDate: snapShot
+                                                .data?.data?.pickerStartDate
+                                                ?.toString() ??
+                                            '',
+                                        eventId: eventId.toString()));
+                              } else {
+                                navigator(
+                                    context: context,
+                                    screen: DatePickerScreen(
+                                      navigateScreen: 'seats',
+                                      eventId:
+                                          snapShot.data?.data?.id?.toString() ??
+                                              '',
+                                      startDate: snapShot
                                               .data?.data?.pickerStartDate
-                                              ?.toString() ??
+                                              .toString() ??
                                           '',
-                                      eventId: eventId.toString()));
-                            } else {
-                              navigator(
-                                  context: context,
-                                  screen: DatePickerScreen(
-                                    navigateScreen: 'tickets',
-                                    eventId:
-                                        snapShot.data?.data?.id?.toString() ??
+                                      endDate: endDatePicker.toString() ?? '',
+                                    ));
+                              }
+                            } else if (snapShot.data?.data?.seats ==
+                                'tickets') {
+                              if ((snapShot.data?.data?.pickerStartDate ??
+                                      '') ==
+                                  (snapShot.data?.data?.prickerEndDate ?? '')) {
+                                navigator(
+                                    context: context,
+                                    screen: EventTicketsScreen(
+                                        selectedDate: snapShot
+                                                .data?.data?.pickerStartDate
+                                                ?.toString() ??
                                             '',
-                                    startDate: snapShot
-                                            .data?.data?.pickerStartDate
-                                            .toString() ??
-                                        '',
-                                    endDate: endDatePicker.toString() ?? '',
-                                  ));
+                                        eventId: eventId.toString()));
+                              } else {
+                                navigator(
+                                    context: context,
+                                    screen: DatePickerScreen(
+                                      navigateScreen: 'tickets',
+                                      eventId:
+                                          snapShot.data?.data?.id?.toString() ??
+                                              '',
+                                      startDate: snapShot
+                                              .data?.data?.pickerStartDate
+                                              .toString() ??
+                                          '',
+                                      endDate: endDatePicker.toString() ?? '',
+                                    ));
+                              }
+                            } else {
+                              // navigator(
+                              //     context: context,
+                              //     screen: WebViewScreen(
+                              //       link: snapShot.data!.data.seats.toString(),
+                              //     ));
                             }
-                          } else {
-                            // navigator(
-                            //     context: context,
-                            //     screen: WebViewScreen(
-                            //       link: snapShot.data!.data.seats.toString(),
-                            //     ));
                           }
                         },
                         child: Container(

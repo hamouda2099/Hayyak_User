@@ -12,6 +12,7 @@ import 'package:hayyak/UI/Screens/account_screen.dart';
 import 'package:hayyak/UI/Screens/contact_us_screen.dart';
 import 'package:hayyak/UI/Screens/faqs_screen.dart';
 import 'package:hayyak/UI/Screens/home_screen.dart';
+import 'package:hayyak/UI/Screens/login_screen.dart';
 import 'package:hayyak/UI/Screens/privacy_policy_screen.dart';
 import 'package:hayyak/UI/Screens/terms_and_conditions_screen.dart';
 import 'package:hayyak/main.dart';
@@ -289,37 +290,77 @@ class SettingsScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              InkWell(
-                onTap: () {
-                  logoutDialog(context);
-                },
-                child: Container(
-                  margin: const EdgeInsets.all(10),
-                  width: screenWidth / 1.1,
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: kLightGreyColor, width: 1)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                          UserData.translation.data?.logOut?.toString() ??
-                              'Log out',
-                          style: TextStyle(
-                              color: kLightGreyColor,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold)),
-                      const Icon(
-                        Icons.logout_rounded,
-                        color: kDarkGreyColor,
-                        size: 20,
+              UserData.token == ''
+                  ? InkWell(
+                      onTap: () {
+                        navigator(
+                            context: context,
+                            screen: LoginScreen(screen: SettingsScreen()),
+                            remove: true);
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.all(10),
+                        width: screenWidth / 1.1,
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            border:
+                                Border.all(color: kLightGreyColor, width: 1)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.login,
+                              color: kDarkGreyColor,
+                              size: 20,
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                                UserData.translation.data?.signIn?.toString() ??
+                                    'Log In Now',
+                                style: const TextStyle(
+                                    color: kLightGreyColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold)),
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
+                    )
+                  : InkWell(
+                      onTap: () {
+                        logoutDialog(context);
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.all(10),
+                        width: screenWidth / 1.1,
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            border:
+                                Border.all(color: kLightGreyColor, width: 1)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                                UserData.translation.data?.logOut?.toString() ??
+                                    'Log out',
+                                style: const TextStyle(
+                                    color: kLightGreyColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold)),
+                            const Icon(
+                              Icons.logout_rounded,
+                              color: kDarkGreyColor,
+                              size: 20,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
             ],
           ),
         ),
