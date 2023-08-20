@@ -54,7 +54,6 @@ class EventTicketsScreen extends StatelessWidget {
                 }
               default:
                 if (snapShot.hasError) {
-                  print(snapShot);
                   return Scaffold(
                       body: Center(child: Text('Error: ${snapShot.error}')));
                 } else {
@@ -264,7 +263,7 @@ class EventTicketsScreen extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              snapShot.data!.data!.event!.kinds.isEmpty
+                              (snapShot.data?.data?.event?.kinds ?? []).isEmpty
                                   ? const SizedBox()
                                   : Align(
                                       alignment: Alignment.topLeft,
@@ -284,8 +283,8 @@ class EventTicketsScreen extends StatelessWidget {
                                     ),
                               Column(
                                 children: List.generate(
-                                    snapShot.data!.data!.event!.kinds.length,
-                                    (index) {
+                                    snapShot.data?.data?.event?.kinds?.length ??
+                                        0, (index) {
                                   return TicketComponentInTicketDetails(
                                     totalProvider: totalPriceProvider,
                                     logic: logic,
@@ -300,7 +299,8 @@ class EventTicketsScreen extends StatelessWidget {
                                 height: 1,
                                 color: Colors.grey,
                               ),
-                              snapShot.data!.data!.event!.services.isEmpty
+                              (snapShot.data?.data?.event?.services ?? [])
+                                      .isEmpty
                                   ? const SizedBox(
                                       height: 20,
                                     )
@@ -322,8 +322,9 @@ class EventTicketsScreen extends StatelessWidget {
                                     ),
                               Column(
                                 children: List.generate(
-                                    snapShot.data!.data!.event!.services.length,
-                                    (index) {
+                                    snapShot.data?.data?.event?.services
+                                            ?.length ??
+                                        0, (index) {
                                   return ServicesComponentInTicketDetails(
                                     totalProvider: totalPriceProvider,
                                     logic: logic,

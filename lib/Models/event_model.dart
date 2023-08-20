@@ -11,10 +11,10 @@ String eventModelToJson(EventModel data) => json.encode(data.toJson());
 
 class EventModel {
   EventModel({
-     this.success,
-     this.message,
-     this.data,
-     this.code,
+    this.success,
+    this.message,
+    this.data,
+    this.code,
   });
 
   bool? success;
@@ -39,20 +39,20 @@ class EventModel {
 
 class Data {
   Data({
-     this.id,
-     this.name,
-     this.description,
-     this.image,
-     this.startDate,
-     this.endDate,
-     this.pickerStartDate,
-     this.prickerEndDate,
-     this.time,
-     this.latLng,
-     this.address,
-     this.averageCost,
-     this.action,
-     this.seats,
+    this.id,
+    this.name,
+    this.description,
+    this.image,
+    this.startDate,
+    this.endDate,
+    this.pickerStartDate,
+    this.prickerEndDate,
+    this.time,
+    this.latLng,
+    this.address,
+    this.averageCost,
+    this.action,
+    this.seats,
   });
 
   int? id;
@@ -109,8 +109,8 @@ class Data {
 
 class Action {
   Action({
-     this.name,
-     this.color,
+    this.name,
+    this.color,
   });
 
   String? name;

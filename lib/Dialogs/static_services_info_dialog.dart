@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hayyak/Config/constants.dart';
+import 'package:hayyak/main.dart';
 import 'package:html_widget/html_widget.dart';
 
 void staticServicesInfoDialog(
@@ -17,8 +18,12 @@ void staticServicesInfoDialog(
           ),
         ),
         actionsAlignment: MainAxisAlignment.center,
-        content: Expanded(
+        content: Container(
+          width: screenWidth / 1.5,
+          height: screenHeight / 1.5,
           child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: MyHtmlParser.parseHtmlToListOfTextWidgets(info).length,
             itemBuilder: (context, index) {
               return MyHtmlParser.parseHtmlToListOfTextWidgets(info)[index];
             },

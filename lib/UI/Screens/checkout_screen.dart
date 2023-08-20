@@ -66,7 +66,6 @@ class CheckoutScreen extends StatelessWidget {
             }
           default:
             if (snapShot.hasError) {
-              print(snapShot);
               return Scaffold(
                 body: Center(
                   child: Text('Error: ${snapShot.error}'),

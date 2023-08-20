@@ -17,6 +17,7 @@ import 'package:hive/hive.dart';
 class LoginLogic {
   late WidgetRef ref;
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
   // final FacebookAuth facebookAuth = FacebookAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
@@ -34,7 +35,6 @@ class LoginLogic {
           .then((value) async {
         Navigator.pop(context);
         ApiManger.getTranslationsKeys().then((value) {
-          print(value.data!.toJson());
           UserData.translation = value;
         });
         if (jsonDecode(value.body)['success'] == true ||
@@ -96,9 +96,7 @@ class LoginLogic {
             screen: screen,
             ref: ref,
             signType: 'social');
-      } else {
-        print('object');
-      }
+      } else {}
     });
   }
 }

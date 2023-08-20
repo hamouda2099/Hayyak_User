@@ -39,7 +39,6 @@ class AccountScreen extends StatelessWidget {
                       return Text('Error: ${snapShot.error}');
                     } else {
                       var fetchedOrder = snapShot.data;
-                      print(snapShot.data!.data!.firstName);
                       return SingleChildScrollView(
                         child: Column(
                           children: [

@@ -30,6 +30,7 @@ class EventHomeCard extends StatelessWidget {
   String location;
   String startDate;
   ActionHome? action;
+
   // ignore: non_constant_identifier_names
   bool is_favourite;
 
@@ -181,17 +182,20 @@ class EventHomeCard extends StatelessWidget {
                                   ? Colors.transparent
                                   : Color(int.parse(
                                       '0xFF${action?.color.toString().substring(1)}')),
-                              size: 20,
+                              size: 15,
                             ),
-                            Text(
-                              action?.name ?? '',
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: action?.color == ''
-                                    ? Colors.transparent
-                                    : Color(int.parse(
-                                        '0xFF${action?.color.toString().substring(1)}')),
+                            Container(
+                              child: Text(
+                                action?.name ?? '',
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: action?.color == ''
+                                      ? Colors.transparent
+                                      : Color(int.parse(
+                                          '0xFF${action?.color.toString().substring(1)}')),
+                                ),
                               ),
                             ),
                           ],

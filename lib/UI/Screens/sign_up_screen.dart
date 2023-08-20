@@ -17,6 +17,7 @@ import '../../Config/user_data.dart';
 // ignore: must_be_immutable
 class SignUpScreen extends StatelessWidget {
   SignUpLogic logic = SignUpLogic();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

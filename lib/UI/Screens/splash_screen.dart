@@ -34,7 +34,6 @@ class _SplashScreenState extends State<SplashScreen> {
       UserData.language = await Hive.box('user_data').get('lang') ?? 'en';
       localLanguage = UserData.language ?? 'en';
       ApiManger.getTranslationsKeys().then((value) async {
-        print(value.data!.toJson());
         if (value.success ?? false) {
           UserData.translation = value;
         } else {

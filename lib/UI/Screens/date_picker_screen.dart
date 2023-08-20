@@ -94,14 +94,16 @@ class _DatePickerScreenState extends State<DatePickerScreen> {
                     minDate: DateTime.tryParse(widget.startDate),
                     maxDate: DateTime.tryParse(widget.endDate),
                     onSelectionChanged: (value) {
-                      selectedDate = controller.selectedDate.toString();
+                      selectedDate = value.value.toString().substring(0, 11);
                     },
                   ),
                 ),
                 InkWell(
                   onTap: () {
                     if (DateTime.tryParse(widget.startDate)?.day ==
-                        DateTime.tryParse(widget.endDate)?.day) {
+                            DateTime.tryParse(widget.endDate)?.day &&
+                        DateTime.tryParse(widget.startDate)?.year ==
+                            DateTime.tryParse(widget.endDate)?.year) {
                       selectedDate =
                           DateTime.tryParse(widget.startDate).toString();
                     }

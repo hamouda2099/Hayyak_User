@@ -127,7 +127,6 @@ class TicketComponentInTicketDetails extends StatelessWidget {
                                   kind.finalCost;
                           selectedTickets.add(allTickets.first);
                           allTickets.remove(allTickets.first);
-                          print(selectedTickets);
                         } else {
                           messageDialog(
                               context, 'this kind tickets was sold !');

@@ -21,7 +21,6 @@ class SplashLogic {
         }
       });
       ApiManger.getTranslationsKeys().then((value) async {
-        print(value.data!.toJson());
         if (value.success ?? false) {
           UserData.translation = value;
         } else {

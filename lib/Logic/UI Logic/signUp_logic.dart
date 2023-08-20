@@ -15,6 +15,7 @@ import 'package:hayyak/UI/Screens/verify_otp_code_screen.dart';
 
 class SignUpLogic {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
   // final FacebookAuth facebookAuth = FacebookAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
   TextEditingController firstNameController = TextEditingController();
@@ -28,6 +29,7 @@ class SignUpLogic {
   List gender = ['Male', 'Female'];
   DateTime? selectedDate = DateTime(2018);
   static String otpCode = '';
+
   static void signUp({
     required BuildContext context,
     required String firstName,
@@ -55,7 +57,6 @@ class SignUpLogic {
               confirmPassword: confirmPassword,
               dateOfBirth: dateOfBirth)
           .then((value) async {
-        print(value.body);
         Navigator.pop(context);
         if (jsonDecode(value.body)['success'] == true &&
             jsonDecode(value.body)['code'] == 200) {
@@ -113,9 +114,7 @@ class SignUpLogic {
             signType: 'social',
             confirmPassword: '',
             gender: '1');
-      } else {
-        print('object');
-      }
+      } else {}
 
       /// sign up
     });

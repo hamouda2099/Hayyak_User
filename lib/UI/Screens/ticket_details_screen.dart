@@ -36,147 +36,224 @@ class TicketDetails extends StatelessWidget {
               if (snapShot.hasError) {
                 return Text('Error: ${snapShot.error}');
               } else {
-                return Stack(
-                  children: [
-                    Container(
-                      width: screenWidth,
-                      height: screenHeight,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(snapShot
-                                      .data?.data?.order?.orderTickets?[0].image
-                                      .toString() ??
-                                  ''))),
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.0)),
-                        ),
-                      ),
-                    ),
-                    Consumer(
-                      builder: (context, ref, child) {
-                        final tab = ref.watch(tabProvider);
-                        return tab == 0
-                            ? PageView.builder(
-                                controller: _controllerTickets,
-                                itemCount: snapShot.data?.data?.order
-                                        ?.orderTickets?.length ??
-                                    0,
-                                itemBuilder: (context, index) {
-                                  return SizedBox(
-                                      width: screenWidth,
-                                      child: TicketSliderItem(
-                                        orderTicket: snapShot.data!.data!.order!
-                                            .orderTickets![index],
-                                        total: snapShot.data!.data!.order!
-                                            .orderTickets!.length,
-                                        index: index,
-                                      ));
-                                },
-                              )
-                            : PageView.builder(
-                                controller: _controllerServices,
-                                itemCount: snapShot.data?.data?.order
-                                        ?.orderServices?.length ??
-                                    0,
-                                itemBuilder: (context, index) {
-                                  return SizedBox(
-                                      width: screenWidth,
-                                      child: ServiceSliderItem(
-                                        orderService: snapShot.data!.data!
-                                            .order!.orderServices![index],
-                                        total: snapShot.data!.data!.order!
-                                            .orderServices!.length,
-                                        index: index,
-                                      ));
-                                },
-                              );
-                      },
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20.0),
-                      child: IconButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          icon: const Icon(
-                            Icons.close,
-                            color: Colors.white,
-                          )),
-                    ),
-                    Align(
-                      alignment: Alignment.topCenter,
-                      child: Consumer(
-                        builder: (context, ref, child) {
-                          final tab = ref.watch(tabProvider);
-                          return Container(
-                            margin: const EdgeInsets.all(40),
-                            width: screenWidth / 1.2,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    ref.read(tabProvider.notifier).state = 0;
-                                  },
-                                  child: Container(
-                                      alignment: Alignment.center,
-                                      width: screenWidth / 3,
-                                      height: 40,
-                                      padding: const EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                          color: tab == 0
-                                              ? kPrimaryColor
-                                              : Colors.white.withOpacity(0.3),
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
-                                      child: Text(
-                                        UserData.translation.data?.tickets
-                                                ?.toString() ??
-                                            'Tickets',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold),
-                                      )),
+                return snapShot?.data?.data?.order == null
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          SizedBox(
+                              width: screenWidth,
+                              child: const Align(
+                                  alignment: Alignment.center,
+                                  child: Text("No Data"))),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              width: screenWidth / 1.2,
+                              decoration: BoxDecoration(
+                                color: kPrimaryColor,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              padding: const EdgeInsets.all(15),
+                              child: const Text(
+                                'Back',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w300,
+                                  color: Colors.white,
                                 ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    ref.read(tabProvider.notifier).state = 1;
-                                  },
-                                  child: Container(
-                                      alignment: Alignment.center,
-                                      width: screenWidth / 3,
-                                      height: 40,
-                                      padding: EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                          color: tab == 1
-                                              ? kPrimaryColor
-                                              : Colors.white.withOpacity(0.3),
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
-                                      child: Text(
-                                        UserData.translation.data?.services
-                                                ?.toString() ??
-                                            'Services',
-                                        style: const TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                ),
-                              ],
+                              ),
                             ),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                );
+                          ),
+                        ],
+                      )
+                    : Stack(
+                        children: [
+                          Container(
+                            width: screenWidth,
+                            height: screenHeight,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(snapShot.data?.data
+                                            ?.order?.orderTickets?[0].image
+                                            .toString() ??
+                                        ''))),
+                            child: BackdropFilter(
+                              filter:
+                                  ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: Colors.white.withOpacity(0.0)),
+                              ),
+                            ),
+                          ),
+                          SafeArea(
+                            child: Consumer(
+                              builder: (context, ref, child) {
+                                final tab = ref.watch(tabProvider);
+                                return tab == 0
+                                    ? PageView.builder(
+                                        controller: _controllerTickets,
+                                        itemCount: snapShot.data?.data?.order
+                                                ?.orderTickets?.length ??
+                                            0,
+                                        itemBuilder: (context, index) {
+                                          return SizedBox(
+                                              width: screenWidth,
+                                              child: TicketSliderItem(
+                                                orderTicket: snapShot
+                                                    .data!
+                                                    .data!
+                                                    .order!
+                                                    .orderTickets![index],
+                                                total: snapShot
+                                                    .data!
+                                                    .data!
+                                                    .order!
+                                                    .orderTickets!
+                                                    .length,
+                                                index: index,
+                                              ));
+                                        },
+                                      )
+                                    : PageView.builder(
+                                        controller: _controllerServices,
+                                        itemCount: snapShot.data?.data?.order
+                                                ?.orderServices?.length ??
+                                            0,
+                                        itemBuilder: (context, index) {
+                                          return SizedBox(
+                                              width: screenWidth,
+                                              child: ServiceSliderItem(
+                                                orderService: snapShot
+                                                    .data!
+                                                    .data!
+                                                    .order!
+                                                    .orderServices![index],
+                                                total: snapShot
+                                                    .data!
+                                                    .data!
+                                                    .order!
+                                                    .orderServices!
+                                                    .length,
+                                                index: index,
+                                              ));
+                                        },
+                                      );
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 20.0),
+                            child: IconButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                icon: const Icon(
+                                  Icons.close,
+                                  color: Colors.white,
+                                )),
+                          ),
+                          Align(
+                            alignment: Alignment.topCenter,
+                            child: Consumer(
+                              builder: (context, ref, child) {
+                                final tab = ref.watch(tabProvider);
+                                return Container(
+                                  margin: const EdgeInsets.all(40),
+                                  width: screenWidth / 1.2,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      ((snapShot.data?.data?.order?.orderTickets
+                                                      ?.length ??
+                                                  0) ==
+                                              0)
+                                          ? SizedBox()
+                                          : InkWell(
+                                              onTap: () {
+                                                ref
+                                                    .read(tabProvider.notifier)
+                                                    .state = 0;
+                                              },
+                                              child: Container(
+                                                  alignment: Alignment.center,
+                                                  width: screenWidth / 3,
+                                                  height: 40,
+                                                  padding:
+                                                      const EdgeInsets.all(10),
+                                                  decoration: BoxDecoration(
+                                                      color: tab == 0
+                                                          ? kPrimaryColor
+                                                          : Colors.white
+                                                              .withOpacity(0.3),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10)),
+                                                  child: Text(
+                                                    UserData.translation.data
+                                                            ?.tickets
+                                                            ?.toString() ??
+                                                        'Tickets',
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  )),
+                                            ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      ((snapShot.data?.data?.order
+                                                      ?.orderServices?.length ??
+                                                  0) ==
+                                              0)
+                                          ? SizedBox()
+                                          : InkWell(
+                                              onTap: () {
+                                                ref
+                                                    .read(tabProvider.notifier)
+                                                    .state = 1;
+                                              },
+                                              child: Container(
+                                                  alignment: Alignment.center,
+                                                  width: screenWidth / 3,
+                                                  height: 40,
+                                                  padding: EdgeInsets.all(10),
+                                                  decoration: BoxDecoration(
+                                                      color: tab == 1
+                                                          ? kPrimaryColor
+                                                          : Colors.white
+                                                              .withOpacity(0.3),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10)),
+                                                  child: Text(
+                                                    UserData.translation.data
+                                                            ?.services
+                                                            ?.toString() ??
+                                                        'Services',
+                                                    style: const TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  )),
+                                            ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      );
               }
           }
         },

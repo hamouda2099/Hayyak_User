@@ -109,7 +109,6 @@ class ServicesComponentInTicketDetails extends StatelessWidget {
                                   });
                                 }
                               }
-                              print(selectedServices);
                             }
                           },
                           child: Icon(
@@ -132,7 +131,6 @@ class ServicesComponentInTicketDetails extends StatelessWidget {
                               ref.read(totalProvider.notifier).state =
                                   ref.read(totalProvider.notifier).state -
                                       service.finalCost;
-                              print(service.id);
                               selectedServices.removeWhere((element) =>
                                   element['service']['id'] == service.id);
                               if (ref.read(counterProvider.notifier).state !=
@@ -143,7 +141,6 @@ class ServicesComponentInTicketDetails extends StatelessWidget {
                                       ref.read(counterProvider.notifier).state
                                 });
                               }
-                              print(selectedServices);
                             }
                           },
                           child: Container(
@@ -197,7 +194,6 @@ class ServicesComponentInTicketDetails extends StatelessWidget {
                                   });
                                 }
                               }
-                              print(selectedServices);
                             }
                           },
                           child: Container(

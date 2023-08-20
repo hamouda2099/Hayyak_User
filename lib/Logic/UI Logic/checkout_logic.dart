@@ -110,7 +110,6 @@ class CheckoutLogic {
             userRole: UserData.role!,
             token: UserData.token!)
         .then((value) {
-      print(value);
       Navigator.pop(context);
       if (value['code'] == 200) {
         orderId = value['data']['order']['order_id'].toString() ?? '';
@@ -188,9 +187,7 @@ class CheckoutLogic {
         payFor = decodedRes['payFor'];
         subscriptionId = decodedRes['SubscriptionId'];
         paymentType = decodedRes['PaymentType'];
-      } catch (e) {
-        print("*************************");
-      }
+      } catch (e) {}
       if (result == 'Successful') {
         ApiManger.payOrder(
           orderId: orderId,
@@ -235,7 +232,6 @@ class CheckoutLogic {
           // billNumber: '',
           // responseMsg: '',
         ).then((value) {
-          print(value);
           if (value['success'] == true) {
             navigator(context: context, screen: HomeScreen(), remove: true);
             messageDialog(context, "Orders created successfully!");

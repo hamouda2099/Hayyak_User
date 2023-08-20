@@ -5,6 +5,7 @@ import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/Config/user_data.dart';
 import 'package:hayyak/Dialogs/loading_screen.dart';
+import 'package:hayyak/Dialogs/message_dialog.dart';
 import 'package:hayyak/Logic/Services/api_manger.dart';
 import 'package:hayyak/Models/event_seats_model.dart';
 import 'package:hayyak/UI/Components/image_viewer.dart';
@@ -40,7 +41,6 @@ class EventSeatsScreen extends StatelessWidget {
             }
           default:
             if (snapShot.hasError) {
-              print(snapShot);
               return Scaffold(
                   body: Center(child: Text('Error: ${snapShot.error}')));
             } else {
@@ -59,7 +59,7 @@ class EventSeatsScreen extends StatelessWidget {
                           Text(
                             UserData.translation.data?.totalPrice?.toString() ??
                                 'Total Price',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 12,
                             ),
@@ -116,31 +116,35 @@ class EventSeatsScreen extends StatelessWidget {
                       ),
                       InkWell(
                         onTap: () {
-                          navigator(
-                              context: context,
-                              screen: CheckoutScreen(
-                                vat: snapShot.data?.data?.event?.details?.vat,
-                                fees: snapShot
-                                    .data?.data?.event?.details?.eventFees,
-                                receitType: 'seats',
-                                total: totalPriceProvider,
-                                selectedDate: selectedDate,
-                                eventId: eventId,
-                                selectedTickets: globalSelectedSeats,
-                                selectedServices: globalSelectedSeatsServices,
-                                eventTime:
-                                    snapShot.data?.data?.event?.details?.time ??
-                                        '',
-                                eventDate: snapShot.data?.data?.event?.details
-                                        ?.startDate ??
-                                    '',
-                                eventName:
-                                    snapShot.data?.data?.event?.details?.name ??
-                                        '',
-                                eventImage: snapShot
-                                        .data?.data?.event?.details?.image ??
-                                    '',
-                              ));
+                          if (globalSelectedSeats.isEmpty) {
+                            messageDialog(context, "Please select seats");
+                          } else {
+                            navigator(
+                                context: context,
+                                screen: CheckoutScreen(
+                                  vat: snapShot.data?.data?.event?.details?.vat,
+                                  fees: snapShot
+                                      .data?.data?.event?.details?.eventFees,
+                                  receitType: 'seats',
+                                  total: totalPriceProvider,
+                                  selectedDate: selectedDate,
+                                  eventId: eventId,
+                                  selectedTickets: globalSelectedSeats,
+                                  selectedServices: globalSelectedSeatsServices,
+                                  eventTime: snapShot
+                                          .data?.data?.event?.details?.time ??
+                                      '',
+                                  eventDate: snapShot.data?.data?.event?.details
+                                          ?.startDate ??
+                                      '',
+                                  eventName: snapShot
+                                          .data?.data?.event?.details?.name ??
+                                      '',
+                                  eventImage: snapShot
+                                          .data?.data?.event?.details?.image ??
+                                      '',
+                                ));
+                          }
                         },
                         child: Container(
                           alignment: Alignment.center,

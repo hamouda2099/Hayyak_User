@@ -27,7 +27,7 @@ class EventTicketsModel {
       EventTicketsModel(
         success: json["success"],
         message: json["message"],
-        data: Data.fromJson(json["data"]),
+        data: json["data"] == null ? null : Data.fromJson(json["data"]),
         code: json["code"],
       );
 
