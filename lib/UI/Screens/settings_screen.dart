@@ -104,40 +104,48 @@ class SettingsScreen extends StatelessWidget {
                   loadingDialog(context);
                   if (localLanguage == 'en') {
                     localLanguage = 'ar';
-                    UserData.language = localLanguage;
-                    Hive.box('user_data').put('lang', localLanguage);
-                    ApiManger.getTranslationsKeys().then((value) async {
-                      Navigator.pop(context);
-                      if (value.success ?? false) {
-                        UserData.translation = value;
-                      } else {
-                        UserData.translation =
-                            await Hive.box('user_data').get('translation');
-                      }
-                    });
+                    UserData.language = "ar";
                     context.setLocale(const Locale('ar'));
                     textDirection = ui.TextDirection.rtl;
-                  } else {
-                    localLanguage = 'en';
-                    UserData.language = localLanguage;
-                    Hive.box('user_data').put('lang', localLanguage);
+                    Hive.box('user_data').put('lang', "ar");
                     ApiManger.getTranslationsKeys().then((value) async {
                       Navigator.pop(context);
                       if (value.success ?? false) {
+                        print(value.success);
                         UserData.translation = value;
+                        navigator(
+                          context: context,
+                          replacement: true,
+                          screen: HomeScreen(),
+                        );
                       } else {
                         UserData.translation =
                             await Hive.box('user_data').get('translation');
                       }
                     });
+                  } else {
+                    localLanguage = 'en';
+                    UserData.language = "en";
                     context.setLocale(const Locale('en'));
                     textDirection = ui.TextDirection.ltr;
+                    Hive.box('user_data').put('lang', "en");
+                    ApiManger.getTranslationsKeys().then((value) async {
+                      Navigator.pop(context);
+                      if (value.success ?? false) {
+                        print(value.toJson());
+                        UserData.translation = value;
+                        navigator(
+                          context: context,
+                          replacement: true,
+                          screen: HomeScreen(),
+                        );
+                      } else {
+                        print(value.toJson());
+                        UserData.translation =
+                            await Hive.box('user_data').get('translation');
+                      }
+                    });
                   }
-                  navigator(
-                    context: context,
-                    replacement: true,
-                    screen: HomeScreen(),
-                  );
                 },
                 child: Container(
                   margin: const EdgeInsets.all(10),

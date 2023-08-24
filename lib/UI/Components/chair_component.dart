@@ -206,9 +206,12 @@ class ChairComponent extends ConsumerWidget {
                   .remove(ref.read(selectedSeatProvider.notifier).state['id']);
               globalSelectedSeats
                   .remove(ref.read(selectedSeatProvider.notifier).state['id']);
-              ref.read(cartCounterProvider.notifier).state--;
-              ref.read(totalPriceProvider.notifier).state =
-                  ref.read(totalPriceProvider.notifier).state - categoryPrice;
+              if (ref.read(cartCounterProvider.notifier).state != 0 ||
+                  ref.read(totalPriceProvider.notifier).state != 0) {
+                ref.read(cartCounterProvider.notifier).state--;
+                ref.read(totalPriceProvider.notifier).state =
+                    ref.read(totalPriceProvider.notifier).state - categoryPrice;
+              }
 
               for (int i = 0; showedList.length > i; i++) {
                 if (selectedSeats.contains(showedList[i]['id'])) {

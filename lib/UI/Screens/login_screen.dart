@@ -10,6 +10,7 @@ import 'package:hayyak/UI/Screens/sign_up_screen.dart';
 import 'package:hayyak/main.dart';
 
 import '../../Config/user_data.dart';
+import 'home_screen.dart';
 
 // ignore: must_be_immutable
 class LoginScreen extends StatelessWidget {
@@ -258,6 +259,24 @@ class LoginScreen extends StatelessWidget {
                       )),
                 ],
               ),
+              const SizedBox(
+                height: 30,
+              ),
+              InkWell(
+                  onTap: () {
+                    navigator(
+                      context: context,
+                      remove: true,
+                      screen: HomeScreen(),
+                    );
+                  },
+                  child: const Text(
+                    "Login as a guest",
+                    style: TextStyle(
+                        color: kDarkGreyColor,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold),
+                  )),
               const SizedBox(
                 height: 50,
               ),

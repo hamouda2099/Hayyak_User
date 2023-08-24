@@ -151,57 +151,52 @@ class EventHomeCard extends StatelessWidget {
                 height: 4,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(
-                        Icons.location_on_sharp,
-                        size: 15,
-                        fill: 0.2,
-                        color: kLightGreyColor,
-                      ),
-                      SizedBox(
-                        child: Text(
-                          location,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                              color: kLightGreyColor, fontSize: 12),
-                        ),
-                      ),
-                    ],
+                  Icon(
+                    Icons.location_on_sharp,
+                    size: 15,
+                    fill: 0.2,
+                    color: kLightGreyColor,
                   ),
-                  action?.name == null
-                      ? const SizedBox()
-                      : Row(
-                          children: [
-                            Icon(
-                              Icons.electric_bolt_rounded,
+                  SizedBox(
+                    child: Text(
+                      location,
+                      overflow: TextOverflow.ellipsis,
+                      style:
+                          const TextStyle(color: kLightGreyColor, fontSize: 12),
+                    ),
+                  ),
+                ],
+              ),
+              action?.name == null
+                  ? const SizedBox()
+                  : Row(
+                      children: [
+                        Icon(
+                          Icons.electric_bolt_rounded,
+                          color: action?.color == ''
+                              ? Colors.transparent
+                              : Color(int.parse(
+                                  '0xFF${action?.color.toString().substring(1)}')),
+                          size: 15,
+                        ),
+                        Container(
+                          child: Text(
+                            action?.name ?? '',
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 12,
                               color: action?.color == ''
                                   ? Colors.transparent
                                   : Color(int.parse(
                                       '0xFF${action?.color.toString().substring(1)}')),
-                              size: 15,
                             ),
-                            Container(
-                              child: Text(
-                                action?.name ?? '',
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: action?.color == ''
-                                      ? Colors.transparent
-                                      : Color(int.parse(
-                                          '0xFF${action?.color.toString().substring(1)}')),
-                                ),
-                              ),
-                            ),
-                          ],
-                        )
-                ],
-              )
+                          ),
+                        ),
+                      ],
+                    )
             ],
           ),
         ),

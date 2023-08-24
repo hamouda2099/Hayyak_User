@@ -7,8 +7,11 @@ import 'package:hayyak/Config/user_data.dart';
 import 'package:hayyak/Logic/UI%20Logic/checkout_logic.dart';
 import 'package:hayyak/States/providers.dart';
 import 'package:hayyak/UI/Components/seccond_app_bar.dart';
+import 'package:hayyak/UI/Screens/event_details_screen.dart';
+import 'package:hayyak/UI/Screens/terms_and_conditions_screen.dart';
 import 'package:hayyak/main.dart';
 
+import '../../Config/navigator.dart';
 import '../../Dialogs/loading_screen.dart';
 import '../../Dialogs/message_dialog.dart';
 import '../../Dialogs/static_services_info_dialog.dart';
@@ -161,7 +164,13 @@ class CheckoutScreen extends StatelessWidget {
                                     duration: UserData.reservationTimer.toInt(),
                                     autoStart: true,
                                     isReverse: true,
-                                    onComplete: () {},
+                                    onComplete: () {
+                                      navigator(
+                                          context: context,
+                                          screen: EventDetails(
+                                              eventId: num.parse(
+                                                  logic.eventId ?? '')));
+                                    },
                                     textStyle: const TextStyle(
                                         color: Colors.white, fontSize: 12),
                                     fillColor: kPrimaryColor,
@@ -506,7 +515,12 @@ class CheckoutScreen extends StatelessWidget {
                                               ],
                                             ),
                                             InkWell(
-                                              onTap: () {},
+                                              onTap: () {
+                                                navigator(
+                                                    context: context,
+                                                    screen:
+                                                        TermsAndConditionsScreen());
+                                              },
                                               child: Padding(
                                                 padding: const EdgeInsets.only(
                                                     left: 20.0,
@@ -731,10 +745,25 @@ class CheckoutScreen extends StatelessWidget {
                                                             ),
                                                           ],
                                                         ),
-                                                        const Icon(
-                                                          Icons.info,
-                                                          color: kDarkGreyColor,
-                                                          size: 20,
+                                                        InkWell(
+                                                          onTap: () {
+                                                            staticServicesInfoDialog(
+                                                                context,
+                                                                'SMS',
+                                                                logic
+                                                                        .staticServices
+                                                                        ?.data
+                                                                        ?.sms
+                                                                        ?.descriptionAr
+                                                                        .toString() ??
+                                                                    '');
+                                                          },
+                                                          child: const Icon(
+                                                            Icons.info,
+                                                            color:
+                                                                kDarkGreyColor,
+                                                            size: 20,
+                                                          ),
                                                         ),
                                                       ],
                                                     ),

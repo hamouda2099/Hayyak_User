@@ -11,7 +11,6 @@ import 'package:hayyak/Models/event_seats_model.dart';
 import 'package:hayyak/UI/Components/image_viewer.dart';
 import 'package:hayyak/UI/Components/seat_category_component.dart';
 import 'package:hayyak/UI/Screens/checkout_screen.dart';
-import 'package:hayyak/UI/Screens/notifications_screen.dart';
 import 'package:hayyak/main.dart';
 import 'package:share/share.dart';
 // import 'package:share/share.dart';
@@ -204,50 +203,16 @@ class EventSeatsScreen extends StatelessWidget {
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold),
                               ),
-                              UserData.token == ''
-                                  ? Row(
-                                      children: [
-                                        InkWell(
-                                            onTap: () {
-                                              Share.share('https://hayyak.net/',
-                                                  subject: 'Seats');
-                                            },
-                                            child: const Icon(
-                                              Icons.file_upload_outlined,
-                                              size: 20,
-                                              color: kDarkGreyColor,
-                                            )),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        InkWell(
-                                          onTap: () {
-                                            navigator(
-                                                context: context,
-                                                screen:
-                                                    const NotificationsScreen());
-                                          },
-                                          child: SizedBox(
-                                            width: 15,
-                                            height: 15,
-                                            child: SvgPicture.asset(
-                                                color: kDarkGreyColor,
-                                                'assets/icon/Icon feather-heart.svg'),
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  : IconButton(
-                                      onPressed: () {
-                                        navigator(
-                                            context: context,
-                                            screen:
-                                                const NotificationsScreen());
-                                      },
-                                      icon: const Icon(Icons.notifications),
-                                      color: kDarkGreyColor,
-                                      iconSize: 25,
-                                    ),
+                              InkWell(
+                                  onTap: () {
+                                    Share.share('https://hayyak.net/',
+                                        subject: 'Seats');
+                                  },
+                                  child: const Icon(
+                                    Icons.file_upload_outlined,
+                                    size: 20,
+                                    color: kDarkGreyColor,
+                                  ))
                             ],
                           ),
                         );
