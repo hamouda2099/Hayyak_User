@@ -201,17 +201,20 @@ class ChairComponent extends ConsumerWidget {
           )),
           IconButton(
             onPressed: () {
-              chairs.removeAt(index);
-              selectedSeats
-                  .remove(ref.read(selectedSeatProvider.notifier).state['id']);
-              globalSelectedSeats
-                  .remove(ref.read(selectedSeatProvider.notifier).state['id']);
-              if (ref.read(cartCounterProvider.notifier).state != 0 || ref.read(totalPriceProvider.notifier).state != 0) {
-                if (selectedSeats.contains(ref.read(selectedSeatProvider.notifier).state['id']) && globalSelectedSeats.contains(ref.read(selectedSeatProvider.notifier).state['id']) ){
-                  ref.read(cartCounterProvider.notifier).state--;
-                  ref.read(totalPriceProvider.notifier).state =
-                      ref.read(totalPriceProvider.notifier).state - categoryPrice;
-                }
+              if (selectedSeats.contains(
+                      ref.read(selectedSeatProvider.notifier).state['id']) &&
+                  globalSelectedSeats.contains(
+                      ref.read(selectedSeatProvider.notifier).state['id'])) {
+                chairs.removeAt(index);
+                selectedSeats.remove(
+                    ref.read(selectedSeatProvider.notifier).state['id']);
+                globalSelectedSeats.remove(
+                    ref.read(selectedSeatProvider.notifier).state['id']);
+                ref.read(cartCounterProvider.notifier).state--;
+                ref.read(totalPriceProvider.notifier).state =
+                    ref.read(totalPriceProvider.notifier).state - categoryPrice;
+              } else {
+                chairs.removeAt(index);
               }
 
               for (int i = 0; showedList.length > i; i++) {

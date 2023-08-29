@@ -111,7 +111,6 @@ class SettingsScreen extends StatelessWidget {
                     ApiManger.getTranslationsKeys().then((value) async {
                       Navigator.pop(context);
                       if (value.success ?? false) {
-                        print(value.success);
                         UserData.translation = value;
                         navigator(
                           context: context,
@@ -132,7 +131,6 @@ class SettingsScreen extends StatelessWidget {
                     ApiManger.getTranslationsKeys().then((value) async {
                       Navigator.pop(context);
                       if (value.success ?? false) {
-                        print(value.toJson());
                         UserData.translation = value;
                         navigator(
                           context: context,
@@ -140,7 +138,6 @@ class SettingsScreen extends StatelessWidget {
                           screen: HomeScreen(),
                         );
                       } else {
-                        print(value.toJson());
                         UserData.translation =
                             await Hive.box('user_data').get('translation');
                       }
