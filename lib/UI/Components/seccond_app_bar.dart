@@ -41,9 +41,9 @@ class SecondAppBar extends StatelessWidget {
                   color: kDarkGreyColor,
                   width: 25,
                   height: 25,
-                  localLanguage == 'ar'
-                      ? 'assets/icon/back_ar.svg'
-                      : 'assets/icon/back.svg'),
+                  localLanguage == 'en'
+                      ? 'assets/icon/back.svg'
+                      : 'assets/icon/back_ar.svg'),
             ),
           ),
           Text(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/Config/navigator.dart';
+import 'package:hayyak/Config/user_data.dart';
 import 'package:hayyak/UI/Screens/home_screen.dart';
 import 'package:hayyak/UI/Screens/login_screen.dart';
 import 'package:hive/hive.dart';
@@ -28,6 +29,13 @@ logoutDialog(BuildContext context) {
               borderRadius: BorderRadius.circular(10),
               onTap: () {
                 Hive.box('user_data').put('logged_in', false);
+                UserData.id = null;
+                UserData.token = '';
+                UserData.email = '';
+                UserData.userName = '';
+                UserData.phone = '';
+                UserData.role = '';
+                UserData.imageUrl = '';
                 navigator(
                     context: context,
                     screen: LoginScreen(

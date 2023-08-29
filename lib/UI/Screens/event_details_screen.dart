@@ -100,16 +100,21 @@ class EventDetails extends StatelessWidget {
                                     const SizedBox(
                                       width: 5,
                                     ),
-                                    Text(
-                                      snapShot?.data?.data?.action?.name ?? '',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: snapShot.data?.data?.action
-                                                    ?.color ==
-                                                ''
-                                            ? Colors.transparent
-                                            : Color(int.parse(
-                                                '0xFF${snapShot.data?.data?.action?.color.toString().substring(1)}')),
+                                    SizedBox(
+                                      width: screenWidth / 5,
+                                      child: Text(
+                                        snapShot?.data?.data?.action?.name ??
+                                            '',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: snapShot.data?.data?.action
+                                                      ?.color ==
+                                                  ''
+                                              ? Colors.transparent
+                                              : Color(int.parse(
+                                                  '0xFF${snapShot.data?.data?.action?.color.toString().substring(1)}')),
+                                        ),
                                       ),
                                     ),
                                   ],

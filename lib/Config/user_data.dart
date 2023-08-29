@@ -3,7 +3,7 @@ import 'package:hayyak/Models/translation_model.dart';
 
 class UserData {
   static String? token = '';
-  static num? id = 0;
+  static num? id;
   static String? userName = '';
   static String? phone = '';
   static String? imageUrl = '';

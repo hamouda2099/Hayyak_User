@@ -13,7 +13,6 @@ import 'package:hayyak/UI/Components/seat_category_component.dart';
 import 'package:hayyak/UI/Screens/checkout_screen.dart';
 import 'package:hayyak/main.dart';
 import 'package:share/share.dart';
-// import 'package:share/share.dart';
 
 final cartCounterProvider = StateProvider<int>((ref) => 0);
 final totalPriceProvider = StateProvider<double>((ref) => 0.0);
@@ -246,7 +245,9 @@ class EventSeatsScreen extends StatelessWidget {
                           height: 10,
                         ),
                         Align(
-                          alignment: Alignment.topLeft,
+                          alignment: localLanguage == 'en'
+                              ? Alignment.topLeft
+                              : Alignment.topRight,
                           child: Padding(
                             padding: EdgeInsets.only(left: 20.0, top: 10),
                             child: Text(
@@ -281,7 +282,9 @@ class EventSeatsScreen extends StatelessWidget {
                           color: Colors.grey,
                         ),
                         Align(
-                          alignment: Alignment.topLeft,
+                          alignment: localLanguage == 'en'
+                              ? Alignment.topLeft
+                              : Alignment.topRight,
                           child: Padding(
                             padding: EdgeInsets.only(left: 20.0, top: 10),
                             child: Text(
