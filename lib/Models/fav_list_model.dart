@@ -11,28 +11,32 @@ String favListModelToJson(FavListModel data) => json.encode(data.toJson());
 
 class FavListModel {
   FavListModel({
-    required this.success,
-    required this.message,
-    required this.data,
-    required this.code,
+    this.success,
+    this.message,
+    this.data,
+    this.code,
   });
 
-  bool success;
-  String message;
-  List<Datum> data;
-  int code;
+  bool? success;
+  String? message;
+  List<Datum>? data;
+  num? code;
 
   factory FavListModel.fromJson(Map<String, dynamic> json) => FavListModel(
         success: json["success"],
         message: json["message"],
-        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+        data: json["data"] == null
+            ? null
+            : List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
         code: json["code"],
       );
 
   Map<String, dynamic> toJson() => {
         "success": success,
         "message": message,
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "data": data == null
+            ? null
+            : List<dynamic>.from(data!.map((x) => x.toJson())),
         "code": code,
       };
 }

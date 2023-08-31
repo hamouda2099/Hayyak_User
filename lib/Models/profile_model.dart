@@ -20,7 +20,7 @@ class ProfileModel {
   bool? success;
   String? message;
   Data? data;
-  int? code;
+  num? code;
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) => ProfileModel(
         success: json["success"],
@@ -49,7 +49,7 @@ class Data {
     this.role,
   });
 
-  int? id;
+  num? id;
   String? name;
   String? firstName;
   String? lastName;

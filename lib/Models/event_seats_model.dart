@@ -21,7 +21,7 @@ class EventSeatsModel {
   bool? success;
   String? message;
   Data? data;
-  int? code;
+  num? code;
 
   factory EventSeatsModel.fromJson(Map<String, dynamic> json) =>
       EventSeatsModel(
@@ -103,7 +103,7 @@ class Details {
     this.eventFeesDisplayed,
   });
 
-  int? id;
+  num? id;
   String? name;
   String? description;
   String? image;
@@ -115,7 +115,7 @@ class Details {
   String? averageCost;
   Action? action;
   String? seats;
-  int? vat;
+  num? vat;
   String? vatDisplayed;
   num? eventFees;
   String? eventFeesDisplayed;
@@ -192,13 +192,13 @@ class Kind {
     this.tickets,
   });
 
-  int? id;
+  num? id;
   String? name;
   String? costBeforeDiscount;
   String? costAfterDiscount;
-  double? discountValue;
-  double? finalCost;
-  int? countLimit;
+  num? discountValue;
+  num? finalCost;
+  num? countLimit;
   String? color;
   dynamic tickets;
 
@@ -265,8 +265,8 @@ class A {
     this.number,
   });
 
-  int? id;
-  int? number;
+  num? id;
+  num? number;
 
   factory A.fromJson(Map<String, dynamic> json) => A(
         id: json["id"],
@@ -292,15 +292,15 @@ class Service {
     this.finalCost,
   });
 
-  int? id;
+  num? id;
   String? name;
   String? description;
   String? type;
-  int? countLimit;
+  num? countLimit;
   String? costBeforeDiscount;
   String? costAfterDiscount;
-  dynamic discountValue;
-  int? finalCost;
+  num? discountValue;
+  num? finalCost;
 
   factory Service.fromJson(Map<String, dynamic> json) => Service(
         id: json["id"],

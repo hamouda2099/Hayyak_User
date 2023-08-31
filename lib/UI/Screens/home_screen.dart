@@ -38,10 +38,10 @@ class HomeScreen extends StatelessWidget {
                         return ListView(
                           primary: true,
                           children: [
-                            HomeAds(slider: snapShot.data?.data.slider ?? []),
+                            HomeAds(slider: snapShot.data?.data?.slider ?? []),
                             Column(
                               children: List.generate(
-                                  snapShot.data!.data.categories.length,
+                                  snapShot.data?.data?.categories?.length ?? 0,
                                   (index) => Column(
                                         children: [
                                           Padding(
@@ -54,7 +54,7 @@ class HomeScreen extends StatelessWidget {
                                                   snapShot
                                                           .data
                                                           ?.data
-                                                          .categories[index]
+                                                          ?.categories?[index]
                                                           .name ??
                                                       '',
                                                   style: const TextStyle(
@@ -71,59 +71,60 @@ class HomeScreen extends StatelessWidget {
                                               primary: false,
                                               scrollDirection: Axis.horizontal,
                                               itemCount: snapShot
-                                                  .data
-                                                  ?.data
-                                                  .categories[index]
-                                                  .events
-                                                  .length,
+                                                      .data
+                                                      ?.data
+                                                      ?.categories?[index]
+                                                      .events
+                                                      ?.length ??
+                                                  0,
                                               itemBuilder: (context, i) {
                                                 return EventHomeCard(
                                                   action: snapShot
                                                       .data
                                                       ?.data
-                                                      .categories[index]
-                                                      .events[i]
+                                                      ?.categories?[index]
+                                                      .events?[i]
                                                       .action,
                                                   id: snapShot
                                                           .data
                                                           ?.data
-                                                          .categories[index]
-                                                          .events[i]
+                                                          ?.categories?[index]
+                                                          .events?[i]
                                                           .id ??
                                                       0,
                                                   eventName: snapShot
                                                           .data
                                                           ?.data
-                                                          .categories[index]
-                                                          .events[i]
+                                                          ?.categories?[index]
+                                                          .events?[i]
                                                           .name ??
                                                       '',
                                                   image: snapShot
                                                           .data
                                                           ?.data
-                                                          .categories[index]
-                                                          .events[i]
+                                                          ?.categories?[index]
+                                                          .events?[i]
                                                           .image ??
                                                       '',
                                                   location: snapShot
                                                           .data
                                                           ?.data
-                                                          .categories[index]
-                                                          .events[i]
+                                                          ?.categories?[index]
+                                                          .events?[i]
                                                           .location ??
                                                       '',
                                                   startDate: snapShot
                                                           .data
                                                           ?.data
-                                                          .categories[index]
-                                                          .events[i]
+                                                          ?.categories?[index]
+                                                          .events?[i]
                                                           .start ??
                                                       '',
                                                   is_favourite: snapShot
                                                           .data
                                                           ?.data
-                                                          .categories[index]
-                                                          .events[i]
+                                                          ?.categories?[index]
+                                                          .events?[i]
                                                           .is_favourite ??
                                                       false,
                                                 );

@@ -13,7 +13,7 @@ class ChairComponent extends ConsumerWidget {
       required this.selectedSeats,
       required this.categoryPrice});
 
-  double categoryPrice;
+  num categoryPrice;
   List<ChairComponent> chairs = [];
   List selectedSeats = [];
   bool submitted = false;

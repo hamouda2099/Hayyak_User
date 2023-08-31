@@ -12,7 +12,7 @@ class TicketCard extends StatelessWidget {
       required this.image,
       required this.date});
 
-  int? orderId;
+  num? orderId;
   String? name, location, date, image;
 
   @override

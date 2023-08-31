@@ -38,10 +38,10 @@ class FavListScreen extends StatelessWidget {
                     } else {
                       return Expanded(
                           child: ListView.builder(
-                        itemCount: snapShot.data!.data.length,
+                        itemCount: snapShot.data!.data?.length,
                         itemBuilder: (context, index) {
                           return FavRow(
-                            item: snapShot.data!.data[index],
+                            item: snapShot.data!.data![index],
                           );
                         },
                       ));

@@ -156,10 +156,10 @@ class MyTicketsScreen extends StatelessWidget {
                                             itemBuilder: (context, index) {
                                               return TicketCard(
                                                 orderId: snapShot
-                                                    .data!
-                                                    .data!
-                                                    .orders!
-                                                    .pastOrders![index]
+                                                    .data
+                                                    ?.data
+                                                    ?.orders
+                                                    ?.pastOrders?[index]
                                                     .orderId,
                                                 image: snapShot
                                                     .data!

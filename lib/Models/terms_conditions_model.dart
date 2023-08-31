@@ -21,7 +21,7 @@ class TermsAndConditionsModel {
   bool? success;
   String? message;
   Data? data;
-  int? code;
+  num? code;
 
   factory TermsAndConditionsModel.fromJson(Map<String, dynamic> json) =>
       TermsAndConditionsModel(
@@ -46,7 +46,7 @@ class Data {
     this.aboutDescription,
   });
 
-  int? id;
+  num? id;
   String? aboutName;
   String? aboutDescription;
 

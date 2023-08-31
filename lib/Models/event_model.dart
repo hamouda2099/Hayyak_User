@@ -20,7 +20,7 @@ class EventModel {
   bool? success;
   String? message;
   Data? data;
-  int? code;
+  num? code;
 
   factory EventModel.fromJson(Map<String, dynamic> json) => EventModel(
         success: json["success"],
@@ -55,7 +55,7 @@ class Data {
     this.seats,
   });
 
-  int? id;
+  num? id;
   String? name;
   String? description;
   String? image;

@@ -66,7 +66,7 @@ class Refund {
   String? name;
   String? descriptionAr;
   String? descriptionEn;
-  int? value;
+  num? value;
   String? valueDisplayed;
 
   Refund({

@@ -15,7 +15,7 @@ import '../../Config/user_data.dart';
 class TicketDetails extends StatelessWidget {
   TicketDetails({required this.orderId});
 
-  int? orderId;
+  num? orderId;
   final _controllerTickets = PageController(initialPage: 0);
   final _controllerServices = PageController(initialPage: 0);
   final tabProvider = StateProvider<num>((ref) => 0);

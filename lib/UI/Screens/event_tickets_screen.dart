@@ -143,23 +143,23 @@ class EventTicketsScreen extends StatelessWidget {
                                 navigator(
                                     context: context,
                                     screen: CheckoutScreen(
-                                      fees: snapShot
-                                          .data?.data?.event?.details.eventFees,
+                                      fees: snapShot.data?.data?.event?.details
+                                          ?.eventFees,
                                       vat: snapShot
-                                          .data?.data?.event?.details.vat,
+                                          .data?.data?.event?.details?.vat,
                                       receitType: 'tickets',
                                       total: totalPriceProvider,
                                       selectedDate: selectedDate,
                                       eventId: eventId,
                                       eventName: snapShot.data?.data?.event
-                                              ?.details.name ??
+                                              ?.details?.name ??
                                           '',
                                       eventDate: dateFormatter(selectedDate),
                                       eventTime: snapShot.data?.data?.event
-                                              ?.details.time ??
+                                              ?.details?.time ??
                                           '',
                                       eventImage: snapShot.data?.data?.event
-                                              ?.details.image ??
+                                              ?.details?.image ??
                                           '',
                                       selectedTickets: selectedTickets ?? [],
                                       selectedServices: selectedServices ?? [],
@@ -194,7 +194,7 @@ class EventTicketsScreen extends StatelessWidget {
                       children: [
                         SecondAppBar(
                             title:
-                                snapShot.data?.data?.event?.details.name ?? '',
+                                snapShot.data?.data?.event?.details?.name ?? '',
                             shareAndFav: false,
                             backToHome: false),
                         Expanded(
@@ -290,7 +290,7 @@ class EventTicketsScreen extends StatelessWidget {
                                     logic: logic,
                                     cartProvider: cartCounterProvider,
                                     kind: snapShot
-                                        .data!.data!.event!.kinds[index],
+                                        .data!.data!.event!.kinds![index]!,
                                   );
                                 }),
                               ),
@@ -330,7 +330,7 @@ class EventTicketsScreen extends StatelessWidget {
                                     logic: logic,
                                     cartProvider: cartCounterProvider,
                                     service: snapShot
-                                        .data!.data!.event!.services[index],
+                                        .data!.data!.event!.services![index]!,
                                   );
                                 }),
                               )

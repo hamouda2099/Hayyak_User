@@ -19,7 +19,7 @@ class FaQsModel {
   bool? success;
   String? message;
   List<Datum>? data;
-  int? code;
+  num? code;
 
   factory FaQsModel.fromJson(Map<String, dynamic> json) => FaQsModel(
         success: json["success"],
@@ -47,7 +47,7 @@ class Datum {
     this.qAnswer,
   });
 
-  int? id;
+  num? id;
   String? qName;
   String? qAnswer;
 

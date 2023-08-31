@@ -80,7 +80,7 @@ class HomeAds extends ConsumerWidget {
                               image: DecorationImage(
                                 fit: BoxFit.fill,
                                 image: NetworkImage(
-                                  slider[index].image,
+                                  slider[index].image ?? '',
                                 ),
                               ),
                             ),

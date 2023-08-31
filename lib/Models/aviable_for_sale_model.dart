@@ -14,7 +14,7 @@ class AvailableTicketsForSaleModel {
   bool? success;
   String? message;
   Data? data;
-  int? code;
+  num? code;
 
   AvailableTicketsForSaleModel({
     this.success,
@@ -70,7 +70,7 @@ class Data {
 }
 
 class ServicesInvoice {
-  int? id;
+  num? id;
   String? count;
   String? serviceName;
   num? cost;
@@ -103,8 +103,8 @@ class ServicesInvoice {
 }
 
 class TicketsInvoice {
-  int? count;
-  int? kindId;
+  num? count;
+  num? kindId;
   String? name;
   String? currancy;
   num? finalCost;
@@ -152,19 +152,19 @@ class TicketsInvoice {
 }
 
 class AvailableTicket {
-  int? id;
+  num? id;
   String? numId;
   String? row;
-  int? number;
+  num? number;
   String? type;
-  dynamic holdAt;
+  String? holdAt;
   DateTime? date;
-  int? kindId;
-  int? eventId;
-  dynamic reservedAt;
-  dynamic checkin;
-  dynamic checkout;
-  dynamic deletedAt;
+  num? kindId;
+  num? eventId;
+  String? reservedAt;
+  String? checkin;
+  String? checkout;
+  String? deletedAt;
   String? createdAt;
   String? updatedAt;
 

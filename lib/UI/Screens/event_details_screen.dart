@@ -21,7 +21,7 @@ import '../../main.dart';
 class EventDetails extends StatelessWidget {
   EventDetails({required this.eventId});
 
-  num eventId;
+  num? eventId;
   DateTime startDate = DateTime.now();
   DateTime endDate = DateTime.now();
   DateTime? endDatePicker;

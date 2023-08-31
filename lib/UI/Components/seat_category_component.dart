@@ -81,7 +81,7 @@ class SeatCategoryComponent extends ConsumerWidget {
                                     rows.add(key.toString());
                                   });
                                   chairs.add(ChairComponent(
-                                    categoryPrice: seatCategory.finalCost ?? 0,
+                                    categoryPrice: seatCategory?.finalCost ?? 0,
                                     rows: rows,
                                     tickets: seatCategory.tickets,
                                     chairs: chairs,

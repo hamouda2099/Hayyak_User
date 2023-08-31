@@ -25,7 +25,7 @@ class TicketComponentInTicketDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final counterProvider = StateProvider((ref) => 0);
-    allTickets = kind.tickets!.data;
+    allTickets = kind.tickets?.data ?? [];
     return Consumer(
       builder: (context, ref, child) {
         final counter = ref.watch(counterProvider);
@@ -54,7 +54,7 @@ class TicketComponentInTicketDetails extends StatelessWidget {
                       Container(
                         width: screenWidth / 3,
                         child: Text(
-                          kind.name,
+                          kind.name ?? '',
                           style: TextStyle(
                               color: Color(int.parse(
                                   '0xFF${kind.color.toString().substring(1)}')),
@@ -65,7 +65,7 @@ class TicketComponentInTicketDetails extends StatelessWidget {
                         height: 8,
                       ),
                       Text(
-                        kind.costAfterDiscount,
+                        kind.costAfterDiscount ?? "",
                         style: const TextStyle(
                             color: kDarkGreyColor,
                             fontSize: 12,

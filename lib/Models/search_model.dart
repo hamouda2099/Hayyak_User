@@ -20,7 +20,7 @@ class SearchModel {
   bool? success;
   String? message;
   List<Datum>? data;
-  int? code;
+  num? code;
 
   factory SearchModel.fromJson(Map<String, dynamic> json) => SearchModel(
         success: json["success"],
@@ -54,7 +54,7 @@ class Datum {
     this.latLng,
   });
 
-  num id;
+  num? id;
   String? name;
   String? description;
   String? location;

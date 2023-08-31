@@ -21,7 +21,7 @@ class PrivacyPolicyModel {
   bool? success;
   String? message;
   Data? data;
-  int? code;
+  num? code;
 
   factory PrivacyPolicyModel.fromJson(Map<String, dynamic> json) =>
       PrivacyPolicyModel(
@@ -46,7 +46,7 @@ class Data {
     this.aboutDescription,
   });
 
-  int? id;
+  num? id;
   String? aboutName;
   String? aboutDescription;
 

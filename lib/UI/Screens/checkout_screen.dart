@@ -653,13 +653,22 @@ class CheckoutScreen extends StatelessWidget {
                                                                         ?.refundGuarantee
                                                                         ?.toString() ??
                                                                     'Refund Guarantee',
-                                                                logic
-                                                                        .staticServices
-                                                                        ?.data
-                                                                        ?.refund
-                                                                        ?.descriptionAr
-                                                                        .toString() ??
-                                                                    '');
+                                                                localLanguage ==
+                                                                        'en'
+                                                                    ? logic
+                                                                            .staticServices
+                                                                            ?.data
+                                                                            ?.refund
+                                                                            ?.descriptionEn
+                                                                            .toString() ??
+                                                                        ''
+                                                                    : logic
+                                                                            .staticServices
+                                                                            ?.data
+                                                                            ?.refund
+                                                                            ?.descriptionAr
+                                                                            .toString() ??
+                                                                        '');
                                                           },
                                                           child: const Icon(
                                                             Icons.info,
@@ -750,13 +759,22 @@ class CheckoutScreen extends StatelessWidget {
                                                             staticServicesInfoDialog(
                                                                 context,
                                                                 'SMS',
-                                                                logic
-                                                                        .staticServices
-                                                                        ?.data
-                                                                        ?.sms
-                                                                        ?.descriptionAr
-                                                                        .toString() ??
-                                                                    '');
+                                                                localLanguage ==
+                                                                        'en'
+                                                                    ? logic
+                                                                            .staticServices
+                                                                            ?.data
+                                                                            ?.sms
+                                                                            ?.descriptionEn
+                                                                            .toString() ??
+                                                                        ''
+                                                                    : logic
+                                                                            .staticServices
+                                                                            ?.data
+                                                                            ?.sms
+                                                                            ?.descriptionAr
+                                                                            .toString() ??
+                                                                        '');
                                                           },
                                                           child: const Icon(
                                                             Icons.info,

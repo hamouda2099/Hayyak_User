@@ -21,7 +21,7 @@ class EventTicketsModel {
   bool? success;
   String? message;
   Data? data;
-  int? code;
+  num? code;
 
   factory EventTicketsModel.fromJson(Map<String, dynamic> json) =>
       EventTicketsModel(
@@ -57,65 +57,69 @@ class Data {
 
 class Event {
   Event({
-    required this.details,
-    required this.kinds,
-    required this.services,
+    this.details,
+    this.kinds,
+    this.services,
   });
 
-  Details details;
-  List<Kind> kinds;
-  List<Kind> services;
+  Details? details;
+  List<Kind?>? kinds;
+  List<Kind?>? services;
 
   factory Event.fromJson(Map<String, dynamic> json) => Event(
-        details: Details.fromJson(json["details"]),
-        kinds: List<Kind>.from(json["kinds"].map((x) => Kind.fromJson(x))),
-        services:
-            List<Kind>.from(json["services"].map((x) => Kind.fromJson(x))),
+        details:
+            json["details"] == null ? null : Details.fromJson(json["details"]),
+        kinds: json["kinds"] == null
+            ? null
+            : List<Kind>.from(json["kinds"].map((x) => Kind.fromJson(x))),
+        services: json["services"] == null
+            ? null
+            : List<Kind>.from(json["services"].map((x) => Kind.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "details": details.toJson(),
-        "kinds": List<dynamic>.from(kinds.map((x) => x.toJson())),
-        "services": List<dynamic>.from(services.map((x) => x.toJson())),
+        "details": details!.toJson(),
+        "kinds": List<dynamic>.from(kinds!.map((x) => x?.toJson())),
+        "services": List<dynamic>.from(services!.map((x) => x?.toJson())),
       };
 }
 
 class Details {
   Details({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.image,
-    required this.startDate,
-    required this.endDate,
-    required this.time,
-    required this.latLng,
-    required this.address,
-    required this.averageCost,
-    required this.action,
-    required this.seats,
-    required this.vat,
-    required this.vatDisplayed,
-    required this.eventFees,
-    required this.eventFeesDisplayed,
+    this.id,
+    this.name,
+    this.description,
+    this.image,
+    this.startDate,
+    this.endDate,
+    this.time,
+    this.latLng,
+    this.address,
+    this.averageCost,
+    this.action,
+    this.seats,
+    this.vat,
+    this.vatDisplayed,
+    this.eventFees,
+    this.eventFeesDisplayed,
   });
 
-  int id;
-  String name;
-  String description;
-  String image;
-  String startDate;
-  String endDate;
-  String time;
-  String latLng;
-  String address;
-  String averageCost;
-  Action action;
-  String seats;
-  num vat;
-  String vatDisplayed;
-  num eventFees;
-  String eventFeesDisplayed;
+  num? id;
+  String? name;
+  String? description;
+  String? image;
+  String? startDate;
+  String? endDate;
+  String? time;
+  String? latLng;
+  String? address;
+  String? averageCost;
+  Action? action;
+  String? seats;
+  num? vat;
+  String? vatDisplayed;
+  num? eventFees;
+  String? eventFeesDisplayed;
 
   factory Details.fromJson(Map<String, dynamic> json) => Details(
         id: json["id"],
@@ -128,7 +132,7 @@ class Details {
         latLng: json["lat_lng"],
         address: json["address"],
         averageCost: json["average_cost"],
-        action: Action.fromJson(json["action"]),
+        action: json["action"] == null ? null : Action.fromJson(json["action"]),
         seats: json["seats"],
         vat: json["vat"],
         vatDisplayed: json["vat_displayed"],
@@ -147,7 +151,7 @@ class Details {
         "lat_lng": latLng,
         "address": address,
         "average_cost": averageCost,
-        "action": action.toJson(),
+        "action": action?.toJson(),
         "seats": seats,
         "vat": vat,
         "vat_displayed": vatDisplayed,
@@ -158,12 +162,12 @@ class Details {
 
 class Action {
   Action({
-    required this.name,
-    required this.color,
+    this.name,
+    this.color,
   });
 
-  String name;
-  String color;
+  String? name;
+  String? color;
 
   factory Action.fromJson(Map<String, dynamic> json) => Action(
         name: json["name"] ?? '',
@@ -178,10 +182,10 @@ class Action {
 
 class Kind {
   Kind({
-    required this.id,
-    required this.name,
-    required this.costBeforeDiscount,
-    required this.costAfterDiscount,
+    this.id,
+    this.name,
+    this.costBeforeDiscount,
+    this.costAfterDiscount,
     this.discountValue,
     this.finalCost,
     this.countLimit,
@@ -192,11 +196,11 @@ class Kind {
     this.type,
   });
 
-  int id;
-  String name;
-  String costBeforeDiscount;
-  String costAfterDiscount;
-  dynamic discountValue;
+  num? id;
+  String? name;
+  String? costBeforeDiscount;
+  String? costAfterDiscount;
+  num? discountValue;
   num? finalCost;
   num? countLimit;
   String? limit;
@@ -239,43 +243,47 @@ class Kind {
 
 class Tickets {
   Tickets({
-    required this.currentPage,
-    required this.data,
-    required this.firstPageUrl,
+    this.currentPage,
+    this.data,
+    this.firstPageUrl,
     this.from,
-    required this.lastPage,
-    required this.lastPageUrl,
-    required this.links,
+    this.lastPage,
+    this.lastPageUrl,
+    this.links,
     this.nextPageUrl,
-    required this.path,
-    required this.perPage,
+    this.path,
+    this.perPage,
     this.prevPageUrl,
     this.to,
-    required this.total,
+    this.total,
   });
 
-  int currentPage;
-  List<dynamic> data;
-  String firstPageUrl;
+  num? currentPage;
+  List<dynamic>? data;
+  String? firstPageUrl;
   dynamic from;
-  int lastPage;
-  String lastPageUrl;
-  List<Link> links;
-  dynamic nextPageUrl;
-  String path;
-  int perPage;
-  dynamic prevPageUrl;
+  num? lastPage;
+  String? lastPageUrl;
+  List<Link?>? links;
+  String? nextPageUrl;
+  String? path;
+  num? perPage;
+  String? prevPageUrl;
   dynamic to;
-  int total;
+  num? total;
 
   factory Tickets.fromJson(Map<String, dynamic> json) => Tickets(
         currentPage: json["current_page"],
-        data: List<dynamic>.from(json["data"].map((x) => x)),
+        data: json["data"] == null
+            ? null
+            : List<dynamic>.from(json["data"].map((x) => x)),
         firstPageUrl: json["first_page_url"],
         from: json["from"],
         lastPage: json["last_page"],
         lastPageUrl: json["last_page_url"],
-        links: List<Link>.from(json["links"].map((x) => Link.fromJson(x))),
+        links: json["links"] == null
+            ? null
+            : List<Link>.from(json["links"].map((x) => Link.fromJson(x))),
         nextPageUrl: json["next_page_url"],
         path: json["path"],
         perPage: json["per_page"],
@@ -286,12 +294,14 @@ class Tickets {
 
   Map<String, dynamic> toJson() => {
         "current_page": currentPage,
-        "data": List<dynamic>.from(data.map((x) => x)),
+        "data": data == null ? null : List<dynamic>.from(data!.map((x) => x)),
         "first_page_url": firstPageUrl,
         "from": from,
         "last_page": lastPage,
         "last_page_url": lastPageUrl,
-        "links": List<dynamic>.from(links.map((x) => x.toJson())),
+        "links": links == null
+            ? null
+            : List<dynamic>.from(links!.map((x) => x?.toJson())),
         "next_page_url": nextPageUrl,
         "path": path,
         "per_page": perPage,
@@ -304,13 +314,13 @@ class Tickets {
 class Link {
   Link({
     this.url,
-    required this.label,
-    required this.active,
+    this.label,
+    this.active,
   });
 
   String? url;
-  String label;
-  bool active;
+  String? label;
+  bool? active;
 
   factory Link.fromJson(Map<String, dynamic> json) => Link(
         url: json["url"],

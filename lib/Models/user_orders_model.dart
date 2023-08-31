@@ -21,7 +21,7 @@ class UserOrdersModel {
   bool? success;
   String? message;
   Data? data;
-  int? code;
+  num? code;
 
   factory UserOrdersModel.fromJson(Map<String, dynamic> json) =>
       UserOrdersModel(
@@ -95,8 +95,8 @@ class PastOrder {
     required this.date,
   });
 
-  int? orderId;
-  int? eventId;
+  num? orderId;
+  num? eventId;
   String eventType;
   String eventName;
   String eventLocation;

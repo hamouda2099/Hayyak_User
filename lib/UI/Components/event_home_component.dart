@@ -24,7 +24,7 @@ class EventHomeCard extends StatelessWidget {
       // ignore: non_constant_identifier_names
       required this.is_favourite});
 
-  int id;
+  num id;
   String eventName;
   String image;
   String location;

@@ -21,7 +21,7 @@ class UserOrderTicketsModel {
   bool? success;
   String? message;
   Data? data;
-  int? code;
+  num? code;
 
   factory UserOrderTicketsModel.fromJson(Map<String, dynamic> json) =>
       UserOrderTicketsModel(
@@ -102,14 +102,14 @@ class OrderTicket {
     this.doorsOpen,
   });
 
-  int? orderId;
-  int? ticketId;
+  num? orderId;
+  num? ticketId;
   String? eventName;
   String? numId;
   String? image;
   String? userName;
   String? kindName;
-  int? number;
+  num? number;
   String? row;
   String? ticketUsedAt;
   String? ticketValidUntil;
@@ -164,14 +164,14 @@ class OrderService {
     this.doorsOpen,
   });
 
-  int? orderId;
-  int? serviceId;
+  num? orderId;
+  num? serviceId;
   String? serviceName;
   String? numId;
   String? image;
   String? userName;
   String? kindName;
-  int? number;
+  num? number;
   String? serviceUsedAt;
   String? serviceValidUntil;
   String? date;

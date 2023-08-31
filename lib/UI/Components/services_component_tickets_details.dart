@@ -50,7 +50,7 @@ class ServicesComponentInTicketDetails extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        service.name,
+                        service.name ?? '',
                         style: const TextStyle(
                             color: kLightGreyColor, fontSize: 12),
                       ),
@@ -58,7 +58,7 @@ class ServicesComponentInTicketDetails extends StatelessWidget {
                         height: 8,
                       ),
                       Text(
-                        service.costAfterDiscount,
+                        service.costAfterDiscount ?? "",
                         style: const TextStyle(
                             color: kLightGreyColor,
                             fontSize: 12,
