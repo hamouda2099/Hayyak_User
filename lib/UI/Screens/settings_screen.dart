@@ -7,7 +7,6 @@ import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/Config/user_data.dart';
 import 'package:hayyak/Dialogs/loading_dialog.dart';
 import 'package:hayyak/UI/Components/box_shadow.dart';
-import 'package:hayyak/UI/Components/seccond_app_bar.dart';
 import 'package:hayyak/UI/Screens/account_screen.dart';
 import 'package:hayyak/UI/Screens/contact_us_screen.dart';
 import 'package:hayyak/UI/Screens/faqs_screen.dart';
@@ -27,15 +26,29 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        title: Text(
+          UserData.translation.data?.settings?.toString() ?? 'Settings',
+          style: TextStyle(
+              color: kDarkGreyColor, fontWeight: FontWeight.bold, fontSize: 20),
+        ),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: kLightGreyColor,
+          ),
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SecondAppBar(
-                  title: UserData.translation.data?.settings?.toString() ??
-                      'Settings',
-                  shareAndFav: false,
-                  backToHome: false),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

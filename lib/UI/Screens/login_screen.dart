@@ -161,7 +161,7 @@ class LoginScreen extends StatelessWidget {
                         UserData.translation.data?.signIn?.toString() ??
                             'SIGN IN',
                         style: const TextStyle(
-                          fontSize: 12,
+                          fontSize: 16,
                           fontWeight: FontWeight.w300,
                           color: Colors.white,
                         ),
@@ -221,8 +221,10 @@ class LoginScreen extends StatelessWidget {
                         const SizedBox(
                           width: 10,
                         ),
-                        const Text(
-                          'Sign in with google account',
+                        Text(
+                          UserData.translation.data?.signInWithGoogle
+                                  ?.toString() ??
+                              'Sign in with google account',
                           style: TextStyle(color: Colors.white),
                         )
                       ],
@@ -270,8 +272,9 @@ class LoginScreen extends StatelessWidget {
                       screen: HomeScreen(),
                     );
                   },
-                  child: const Text(
-                    "Login as a guest",
+                  child: Text(
+                    UserData.translation.data?.skip?.toString() ??
+                        "Login as a guest",
                     style: TextStyle(
                         color: kDarkGreyColor,
                         fontSize: 14,

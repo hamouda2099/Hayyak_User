@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hayyak/Config/constants.dart';
 
+import '../Config/user_data.dart';
 import '../main.dart';
 
-void messageDialog(BuildContext context, String message) {
+void messageDialog(BuildContext context, String message, {Function? function}) {
   showDialog(
     context: context,
     builder: (context) => AlertDialog(
@@ -19,9 +20,13 @@ void messageDialog(BuildContext context, String message) {
       actionsAlignment: MainAxisAlignment.center,
       content: InkWell(
         borderRadius: BorderRadius.circular(10),
-        onTap: () {
-          Navigator.pop(context);
-        },
+        onTap: function == null
+            ? () {
+                Navigator.pop(context);
+              }
+            : () {
+                function();
+              },
         child: Container(
           alignment: Alignment.center,
           width: screenWidth / 1,
@@ -31,8 +36,8 @@ void messageDialog(BuildContext context, String message) {
             borderRadius: BorderRadius.circular(10),
           ),
           padding: const EdgeInsets.all(5),
-          child: const Text(
-            'Ok',
+          child: Text(
+            UserData.translation.data?.ok?.toString() ?? 'Ok',
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w300,

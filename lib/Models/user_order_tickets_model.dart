@@ -100,6 +100,7 @@ class OrderTicket {
     this.ticketValidUntil,
     this.date,
     this.doorsOpen,
+    this.validity,
   });
 
   num? orderId;
@@ -115,6 +116,7 @@ class OrderTicket {
   String? ticketValidUntil;
   String? date;
   String? doorsOpen;
+  String? validity;
 
   factory OrderTicket.fromJson(Map<String, dynamic> json) => OrderTicket(
       orderId: json["order_id"],
@@ -129,6 +131,7 @@ class OrderTicket {
       ticketValidUntil: json["ticket_valid_until"],
       date: json["date"],
       doorsOpen: json["doors_open"],
+      validity: json["validity"],
       row: json["row"]);
 
   Map<String, dynamic> toJson() => {
@@ -144,7 +147,8 @@ class OrderTicket {
         "ticket_valid_until": ticketValidUntil,
         "date": date,
         "doors_open": doorsOpen,
-        "row": row
+        "row": row,
+        "validity": validity,
       };
 }
 
@@ -162,6 +166,7 @@ class OrderService {
     this.serviceValidUntil,
     this.date,
     this.doorsOpen,
+    this.validity,
   });
 
   num? orderId;
@@ -176,6 +181,7 @@ class OrderService {
   String? serviceValidUntil;
   String? date;
   String? doorsOpen;
+  String? validity;
 
   factory OrderService.fromJson(Map<String, dynamic> json) => OrderService(
         orderId: json["order_id"],
@@ -189,6 +195,7 @@ class OrderService {
         serviceUsedAt: json["service_used_at"],
         serviceValidUntil: json["service_valid_until"],
         date: json["date"],
+        validity: json["validity"],
         doorsOpen: json["doors_open"],
       );
 
@@ -204,6 +211,7 @@ class OrderService {
         "service_used_at": serviceUsedAt,
         "service_valid_until": serviceValidUntil,
         "date": date,
+        "validity": validity,
         "doors_open": doorsOpen,
       };
 }

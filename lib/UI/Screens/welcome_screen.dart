@@ -56,7 +56,7 @@ class WelcomeScreen extends StatelessWidget {
                         'SIGN IN',
                     style: TextStyle(
                       fontSize: 14,
-                      fontWeight: FontWeight.w300,
+                      fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
                   ),
@@ -84,7 +84,7 @@ class WelcomeScreen extends StatelessWidget {
                         'CONTACT US',
                     style: TextStyle(
                       fontSize: 14,
-                      fontWeight: FontWeight.w300,
+                      fontWeight: FontWeight.bold,
                       color: kDarkGreyColor,
                     ),
                   ),
@@ -105,6 +105,7 @@ class WelcomeScreen extends StatelessWidget {
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 14,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               )

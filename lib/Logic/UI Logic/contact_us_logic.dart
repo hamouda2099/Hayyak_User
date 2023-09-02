@@ -3,6 +3,7 @@ import 'package:hayyak/Dialogs/message_dialog.dart';
 import 'package:hayyak/UI/Screens/home_screen.dart';
 
 import '../../Config/navigator.dart';
+import '../../Config/user_data.dart';
 import '../Services/api_manger.dart';
 
 class ContactUsLogic {
@@ -23,9 +24,15 @@ class ContactUsLogic {
         .then((value) {
       if (value.statusCode == 200) {
         navigator(context: context, screen: HomeScreen());
-        messageDialog(context, "Your feedback sent successfully");
+        messageDialog(
+            context,
+            UserData.translation.data?.feedbackSentSuccessfully?.toString() ??
+                "Your feedback sent successfully");
       } else {
-        messageDialog(context, "An Error occurred!");
+        messageDialog(
+            context,
+            UserData.translation.data?.anErrorOccurred?.toString() ??
+                "An Error occurred!");
       }
     });
   }

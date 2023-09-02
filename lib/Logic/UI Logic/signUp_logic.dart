@@ -13,9 +13,12 @@ import 'package:hayyak/UI/Screens/login_screen.dart';
 import 'package:hayyak/UI/Screens/sign_up_screen.dart';
 import 'package:hayyak/UI/Screens/verify_otp_code_screen.dart';
 
-class SignUpLogic {
-  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+import '../../Config/user_data.dart';
+import '../../UI/Screens/home_screen.dart';
 
+class SignUpLogic {
+  final formKey = GlobalKey<FormState>();
+  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   // final FacebookAuth facebookAuth = FacebookAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
   TextEditingController firstNameController = TextEditingController();
@@ -42,9 +45,7 @@ class SignUpLogic {
     required String gender,
     required String signType,
   }) {
-    if (email.isEmpty) {
-      messageDialog(context, 'Some Fields is required !');
-    } else {
+    if (signType == 'social') {
       loadingDialog(context);
       ApiManger.registerUser(
               firstName: firstName,
@@ -64,7 +65,7 @@ class SignUpLogic {
             navigator(
                 context: context,
                 screen: LoginScreen(
-                  screen: SignUpScreen(),
+                  screen: HomeScreen(),
                 ),
                 remove: true);
           } else {
@@ -82,6 +83,59 @@ class SignUpLogic {
               '${jsonDecode(value.body)['error'] ?? jsonDecode(value.body)['code']}');
         }
       });
+    } else {
+      if (email.isEmpty ||
+          dateOfBirth.isEmpty ||
+          gender.isEmpty ||
+          password.isEmpty ||
+          confirmPassword.isEmpty ||
+          phone.isEmpty ||
+          firstName.isEmpty ||
+          lastName.isEmpty) {
+        messageDialog(
+            context,
+            UserData.translation.data?.someFieldsAreRequired?.toString() ??
+                'Some Fields is required !');
+      } else {
+        loadingDialog(context);
+        ApiManger.registerUser(
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                phone: phone,
+                gender: gender,
+                password: password,
+                signType: signType,
+                confirmPassword: confirmPassword,
+                dateOfBirth: dateOfBirth)
+            .then((value) async {
+          print(value.body);
+          Navigator.pop(context);
+          if (jsonDecode(value.body)['success'] == true &&
+              jsonDecode(value.body)['code'] == 200) {
+            if (signType == 'social') {
+              navigator(
+                  context: context,
+                  screen: LoginScreen(
+                    screen: SignUpScreen(),
+                  ),
+                  remove: true);
+            } else {
+              otpCode = jsonDecode(value.body)['data']['otp'].toString();
+              navigator(
+                  context: context,
+                  screen: VerifyOtpCodeScreen(
+                    otpCode: otpCode,
+                    email: email,
+                  ),
+                  remove: true);
+            }
+          } else {
+            messageDialog(context,
+                '${jsonDecode(value.body)['error'] ?? jsonDecode(value.body)['code']}');
+          }
+        });
+      }
     }
   }
 

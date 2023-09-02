@@ -191,7 +191,9 @@ class EventSeatsScreen extends StatelessWidget {
                                       color: kDarkGreyColor,
                                       width: 25,
                                       height: 25,
-                                      'assets/icon/back.svg'),
+                                      localLanguage == 'en'
+                                          ? 'assets/icon/back.svg'
+                                          : 'assets/icon/back_ar.svg'),
                                 ),
                               ),
                               Text(

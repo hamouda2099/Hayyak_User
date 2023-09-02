@@ -13,9 +13,10 @@ logoutDialog(BuildContext context) {
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: const Center(
+        title: Center(
           child: Text(
-            'Do you want to log out ?',
+            UserData.translation.data?.doYouWantToLogOut?.toString() ??
+                'Do you want to log out ?',
             style: TextStyle(
               color: kDarkGreyColor,
               fontSize: 16,
@@ -52,8 +53,8 @@ logoutDialog(BuildContext context) {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 padding: const EdgeInsets.all(5),
-                child: const Text(
-                  'Ok',
+                child: Text(
+                  UserData.translation.data?.ok?.toString() ?? 'Ok',
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w300,
@@ -76,8 +77,8 @@ logoutDialog(BuildContext context) {
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(color: kPrimaryColor)),
                 padding: const EdgeInsets.all(5),
-                child: const Text(
-                  'Cancel',
+                child: Text(
+                  UserData.translation.data?.cancel?.toString() ?? 'Cancel',
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w300,

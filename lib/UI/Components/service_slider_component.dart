@@ -29,33 +29,19 @@ class ServiceSliderItem extends StatelessWidget {
             isCornerRounded: true,
             child: Column(
               children: [
-                const SizedBox(
-                  height: 10,
-                ),
-                Container(
-                    alignment: Alignment.center,
-                    width: screenWidth / 1.5,
-                    child: Text(
-                      orderService.serviceName.toString(),
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                          color: kDarkGreyColor,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
-                    )),
                 QrImageView(
                   data: "https://hayyak.net/${orderService.serviceName}",
                   version: QrVersions.auto,
-                  size: screenWidth / 2,
+                  size: screenWidth / 1.6,
                 ),
-                const SizedBox(
-                  height: 20,
+                SizedBox(
+                  height: screenHeight / 30,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      width: screenWidth / 4.5,
+                      width: screenWidth / 4.4,
                       height: 1,
                       color: kLightGreyColor,
                     ),
@@ -71,7 +57,7 @@ class ServiceSliderItem extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      width: screenWidth / 4.5,
+                      width: screenWidth / 4.4,
                       height: 1,
                       color: kLightGreyColor,
                     ),
@@ -85,9 +71,17 @@ class ServiceSliderItem extends StatelessWidget {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        const SizedBox(
-                          height: 20,
-                        ),
+                        Container(
+                            alignment: Alignment.center,
+                            width: screenWidth / 1.5,
+                            child: Text(
+                              orderService.serviceName.toString(),
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  color: kDarkGreyColor,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            )),
                         Container(
                           width: screenWidth / 2,
                           height: screenWidth / 3,
@@ -146,8 +140,11 @@ class ServiceSliderItem extends StatelessWidget {
                         ),
                         Text(
                           'Service valid until ${orderService.serviceValidUntil}',
-                          style: const TextStyle(
-                              color: kDarkGreyColor, fontSize: 12),
+                          style: TextStyle(
+                              color: orderService.validity == 'valid'
+                                  ? Colors.green
+                                  : Colors.red,
+                              fontSize: 12),
                         ),
                         const SizedBox(
                           height: 20,

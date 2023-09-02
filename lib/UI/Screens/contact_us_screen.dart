@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/Logic/UI%20Logic/contact_us_logic.dart';
-import 'package:hayyak/UI/Components/seccond_app_bar.dart';
 import 'package:hayyak/UI/Components/text_field.dart';
 import 'package:hayyak/main.dart';
 
@@ -14,15 +13,29 @@ class ContactUsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     logic.context = context;
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        title: Text(
+          UserData.translation.data?.contactUs?.toString() ?? 'Contact Us',
+          style: const TextStyle(
+              color: kDarkGreyColor, fontWeight: FontWeight.bold, fontSize: 20),
+        ),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: kLightGreyColor,
+          ),
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SecondAppBar(
-                  title: UserData.translation.data?.contactUs?.toString() ??
-                      'Contact Us',
-                  shareAndFav: false,
-                  backToHome: false),
               CustomTextField(
                 width: screenWidth / 1.2,
                 controller: logic.nameCnt,

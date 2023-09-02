@@ -28,33 +28,19 @@ class TicketSliderItem extends StatelessWidget {
             isCornerRounded: true,
             child: Column(
               children: [
-                const SizedBox(
-                  height: 10,
-                ),
-                Container(
-                    alignment: Alignment.center,
-                    width: screenWidth / 1.5,
-                    child: Text(
-                      orderTicket.eventName.toString(),
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                          color: kDarkGreyColor,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
-                    )),
                 QrImageView(
                   data: "https://hayyak.net/${orderTicket.eventName}",
                   version: QrVersions.auto,
-                  size: screenWidth / 2,
+                  size: screenWidth / 1.6,
                 ),
-                const SizedBox(
-                  height: 20,
+                SizedBox(
+                  height: screenHeight / 30,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      width: screenWidth / 4.5,
+                      width: screenWidth / 4.4,
                       height: 1,
                       color: kLightGreyColor,
                     ),
@@ -70,7 +56,7 @@ class TicketSliderItem extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      width: screenWidth / 4.5,
+                      width: screenWidth / 4.4,
                       height: 1,
                       color: kLightGreyColor,
                     ),
@@ -84,6 +70,17 @@ class TicketSliderItem extends StatelessWidget {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
+                        Container(
+                            alignment: Alignment.center,
+                            width: screenWidth / 1.5,
+                            child: Text(
+                              orderTicket.eventName.toString(),
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  color: kDarkGreyColor,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            )),
                         const SizedBox(
                           height: 20,
                         ),
@@ -120,9 +117,11 @@ class TicketSliderItem extends StatelessWidget {
                           style: const TextStyle(
                               color: kDarkGreyColor, fontSize: 14),
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        orderTicket.row == null
+                            ? SizedBox()
+                            : const SizedBox(
+                                height: 10,
+                              ),
                         orderTicket.row == null
                             ? SizedBox()
                             : Text(
@@ -151,17 +150,14 @@ class TicketSliderItem extends StatelessWidget {
                         const SizedBox(
                           height: 5,
                         ),
-                        Text(
-                          'Doors open ${orderTicket.doorsOpen}',
-                          style: const TextStyle(
-                              color: kDarkGreyColor, fontSize: 12),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
+                        // Text(
+                        //   'Doors open ${orderTicket.doorsOpen}',
+                        //   style: const TextStyle(
+                        //       color: kDarkGreyColor, fontSize: 12),
+                        // ),
+                        // const SizedBox(
+                        //   height: 5,
+                        // ),
                         Align(
                             alignment: Alignment.bottomLeft,
                             child: Padding(
@@ -178,8 +174,11 @@ class TicketSliderItem extends StatelessWidget {
                             padding: const EdgeInsets.only(left: 8.0, right: 8),
                             child: Text(
                               'Ticket valid until ${orderTicket.ticketValidUntil}',
-                              style: const TextStyle(
-                                  color: Colors.green, fontSize: 10),
+                              style: TextStyle(
+                                  color: orderTicket.validity == 'valid'
+                                      ? Colors.green
+                                      : Colors.red,
+                                  fontSize: 10),
                             ),
                           ),
                         ),

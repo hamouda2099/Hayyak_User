@@ -51,7 +51,7 @@ class SecondAppBar extends StatelessWidget {
             style: const TextStyle(
                 overflow: TextOverflow.ellipsis,
                 color: kDarkGreyColor,
-                fontSize: 16,
+                fontSize: 20,
                 fontWeight: FontWeight.bold),
           ),
           shareAndFav || UserData.token == ''

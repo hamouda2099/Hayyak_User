@@ -11,6 +11,7 @@ import 'package:hayyak/UI/Components/map_view_screen.dart';
 import 'package:hayyak/UI/Components/seccond_app_bar.dart';
 import 'package:hayyak/UI/Screens/date_picker_screen.dart';
 import 'package:hayyak/UI/Screens/event_tickets_screen.dart';
+import 'package:hayyak/UI/Screens/login_screen.dart';
 import 'package:html_widget/html_widget.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -179,7 +180,13 @@ class EventDetails extends StatelessWidget {
                       InkWell(
                         onTap: () {
                           if (UserData.token == '') {
-                            messageDialog(context, 'Please Login First');
+                            messageDialog(context, 'Please Login First',
+                                function: () {
+                              navigator(
+                                  context: context,
+                                  screen: LoginScreen(
+                                      screen: EventDetails(eventId: eventId)));
+                            });
                           } else {
                             if ((snapShot.data?.data?.pickerStartDate ?? '') ==
                                 (snapShot.data?.data?.prickerEndDate ?? '')) {

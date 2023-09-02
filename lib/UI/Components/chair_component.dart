@@ -118,63 +118,74 @@ class ChairComponent extends ConsumerWidget {
                     )),
                     content: Container(
                       margin: const EdgeInsets.only(top: 10),
-                      width: screenWidth / 1.2,
-                      height: screenHeight / 1.5,
-                      child: GridView.builder(
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                        ),
-                        itemCount:
-                            ref.read(seatsProvider.notifier).state.length,
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                            onTap: () {
-                              ref.read(selectedSeatProvider.notifier).state =
-                                  ref.read(seatsProvider.notifier).state[index];
-                              selectedSeats.add(ref
-                                  .read(seatsProvider.notifier)
-                                  .state[index]['id']);
-                              globalSelectedSeats.add(ref
-                                  .read(seatsProvider.notifier)
-                                  .state[index]['id']);
-                              ref.read(cartCounterProvider.notifier).state++;
-                              ref.read(totalPriceProvider.notifier).state =
-                                  ref.read(totalPriceProvider.notifier).state +
-                                      categoryPrice;
-                              submitted = true;
-                              ref.read(rebuildProvide.notifier).state =
-                                  DateTime.now().toString();
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              margin: const EdgeInsets.only(bottom: 5),
-                              width: 60,
-                              height: 60,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  color: Colors.white,
-                                  image: const DecorationImage(
-                                    fit: BoxFit.contain,
-                                    opacity: 0.2,
-                                    image:
-                                        AssetImage('assets/images/pngegg.png'),
-                                  )),
-                              child: Padding(
-                                padding: const EdgeInsets.only(bottom: 10.0),
-                                child: Text(
-                                  ref
-                                      .read(seatsProvider.notifier)
-                                      .state[index]['number']
-                                      .toString(),
-                                  style: const TextStyle(
-                                      color: Colors.black, fontSize: 12),
+                      width: screenWidth,
+                      height: screenHeight / 4,
+                      child: Scrollbar(
+                        isAlwaysShown: true,
+                        thickness: 5,
+                        child: GridView.builder(
+                          controller: ScrollController(),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 5,
+                          ),
+                          itemCount:
+                              ref.read(seatsProvider.notifier).state.length,
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              onTap: () {
+                                ref.read(selectedSeatProvider.notifier).state =
+                                    ref
+                                        .read(seatsProvider.notifier)
+                                        .state[index];
+                                selectedSeats.add(ref
+                                    .read(seatsProvider.notifier)
+                                    .state[index]['id']);
+                                globalSelectedSeats.add(ref
+                                    .read(seatsProvider.notifier)
+                                    .state[index]['id']);
+                                ref.read(cartCounterProvider.notifier).state++;
+                                ref.read(totalPriceProvider.notifier).state =
+                                    ref
+                                            .read(totalPriceProvider.notifier)
+                                            .state +
+                                        categoryPrice;
+                                submitted = true;
+                                ref.read(rebuildProvide.notifier).state =
+                                    DateTime.now().toString();
+                                Navigator.pop(context);
+                              },
+                              child: Container(
+                                margin: const EdgeInsets.only(bottom: 5),
+                                width: 60,
+                                height: 60,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    color: Colors.white,
+                                    image: const DecorationImage(
+                                      fit: BoxFit.contain,
+                                      opacity: 0.2,
+                                      image: AssetImage(
+                                          'assets/images/pngegg.png'),
+                                    )),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(bottom: 25.0),
+                                  child: Text(
+                                    ref
+                                        .read(seatsProvider.notifier)
+                                        .state[index]['number']
+                                        .toString(),
+                                    style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
                               ),
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        ),
                       ),
                     ),
                   );
