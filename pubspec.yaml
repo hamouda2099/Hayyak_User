@@ -50,6 +50,7 @@ dependencies:
   firebase_auth: ^4.6.2
   firebase_core: ^2.13.1
   flutter_facebook_auth: ^5.0.11
+  youtube_player_flutter: ^8.1.2
 
 
 dev_dependencies:
@@ -81,10 +82,13 @@ flutter:
     - assets/appconfig.json
 
   fonts:
-    - family: Montserra
+    - family: TisaSansPro
       fonts:
-        - asset: assets/fonts/Montserrat-Regular.ttf
         - asset: assets/fonts/TisaSansPro-Regular.ttf
+
+    - family: ArbFONTS-DINNextLTArabic
+      fonts:
+        - asset: assets/fonts/ArbFONTS-DINNextLTArabic-Regular.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:

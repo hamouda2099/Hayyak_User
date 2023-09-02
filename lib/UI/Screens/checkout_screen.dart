@@ -92,7 +92,10 @@ class CheckoutScreen extends StatelessWidget {
                       }
                     default:
                       if (snapShot.hasError) {
-                        return Text('Error: ${snapShot.error}');
+                        return Scaffold(
+                            body: Center(
+                          child: Text('Error: ${snapShot.error}'),
+                        ));
                       } else {
                         logic.init(snapShot);
                         return Consumer(builder: (context, ref, child) {
@@ -157,6 +160,9 @@ class CheckoutScreen extends StatelessWidget {
                                       )
                                     ],
                                   ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
                                   CircularCountDownTimer(
                                     controller: countDownController,
                                     width: 40,
@@ -200,20 +206,21 @@ class CheckoutScreen extends StatelessWidget {
                                     },
                                     child: Container(
                                       alignment: Alignment.center,
-                                      width: screenWidth / 2,
+                                      width: screenWidth / 1.8,
                                       height: 50,
                                       margin: const EdgeInsets.all(10),
                                       decoration: BoxDecoration(
-                                        color: Colors.green,
+                                        color: const Color(0xFF1fde1f),
                                         borderRadius: BorderRadius.circular(5),
                                       ),
                                       child: Text(
                                         UserData.translation.data?.pay
                                                 ?.toString() ??
                                             'Pay',
+                                        textAlign: TextAlign.center,
                                         style: const TextStyle(
                                             color: Colors.white,
-                                            fontSize: 14,
+                                            fontSize: 20,
                                             fontWeight: FontWeight.bold),
                                       ),
                                     ),
@@ -528,8 +535,10 @@ class CheckoutScreen extends StatelessWidget {
                                                     top: 10,
                                                     bottom: 10),
                                                 child: Align(
-                                                    alignment:
-                                                        Alignment.centerLeft,
+                                                    alignment: localLanguage ==
+                                                            'en'
+                                                        ? Alignment.centerLeft
+                                                        : Alignment.centerRight,
                                                     child: Text(
                                                       UserData.translation.data
                                                               ?.termsAndConditions
@@ -549,8 +558,10 @@ class CheckoutScreen extends StatelessWidget {
                                                   top: 10,
                                                   bottom: 10),
                                               child: Align(
-                                                  alignment:
-                                                      Alignment.centerLeft,
+                                                  alignment: localLanguage ==
+                                                          'en'
+                                                      ? Alignment.centerLeft
+                                                      : Alignment.centerRight,
                                                   child: Text(
                                                     UserData.translation.data
                                                             ?.additionalServices
@@ -742,8 +753,13 @@ class CheckoutScreen extends StatelessWidget {
                                                                       ),
                                                                     ),
                                                             ),
-                                                            const Text(
-                                                              'Send me tickets vis sms',
+                                                            Text(
+                                                              UserData
+                                                                      .translation
+                                                                      .data
+                                                                      ?.sendMeTicketsViaSms
+                                                                      ?.toString() ??
+                                                                  'Send me tickets vis sms',
                                                               style: TextStyle(
                                                                   color:
                                                                       kDarkGreyColor,
@@ -841,8 +857,13 @@ class CheckoutScreen extends StatelessWidget {
                                                                   ),
                                                                 ),
                                                         ),
-                                                        const Text(
-                                                          'Send me tickets vis Whatsapp',
+                                                        Text(
+                                                          UserData
+                                                                  .translation
+                                                                  .data
+                                                                  ?.sendMeTicketsViaWhatsApp
+                                                                  ?.toString() ??
+                                                              'Send me tickets vis Whatsapp',
                                                           style: TextStyle(
                                                               color:
                                                                   kDarkGreyColor,
@@ -1120,8 +1141,13 @@ class CheckoutScreen extends StatelessWidget {
                                                           MainAxisAlignment
                                                               .spaceBetween,
                                                       children: [
-                                                        const Text(
-                                                          'Send me tickets vis sms',
+                                                        Text(
+                                                          UserData
+                                                                  .translation
+                                                                  .data
+                                                                  ?.sendMeTicketsViaSms
+                                                                  ?.toString() ??
+                                                              'Send me tickets vis sms',
                                                           style: TextStyle(
                                                               color:
                                                                   kDarkGreyColor,
@@ -1161,8 +1187,13 @@ class CheckoutScreen extends StatelessWidget {
                                                           MainAxisAlignment
                                                               .spaceBetween,
                                                       children: [
-                                                        const Text(
-                                                          'Send me tickets vis Whatsapp',
+                                                        Text(
+                                                          UserData
+                                                                  .translation
+                                                                  .data
+                                                                  ?.sendMeTicketsViaWhatsApp
+                                                                  ?.toString() ??
+                                                              'Send me tickets vis Whatsapp',
                                                           style: TextStyle(
                                                               color:
                                                                   kDarkGreyColor,
@@ -1295,7 +1326,7 @@ class CheckoutScreen extends StatelessWidget {
                                                         .spaceBetween,
                                                 children: [
                                                   Text(
-                                                    '${UserData.translation.data?.fees?.toString() ?? 'Fees'}$fees%',
+                                                    '${UserData.translation.data?.fees?.toString() ?? 'Fees'} $fees%',
                                                     style: const TextStyle(
                                                         color: kDarkGreyColor,
                                                         fontSize: 12,
@@ -1342,7 +1373,7 @@ class CheckoutScreen extends StatelessWidget {
                                                         .spaceBetween,
                                                 children: [
                                                   Text(
-                                                    '${UserData.translation.data?.vat?.toString() ?? 'VAT'}$vat%',
+                                                    '${UserData.translation.data?.vat?.toString() ?? 'VAT'} $vat%',
                                                     style: const TextStyle(
                                                         color: kDarkGreyColor,
                                                         fontSize: 12,

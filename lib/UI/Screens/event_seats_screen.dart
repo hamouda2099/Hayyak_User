@@ -146,8 +146,8 @@ class EventSeatsScreen extends StatelessWidget {
                         },
                         child: Container(
                           alignment: Alignment.center,
-                          width: screenWidth / 2,
-                          height: 35,
+                          width: screenWidth / 1.5,
+                          height: 50,
                           margin: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             color: kPrimaryColor,
@@ -158,7 +158,7 @@ class EventSeatsScreen extends StatelessWidget {
                                 'Checkout',
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 14,
+                                fontSize: 16,
                                 fontWeight: FontWeight.bold),
                           ),
                         ),
@@ -230,34 +230,42 @@ class EventSeatsScreen extends StatelessWidget {
                                       '',
                                 ));
                           },
-                          child: Container(
-                            width: double.infinity,
-                            height: screenHeight / 4,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    fit: BoxFit.fill,
-                                    image: NetworkImage(snapShot.data!.data
-                                            ?.event?.details?.image ??
-                                        ''))),
+                          child: AspectRatio(
+                            aspectRatio: 16 / 9,
+                            child: Image(
+                                fit: BoxFit.fill,
+                                image: NetworkImage(snapShot
+                                        .data?.data?.event?.details?.image ??
+                                    '')),
                           ),
                         ),
                         const SizedBox(
                           height: 10,
                         ),
-                        Align(
-                          alignment: localLanguage == 'en'
-                              ? Alignment.topLeft
-                              : Alignment.topRight,
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 20.0, top: 10),
-                            child: Text(
-                              UserData.translation.data?.tickets?.toString() ??
-                                  'Tickets',
-                              style: TextStyle(
-                                  color: kDarkGreyColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold),
-                            ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: screenWidth / 15, right: screenWidth / 15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                UserData.translation.data?.tickets
+                                        ?.toString() ??
+                                    'Bookings',
+                                style: const TextStyle(
+                                    color: kDarkGreyColor,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                UserData.translation.data?.price?.toString() ??
+                                    'Price',
+                                style: TextStyle(
+                                    color: kDarkGreyColor,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
                           ),
                         ),
                         Column(
@@ -281,22 +289,25 @@ class EventSeatsScreen extends StatelessWidget {
                           height: 1,
                           color: Colors.grey,
                         ),
-                        Align(
-                          alignment: localLanguage == 'en'
-                              ? Alignment.topLeft
-                              : Alignment.topRight,
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 20.0, top: 10),
-                            child: Text(
-                              UserData.translation.data?.services?.toString() ??
-                                  'Services',
-                              style: TextStyle(
-                                  color: kDarkGreyColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ),
+                        snapShot.data?.data?.event?.services?.length == 0
+                            ? SizedBox()
+                            : Align(
+                                alignment: localLanguage == 'en'
+                                    ? Alignment.topLeft
+                                    : Alignment.topRight,
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: 20.0, top: 10),
+                                  child: Text(
+                                    UserData.translation.data?.services
+                                            ?.toString() ??
+                                        'Services',
+                                    style: TextStyle(
+                                        color: kDarkGreyColor,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ),
                         Column(
                           children: List.generate(
                               snapShot.data?.data?.event?.services?.length ?? 0,

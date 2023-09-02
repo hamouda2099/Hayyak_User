@@ -39,13 +39,16 @@ class HomeScreen extends StatelessWidget {
                           primary: true,
                           children: [
                             HomeAds(slider: snapShot.data?.data?.slider ?? []),
+                            const SizedBox(
+                              height: 10,
+                            ),
                             Column(
                               children: List.generate(
                                   snapShot.data?.data?.categories?.length ?? 0,
                                   (index) => Column(
                                         children: [
                                           Padding(
-                                            padding: const EdgeInsets.all(5.0),
+                                            padding: const EdgeInsets.all(10.0),
                                             child: Align(
                                                 alignment: localLanguage == 'en'
                                                     ? Alignment.centerLeft

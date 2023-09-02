@@ -61,7 +61,7 @@ class ApiManger {
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer ${UserData.token}',
-        'lang': 'en'
+        'lang': localLanguage
       },
       body: jsonEncode(parameters),
     );
@@ -85,7 +85,7 @@ class ApiManger {
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer ${UserData.token}',
-        'accept-language': 'en',
+        'accept-language': localLanguage,
       },
     );
   }

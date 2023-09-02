@@ -181,7 +181,7 @@ class EventTicketsScreen extends StatelessWidget {
                                     'Checkout',
                                 style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 14,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.bold),
                               ),
                             ),
@@ -200,16 +200,13 @@ class EventTicketsScreen extends StatelessWidget {
                         Expanded(
                           child: ListView(
                             children: [
-                              Container(
-                                width: screenWidth / 1.1,
-                                height: screenHeight / 6,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      fit: BoxFit.fill,
-                                      image: NetworkImage(snapShot.data?.data
-                                              ?.event?.details?.image ??
-                                          '')),
-                                ),
+                              AspectRatio(
+                                aspectRatio: 16 / 9,
+                                child: Image(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(snapShot.data?.data
+                                            ?.event?.details?.image ??
+                                        '')),
                               ),
                               Container(
                                 margin: const EdgeInsets.all(10),
@@ -265,20 +262,33 @@ class EventTicketsScreen extends StatelessWidget {
                               ),
                               (snapShot.data?.data?.event?.kinds ?? []).isEmpty
                                   ? const SizedBox()
-                                  : Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 20.0, top: 10),
-                                        child: Text(
-                                          UserData.translation.data?.tickets
-                                                  ?.toString() ??
-                                              'Tickets',
-                                          style: TextStyle(
-                                              color: kDarkGreyColor,
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.bold),
-                                        ),
+                                  : Padding(
+                                      padding: EdgeInsets.only(
+                                          left: screenWidth / 10,
+                                          right: screenWidth / 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            UserData.translation.data?.tickets
+                                                    ?.toString() ??
+                                                'Bookings',
+                                            style: const TextStyle(
+                                                color: kDarkGreyColor,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text(
+                                            UserData.translation.data?.quantity
+                                                    ?.toString() ??
+                                                'Quantity',
+                                            style: TextStyle(
+                                                color: kDarkGreyColor,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
                                       ),
                                     ),
                               Column(

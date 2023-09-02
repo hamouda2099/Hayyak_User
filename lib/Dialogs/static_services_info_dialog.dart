@@ -20,7 +20,6 @@ void staticServicesInfoDialog(
         actionsAlignment: MainAxisAlignment.center,
         content: Container(
           width: screenWidth / 1.5,
-          height: screenHeight / 1.5,
           child: ListView.builder(
             shrinkWrap: true,
             itemCount: MyHtmlParser.parseHtmlToListOfTextWidgets(info).length,

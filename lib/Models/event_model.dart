@@ -53,6 +53,9 @@ class Data {
     this.averageCost,
     this.action,
     this.seats,
+    this.avgCost,
+    this.typeYouTubeImage,
+    this.urlYouTubeImage,
   });
 
   num? id;
@@ -67,8 +70,11 @@ class Data {
   String? latLng;
   String? address;
   String? averageCost;
+  num? avgCost;
   Action? action;
   String? seats;
+  String? typeYouTubeImage;
+  String? urlYouTubeImage;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         id: json["id"],
@@ -83,8 +89,11 @@ class Data {
         latLng: json["lat_lng"],
         address: json["address"] ?? '',
         averageCost: json["average_cost"],
+        avgCost: json["avg_cost"],
         action: Action.fromJson(json["action"]),
         seats: json["seats"],
+        typeYouTubeImage: json["type_youtube_image"],
+        urlYouTubeImage: json["url_youtube_image"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -102,8 +111,11 @@ class Data {
         "lat_lng": latLng,
         "address": address,
         "average_cost": averageCost,
+        "avg_cost": avgCost,
         "action": action!.toJson(),
         "seats": seats,
+        "type_youtube_image": typeYouTubeImage,
+        "url_youtube_image": urlYouTubeImage,
       };
 }
 

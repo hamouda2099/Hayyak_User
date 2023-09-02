@@ -51,45 +51,41 @@ class HomeAds extends ConsumerWidget {
     return Container(
       child: slider.isEmpty ?? true
           ? const SizedBox()
-          : Padding(
-              padding: const EdgeInsets.all(10),
-              child: AspectRatio(
-                aspectRatio: 4 / 3,
-                child: Stack(
-                  children: [
-                    PageView.builder(
-                      itemCount: slider.length ?? 0,
-                      controller: controller,
-                      onPageChanged: (index) {
-                        ref.read(currentPageIndexProvider.notifier).state =
-                            index;
-                      },
-                      itemBuilder: (BuildContext context, index) {
-                        return InkWell(
-                          onTap: () {
-                            navigator(
-                                context: context,
-                                screen: EventDetails(
-                                  eventId: slider[index].id,
-                                ));
-                          },
-                          child: Container(
-                            margin: EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              image: DecorationImage(
-                                fit: BoxFit.fill,
-                                image: NetworkImage(
-                                  slider[index].image ?? '',
-                                ),
+          : AspectRatio(
+              aspectRatio: 4 / 3,
+              child: Stack(
+                children: [
+                  PageView.builder(
+                    itemCount: slider.length ?? 0,
+                    controller: controller,
+                    onPageChanged: (index) {
+                      ref.read(currentPageIndexProvider.notifier).state = index;
+                    },
+                    itemBuilder: (BuildContext context, index) {
+                      return InkWell(
+                        onTap: () {
+                          navigator(
+                              context: context,
+                              screen: EventDetails(
+                                eventId: slider[index].id,
+                              ));
+                        },
+                        child: Container(
+                          margin: EdgeInsets.all(1),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            image: DecorationImage(
+                              fit: BoxFit.fill,
+                              image: NetworkImage(
+                                slider[index].image ?? '',
                               ),
                             ),
                           ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
             ),
     );

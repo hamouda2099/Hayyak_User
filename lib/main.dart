@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hayyak/Config/constants.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
@@ -17,7 +18,7 @@ void main() async {
   Hive.init(directory.path);
   await Hive.openBox('user_data');
   await EasyLocalization.ensureInitialized();
-
+  localLanguage = await Hive.box('user_data').get('lang');
   runApp(EasyLocalization(
     supportedLocales: const [Locale('ar'), Locale('en')],
     path: 'assets/translations',
@@ -38,7 +39,10 @@ class App extends StatelessWidget {
         title: 'Hayyak Events',
         home: const SplashScreen(),
         debugShowCheckedModeBanner: false,
-        // theme: ThemeData(fontFamily: 'TisaSansPro'),
+        theme: ThemeData(
+            fontFamily: localLanguage == 'en'
+                ? 'TisaSansPro'
+                : 'ArbFONTS-DINNextLTArabic'),
       ),
     );
   }

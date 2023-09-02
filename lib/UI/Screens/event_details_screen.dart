@@ -1,4 +1,3 @@
-import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 // import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -13,6 +12,7 @@ import 'package:hayyak/UI/Components/seccond_app_bar.dart';
 import 'package:hayyak/UI/Screens/date_picker_screen.dart';
 import 'package:hayyak/UI/Screens/event_tickets_screen.dart';
 import 'package:html_widget/html_widget.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../Config/user_data.dart';
 import '../../Dialogs/message_dialog.dart';
@@ -27,7 +27,13 @@ class EventDetails extends StatelessWidget {
   DateTime? endDatePicker;
   GoogleMapController? controller;
   Set<Marker> marker = Set();
-
+  YoutubePlayerController videoController =
+      YoutubePlayerController(initialVideoId: '');
+  late PlayerState _playerState;
+  late YoutubeMetaData _videoMetaData;
+  double _volume = 100;
+  bool _muted = false;
+  bool _isPlayerReady = false;
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<EventModel>(
@@ -61,7 +67,17 @@ class EventDetails extends StatelessWidget {
                   ),
                 ),
               );
-
+              WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                videoController = YoutubePlayerController(
+                  initialVideoId: YoutubePlayer.convertUrlToId(
+                          snapShot.data?.data?.urlYouTubeImage ?? '') ??
+                      '',
+                  flags: const YoutubePlayerFlags(
+                    autoPlay: false,
+                    mute: false,
+                  ),
+                );
+              });
               return Scaffold(
                 backgroundColor: Colors.white,
                 bottomNavigationBar: Container(
@@ -75,49 +91,88 @@ class EventDetails extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            snapShot?.data?.data?.averageCost ?? '',
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 14),
-                          ),
+                          // Text(
+                          //   snapShot?.data?.data?.averageCost ?? '',
+                          //   style: const TextStyle(
+                          //       color: Colors.white, fontSize: 14),
+                          // ),
+                          snapShot?.data?.data?.averageCost == null
+                              ? SizedBox()
+                              : Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 5.0, right: 5),
+                                  child: Row(
+                                    children: [
+                                      snapShot?.data?.data?.avgCost == 0
+                                          ? Text(
+                                              UserData.translation.data?.free
+                                                      ?.toString() ??
+                                                  'Free',
+                                              style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 10),
+                                            )
+                                          : Text(
+                                              UserData.translation.data
+                                                      ?.startFrom
+                                                      ?.toString() ??
+                                                  'Start From',
+                                              style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 10),
+                                            ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(
+                                        snapShot?.data?.data?.averageCost ?? '',
+                                        style: const TextStyle(
+                                            color: Colors.white, fontSize: 14),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+
                           const SizedBox(
                             height: 5,
                           ),
                           snapShot?.data?.data?.action?.name == null
                               ? const SizedBox()
-                              : Row(
-                                  children: [
-                                    Icon(
-                                      Icons.electric_bolt_rounded,
-                                      color: snapShot
-                                                  .data?.data?.action?.color ==
-                                              ''
-                                          ? Colors.transparent
-                                          : Color(int.parse(
-                                              '0xFF${snapShot.data?.data?.action?.color.toString().substring(1)}')),
-                                      size: 20,
-                                    ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    SizedBox(
-                                      width: screenWidth / 5,
-                                      child: Text(
-                                        snapShot?.data?.data?.action?.name ??
-                                            '',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: snapShot.data?.data?.action
-                                                      ?.color ==
-                                                  ''
-                                              ? Colors.transparent
-                                              : Color(int.parse(
-                                                  '0xFF${snapShot.data?.data?.action?.color.toString().substring(1)}')),
+                              : Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 3.0, right: 3),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.electric_bolt_rounded,
+                                        color: snapShot.data?.data?.action
+                                                    ?.color ==
+                                                ''
+                                            ? Colors.transparent
+                                            : Color(int.parse(
+                                                '0xFF${snapShot.data?.data?.action?.color.toString().substring(1)}')),
+                                        size: 20,
+                                      ),
+                                      SizedBox(
+                                        width: screenWidth / 6,
+                                        child: Text(
+                                          snapShot?.data?.data?.action?.name ??
+                                              '',
+                                          // textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: snapShot.data?.data?.action
+                                                        ?.color ==
+                                                    ''
+                                                ? Colors.transparent
+                                                : Color(int.parse(
+                                                    '0xFF${snapShot.data?.data?.action?.color.toString().substring(1)}')),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 )
                         ],
                       ),
@@ -211,9 +266,9 @@ class EventDetails extends StatelessWidget {
                           child: Text(
                             UserData.translation.data?.tickets?.toString() ??
                                 'Book',
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.white,
-                                fontSize: 14,
+                                fontSize: 16,
                                 fontWeight: FontWeight.bold),
                           ),
                         ),
@@ -233,28 +288,28 @@ class EventDetails extends StatelessWidget {
                       Expanded(
                         child: ListView(
                           children: [
-                            Container(
-                              width: screenWidth,
-                              height: screenHeight / 3.5,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    fit: BoxFit.fill,
-                                    image: NetworkImage(snapShot
-                                            ?.data?.data?.image
-                                            .toString() ??
-                                        '')),
-                              ),
+                            AspectRatio(
+                              aspectRatio: 16 / 9,
+                              child: Image(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage(
+                                      snapShot.data?.data?.image ?? '')),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  SvgPicture.asset(
-                                      color: kDarkGreyColor,
-                                      width: 25,
-                                      height: 25,
-                                      'assets/icon/Icon material-event.svg'),
+                                  // SvgPicture.asset(
+                                  //     color: kDarkGreyColor,
+                                  //     width: 25,
+                                  //     height: 25,
+                                  //     'assets/icon/Icon material-event.svg'),
+                                  Icon(
+                                    Icons.access_time,
+                                    color: kDarkGreyColor,
+                                    size: 25,
+                                  ),
                                   const SizedBox(
                                     width: 10,
                                   ),
@@ -263,10 +318,10 @@ class EventDetails extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        snapShot?.data?.data?.startDate
-                                                .toString() ??
-                                            '',
-                                        style: const TextStyle(
+                                        UserData.translation.data?.time
+                                                ?.toString() ??
+                                            'Time',
+                                        style: TextStyle(
                                             color: kDarkGreyColor,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 14),
@@ -280,35 +335,35 @@ class EventDetails extends StatelessWidget {
                                             color: kLightGreyColor,
                                             fontSize: 14),
                                       ),
-                                      const SizedBox(
-                                        height: 5,
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          final Event event = Event(
-                                            title:
-                                                snapShot.data?.data?.name ?? '',
-                                            description: snapShot
-                                                .data?.data?.description,
-                                            location:
-                                                snapShot.data?.data?.address,
-                                            startDate: snapShot
-                                                .data!.data!.pickerStartDate!,
-                                            endDate: snapShot
-                                                .data!.data!.prickerEndDate!,
-                                          );
-                                          Add2Calendar.addEvent2Cal(event);
-                                        },
-                                        child: Text(
-                                          UserData.translation.data
-                                                  ?.addToCalender
-                                                  ?.toString() ??
-                                              'Add to calender',
-                                          style: TextStyle(
-                                              color: kPrimaryColor,
-                                              fontSize: 14),
-                                        ),
-                                      ),
+                                      // const SizedBox(
+                                      //   height: 5,
+                                      // ),
+                                      // InkWell(
+                                      //   onTap: () {
+                                      //     final Event event = Event(
+                                      //       title:
+                                      //           snapShot.data?.data?.name ?? '',
+                                      //       description: snapShot
+                                      //           .data?.data?.description,
+                                      //       location:
+                                      //           snapShot.data?.data?.address,
+                                      //       startDate: snapShot
+                                      //           .data!.data!.pickerStartDate!,
+                                      //       endDate: snapShot
+                                      //           .data!.data!.prickerEndDate!,
+                                      //     );
+                                      //     Add2Calendar.addEvent2Cal(event);
+                                      //   },
+                                      //   child: Text(
+                                      //     UserData.translation.data
+                                      //             ?.addToCalender
+                                      //             ?.toString() ??
+                                      //         'Add to calender',
+                                      //     style: TextStyle(
+                                      //         color: kPrimaryColor,
+                                      //         fontSize: 14),
+                                      //   ),
+                                      // ),
                                     ],
                                   )
                                 ],
@@ -415,6 +470,46 @@ class EventDetails extends StatelessWidget {
                                           snapShot.data?.data?.description ??
                                               '')[0],
                                 )),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            snapShot.data?.data?.typeYouTubeImage == null
+                                ? const SizedBox()
+                                : snapShot.data?.data?.urlYouTubeImage ==
+                                            null ||
+                                        snapShot.data?.data?.urlYouTubeImage ==
+                                            ''
+                                    ? SizedBox()
+                                    : Container(
+                                        width: screenWidth / 1.2,
+                                        height: screenHeight / 3,
+                                        child: snapShot.data?.data
+                                                    ?.typeYouTubeImage ==
+                                                'image'
+                                            ? Image(
+                                                fit: BoxFit.fill,
+                                                image: NetworkImage(snapShot
+                                                        .data
+                                                        ?.data
+                                                        ?.urlYouTubeImage ??
+                                                    ''))
+                                            : YoutubePlayerBuilder(
+                                                player: YoutubePlayer(
+                                                    bottomActions: [
+                                                      CurrentPosition(),
+                                                      ProgressBar(
+                                                          isExpanded: true),
+                                                    ],
+                                                    showVideoProgressIndicator:
+                                                        true,
+                                                    controller:
+                                                        videoController),
+                                                builder: (context, player) {
+                                                  return Column(
+                                                    children: [player],
+                                                  );
+                                                },
+                                              )),
                             const SizedBox(
                               height: 20,
                             ),

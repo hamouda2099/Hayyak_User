@@ -5,6 +5,8 @@ import 'package:hayyak/UI/Components/seat_category_component.dart';
 import 'package:hayyak/UI/Screens/event_seats_screen.dart';
 import 'package:hayyak/main.dart';
 
+import '../../Config/user_data.dart';
+
 class ChairComponent extends ConsumerWidget {
   ChairComponent(
       {required this.rows,
@@ -33,7 +35,7 @@ class ChairComponent extends ConsumerWidget {
     return Container(
       margin: const EdgeInsets.only(left: 45, right: 45),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        // mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Consumer(
             builder: (context, ref, child) {
@@ -90,6 +92,9 @@ class ChairComponent extends ConsumerWidget {
               );
             },
           ),
+          SizedBox(
+            width: 10,
+          ),
           InkWell(onTap: () {
             if (ref.read(selectedSeatProvider.notifier).state['number'] ==
                     null &&
@@ -105,10 +110,11 @@ class ChairComponent extends ConsumerWidget {
                 builder: (context) {
                   return AlertDialog(
                     contentPadding: const EdgeInsets.all(3),
-                    title: const Center(
+                    title: Center(
                         child: Text(
-                      'Select Seat',
-                      style: TextStyle(color: kPrimaryColor, fontSize: 14),
+                      UserData.translation.data?.selectSeat ?? 'Select Seat',
+                      style:
+                          const TextStyle(color: kPrimaryColor, fontSize: 14),
                     )),
                     content: Container(
                       margin: const EdgeInsets.only(top: 10),
@@ -181,7 +187,7 @@ class ChairComponent extends ConsumerWidget {
               return ref.read(selectedSeatProvider.notifier).state['number'] ==
                       null
                   ? Container(
-                      width: screenWidth / 5,
+                      width: screenWidth / 8,
                       height: 30,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
@@ -193,10 +199,13 @@ class ChairComponent extends ConsumerWidget {
                         style: TextStyle(color: Colors.white, fontSize: 12),
                       ),
                     )
-                  : Text(ref
-                      .read(selectedSeatProvider.notifier)
-                      .state['number']
-                      .toString());
+                  : SizedBox(
+                      width: 20,
+                      child: Text(ref
+                          .read(selectedSeatProvider.notifier)
+                          .state['number']
+                          .toString()),
+                    );
             },
           )),
           IconButton(

@@ -44,12 +44,12 @@ class EventHomeCard extends StatelessWidget {
               eventId: id,
             ));
       },
-      child: Padding(
-        padding: const EdgeInsets.all(5.0),
-        child: Container(
-          padding: const EdgeInsets.all(5),
-          width: screenWidth / 2,
-          height: screenHeight / 4,
+      child: Container(
+        padding: const EdgeInsets.all(2),
+        width: screenWidth / 2,
+        height: screenHeight / 4,
+        child: AspectRatio(
+          aspectRatio: 4 / 3,
           child: Column(
             children: [
               Container(

@@ -124,6 +124,12 @@ class Data {
   String? yourAccountIsVerified;
   String? anErrorOccurred;
   String? row;
+  String? time;
+  String? quantity;
+  String? startFrom;
+  String? free;
+  String? sendMeTicketsViaWhatsApp;
+  String? sendMeTicketsViaSms;
 
   Data({
     this.signIn,
@@ -214,6 +220,12 @@ class Data {
     this.yourAccountIsVerified,
     this.anErrorOccurred,
     this.row,
+    this.time,
+    this.quantity,
+    this.startFrom,
+    this.free,
+    this.sendMeTicketsViaWhatsApp,
+    this.sendMeTicketsViaSms,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -306,6 +318,12 @@ class Data {
         yourAccountIsVerified: json["Your account is verified"],
         anErrorOccurred: json["An error occurred"],
         row: json["row"],
+        time: json["time"],
+        quantity: json["quantity"],
+        startFrom: json["start_from"],
+        free: json["free"],
+        sendMeTicketsViaWhatsApp: json["sendMeTicketsViaWhatsApp"],
+        sendMeTicketsViaSms: json["sendMeTicketsViaSms"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -398,5 +416,11 @@ class Data {
         "Your account is verified": yourAccountIsVerified,
         "An error occurred": anErrorOccurred,
         "row": row,
+        "time": time,
+        "quantity": quantity,
+        "start_from": startFrom,
+        "free": free,
+        "sendMeTicketsViaWhatsApp": sendMeTicketsViaWhatsApp,
+        "sendMeTicketsViaSms": sendMeTicketsViaSms,
       };
 }
