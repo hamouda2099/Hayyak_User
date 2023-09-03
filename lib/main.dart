@@ -18,7 +18,7 @@ void main() async {
   Hive.init(directory.path);
   await Hive.openBox('user_data');
   await EasyLocalization.ensureInitialized();
-  localLanguage = await Hive.box('user_data').get('lang');
+  localLanguage = await Hive.box('user_data').get('lang') ?? 'en';
   runApp(EasyLocalization(
     supportedLocales: const [Locale('ar'), Locale('en')],
     path: 'assets/translations',

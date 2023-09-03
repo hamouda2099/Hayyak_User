@@ -313,8 +313,7 @@ class SettingsScreen extends StatelessWidget {
                       onTap: () {
                         navigator(
                             context: context,
-                            screen: LoginScreen(screen: SettingsScreen()),
-                            remove: true);
+                            screen: LoginScreen(screen: SettingsScreen()));
                       },
                       child: Container(
                         margin: const EdgeInsets.all(10),
