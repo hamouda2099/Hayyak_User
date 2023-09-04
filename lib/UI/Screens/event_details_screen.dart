@@ -184,6 +184,7 @@ class EventDetails extends StatelessWidget {
                                 function: () {
                               navigator(
                                   context: context,
+                                  remove: true,
                                   screen: LoginScreen(
                                       screen: EventDetails(eventId: eventId)));
                             });
@@ -289,7 +290,7 @@ class EventDetails extends StatelessWidget {
                       SecondAppBar(
                         title: snapShot.data?.data?.name.toString() ?? '',
                         shareAndFav: true,
-                        backToHome: false,
+                        backToHome: true,
                         eventId: eventId.toString(),
                       ),
                       Expanded(

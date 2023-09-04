@@ -15,14 +15,11 @@ import 'home_screen.dart';
 // ignore: must_be_immutable
 class LoginScreen extends StatelessWidget {
   LoginScreen({required this.screen});
-
   LoginLogic logic = LoginLogic();
   var screen;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
   _back() {}
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(

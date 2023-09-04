@@ -62,7 +62,7 @@ class LoginLogic {
           } else {
             null;
           }
-          navigator(context: context, screen: screen, remove: true);
+          navigator(context: context, screen: screen, replacement: true);
         } else {
           messageDialog(context,
               '${jsonDecode(value.body)['error'] ?? 'An error occurred'}');
