@@ -51,7 +51,7 @@ class ChairComponent extends ConsumerWidget {
                       width: 0.5,
                       color: kLightGreyColor.withOpacity(0.3),
                     )),
-                width: screenWidth / 3.5,
+                width: screenWidth / 7,
                 child: DropdownButton(
                   underline: const SizedBox(),
                   isExpanded: true,

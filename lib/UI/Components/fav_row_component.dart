@@ -4,6 +4,7 @@ import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/Dialogs/loading_dialog.dart';
 import 'package:hayyak/Dialogs/message_dialog.dart';
 import 'package:hayyak/Logic/Services/api_manger.dart';
+import 'package:hayyak/UI/Screens/event_details_screen.dart';
 import 'package:hayyak/UI/Screens/favourite_list_screen.dart';
 import 'package:hayyak/main.dart';
 
@@ -24,14 +25,20 @@ class FavRow extends StatelessWidget {
       width: screenWidth / 1.2,
       child: Row(
         children: [
-          Container(
-            width: screenWidth / 2.5,
-            height: screenWidth / 3,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              image: DecorationImage(
-                fit: BoxFit.fill,
-                image: NetworkImage(item.image),
+          InkWell(
+            onTap: () {
+              navigator(
+                  context: context, screen: EventDetails(eventId: item.id));
+            },
+            child: Container(
+              width: screenWidth / 2.5,
+              height: screenWidth / 3,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                image: DecorationImage(
+                  fit: BoxFit.fill,
+                  image: NetworkImage(item.image),
+                ),
               ),
             ),
           ),

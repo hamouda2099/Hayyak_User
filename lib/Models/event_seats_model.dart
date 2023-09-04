@@ -89,6 +89,7 @@ class Details {
     this.name,
     this.description,
     this.image,
+    this.seatsMapImage,
     this.startDate,
     this.endDate,
     this.time,
@@ -107,6 +108,7 @@ class Details {
   String? name;
   String? description;
   String? image;
+  String? seatsMapImage;
   String? startDate;
   String? endDate;
   String? time;
@@ -125,6 +127,7 @@ class Details {
         name: json["name"],
         description: json["description"],
         image: json["image"],
+        seatsMapImage: json["seats_map_image"],
         startDate: json["start_date"],
         endDate: json["end_date"],
         time: json["time"],
@@ -155,7 +158,8 @@ class Details {
         "vat": vat,
         "vat_displayed": vatDisplayed,
         "event_fees": eventFees,
-        "event_fees_displayed": eventFeesDisplayed
+        "event_fees_displayed": eventFeesDisplayed,
+        "seats_map_image": seatsMapImage
       };
 }
 

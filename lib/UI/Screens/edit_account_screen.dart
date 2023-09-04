@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hayyak/Config/constants.dart';
@@ -6,6 +8,7 @@ import 'package:hayyak/Logic/UI%20Logic/profile_logic.dart';
 import 'package:hayyak/Models/profile_model.dart';
 import 'package:hayyak/UI/Components/seccond_app_bar.dart';
 import 'package:hayyak/main.dart';
+import 'package:image_picker/image_picker.dart';
 
 // import 'package:image_picker/image_picker.dart';
 
@@ -14,6 +17,8 @@ import '../../Logic/Services/api_manger.dart';
 
 class EditAccountScreen extends StatelessWidget {
   ProfileLogic logic = ProfileLogic();
+  File? imageFile;
+  final rebuild = StateProvider<String?>((ref) => null);
 
   // final picker = StateProvider<ImagePicker>((ref) => ImagePicker());
   @override
@@ -47,48 +52,95 @@ class EditAccountScreen extends StatelessWidget {
                           child: Column(
                             children: [
                               Consumer(
-                                builder: (context, watch, child) {
-                                  // watch(picker).state;
-                                  return InkWell(
-                                    onTap: () async {
-                                      // XFile? image = await context.read(picker).state.pickImage(source: ImageSource.gallery);
-                                    },
-                                    child: Stack(
-                                      alignment: Alignment.bottomRight,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(5.0),
-                                          child: Container(
-                                            width: 80,
-                                            height: 80,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    width: 1,
-                                                    color: kPrimaryColor),
+                                builder: (context, ref, child) {
+                                  ref.watch(rebuild);
+                                  return Stack(
+                                    alignment: Alignment.bottomRight,
+                                    children: [
+                                      InkWell(
+                                        onTap: () async {
+                                          PickedFile? pickedFile =
+                                              await ImagePicker().getImage(
+                                            source: ImageSource.gallery,
+                                            maxWidth: 1800,
+                                            maxHeight: 1800,
+                                          );
+                                          if (pickedFile != null) {
+                                            imageFile = File(pickedFile.path);
+                                            ref.read(rebuild.notifier).state =
+                                                DateTime.now().toString();
+                                          }
+                                        },
+                                        child: Stack(
+                                          alignment: Alignment.bottomRight,
+                                          children: [
+                                            imageFile != null
+                                                ? Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            5.0),
+                                                    child: Container(
+                                                      width: 80,
+                                                      height: 80,
+                                                      decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                        color: Colors.blue,
+                                                      ),
+                                                      child: Image.file(
+                                                        imageFile!,
+                                                        fit: BoxFit.fill,
+                                                      ),
+                                                    ),
+                                                  )
+                                                : Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            5.0),
+                                                    child: Container(
+                                                      width: 80,
+                                                      height: 80,
+                                                      decoration: BoxDecoration(
+                                                          shape:
+                                                              BoxShape.circle,
+                                                          color: Colors.blue,
+                                                          image: DecorationImage(
+                                                              image: NetworkImage(
+                                                                  snapShot
+                                                                          ?.data
+                                                                          ?.data
+                                                                          ?.image ??
+                                                                      ''))),
+                                                    ),
+                                                  ),
+                                            Container(
+                                              width: 30,
+                                              height: 30,
+                                              decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
-                                                image: DecorationImage(
-                                                    image: NetworkImage(snapShot
-                                                            ?.data
-                                                            ?.data
-                                                            ?.image ??
-                                                        ''))),
-                                          ),
+                                                color: Colors.blue
+                                                    .withOpacity(0.5),
+                                              ),
+                                              child: const Icon(
+                                                Icons.camera_alt_outlined,
+                                                color: Colors.white,
+                                              ),
+                                            )
+                                          ],
                                         ),
-                                        Container(
-                                          width: 30,
-                                          height: 30,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color:
-                                                kPrimaryColor.withOpacity(0.5),
-                                          ),
-                                          child: const Icon(
-                                            Icons.camera_alt_outlined,
-                                            color: Colors.white,
-                                          ),
-                                        )
-                                      ],
-                                    ),
+                                      ),
+                                      Container(
+                                        width: 30,
+                                        height: 30,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: kPrimaryColor.withOpacity(0.5),
+                                        ),
+                                        child: const Icon(
+                                          Icons.camera_alt_outlined,
+                                          color: Colors.white,
+                                        ),
+                                      )
+                                    ],
                                   );
                                 },
                               ),

@@ -45,97 +45,187 @@ class HomeScreen extends StatelessWidget {
                             Column(
                               children: List.generate(
                                   snapShot.data?.data?.categories?.length ?? 0,
-                                  (index) => Column(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(10.0),
-                                            child: Align(
-                                                alignment: localLanguage == 'en'
-                                                    ? Alignment.centerLeft
-                                                    : Alignment.centerRight,
-                                                child: Text(
-                                                  snapShot
-                                                          .data
-                                                          ?.data
-                                                          ?.categories?[index]
-                                                          .name ??
-                                                      '',
-                                                  style: const TextStyle(
-                                                      color: kDarkGreyColor,
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                )),
-                                          ),
-                                          SizedBox(
-                                            width: screenWidth,
-                                            height: screenHeight / 3.2,
-                                            child: ListView.builder(
-                                              primary: false,
-                                              scrollDirection: Axis.horizontal,
-                                              itemCount: snapShot
+                                  (index) {
+                                double scrollingVal = 0;
+                                ScrollController scrollCnt = ScrollController();
+                                num jumps = 0;
+                                num actions = 1;
+                                if ((snapShot.data?.data?.categories?[index]
+                                            .events ??
+                                        [])
+                                    .length
+                                    .isOdd) {
+                                  jumps = ((snapShot
                                                       .data
                                                       ?.data
                                                       ?.categories?[index]
-                                                      .events
-                                                      ?.length ??
-                                                  0,
-                                              itemBuilder: (context, i) {
-                                                return EventHomeCard(
-                                                  action: snapShot
-                                                      .data
-                                                      ?.data
-                                                      ?.categories?[index]
-                                                      .events?[i]
-                                                      .action,
-                                                  id: snapShot
-                                                          .data
-                                                          ?.data
-                                                          ?.categories?[index]
-                                                          .events?[i]
-                                                          .id ??
-                                                      0,
-                                                  eventName: snapShot
-                                                          .data
-                                                          ?.data
-                                                          ?.categories?[index]
-                                                          .events?[i]
-                                                          .name ??
-                                                      '',
-                                                  image: snapShot
-                                                          .data
-                                                          ?.data
-                                                          ?.categories?[index]
-                                                          .events?[i]
-                                                          .image ??
-                                                      '',
-                                                  location: snapShot
-                                                          .data
-                                                          ?.data
-                                                          ?.categories?[index]
-                                                          .events?[i]
-                                                          .location ??
-                                                      '',
-                                                  startDate: snapShot
-                                                          .data
-                                                          ?.data
-                                                          ?.categories?[index]
-                                                          .events?[i]
-                                                          .start ??
-                                                      '',
-                                                  is_favourite: snapShot
-                                                          .data
-                                                          ?.data
-                                                          ?.categories?[index]
-                                                          .events?[i]
-                                                          .is_favourite ??
-                                                      false,
-                                                );
-                                              },
+                                                      .events ??
+                                                  [])
+                                              .length +
+                                          1) /
+                                      2;
+                                } else {
+                                  jumps = (snapShot.data?.data
+                                                  ?.categories?[index].events ??
+                                              [])
+                                          .length /
+                                      2;
+                                }
+
+                                return Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Align(
+                                          alignment: localLanguage == 'en'
+                                              ? Alignment.centerLeft
+                                              : Alignment.centerRight,
+                                          child: Text(
+                                            snapShot.data?.data
+                                                    ?.categories?[index].name ??
+                                                '',
+                                            style: const TextStyle(
+                                                color: kDarkGreyColor,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                    ),
+                                    ((snapShot.data?.data?.categories?[index]
+                                                    .events?.length) ??
+                                                0) >
+                                            2
+                                        ? InkWell(
+                                            onTap: () {
+                                              if (actions >= jumps) {
+                                                actions = 1;
+                                                scrollingVal = 0;
+                                                scrollCnt.animateTo(
+                                                    scrollingVal,
+                                                    duration: const Duration(
+                                                        seconds: 1),
+                                                    curve: Curves.ease);
+                                              } else {
+                                                scrollingVal = screenWidth;
+                                                actions = actions + 1;
+                                                scrollCnt.animateTo(
+                                                    scrollingVal,
+                                                    duration: const Duration(
+                                                        seconds: 1),
+                                                    curve: Curves.ease);
+                                              }
+                                              print(snapShot
+                                                  .data
+                                                  ?.data
+                                                  ?.categories?[index]
+                                                  .events
+                                                  ?.length);
+                                              print(jumps);
+                                              print(actions);
+                                              print(scrollingVal);
+                                            },
+                                            child: const Padding(
+                                              padding: EdgeInsets.all(5),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                children: [
+                                                  Text(
+                                                    "See All ",
+                                                    style: TextStyle(
+                                                        color: kPrimaryColor,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  Icon(
+                                                    Icons.arrow_forward_ios,
+                                                    color: kPrimaryColor,
+                                                    size: 10,
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      )),
+                                          )
+                                        : SizedBox(),
+                                    SizedBox(
+                                      width: screenWidth,
+                                      height: screenHeight / 3.4,
+                                      child: ListView.builder(
+                                        controller: scrollCnt,
+                                        primary: false,
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: snapShot
+                                                .data
+                                                ?.data
+                                                ?.categories?[index]
+                                                .events
+                                                ?.length ??
+                                            0,
+                                        itemBuilder: (context, i) {
+                                          scrollCnt.addListener(
+                                            () {
+                                              if (scrollCnt.position.atEdge &&
+                                                  scrollCnt.position.pixels !=
+                                                      0) {
+                                                actions = 1;
+                                              }
+                                            },
+                                          );
+                                          return EventHomeCard(
+                                            action: snapShot
+                                                .data
+                                                ?.data
+                                                ?.categories?[index]
+                                                .events?[i]
+                                                .action,
+                                            id: snapShot
+                                                    .data
+                                                    ?.data
+                                                    ?.categories?[index]
+                                                    .events?[i]
+                                                    .id ??
+                                                0,
+                                            eventName: snapShot
+                                                    .data
+                                                    ?.data
+                                                    ?.categories?[index]
+                                                    .events?[i]
+                                                    .name ??
+                                                '',
+                                            image: snapShot
+                                                    .data
+                                                    ?.data
+                                                    ?.categories?[index]
+                                                    .events?[i]
+                                                    .image ??
+                                                '',
+                                            location: snapShot
+                                                    .data
+                                                    ?.data
+                                                    ?.categories?[index]
+                                                    .events?[i]
+                                                    .location ??
+                                                '',
+                                            startDate: snapShot
+                                                    .data
+                                                    ?.data
+                                                    ?.categories?[index]
+                                                    .events?[i]
+                                                    .start ??
+                                                '',
+                                            is_favourite: snapShot
+                                                    .data
+                                                    ?.data
+                                                    ?.categories?[index]
+                                                    .events?[i]
+                                                    .is_favourite ??
+                                                false,
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              }),
                             )
                           ],
                         );

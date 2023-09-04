@@ -39,13 +39,13 @@ class LoginLogic {
         });
         if (jsonDecode(value.body)['success'] == true ||
             jsonDecode(value.body)['code'] == 200) {
-          UserData.token = jsonDecode(value.body)['data']['token'];
-          UserData.id = jsonDecode(value.body)['data']['id'];
-          // UserData.userName = jsonDecode(value.body)['data']['name'];
-          UserData.role = jsonDecode(value.body)['data']['role'];
-          UserData.email = jsonDecode(value.body)['data']['email'];
-          UserData.phone = jsonDecode(value.body)['data']['phone'];
-          UserData.imageUrl = jsonDecode(value.body)['data']['image'];
+          UserData.token = jsonDecode(value.body)['data']['token'] ?? '';
+          UserData.id = jsonDecode(value.body)['data']['id'] ?? '';
+          UserData.userName = jsonDecode(value.body)['data']['name'] ?? '';
+          UserData.role = jsonDecode(value.body)['data']['role'] ?? '';
+          UserData.email = jsonDecode(value.body)['data']['email'] ?? '';
+          UserData.phone = jsonDecode(value.body)['data']['phone'] ?? '';
+          UserData.imageUrl = jsonDecode(value.body)['data']['image'] ?? '';
           UserData.language = localLanguage;
           if (ref.read(rememberMeProvider.notifier).state == true) {
             Hive.box('user_data').put('logged_in', true);

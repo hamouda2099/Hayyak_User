@@ -201,7 +201,7 @@ class EventSeatsScreen extends StatelessWidget {
                                     "Seats",
                                 style: TextStyle(
                                     color: kDarkGreyColor,
-                                    fontSize: 16,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.bold),
                               ),
                               InkWell(
@@ -223,24 +223,36 @@ class EventSeatsScreen extends StatelessWidget {
                         child: ListView(
                       children: [
                         InkWell(
-                          onTap: () {
-                            navigator(
-                                context: context,
-                                screen: ImageViewer(
-                                  url: snapShot
-                                          .data!.data?.event?.details?.image ??
-                                      '',
-                                ));
-                          },
-                          child: AspectRatio(
-                            aspectRatio: 16 / 9,
-                            child: Image(
-                                fit: BoxFit.fill,
-                                image: NetworkImage(snapShot
-                                        .data?.data?.event?.details?.image ??
-                                    '')),
-                          ),
-                        ),
+                            onTap: () {
+                              navigator(
+                                  context: context,
+                                  screen: ImageViewer(
+                                    url: snapShot.data!.data?.event?.details
+                                            ?.seatsMapImage ??
+                                        '',
+                                  ));
+                            },
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                AspectRatio(
+                                  aspectRatio: 16 / 9,
+                                  child: Image(
+                                      fit: BoxFit.fill,
+                                      image: NetworkImage(snapShot.data?.data
+                                              ?.event?.details?.seatsMapImage ??
+                                          '')),
+                                ),
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: Icon(
+                                    Icons.zoom_in,
+                                    color: Colors.black.withOpacity(0.4),
+                                    size: screenWidth / 4,
+                                  ),
+                                )
+                              ],
+                            )),
                         const SizedBox(
                           height: 10,
                         ),
@@ -256,7 +268,7 @@ class EventSeatsScreen extends StatelessWidget {
                                     'Bookings',
                                 style: const TextStyle(
                                     color: kDarkGreyColor,
-                                    fontSize: 12,
+                                    fontSize: 14,
                                     fontWeight: FontWeight.bold),
                               ),
                               Text(
@@ -298,7 +310,9 @@ class EventSeatsScreen extends StatelessWidget {
                                     ? Alignment.topLeft
                                     : Alignment.topRight,
                                 child: Padding(
-                                  padding: EdgeInsets.only(left: 20.0, top: 10),
+                                  padding: EdgeInsets.only(
+                                      left: screenWidth / 15,
+                                      right: screenWidth / 15),
                                   child: Text(
                                     UserData.translation.data?.services
                                             ?.toString() ??

@@ -727,7 +727,7 @@ class CheckoutScreen extends StatelessWidget {
                                                                   ? const Padding(
                                                                       padding:
                                                                           EdgeInsets.all(
-                                                                              8.0),
+                                                                              5.0),
                                                                       child:
                                                                           Icon(
                                                                         Icons

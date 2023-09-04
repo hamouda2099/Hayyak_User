@@ -18,6 +18,7 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '../../Config/user_data.dart';
 import '../../Dialogs/message_dialog.dart';
 import '../../main.dart';
+import '../Components/web_view_screen.dart';
 
 class EventDetails extends StatelessWidget {
   EventDetails({required this.eventId});
@@ -237,11 +238,13 @@ class EventDetails extends StatelessWidget {
                                     ));
                               }
                             } else {
-                              // navigator(
-                              //     context: context,
-                              //     screen: WebViewScreen(
-                              //       link: snapShot.data!.data.seats.toString(),
-                              //     ));
+                              navigator(
+                                  context: context,
+                                  screen: WebViewScreen(
+                                    link: snapShot.data?.data?.seats
+                                            ?.toString() ??
+                                        '',
+                                  ));
                             }
                           }
                         },
@@ -299,7 +302,7 @@ class EventDetails extends StatelessWidget {
                                   const Icon(
                                     Icons.access_time,
                                     color: kDarkGreyColor,
-                                    size: 25,
+                                    size: 20,
                                   ),
                                   const SizedBox(
                                     width: 10,

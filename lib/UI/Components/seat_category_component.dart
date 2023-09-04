@@ -220,7 +220,7 @@ class SeatCategoryComponent extends ConsumerWidget {
                           ),
                         ),
                         SizedBox(
-                          width: 40,
+                          width: screenWidth / 9,
                         )
                       ],
                     )

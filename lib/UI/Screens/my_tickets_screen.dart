@@ -141,53 +141,40 @@ class MyTicketsScreen extends StatelessWidget {
                                           },
                                         ),
                                       )
-                                    : Padding(
-                                        padding: EdgeInsets.only(top: 20),
-                                        child: SizedBox(
-                                          height: screenHeight / 1.5,
-                                          child: ListView.builder(
-                                            itemCount: snapShot
-                                                    .data!
-                                                    .data!
-                                                    .orders!
-                                                    .pastOrders!
-                                                    .length ??
-                                                0,
-                                            itemBuilder: (context, index) {
-                                              return TicketCard(
-                                                orderId: snapShot
-                                                    .data
-                                                    ?.data
-                                                    ?.orders
-                                                    ?.pastOrders?[index]
-                                                    .orderId,
-                                                image: snapShot
-                                                    .data!
-                                                    .data!
-                                                    .orders!
-                                                    .pastOrders![index]
-                                                    .image,
-                                                date: snapShot
-                                                    .data!
-                                                    .data!
-                                                    .orders!
-                                                    .pastOrders![index]
-                                                    .date,
-                                                name: snapShot
-                                                    .data!
-                                                    .data!
-                                                    .orders!
-                                                    .pastOrders![index]
-                                                    .eventName,
-                                                location: snapShot
-                                                    .data!
-                                                    .data!
-                                                    .orders!
-                                                    .pastOrders![index]
-                                                    .eventLocation,
-                                              );
-                                            },
-                                          ),
+                                    : Container(
+                                        padding: EdgeInsets.only(top: 5),
+                                        height: screenHeight / 1.42,
+                                        child: ListView.builder(
+                                          // shrinkWrap: true,
+                                          itemCount: snapShot.data!.data!
+                                                  .orders!.pastOrders!.length ??
+                                              0,
+                                          itemBuilder: (context, index) {
+                                            return TicketCard(
+                                              orderId: snapShot
+                                                  .data
+                                                  ?.data
+                                                  ?.orders
+                                                  ?.pastOrders?[index]
+                                                  .orderId,
+                                              image: snapShot
+                                                  .data!
+                                                  .data!
+                                                  .orders!
+                                                  .pastOrders![index]
+                                                  .image,
+                                              date: snapShot.data!.data!.orders!
+                                                  .pastOrders![index].date,
+                                              name: snapShot.data!.data!.orders!
+                                                  .pastOrders![index].eventName,
+                                              location: snapShot
+                                                  .data!
+                                                  .data!
+                                                  .orders!
+                                                  .pastOrders![index]
+                                                  .eventLocation,
+                                            );
+                                          },
                                         ),
                                       );
                               },

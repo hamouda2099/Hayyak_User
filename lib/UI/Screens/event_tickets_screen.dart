@@ -264,7 +264,7 @@ class EventTicketsScreen extends StatelessWidget {
                                   ? const SizedBox()
                                   : Padding(
                                       padding: EdgeInsets.only(
-                                          left: screenWidth / 10,
+                                          left: screenWidth / 8,
                                           right: screenWidth / 10),
                                       child: Row(
                                         mainAxisAlignment:
@@ -276,7 +276,7 @@ class EventTicketsScreen extends StatelessWidget {
                                                 'Bookings',
                                             style: const TextStyle(
                                                 color: kDarkGreyColor,
-                                                fontSize: 12,
+                                                fontSize: 14,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           Text(
@@ -315,17 +315,20 @@ class EventTicketsScreen extends StatelessWidget {
                                       height: 20,
                                     )
                                   : Align(
-                                      alignment: Alignment.topLeft,
+                                      alignment: localLanguage == 'en'
+                                          ? Alignment.topLeft
+                                          : Alignment.topRight,
                                       child: Padding(
                                         padding: EdgeInsets.only(
-                                            left: 20.0, top: 10),
+                                            left: screenWidth / 8,
+                                            right: screenWidth / 10),
                                         child: Text(
                                           UserData.translation.data?.services
                                                   ?.toString() ??
                                               'Services',
                                           style: TextStyle(
                                               color: kDarkGreyColor,
-                                              fontSize: 12,
+                                              fontSize: 14,
                                               fontWeight: FontWeight.bold),
                                         ),
                                       ),

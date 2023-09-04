@@ -49,7 +49,7 @@ class SettingsScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Row(
+              Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
@@ -67,7 +67,7 @@ class SettingsScreen extends StatelessWidget {
                     width: 10,
                   ),
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(UserData.userName ?? '',
                           style: const TextStyle(
