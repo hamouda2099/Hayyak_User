@@ -28,13 +28,7 @@ class EventDetails extends StatelessWidget {
   DateTime? endDatePicker;
   GoogleMapController? controller;
   Set<Marker> marker = Set();
-  YoutubePlayerController videoController =
-      YoutubePlayerController(initialVideoId: '');
-  late PlayerState _playerState;
-  late YoutubeMetaData _videoMetaData;
-  double _volume = 100;
-  bool _muted = false;
-  bool _isPlayerReady = false;
+  YoutubePlayerController? videoController;
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<EventModel>(
@@ -68,17 +62,6 @@ class EventDetails extends StatelessWidget {
                   ),
                 ),
               );
-              WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                videoController = YoutubePlayerController(
-                  initialVideoId: YoutubePlayer.convertUrlToId(
-                          snapShot.data?.data?.urlYouTubeImage ?? '') ??
-                      '',
-                  flags: const YoutubePlayerFlags(
-                    autoPlay: false,
-                    mute: false,
-                  ),
-                );
-              });
               return Scaffold(
                 backgroundColor: Colors.white,
                 bottomNavigationBar: Container(
@@ -98,7 +81,7 @@ class EventDetails extends StatelessWidget {
                           //       color: Colors.white, fontSize: 14),
                           // ),
                           snapShot?.data?.data?.averageCost == null
-                              ? SizedBox()
+                              ? const SizedBox()
                               : Padding(
                                   padding: const EdgeInsets.only(
                                       left: 5.0, right: 5),
@@ -122,7 +105,7 @@ class EventDetails extends StatelessWidget {
                                                   color: Colors.white,
                                                   fontSize: 10),
                                             ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 5,
                                       ),
                                       Text(
@@ -313,7 +296,7 @@ class EventDetails extends StatelessWidget {
                                   //     width: 25,
                                   //     height: 25,
                                   //     'assets/icon/Icon material-event.svg'),
-                                  Icon(
+                                  const Icon(
                                     Icons.access_time,
                                     color: kDarkGreyColor,
                                     size: 25,
@@ -329,7 +312,7 @@ class EventDetails extends StatelessWidget {
                                         UserData.translation.data?.time
                                                 ?.toString() ??
                                             'Time',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             color: kDarkGreyColor,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 14),
@@ -398,7 +381,7 @@ class EventDetails extends StatelessWidget {
                                         UserData.translation.data?.address
                                                 ?.toString() ??
                                             'Address',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             color: kDarkGreyColor,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 14),
@@ -438,7 +421,7 @@ class EventDetails extends StatelessWidget {
                                           UserData.translation.data?.viewMap
                                                   ?.toString() ??
                                               'View Map',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               color: kPrimaryColor,
                                               fontSize: 14),
                                         ),
@@ -462,7 +445,7 @@ class EventDetails extends StatelessWidget {
                                     UserData.translation.data?.aboutThisEvent
                                             ?.toString() ??
                                         'About This Event',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: kDarkGreyColor,
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold),
@@ -487,8 +470,8 @@ class EventDetails extends StatelessWidget {
                                             null ||
                                         snapShot.data?.data?.urlYouTubeImage ==
                                             ''
-                                    ? SizedBox()
-                                    : Container(
+                                    ? const SizedBox()
+                                    : SizedBox(
                                         width: screenWidth / 1.2,
                                         height: screenHeight / 3,
                                         child: snapShot.data?.data
@@ -511,7 +494,21 @@ class EventDetails extends StatelessWidget {
                                                     showVideoProgressIndicator:
                                                         true,
                                                     controller:
-                                                        videoController),
+                                                        YoutubePlayerController(
+                                                      initialVideoId: YoutubePlayer
+                                                              .convertUrlToId(
+                                                                  snapShot
+                                                                          .data
+                                                                          ?.data
+                                                                          ?.urlYouTubeImage ??
+                                                                      '') ??
+                                                          '',
+                                                      flags:
+                                                          const YoutubePlayerFlags(
+                                                        autoPlay: false,
+                                                        mute: false,
+                                                      ),
+                                                    )),
                                                 builder: (context, player) {
                                                   return Column(
                                                     children: [player],
@@ -522,7 +519,7 @@ class EventDetails extends StatelessWidget {
                               height: 20,
                             ),
                             Padding(
-                              padding: EdgeInsets.only(
+                              padding: const EdgeInsets.only(
                                   left: 15.0, right: 15, bottom: 5),
                               child: Align(
                                   alignment: localLanguage == 'en'
@@ -532,7 +529,7 @@ class EventDetails extends StatelessWidget {
                                     UserData.translation.data?.location
                                             ?.toString() ??
                                         'Location',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: kDarkGreyColor,
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold),

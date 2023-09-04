@@ -32,7 +32,7 @@ class SettingsScreen extends StatelessWidget {
         centerTitle: true,
         title: Text(
           UserData.translation.data?.settings?.toString() ?? 'Settings',
-          style: TextStyle(
+          style: const TextStyle(
               color: kDarkGreyColor, fontWeight: FontWeight.bold, fontSize: 20),
         ),
         leading: IconButton(
