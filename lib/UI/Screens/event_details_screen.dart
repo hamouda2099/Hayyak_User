@@ -250,7 +250,7 @@ class EventDetails extends StatelessWidget {
                         },
                         child: Container(
                           alignment: Alignment.center,
-                          width: screenWidth / 1.5,
+                          width: screenWidth / 1.6,
                           height: 50,
                           margin: const EdgeInsets.all(10),
                           decoration: BoxDecoration(

@@ -14,6 +14,7 @@ import '../../Config/user_data.dart';
 import '../../Dialogs/order_created_successfully.dart';
 import '../../Models/static_services_model.dart';
 import '../../UI/Screens/home_screen.dart';
+import '../../UI/Screens/payment_method_screen.dart';
 import '../Services/api_manger.dart';
 
 class CheckoutLogic {
@@ -116,7 +117,13 @@ class CheckoutLogic {
         if (UserData.role == 'member') {
           orderCreatedSuccessfully(context: context);
         } else {
-          onlinePayment(context: context, amount: double.parse(amount));
+          navigator(
+              context: context,
+              screen: PaymentMethods(
+                description: "#order $orderId",
+                amount: double.parse(amount),
+              ));
+          // onlinePayment(context: context, amount: double.parse(amount));
         }
       } else {
         messageDialog(context, 'An error occurred');

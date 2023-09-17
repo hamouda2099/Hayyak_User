@@ -8,6 +8,7 @@ import 'package:hayyak/Logic/UI%20Logic/checkout_logic.dart';
 import 'package:hayyak/States/providers.dart';
 import 'package:hayyak/UI/Components/seccond_app_bar.dart';
 import 'package:hayyak/UI/Screens/event_details_screen.dart';
+import 'package:hayyak/UI/Screens/payment_method_screen.dart';
 import 'package:hayyak/UI/Screens/terms_and_conditions_screen.dart';
 import 'package:hayyak/main.dart';
 
