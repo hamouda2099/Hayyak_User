@@ -14,10 +14,11 @@ class DatePickerScreen extends StatefulWidget {
       {required this.startDate,
       required this.endDate,
       required this.eventId,
+      this.eventIsFav,
       required this.navigateScreen});
 
   String startDate = '';
-
+  bool? eventIsFav;
   String endDate = '';
   String eventId = '';
   String navigateScreen = '';
@@ -33,7 +34,6 @@ class _DatePickerScreenState extends State<DatePickerScreen> {
   @override
   void initState() {
     // TODO: implement initState
-
     super.initState();
   }
 
@@ -79,22 +79,26 @@ class _DatePickerScreenState extends State<DatePickerScreen> {
                         DateRangePickerNavigationDirection.vertical,
                     navigationMode: DateRangePickerNavigationMode.snap,
                     controller: controller,
-                    view: DateTime.tryParse(widget.endDate)?.month ==
-                            DateTime.tryParse(widget.endDate)?.month
+                    view: (DateTime.tryParse(widget.endDate)?.month ==
+                            DateTime.tryParse(widget.endDate)?.month)
                         ? DateRangePickerView.month
                         : DateRangePickerView.year,
                     extendableRangeSelectionDirection:
                         ExtendableRangeSelectionDirection.both,
                     enablePastDates: false,
                     initialSelectedDate:
-                        DateTime.tryParse(widget.startDate)?.day ==
-                                DateTime.tryParse(widget.endDate)?.day
+                        (DateTime.tryParse(widget.startDate)?.day ==
+                                    DateTime.tryParse(widget.endDate)?.day) &&
+                                (DateTime.tryParse(widget.startDate)?.month ==
+                                    DateTime.tryParse(widget.endDate)?.month) &&
+                                (DateTime.tryParse(widget.startDate)?.year ==
+                                    DateTime.tryParse(widget.endDate)?.year)
                             ? DateTime.tryParse(widget.startDate)
                             : null,
                     minDate: DateTime.tryParse(widget.startDate),
                     maxDate: DateTime.tryParse(widget.endDate),
                     onSelectionChanged: (value) {
-                      selectedDate = value.value.toString().substring(0, 11);
+                      selectedDate = value.value.toString();
                     },
                   ),
                 ),
@@ -108,7 +112,11 @@ class _DatePickerScreenState extends State<DatePickerScreen> {
                           DateTime.tryParse(widget.startDate).toString();
                     }
                     if (selectedDate == '') {
-                      messageDialog(context, 'Please select date!');
+                      messageDialog(
+                          context,
+                          UserData.translation.data?.pleaseSelectDate
+                                  ?.toString() ??
+                              'Please select date!');
                     } else {
                       if (widget.navigateScreen == 'seats') {
                         navigator(
@@ -116,8 +124,13 @@ class _DatePickerScreenState extends State<DatePickerScreen> {
                             screen: EventSeatsScreen(
                               selectedDate: selectedDate,
                               eventId: widget.eventId,
+                              eventIsFav: widget.eventIsFav,
                             ));
                       } else {
+                        print("selectedDate");
+                        print(selectedDate);
+                        print(widget.startDate);
+                        print(DateTime.parse(selectedDate ?? '').toString());
                         navigator(
                             context: context,
                             screen: EventTicketsScreen(

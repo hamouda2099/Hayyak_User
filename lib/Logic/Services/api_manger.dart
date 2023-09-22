@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,6 +19,7 @@ import 'package:hayyak/Models/user_orders_model.dart';
 import 'package:hayyak/States/providers.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:http_parser/http_parser.dart';
 
 import '../../Models/aviable_for_sale_model.dart';
 import '../../Models/event_seats_model.dart';
@@ -38,7 +40,7 @@ class ApiManger {
       '$hostUrl/orders/get-order-tickets';
   static const String _favUrl = '$hostUrl/favorites';
   static const String _createOrderUrl = '$hostUrl/orders/create-order';
-  static const String _payOrderUrl = '$hostUrl/orders/pay-order';
+  static const String _payOrderUrl = '$hostUrl/orders/moyasar-pay-order';
   static const String _availableTicketsForSale = '$hostUrl/event/avail-for-sal';
   static const String _faqsUrl = '$hostUrl/faq';
   static const String _getSettings = '$hostUrl/get-settings';
@@ -49,6 +51,7 @@ class ApiManger {
   static const String _applyCouponUrl = '$hostUrl/apply-coupon';
   static const String _conditionsUrl = '$hostUrl/conditions';
   static const String _profileUrl = '$hostUrl/user/profile';
+  static const String _updateProfile = '$hostUrl/user/update-profile';
   static const String _searchUrl = '$hostUrl/event/search/';
 
   static const String _timeDateUrl =
@@ -61,7 +64,8 @@ class ApiManger {
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer ${UserData.token}',
-        'lang': localLanguage
+        'lang': localLanguage,
+        'user_id': UserData.id.toString()
       },
       body: jsonEncode(parameters),
     );
@@ -113,6 +117,17 @@ class ApiManger {
     required String gender,
     required String signType,
   }) async {
+    print(<String, String>{
+      'first_name': firstName,
+      'last_name': lastName,
+      'phone': phone,
+      'date_of_birth': dateOfBirth,
+      'gender': gender,
+      'email': email,
+      'password': password,
+      'password_confirmation': confirmPassword,
+      "sign_type": signType
+    });
     return await sendPostRequest(_signupUrl, <String, String>{
       'first_name': firstName,
       'last_name': lastName,
@@ -268,88 +283,50 @@ class ApiManger {
   static Future payOrder({
     String? orderId,
     String? payStatus,
-    String? paymentId,
-    String? tranId,
-    String? eci,
-    String? result,
-    String? trackId,
-    String? authCode,
-    String? responseCode,
-    String? rrn,
-    String? responseHash,
+    String? status,
+    String? source,
+    String? id,
     String? amount,
-    String? cardBrand,
-    String? userField1,
-    String? userField2,
-    String? userField3,
-    String? userField4,
-    String? userField5,
-    String? maskedPAN,
-    String? cardToken,
-    String? subscriptionId,
-    String? email,
-    String? payFor,
-    String? payId,
-    String? terminalid,
-    String? udf1,
-    String? udf2,
-    String? udf3,
-    String? udf4,
-    String? udf5,
-    String? tranDate,
-    String? tranType,
-    String? integrationModule,
-    String? integrationData,
-    String? targetUrl,
-    String? postData,
-    String? intUrl,
-    String? linkBasedUrl,
-    String? sadadNumber,
-    String? billNumber,
-    String? responseMsg,
+    String? createdAt,
+    String? refunded,
+    String? updatedAt,
+    String? metadata,
+    String? description,
+    String? currency,
+    String? amountFormat,
+    String? voidedAt,
+    String? callbackUrl,
+    String? captured,
+    String? capturedAt,
+    String? capturedFormat,
+    String? fee,
+    String? feeFormat,
+    String? invoiceId,
+    String? ip,
   }) async {
     Response response = await sendPostRequest(_payOrderUrl, <String, String?>{
       "order_id": orderId,
       "pay_status": payStatus,
-      "PaymentId": paymentId,
-      "TranId": tranId,
-      "ECI": eci,
-      "Result": result,
-      "TrackId": trackId,
-      "AuthCode": authCode,
-      "ResponseCode": responseCode,
-      "RRN": rrn,
-      "responseHash": responseHash,
+      "status": status,
+      "source": source,
+      "id": id,
       "amount": amount,
-      "cardBrand": cardBrand,
-      "UserField1": userField1,
-      "UserField2": userField2,
-      "UserField3": userField3,
-      "UserField4": userField4,
-      "UserField5": userField5,
-      "maskedPAN": maskedPAN,
-      "cardToken": cardToken,
-      "SubscriptionId": subscriptionId,
-      "email": email,
-      "payFor": payFor,
-      "terminalid": terminalid,
-      "udf1": udf1,
-      "udf2": udf2,
-      "udf3": udf3,
-      "udf4": udf4,
-      "udf5": udf5,
-      "trandate": tranDate,
-      "tranType": tranType,
-      "integrationModule": integrationModule,
-      "integrationData": integrationData,
-      "payid": payId,
-      "targetUrl": targetUrl,
-      "postData": postData,
-      "intUrl": intUrl,
-      "linkBasedUrl": linkBasedUrl,
-      "sadadNumber": sadadNumber,
-      "billNumber": billNumber,
-      "ResponseMsg": responseMsg,
+      "createdAt": refunded,
+      "refunded": refunded,
+      "updatedAt": updatedAt,
+      "metadata": metadata,
+      "description": description,
+      "currency": currency,
+      "amountFormat": amountFormat,
+      "voidedAt": voidedAt,
+      "callbackUrl": callbackUrl,
+      "captured": captured,
+      "capturedAt": capturedAt,
+      "capturedFormat": capturedFormat,
+      "fee": fee,
+      "feeFormat": feeFormat,
+      "invoiceId": invoiceId,
+      "ip": ip,
     });
     return json.decode(response.body);
   }
@@ -418,5 +395,68 @@ class ApiManger {
     final response = await sendGetRequest(_timeDateUrl);
     ref.read(dateTimeProvider.notifier).state = jsonDecode(response.body);
     return jsonDecode(response.body);
+  }
+
+  static Future<dynamic> uploadProfileMultiPart({
+    File? image,
+    String? firstName,
+    String? lastName,
+    String? password,
+    String? mobile,
+  }) async {
+    var request = http.MultipartRequest('POST', Uri.parse(_updateProfile));
+    request.fields.addAll({
+      'first_name': firstName ?? '',
+      'last_name': lastName ?? '',
+      'password': password ?? '',
+      'phone': mobile ?? '',
+    });
+    request.files.add(http.MultipartFile(
+        'image',
+        File(image?.path ?? '').readAsBytes().asStream(),
+        File(image?.path ?? '').lengthSync(),
+        filename: image?.path.split("/").last));
+    var res = await request.send();
+    return res;
+  }
+
+  static Future<dynamic> updateProfile({
+    File? image,
+    String? firstName,
+    String? lastName,
+    String? password,
+    String? mobile,
+  }) async {
+    ///MultiPart request
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse(_updateProfile),
+    );
+    Map<String, String> headers = {
+      'Authorization': 'Bearer ${UserData.token}',
+      "Content-type": "multipart/form-data",
+      'lang': localLanguage,
+      'user_id': UserData.id.toString()
+    };
+    if (image != null) {
+      request.files.add(
+        http.MultipartFile(
+          'image',
+          image.readAsBytes().asStream(),
+          image.lengthSync(),
+          filename: "filename",
+          contentType: MediaType('image', 'jpeg'),
+        ),
+      );
+    }
+    request.headers.addAll(headers);
+    request.fields.addAll({
+      'first_name': firstName ?? '',
+      'last_name': lastName ?? '',
+      'password': password ?? '',
+      'phone': mobile ?? '',
+    });
+    var res = await request.send();
+    return jsonDecode(await res.stream.bytesToString());
   }
 }

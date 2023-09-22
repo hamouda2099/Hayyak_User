@@ -2,97 +2,23 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:hayyak/Config/constants.dart';
+import 'package:hayyak/Logic/UI%20Logic/checkout_logic.dart';
 import 'package:moyasar/moyasar.dart';
 
 import '../../main.dart';
 
 class PaymentMethods extends StatelessWidget {
-  PaymentMethods({this.description, this.amount});
-  PaymentConfig? paymentConfig;
-  String? description;
-  num? amount;
+  PaymentMethods(
+      {this.description, this.amount, this.orderId, required this.logic});
 
-  void onPaymentResult(result) {
-    if (result is PaymentResponse) {
-      if (result.status == PaymentStatus.paid) {
-        print(result.status);
-        print(result.source);
-        print(result.updatedAt);
-        print(result.refunded);
-        // ApiManger.payOrder(
-        //   orderId: orderId,
-        //   payStatus: 'success',
-        //   // paymentId: paymentId,
-        //   // tranId: transId,
-        //   // eci: eci,
-        //   // result: result,
-        //   // trackId: trackId,
-        //   // authCode: authCode??'',
-        //   // responseCode: responseCode,
-        //   // rrn: rrn,
-        //   // responseHash: responseHash,
-        //   // amount: amount.toString(),
-        //   // cardBrand: cardBrand,
-        //   // userField1: userField1,
-        //   // userField2: userField2,
-        //   // userField3: userField3,
-        //   // userField4: userField4,
-        //   // userField5: userField5,
-        //   // maskedPAN: maskedBan,
-        //   // cardToken: cardToken,
-        //   // subscriptionId: subscriptionId,
-        //   // email: UserData.email,
-        //   // payFor: payFor,
-        //   // payId: paymentId,
-        //   // terminalid: terminalId,
-        //   // udf1: udf1,
-        //   // udf2: udf2,
-        //   // udf3: udf3,
-        //   // udf4: udf4,
-        //   // udf5: udf5,
-        //   // tranDate: '',
-        //   // tranType: '',
-        //   // integrationModule: '',
-        //   // integrationData: '',
-        //   // targetUrl: '',
-        //   // postData: '',
-        //   // intUrl: '',
-        //   // linkBasedUrl: '',
-        //   // sadadNumber: '',
-        //   // billNumber: '',
-        //   // responseMsg: '',
-        // ).then((value) {
-        //   if (value['success'] == true) {
-        //     navigator(context: context, screen: HomeScreen(), remove: true);
-        //     messageDialog(context, "Orders created successfully!");
-        //   } else {
-        //     messageDialog(context, "an error occured, please contact us");
-        //   }
-        // });
-        // } else {
-        //   messageDialog(context, "an error occured, please contact us");
-        // }
-      } else if (result.status == PaymentStatus.failed) {
-        print(result.metadata);
-      }
-    }
-  }
+  CheckoutLogic logic = CheckoutLogic();
+  String? description;
+  String? orderId;
+  num? amount;
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      paymentConfig = PaymentConfig(
-        publishableApiKey: 'pk_test_wS13FMSHPN7CxmVhiZD3msn5L2FfDJFTqeVDSkzD',
-        amount: (amount ?? 0 * 100).toInt(), // SAR 257.58
-        description: description ?? '',
-        metadata: {'size': '250g'},
-        creditCard: CreditCardConfig(saveCard: true, manual: false),
-        applePay: ApplePayConfig(
-            merchantId: 'sk_test_k6R4UubCbhZCnGfKD9SfMMdHZzrmPsemkccBWpVg',
-            label: 'Hayyak Events',
-            manual: false),
-      );
-    });
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {});
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -126,13 +52,13 @@ class PaymentMethods extends StatelessWidget {
               height: screenHeight / 8,
             ),
             ApplePay(
-              config: paymentConfig!,
-              onPaymentResult: onPaymentResult,
+              config: logic.paymentConfig!,
+              onPaymentResult: logic.onPaymentResult,
             ),
-            Platform.isIOS ? const Text("or") : SizedBox(),
+            Platform.isIOS ? const Text("or") : const SizedBox(),
             CreditCard(
-              config: paymentConfig!,
-              onPaymentResult: onPaymentResult,
+              config: logic.paymentConfig!,
+              onPaymentResult: logic.onPaymentResult,
             )
           ],
         ),

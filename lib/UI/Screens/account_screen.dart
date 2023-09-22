@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/Dialogs/loading_screen.dart';
@@ -12,7 +15,8 @@ import '../../Config/user_data.dart';
 import '../../Logic/Services/api_manger.dart';
 
 class AccountScreen extends StatelessWidget {
-  const AccountScreen({Key? key}) : super(key: key);
+  final rebuild = StateProvider<String?>((ref) => null);
+  File? imageFile;
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +132,7 @@ class AccountScreen extends StatelessWidget {
                               child: Row(
                                 children: [
                                   Container(
-                                    width: screenWidth / 2,
+                                    width: screenWidth / 3,
                                     child: Text(
                                       UserData.translation.data?.firstName
                                               ?.toString() ??
@@ -165,7 +169,7 @@ class AccountScreen extends StatelessWidget {
                               child: Row(
                                 children: [
                                   Container(
-                                    width: screenWidth / 2,
+                                    width: screenWidth / 3,
                                     child: Text(
                                       UserData.translation.data?.lastName
                                               ?.toString() ??
@@ -202,7 +206,7 @@ class AccountScreen extends StatelessWidget {
                               child: Row(
                                 children: [
                                   Container(
-                                    width: screenWidth / 2,
+                                    width: screenWidth / 3,
                                     child: Text(
                                       UserData.translation.data?.email
                                               ?.toString() ??
@@ -239,7 +243,7 @@ class AccountScreen extends StatelessWidget {
                               child: Row(
                                 children: [
                                   Container(
-                                    width: screenWidth / 2,
+                                    width: screenWidth / 3,
                                     child: Text(
                                       UserData.translation.data?.phone
                                               ?.toString() ??

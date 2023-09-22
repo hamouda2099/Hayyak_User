@@ -7,6 +7,7 @@ import 'package:hayyak/Logic/Services/api_manger.dart';
 import 'package:hayyak/UI/Screens/event_details_screen.dart';
 import 'package:hayyak/UI/Screens/favourite_list_screen.dart';
 import 'package:hayyak/main.dart';
+import 'package:share/share.dart';
 
 // import 'package:share/share.dart';
 
@@ -86,8 +87,8 @@ class FavRow extends StatelessWidget {
                     SizedBox(width: screenWidth / 3),
                     InkWell(
                         onTap: () {
-                          // Share.share('https://hayyak.net/ar/event/${item.id}',
-                          //     subject: item.name);
+                          Share.share('https://hayyak.net/ar/event/${item.id}',
+                              subject: item.name);
                         },
                         child: const Icon(
                           Icons.file_upload_outlined,

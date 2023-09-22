@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hayyak/Config/constants.dart';
+import 'package:hayyak/Config/date_formatter.dart';
 import 'package:hayyak/Config/user_data.dart';
 import 'package:hayyak/Logic/UI%20Logic/checkout_logic.dart';
 import 'package:hayyak/States/providers.dart';
 import 'package:hayyak/UI/Components/seccond_app_bar.dart';
 import 'package:hayyak/UI/Screens/event_details_screen.dart';
-import 'package:hayyak/UI/Screens/payment_method_screen.dart';
 import 'package:hayyak/UI/Screens/terms_and_conditions_screen.dart';
 import 'package:hayyak/main.dart';
 
@@ -125,7 +125,7 @@ class CheckoutScreen extends StatelessWidget {
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                        CrossAxisAlignment.center,
                                     children: [
                                       Row(
                                         children: [
@@ -209,6 +209,7 @@ class CheckoutScreen extends StatelessWidget {
                                       alignment: Alignment.center,
                                       width: screenWidth / 1.8,
                                       height: 50,
+                                      padding: EdgeInsets.only(bottom: 5),
                                       margin: const EdgeInsets.all(10),
                                       decoration: BoxDecoration(
                                         color: const Color(0xFF1fde1f),
@@ -281,7 +282,8 @@ class CheckoutScreen extends StatelessWidget {
                                                         width: 5,
                                                       ),
                                                       Text(
-                                                        eventDate,
+                                                        dateFormatter(
+                                                            selectedDate),
                                                         style: const TextStyle(
                                                             color:
                                                                 kDarkGreyColor,
@@ -335,7 +337,17 @@ class CheckoutScreen extends StatelessWidget {
                                                             Row(
                                                               children: [
                                                                 Text(
-                                                                  '${snapShot.data?.data?.ticketsInvoice?[index].count ?? ''}x',
+                                                                  '${snapShot.data?.data?.ticketsInvoice?[index].count ?? ''}',
+                                                                  style:
+                                                                      const TextStyle(
+                                                                    color:
+                                                                        kPrimaryColor,
+                                                                    fontSize:
+                                                                        12,
+                                                                  ),
+                                                                ),
+                                                                Text(
+                                                                  ' x',
                                                                   style:
                                                                       const TextStyle(
                                                                     color:
@@ -462,65 +474,8 @@ class CheckoutScreen extends StatelessWidget {
                                                         ),
                                                       )),
                                             ),
-                                            Row(
-                                              children: [
-                                                IconButton(
-                                                  onPressed: () {
-                                                    if (termsAndConditions ==
-                                                        false) {
-                                                      ref
-                                                          .read(
-                                                              termsAndConditionsProvider
-                                                                  .notifier)
-                                                          .state = true;
-                                                    } else {
-                                                      ref
-                                                          .read(
-                                                              termsAndConditionsProvider
-                                                                  .notifier)
-                                                          .state = false;
-                                                    }
-                                                  },
-                                                  icon: termsAndConditions ==
-                                                          false
-                                                      ? const Icon(
-                                                          Icons
-                                                              .check_box_outline_blank_sharp,
-                                                          color: Colors.grey,
-                                                          size: 18,
-                                                        )
-                                                      : const Icon(
-                                                          Icons.check_box,
-                                                          color: kPrimaryColor,
-                                                          size: 18,
-                                                        ),
-                                                ),
-                                                Text(
-                                                  UserData.translation.data
-                                                          ?.acceptAllTermsAndConditions
-                                                          ?.toString() ??
-                                                      'I accept the',
-                                                  style: const TextStyle(
-                                                      color: kLightGreyColor,
-                                                      fontSize: 10,
-                                                      fontWeight:
-                                                          FontWeight.w400),
-                                                ),
-                                                InkWell(
-                                                  onTap: () {},
-                                                  child: Text(
-                                                    UserData.translation.data
-                                                            ?.termsAndConditions
-                                                            ?.toString() ??
-                                                        ' terms & conditions',
-                                                    style: const TextStyle(
-                                                        color: kLightGreyColor,
-                                                        fontSize: 10,
-                                                        fontWeight:
-                                                            FontWeight.w400),
-                                                  ),
-                                                ),
-                                              ],
+                                            SizedBox(
+                                              height: 10,
                                             ),
                                             InkWell(
                                               onTap: () {
@@ -550,6 +505,86 @@ class CheckoutScreen extends StatelessWidget {
                                                         fontSize: 12,
                                                       ),
                                                     )),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 20.0, right: 20),
+                                              child: Row(
+                                                children: [
+                                                  InkWell(
+                                                    onTap: () {
+                                                      if (termsAndConditions ==
+                                                          false) {
+                                                        ref
+                                                            .read(
+                                                                termsAndConditionsProvider
+                                                                    .notifier)
+                                                            .state = true;
+                                                      } else {
+                                                        ref
+                                                            .read(
+                                                                termsAndConditionsProvider
+                                                                    .notifier)
+                                                            .state = false;
+                                                      }
+                                                    },
+                                                    child: termsAndConditions ==
+                                                            false
+                                                        ? Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(8.0),
+                                                            child: const Icon(
+                                                              Icons
+                                                                  .check_box_outline_blank_sharp,
+                                                              color:
+                                                                  Colors.grey,
+                                                              size: 18,
+                                                            ),
+                                                          )
+                                                        : Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(8.0),
+                                                            child: const Icon(
+                                                              Icons.check_box,
+                                                              color:
+                                                                  kPrimaryColor,
+                                                              size: 18,
+                                                            ),
+                                                          ),
+                                                  ),
+                                                  Text(
+                                                    UserData.translation.data
+                                                            ?.acceptAllTermsAndConditions
+                                                            ?.toString() ??
+                                                        'I accept the',
+                                                    style: const TextStyle(
+                                                        color: kLightGreyColor,
+                                                        fontSize: 10,
+                                                        fontWeight:
+                                                            FontWeight.w400),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 2,
+                                                  ),
+                                                  InkWell(
+                                                    onTap: () {},
+                                                    child: Text(
+                                                      UserData.translation.data
+                                                              ?.termsAndConditions
+                                                              ?.toString() ??
+                                                          ' terms & conditions',
+                                                      style: const TextStyle(
+                                                          color:
+                                                              kLightGreyColor,
+                                                          fontSize: 10,
+                                                          fontWeight:
+                                                              FontWeight.w400),
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                             Padding(
@@ -913,7 +948,7 @@ class CheckoutScreen extends StatelessWidget {
                                                               'Enter Promo Code',
                                                           contentPadding:
                                                               EdgeInsets.only(
-                                                                  bottom: 10,
+                                                                  bottom: 15,
                                                                   right: 5,
                                                                   left: 5),
                                                           hintStyle: TextStyle(
@@ -940,7 +975,10 @@ class CheckoutScreen extends StatelessWidget {
                                                               screenWidth / 4,
                                                           padding:
                                                               const EdgeInsets
-                                                                  .all(10),
+                                                                      .only(
+                                                                  left: 10,
+                                                                  right: 10,
+                                                                  bottom: 8),
                                                           alignment:
                                                               Alignment.center,
                                                           decoration: BoxDecoration(

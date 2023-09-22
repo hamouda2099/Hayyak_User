@@ -79,7 +79,7 @@ class EventHomeCard extends StatelessWidget {
                       eventName,
                       overflow: TextOverflow.ellipsis,
                       style:
-                          const TextStyle(color: kLightGreyColor, fontSize: 12),
+                          const TextStyle(color: kDarkGreyColor, fontSize: 12),
                     ),
                   ),
                 ),

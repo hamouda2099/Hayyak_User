@@ -156,114 +156,118 @@ class SignUpScreen extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              Container(
-                width: screenWidth / 1.2,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    width: 0.5,
-                    color: kLightGreyColor.withOpacity(0.3),
+              Directionality(
+                textDirection: TextDirection.ltr,
+                child: Container(
+                  width: screenWidth / 1.2,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 0.5,
+                      color: kLightGreyColor.withOpacity(0.3),
+                    ),
+                    borderRadius: BorderRadius.circular(5),
                   ),
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(5),
-                      width: 50,
-                      child: TextField(
-                        enabled: false,
-                        decoration: InputDecoration(
-                          hintText: '  +966',
-                          hintStyle: TextStyle(
-                              color: kLightGreyColor.withOpacity(0.8),
-                              fontWeight: FontWeight.w300,
-                              fontSize: 12),
-                          border: InputBorder.none,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(5),
+                        width: 50,
+                        child: TextField(
+                          enabled: false,
+                          decoration: InputDecoration(
+                            hintText: '  +966',
+                            hintStyle: TextStyle(
+                                color: kLightGreyColor.withOpacity(0.8),
+                                fontWeight: FontWeight.w300,
+                                fontSize: 12),
+                            border: InputBorder.none,
+                          ),
                         ),
                       ),
-                    ),
-                    const Text(
-                      '|',
-                      style: TextStyle(color: kLightGreyColor, fontSize: 14),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(left: 5, right: 5),
-                      width: screenWidth / 2.5,
-                      child: TextFormField(
-                        controller: logic.phoneController,
-                        validator: (val) {
-                          if (logic.phoneController?.text.isEmpty ??
-                              ''.isEmpty) {
-                            return UserData
-                                    .translation.data?.thisFieldIsRequired
-                                    ?.toString() ??
-                                'This field is required';
-                          } else {
-                            if (val?.length != 10) {
-                              return UserData.translation.data?.phone
+                      const Text(
+                        '|',
+                        style: TextStyle(color: kLightGreyColor, fontSize: 14),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.only(left: 5, right: 5),
+                        width: screenWidth / 2.5,
+                        child: TextFormField(
+                          controller: logic.phoneController,
+                          validator: (val) {
+                            if (logic.phoneController.text.isEmpty ??
+                                ''.isEmpty) {
+                              return UserData
+                                      .translation.data?.thisFieldIsRequired
                                       ?.toString() ??
-                                  'Phone must be of 10 digit';
+                                  'This field is required';
                             } else {
-                              return null;
+                              if ((val ?? "").length < 9) {
+                                return UserData.translation.data?.phone
+                                        ?.toString() ??
+                                    'Phone must be of 9 digit';
+                              } else {
+                                return null;
+                              }
                             }
-                          }
-                        },
-                        decoration: InputDecoration(
-                          hintText:
-                              UserData.translation.data?.phone?.toString() ??
-                                  'Phone',
-                          hintStyle: TextStyle(
-                              color: kLightGreyColor.withOpacity(0.8),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14),
-                          border: InputBorder.none,
+                          },
+                          decoration: InputDecoration(
+                            hintText:
+                                UserData.translation.data?.phone?.toString() ??
+                                    'Phone',
+                            hintStyle: TextStyle(
+                                color: kLightGreyColor.withOpacity(0.8),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14),
+                            border: InputBorder.none,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(
                 height: 10,
               ),
-              Container(
-                padding: const EdgeInsets.all(5),
-                width: screenWidth / 1.2,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    width: 0.5,
-                    color: kLightGreyColor.withOpacity(0.3),
-                  ),
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: TextField(
-                  controller: logic.dateOfBirthController,
-                  decoration: InputDecoration(
-                    hintText: 'dd-mm-yy',
-                    suffixIcon: IconButton(
-                      onPressed: () async {
-                        DateTime? pickedDate = await showDatePicker(
-                            context: context,
-                            initialDate: DateTime(DateTime.now().year - 18),
-                            //get today's date
-                            firstDate: DateTime(DateTime.now().year - 100),
-                            //DateTime.now() - not to allow to choose before today.
-                            lastDate: DateTime(DateTime.now().year - 12));
-                        print(pickedDate);
-                        logic.dateOfBirthController.text =
-                            '${pickedDate!.day < 10 ? '0' : ''}${pickedDate?.day}-${pickedDate!.month < 10 ? '0' : ''}${pickedDate.month}-${pickedDate?.year}';
-                      },
-                      icon: const Icon(
-                        Icons.calendar_month,
-                        color: kLightGreyColor,
-                      ),
+              InkWell(
+                onTap: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime(DateTime.now().year - 18),
+                      firstDate: DateTime(DateTime.now().year - 100),
+                      lastDate: DateTime(DateTime.now().year - 12));
+                  logic.dateOfBirthController.text =
+                      '${pickedDate!.day < 10 ? '0' : ''}${pickedDate?.day}-${pickedDate!.month < 10 ? '0' : ''}${pickedDate.month}-${pickedDate?.year}';
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(5),
+                  width: screenWidth / 1.2,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 0.5,
+                      color: kLightGreyColor.withOpacity(0.3),
                     ),
-                    hintStyle: TextStyle(
-                        color: kLightGreyColor.withOpacity(0.8),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14),
-                    border: InputBorder.none,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: TextField(
+                    enabled: false,
+                    controller: logic.dateOfBirthController,
+                    decoration: InputDecoration(
+                      hintText: 'dd-mm-yy',
+                      suffixIcon: IconButton(
+                        onPressed: () async {},
+                        icon: const Icon(
+                          Icons.calendar_month,
+                          color: kLightGreyColor,
+                        ),
+                      ),
+                      hintStyle: TextStyle(
+                          color: kLightGreyColor.withOpacity(0.8),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14),
+                      border: InputBorder.none,
+                    ),
                   ),
                 ),
               ),
@@ -304,14 +308,18 @@ class SignUpScreen extends StatelessWidget {
                       },
                       items: logic.gender.map((location) {
                         return DropdownMenuItem(
+                          value: location,
                           child: Text(
-                            location,
+                            location == 'Male' && localLanguage == 'ar'
+                                ? 'ذكر'
+                                : location == 'Female' && localLanguage == 'ar'
+                                    ? 'أنثي'
+                                    : location.toString(),
                             style: TextStyle(
                                 color: kLightGreyColor.withOpacity(0.8),
                                 fontWeight: FontWeight.bold,
                                 fontSize: 14),
                           ),
-                          value: location,
                         );
                       }).toList(),
                     ),

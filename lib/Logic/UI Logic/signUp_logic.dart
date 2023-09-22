@@ -19,6 +19,7 @@ import '../../UI/Screens/home_screen.dart';
 class SignUpLogic {
   final formKey = GlobalKey<FormState>();
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
   // final FacebookAuth facebookAuth = FacebookAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
   TextEditingController firstNameController = TextEditingController();
@@ -58,6 +59,7 @@ class SignUpLogic {
               confirmPassword: confirmPassword,
               dateOfBirth: dateOfBirth)
           .then((value) async {
+        print(value.body);
         Navigator.pop(context);
         if (jsonDecode(value.body)['success'] == true &&
             jsonDecode(value.body)['code'] == 200) {
@@ -80,7 +82,7 @@ class SignUpLogic {
           }
         } else {
           messageDialog(context,
-              '${jsonDecode(value.body)['error'] ?? jsonDecode(value.body)['code']}');
+              '${jsonDecode(value.body)['errors'] ?? jsonDecode(value.body)['code']}');
         }
       });
     } else {

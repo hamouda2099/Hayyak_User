@@ -35,6 +35,7 @@ class EventTicketsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(selectedDate);
     return Consumer(
       builder: (context, ref, child) {
         final page = ref.watch(pageProvider);

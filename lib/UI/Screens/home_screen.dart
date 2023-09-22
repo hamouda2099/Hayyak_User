@@ -9,6 +9,8 @@ import 'package:hayyak/UI/Components/event_home_component.dart';
 import 'package:hayyak/UI/Components/home_slider_component.dart';
 import 'package:hayyak/main.dart';
 
+import '../../Config/user_data.dart';
+
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -123,18 +125,20 @@ class HomeScreen extends StatelessWidget {
                                               print(actions);
                                               print(scrollingVal);
                                             },
-                                            child: const Padding(
+                                            child: Padding(
                                               padding: EdgeInsets.all(5),
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.end,
                                                 children: [
                                                   Text(
-                                                    "See All ",
+                                                    UserData.translation.data
+                                                            ?.seeAll
+                                                            ?.toString() ??
+                                                        "See All ",
                                                     style: TextStyle(
-                                                        color: kPrimaryColor,
-                                                        fontWeight:
-                                                            FontWeight.bold),
+                                                      color: kPrimaryColor,
+                                                    ),
                                                   ),
                                                   Icon(
                                                     Icons.arrow_forward_ios,

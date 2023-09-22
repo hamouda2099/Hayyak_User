@@ -30,6 +30,7 @@ class EventDetails extends StatelessWidget {
   GoogleMapController? controller;
   Set<Marker> marker = Set();
   YoutubePlayerController? videoController;
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<EventModel>(
@@ -164,8 +165,11 @@ class EventDetails extends StatelessWidget {
                       InkWell(
                         onTap: () {
                           if (UserData.token == '') {
-                            messageDialog(context, 'Please Login First',
-                                function: () {
+                            messageDialog(
+                                context,
+                                UserData.translation.data?.pleaseLoginFirst
+                                        ?.toString() ??
+                                    'Please Login First', function: () {
                               navigator(
                                   context: context,
                                   remove: true,
@@ -199,6 +203,7 @@ class EventDetails extends StatelessWidget {
                                     context: context,
                                     screen: DatePickerScreen(
                                       navigateScreen: 'seats',
+                                      eventIsFav: snapShot.data?.data?.isFav,
                                       eventId:
                                           snapShot.data?.data?.id?.toString() ??
                                               '',
@@ -227,6 +232,7 @@ class EventDetails extends StatelessWidget {
                                     context: context,
                                     screen: DatePickerScreen(
                                       navigateScreen: 'tickets',
+                                      eventIsFav: snapShot.data?.data?.isFav,
                                       eventId:
                                           snapShot.data?.data?.id?.toString() ??
                                               '',
@@ -277,6 +283,7 @@ class EventDetails extends StatelessWidget {
                         title: snapShot.data?.data?.name.toString() ?? '',
                         shareAndFav: true,
                         backToHome: true,
+                        eventIsFav: snapShot.data?.data?.isFav,
                         eventId: eventId.toString(),
                       ),
                       Expanded(

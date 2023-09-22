@@ -137,6 +137,9 @@ class Data {
   String? phoneValidation;
   String? feedbackSentSuccessfully;
   String? pleaseLoginFirst;
+  String? pleaseSelectSeats;
+  String? seeAll;
+  String? pleaseSelectDate;
 
   Data(
       {this.signIn,
@@ -239,6 +242,9 @@ class Data {
       this.mainVaildation,
       this.phoneValidation,
       this.pleaseLoginFirst,
+      this.pleaseSelectSeats,
+      this.pleaseSelectDate,
+      this.seeAll,
       this.feedbackSentSuccessfully});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -343,6 +349,9 @@ class Data {
         mainVaildation: json["mainVaildation"],
         phoneValidation: json["phoneValidation"],
         pleaseLoginFirst: json["pleaseLoginFirst"],
+        pleaseSelectSeats: json["PleaseSelectSeats"],
+        pleaseSelectDate: json["PleaseSelectDate"],
+        seeAll: json["SeeAll"],
         feedbackSentSuccessfully: json["feedbackSentSuccessfully"],
       );
 
@@ -449,5 +458,6 @@ class Data {
         "phoneValidation": phoneValidation,
         "feedbackSentSuccessfully": feedbackSentSuccessfully,
         "pleaseLoginFirst": pleaseLoginFirst,
+        "PleaseSelectSeats": pleaseSelectSeats,
       };
 }

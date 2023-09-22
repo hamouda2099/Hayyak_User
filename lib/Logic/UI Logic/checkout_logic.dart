@@ -1,26 +1,29 @@
 import 'dart:convert';
+import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/Dialogs/loading_dialog.dart';
 import 'package:hayyak/Dialogs/message_dialog.dart';
 import 'package:hayyak/Models/aviable_for_sale_model.dart';
-import 'package:urwaypayment/urwaypayment.dart';
+import 'package:moyasar/moyasar.dart';
 
 // import 'package:urwaypayment/urwaypayment.dart';
 
+import '../../Config/constants.dart';
 import '../../Config/user_data.dart';
 import '../../Dialogs/order_created_successfully.dart';
 import '../../Models/static_services_model.dart';
 import '../../UI/Screens/home_screen.dart';
-import '../../UI/Screens/payment_method_screen.dart';
+import '../../main.dart';
 import '../Services/api_manger.dart';
 
 class CheckoutLogic {
   late BuildContext context;
   late bool validateEmail;
   StaticServices? staticServices;
+  PaymentConfig? paymentConfig;
   String? eventId;
   String? orderId;
   String? terminalId;
@@ -95,7 +98,7 @@ class CheckoutLogic {
     required String amount,
     required String date,
     required String couponId,
-  }) {
+  }) async {
     loadingDialog(context);
     ApiManger.createOrder(
             eventId: eventId,
@@ -110,19 +113,77 @@ class CheckoutLogic {
             couponId: couponId,
             userRole: UserData.role!,
             token: UserData.token!)
-        .then((value) {
+        .then((value) async {
       Navigator.pop(context);
       if (value['code'] == 200) {
         orderId = value['data']['order']['order_id'].toString() ?? '';
         if (UserData.role == 'member') {
           orderCreatedSuccessfully(context: context);
         } else {
-          navigator(
+          print(amount);
+          paymentConfig = PaymentConfig(
+            publishableApiKey:
+                'pk_test_wS13FMSHPN7CxmVhiZD3msn5L2FfDJFTqeVDSkzD',
+            amount: (double.parse(amount) * 100).toInt(),
+            // SAR 257.58
+            description: "#order $orderId",
+            metadata: {'size': '250g'},
+            creditCard: CreditCardConfig(saveCard: true, manual: false),
+            applePay: ApplePayConfig(
+                merchantId: 'sk_test_k6R4UubCbhZCnGfKD9SfMMdHZzrmPsemkccBWpVg',
+                label: 'Hayyak Events',
+                manual: false),
+          );
+
+          await showDialog(
               context: context,
-              screen: PaymentMethods(
-                description: "#order $orderId",
-                amount: double.parse(amount),
-              ));
+              builder: (context) {
+                return Scaffold(
+                  backgroundColor: Colors.white,
+                  appBar: AppBar(
+                    backgroundColor: Colors.white,
+                    centerTitle: true,
+                    elevation: 0,
+                    leading: IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: kDarkGreyColor,
+                      ),
+                    ),
+                    title: const Text(
+                      "Online Payment",
+                      style: TextStyle(color: kDarkGreyColor, fontSize: 16),
+                    ),
+                  ),
+                  body: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Image(
+                            width: screenWidth / 1.5,
+                            image:
+                                const AssetImage('assets/images/grey_logo.png'),
+                          ),
+                          ApplePay(
+                            config: paymentConfig!,
+                            onPaymentResult: onPaymentResult,
+                          ),
+                          Platform.isIOS ? const Text("or") : const SizedBox(),
+                          CreditCard(
+                            config: paymentConfig!,
+                            onPaymentResult: onPaymentResult,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              });
           // onlinePayment(context: context, amount: double.parse(amount));
         }
       } else {
@@ -148,109 +209,109 @@ class CheckoutLogic {
     return jsonString;
   }
 
-  onlinePayment({required BuildContext context, required double amount}) {
-    loadingDialog(context);
-    Payment.makepaymentService(
-      context: context,
-      country: 'SA',
-      action: '4',
-      currency: 'SAR',
-      amt: amount.toString(),
-      customerEmail: UserData.email ?? '',
-      trackid: 'FLUTTER_456353577432',
-      udf1: 'text',
-      udf2: '',
-      udf3: 'EN',
-      udf4: '',
-      udf5: 'Text6',
-      tokenizationType: '2',
-      address: '',
-      cardToken: '',
-      city: '',
-      state: '',
-      tokenOperation: 'A',
-      zipCode: '21442',
-    ).then((value) {
-      Navigator.pop(context);
-      try {
-        String res = _convertToJsonStringQuotes(raw: value);
-        Map decodedRes = jsonDecode(res);
-        paymentId = decodedRes['PaymentId'];
-        transId = decodedRes['TranId'];
-        eci = decodedRes['ECI'];
-        result = decodedRes['Result'];
-        trackId = decodedRes['TrackId'];
-        responseCode = decodedRes['ResponseCode'];
-        rrn = decodedRes['RRN'];
-        responseHash = decodedRes['responseHash'];
-        cardBrand = decodedRes['MASTER'];
-        userField1 = decodedRes['UserField1'];
-        userField2 = decodedRes['UserField2'];
-        userField3 = decodedRes['UserField3'];
-        userField4 = decodedRes['UserField4'];
-        userField5 = decodedRes['UserField5'];
-        cardToken = decodedRes['cardToken'];
-        maskedBan = decodedRes['maskedPAN'];
-        payFor = decodedRes['payFor'];
-        subscriptionId = decodedRes['SubscriptionId'];
-        paymentType = decodedRes['PaymentType'];
-      } catch (e) {}
-      if (result == 'Successful') {
-        ApiManger.payOrder(
-          orderId: orderId,
-          payStatus: 'success',
-          // paymentId: paymentId,
-          // tranId: transId,
-          // eci: eci,
-          // result: result,
-          // trackId: trackId,
-          // authCode: authCode??'',
-          // responseCode: responseCode,
-          // rrn: rrn,
-          // responseHash: responseHash,
-          // amount: amount.toString(),
-          // cardBrand: cardBrand,
-          // userField1: userField1,
-          // userField2: userField2,
-          // userField3: userField3,
-          // userField4: userField4,
-          // userField5: userField5,
-          // maskedPAN: maskedBan,
-          // cardToken: cardToken,
-          // subscriptionId: subscriptionId,
-          // email: UserData.email,
-          // payFor: payFor,
-          // payId: paymentId,
-          // terminalid: terminalId,
-          // udf1: udf1,
-          // udf2: udf2,
-          // udf3: udf3,
-          // udf4: udf4,
-          // udf5: udf5,
-          // tranDate: '',
-          // tranType: '',
-          // integrationModule: '',
-          // integrationData: '',
-          // targetUrl: '',
-          // postData: '',
-          // intUrl: '',
-          // linkBasedUrl: '',
-          // sadadNumber: '',
-          // billNumber: '',
-          // responseMsg: '',
-        ).then((value) {
-          if (value['success'] == true) {
-            navigator(context: context, screen: HomeScreen(), remove: true);
-            messageDialog(context, "Orders created successfully!");
-          } else {
-            messageDialog(context, "an error occured, please contact us");
-          }
-        });
-      } else {
-        messageDialog(context, "an error occured, please contact us");
-      }
-    });
-  }
+  // onlinePayment({required BuildContext context, required double amount}) {
+  //   loadingDialog(context);
+  //   Payment.makepaymentService(
+  //     context: context,
+  //     country: 'SA',
+  //     action: '4',
+  //     currency: 'SAR',
+  //     amt: amount.toString(),
+  //     customerEmail: UserData.email ?? '',
+  //     trackid: 'FLUTTER_456353577432',
+  //     udf1: 'text',
+  //     udf2: '',
+  //     udf3: 'EN',
+  //     udf4: '',
+  //     udf5: 'Text6',
+  //     tokenizationType: '2',
+  //     address: '',
+  //     cardToken: '',
+  //     city: '',
+  //     state: '',
+  //     tokenOperation: 'A',
+  //     zipCode: '21442',
+  //   ).then((value) {
+  //     Navigator.pop(context);
+  //     try {
+  //       String res = _convertToJsonStringQuotes(raw: value);
+  //       Map decodedRes = jsonDecode(res);
+  //       paymentId = decodedRes['PaymentId'];
+  //       transId = decodedRes['TranId'];
+  //       eci = decodedRes['ECI'];
+  //       result = decodedRes['Result'];
+  //       trackId = decodedRes['TrackId'];
+  //       responseCode = decodedRes['ResponseCode'];
+  //       rrn = decodedRes['RRN'];
+  //       responseHash = decodedRes['responseHash'];
+  //       cardBrand = decodedRes['MASTER'];
+  //       userField1 = decodedRes['UserField1'];
+  //       userField2 = decodedRes['UserField2'];
+  //       userField3 = decodedRes['UserField3'];
+  //       userField4 = decodedRes['UserField4'];
+  //       userField5 = decodedRes['UserField5'];
+  //       cardToken = decodedRes['cardToken'];
+  //       maskedBan = decodedRes['maskedPAN'];
+  //       payFor = decodedRes['payFor'];
+  //       subscriptionId = decodedRes['SubscriptionId'];
+  //       paymentType = decodedRes['PaymentType'];
+  //     } catch (e) {}
+  //     if (result == 'Successful') {
+  //       ApiManger.payOrder(
+  //         orderId: orderId,
+  //         payStatus: 'success',
+  //         // paymentId: paymentId,
+  //         // tranId: transId,
+  //         // eci: eci,
+  //         // result: result,
+  //         // trackId: trackId,
+  //         // authCode: authCode??'',
+  //         // responseCode: responseCode,
+  //         // rrn: rrn,
+  //         // responseHash: responseHash,
+  //         // amount: amount.toString(),
+  //         // cardBrand: cardBrand,
+  //         // userField1: userField1,
+  //         // userField2: userField2,
+  //         // userField3: userField3,
+  //         // userField4: userField4,
+  //         // userField5: userField5,
+  //         // maskedPAN: maskedBan,
+  //         // cardToken: cardToken,
+  //         // subscriptionId: subscriptionId,
+  //         // email: UserData.email,
+  //         // payFor: payFor,
+  //         // payId: paymentId,
+  //         // terminalid: terminalId,
+  //         // udf1: udf1,
+  //         // udf2: udf2,
+  //         // udf3: udf3,
+  //         // udf4: udf4,
+  //         // udf5: udf5,
+  //         // tranDate: '',
+  //         // tranType: '',
+  //         // integrationModule: '',
+  //         // integrationData: '',
+  //         // targetUrl: '',
+  //         // postData: '',
+  //         // intUrl: '',
+  //         // linkBasedUrl: '',
+  //         // sadadNumber: '',
+  //         // billNumber: '',
+  //         // responseMsg: '',
+  //       ).then((value) {
+  //         if (value['success'] == true) {
+  //           navigator(context: context, screen: HomeScreen(), remove: true);
+  //           messageDialog(context, "Orders created successfully!");
+  //         } else {
+  //           messageDialog(context, "an error occured, please contact us");
+  //         }
+  //       });
+  //     } else {
+  //       messageDialog(context, "an error occured, please contact us");
+  //     }
+  //   });
+  // }
 
   initStaticServices(
       {required AsyncSnapshot<StaticServices> snapShot,
@@ -421,5 +482,70 @@ class CheckoutLogic {
           (value.data?.whatsapp?.value ?? 0) * selectedTickets.length;
     });
     // }
+  }
+
+  void onPaymentResult(result) {
+    if (result is PaymentResponse) {
+      if (result.status == PaymentStatus.paid) {
+        print(result.status);
+        print(result.source);
+        print(result.id);
+        print(result.amount);
+        print(result.createdAt);
+        print(result.refunded);
+        print(result.updatedAt);
+        print(result.metadata);
+        print(result.description);
+        print(result.currency);
+        print(result.amountFormat);
+        print(result.voidedAt);
+        print(result.callbackUrl);
+        print(result.captured);
+        print(result.capturedAt);
+        print(result.capturedFormat);
+        print(result.fee);
+        print(result.feeFormat);
+        print(result.invoiceId);
+        print(result.ip);
+        ApiManger.payOrder(
+          orderId: orderId,
+          payStatus: 'success',
+          status: result.status.toString(),
+          source: result.source.toString(),
+          id: result.id.toString(),
+          amount: result.amount.toString(),
+          createdAt: result.createdAt.toString(),
+          refunded: result.refunded.toString(),
+          updatedAt: result.updatedAt.toString(),
+          metadata: result.metadata.toString(),
+          description: result.description.toString(),
+          currency: result.amount.toString(),
+          amountFormat: result.amountFormat.toString(),
+          voidedAt: result.voidedAt.toString(),
+          callbackUrl: result.callbackUrl.toString(),
+          captured: result.captured.toString(),
+          capturedAt: result.capturedAt.toString(),
+          capturedFormat: result.capturedFormat.toString(),
+          fee: result.fee.toString(),
+          feeFormat: result.feeFormat.toString(),
+          invoiceId: result.invoiceId.toString(),
+          ip: result.ip.toString(),
+        ).then((value) {
+          print(value);
+          if (value['success'] == true) {
+            navigator(context: context, screen: HomeScreen(), remove: true);
+            messageDialog(
+                context, value["message"] ?? 'order created successfully');
+          } else {
+            messageDialog(context,
+                value["message"] ?? "an error occurred, please contact us");
+          }
+        });
+      } else {
+        messageDialog(context, "an error occurred, please contact us");
+      }
+    } else if (result.status == PaymentStatus.failed) {
+      messageDialog(context, "An error occurred !");
+    }
   }
 }

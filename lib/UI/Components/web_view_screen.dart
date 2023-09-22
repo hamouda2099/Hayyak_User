@@ -4,13 +4,16 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewScreen extends StatefulWidget {
   WebViewScreen({required this.link});
+
   String link;
+
   @override
   State<WebViewScreen> createState() => _WebViewScreenState();
 }
 
 class _WebViewScreenState extends State<WebViewScreen> {
   WebViewController controller = WebViewController();
+
   @override
   void initState() {
     controller.loadRequest(

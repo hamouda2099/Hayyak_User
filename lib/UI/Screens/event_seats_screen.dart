@@ -12,17 +12,21 @@ import 'package:hayyak/UI/Components/image_viewer.dart';
 import 'package:hayyak/UI/Components/seat_category_component.dart';
 import 'package:hayyak/UI/Screens/checkout_screen.dart';
 import 'package:hayyak/main.dart';
-import 'package:share/share.dart';
+
+import '../../Dialogs/loading_dialog.dart';
+import 'home_screen.dart';
 
 final cartCounterProvider = StateProvider<int>((ref) => 0);
 final totalPriceProvider = StateProvider<double>((ref) => 0.0);
 
 class EventSeatsScreen extends StatelessWidget {
-  EventSeatsScreen({required this.selectedDate, required this.eventId});
+  EventSeatsScreen(
+      {required this.selectedDate, required this.eventId, this.eventIsFav});
 
   final tabProvider = StateProvider<String>((ref) => 'tickets');
   String selectedDate = '';
   String eventId = '';
+  bool? eventIsFav;
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +119,12 @@ class EventSeatsScreen extends StatelessWidget {
                       InkWell(
                         onTap: () {
                           if (globalSelectedSeats.isEmpty) {
-                            messageDialog(context, "Please select seats");
+                            messageDialog(
+                                context,
+                                UserData.translation.data
+                                        ?.pleaseChooseTheCurrentSeat
+                                        ?.toString() ??
+                                    "Please select seats");
                           } else {
                             navigator(
                                 context: context,
@@ -205,15 +214,70 @@ class EventSeatsScreen extends StatelessWidget {
                                     fontWeight: FontWeight.bold),
                               ),
                               InkWell(
-                                  onTap: () {
-                                    Share.share('https://hayyak.net/',
-                                        subject: 'Seats');
-                                  },
-                                  child: const Icon(
-                                    Icons.file_upload_outlined,
-                                    size: 20,
-                                    color: kDarkGreyColor,
-                                  ))
+                                onTap: () {
+                                  if (UserData.id == null) {
+                                    messageDialog(
+                                        context,
+                                        UserData.translation.data
+                                                ?.pleaseLoginFirst
+                                                ?.toString() ??
+                                            'Please Login to Add to Favourites !');
+                                  } else {
+                                    if (eventIsFav ?? false) {
+                                      loadingDialog(context);
+                                      ApiManger.removeFromFav(
+                                              id: eventId.toString())
+                                          .then((value) {
+                                        Navigator.pop(context);
+                                        if (value['success']) {
+                                          navigator(
+                                              context: context,
+                                              screen: HomeScreen(),
+                                              replacement: true);
+                                        } else {
+                                          messageDialog(
+                                              context, 'An error occurred');
+                                        }
+                                      });
+                                    } else {
+                                      loadingDialog(context);
+                                      ApiManger.addToFav(
+                                              eventId: eventId.toString())
+                                          .then((value) {
+                                        Navigator.pop(context);
+                                        if (value['success']) {
+                                          navigator(
+                                              context: context,
+                                              screen: HomeScreen(),
+                                              replacement: true);
+                                        } else {
+                                          messageDialog(
+                                              context, 'An Error Occurred');
+                                        }
+                                      });
+                                    }
+                                  }
+                                },
+                                child: (eventIsFav ?? false)
+                                    ? Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 1.0, right: 1),
+                                        child: SvgPicture.asset(
+                                            color: kLightGreyColor,
+                                            width: 20,
+                                            height: 20,
+                                            'assets/icon/solid_heart.svg'),
+                                      )
+                                    : Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 1.0, right: 1),
+                                        child: SvgPicture.asset(
+                                            color: kLightGreyColor,
+                                            width: 13,
+                                            height: 13,
+                                            'assets/icon/Icon feather-heart.svg'),
+                                      ),
+                              )
                             ],
                           ),
                         );

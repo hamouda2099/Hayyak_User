@@ -51,7 +51,7 @@ class ChairComponent extends ConsumerWidget {
                       width: 0.5,
                       color: kLightGreyColor.withOpacity(0.3),
                     )),
-                width: screenWidth / 7,
+                width: screenWidth / 5,
                 child: DropdownButton(
                   underline: const SizedBox(),
                   isExpanded: true,
@@ -61,8 +61,9 @@ class ChairComponent extends ConsumerWidget {
                     Icons.arrow_drop_down_sharp,
                     color: Colors.black.withOpacity(0.5),
                   ),
-                  hint: const Text(
-                    'Select Row',
+                  hint: Text(
+                    UserData.translation.data?.selectRow?.toString() ??
+                        'Select Row',
                     style: TextStyle(
                       fontSize: 12,
                     ),
@@ -205,8 +206,8 @@ class ChairComponent extends ConsumerWidget {
                         color: kPrimaryColor,
                         borderRadius: BorderRadius.circular(5),
                       ),
-                      child: const Text(
-                        'Seat',
+                      child: Text(
+                        UserData.translation.data?.seat?.toString() ?? 'Seat',
                         style: TextStyle(color: Colors.white, fontSize: 12),
                       ),
                     )

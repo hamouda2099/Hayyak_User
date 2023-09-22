@@ -38,25 +38,25 @@ class EventModel {
 }
 
 class Data {
-  Data({
-    this.id,
-    this.name,
-    this.description,
-    this.image,
-    this.startDate,
-    this.endDate,
-    this.pickerStartDate,
-    this.prickerEndDate,
-    this.time,
-    this.latLng,
-    this.address,
-    this.averageCost,
-    this.action,
-    this.seats,
-    this.avgCost,
-    this.typeYouTubeImage,
-    this.urlYouTubeImage,
-  });
+  Data(
+      {this.id,
+      this.name,
+      this.description,
+      this.image,
+      this.startDate,
+      this.endDate,
+      this.pickerStartDate,
+      this.prickerEndDate,
+      this.time,
+      this.latLng,
+      this.address,
+      this.averageCost,
+      this.action,
+      this.seats,
+      this.avgCost,
+      this.typeYouTubeImage,
+      this.urlYouTubeImage,
+      this.isFav});
 
   num? id;
   String? name;
@@ -75,6 +75,7 @@ class Data {
   String? seats;
   String? typeYouTubeImage;
   String? urlYouTubeImage;
+  bool? isFav;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         id: json["id"],
@@ -92,6 +93,7 @@ class Data {
         avgCost: json["avg_cost"],
         action: Action.fromJson(json["action"]),
         seats: json["seats"],
+        isFav: json["is_favourite"],
         typeYouTubeImage: json["type_youtube_image"],
         urlYouTubeImage: json["url_youtube_image"],
       );
@@ -112,8 +114,9 @@ class Data {
         "address": address,
         "average_cost": averageCost,
         "avg_cost": avgCost,
-        "action": action!.toJson(),
+        "action": action?.toJson(),
         "seats": seats,
+        "is_favourite": isFav,
         "type_youtube_image": typeYouTubeImage,
         "url_youtube_image": urlYouTubeImage,
       };

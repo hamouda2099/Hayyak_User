@@ -59,7 +59,7 @@ class SettingsScreen extends StatelessWidget {
                       shape: BoxShape.circle,
                       border: Border.all(color: kLightGreyColor, width: 1),
                       image: DecorationImage(
-                          fit: BoxFit.cover,
+                          fit: BoxFit.contain,
                           image: NetworkImage(UserData.imageUrl ?? '')),
                     ),
                   ),
@@ -83,7 +83,7 @@ class SettingsScreen extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  navigator(context: context, screen: const AccountScreen());
+                  navigator(context: context, screen: AccountScreen());
                 },
                 child: Container(
                   margin: const EdgeInsets.all(10),

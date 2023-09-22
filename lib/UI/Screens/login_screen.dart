@@ -15,11 +15,14 @@ import 'home_screen.dart';
 // ignore: must_be_immutable
 class LoginScreen extends StatelessWidget {
   LoginScreen({required this.screen});
+
   LoginLogic logic = LoginLogic();
   var screen;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
   _back() {}
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -42,7 +45,9 @@ class LoginScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 35.0, right: 35.0),
                 child: Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: localLanguage == 'en'
+                      ? Alignment.centerLeft
+                      : Alignment.centerRight,
                   child: Text(
                     UserData.translation.data?.welcomeBack?.toString() ??
                         'Welcome back!',

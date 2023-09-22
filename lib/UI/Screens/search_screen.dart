@@ -55,20 +55,6 @@ class SearchScreen extends ConsumerWidget {
                 ),
               ),
             ),
-            Align(
-              alignment: Alignment.topLeft,
-              child: Padding(
-                padding: EdgeInsets.all(20.0),
-                child: Text(
-                  UserData.translation.data?.recently?.toString() ?? 'Recently',
-                  style: TextStyle(
-                    color: kDarkGreyColor,
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
             Consumer(
               builder: (context, watch, child) {
                 ref.watch(rebuildProvider);
@@ -276,12 +262,17 @@ class SearchScreen extends ConsumerWidget {
                                     );
                                   },
                                 ))
-                              : Text(
-                                  UserData.translation.data?.searchForEvents
-                                          ?.toString() ??
-                                      'Search for events',
-                                  style: TextStyle(
-                                      color: kLightGreyColor, fontSize: 14),
+                              : Padding(
+                                  padding: const EdgeInsets.all(15.0),
+                                  child: Center(
+                                    child: Text(
+                                      UserData.translation.data?.searchForEvents
+                                              ?.toString() ??
+                                          'Search for events',
+                                      style: const TextStyle(
+                                          color: kLightGreyColor, fontSize: 14),
+                                    ),
+                                  ),
                                 );
                         }
                     }
