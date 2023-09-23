@@ -120,17 +120,15 @@ class CheckoutLogic {
         if (UserData.role == 'member') {
           orderCreatedSuccessfully(context: context);
         } else {
-          print(amount);
           paymentConfig = PaymentConfig(
-            publishableApiKey:
-                'pk_test_wS13FMSHPN7CxmVhiZD3msn5L2FfDJFTqeVDSkzD',
+            publishableApiKey: UserData.moyasarPublishableKey ?? '',
             amount: (double.parse(amount) * 100).toInt(),
             // SAR 257.58
             description: "#order $orderId",
             metadata: {'size': '250g'},
             creditCard: CreditCardConfig(saveCard: true, manual: false),
             applePay: ApplePayConfig(
-                merchantId: 'sk_test_k6R4UubCbhZCnGfKD9SfMMdHZzrmPsemkccBWpVg',
+                merchantId: UserData.moyasarSecretKey ?? '',
                 label: 'Hayyak Events',
                 manual: false),
           );
@@ -138,47 +136,52 @@ class CheckoutLogic {
           await showDialog(
               context: context,
               builder: (context) {
-                return Scaffold(
-                  backgroundColor: Colors.white,
-                  appBar: AppBar(
+                return Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: Scaffold(
                     backgroundColor: Colors.white,
-                    centerTitle: true,
-                    elevation: 0,
-                    leading: IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: const Icon(
-                        Icons.arrow_back,
-                        color: kDarkGreyColor,
+                    appBar: AppBar(
+                      backgroundColor: Colors.white,
+                      centerTitle: true,
+                      elevation: 0,
+                      leading: IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(
+                          Icons.arrow_back,
+                          color: kDarkGreyColor,
+                        ),
+                      ),
+                      title: const Text(
+                        "Online Payment",
+                        style: TextStyle(color: kDarkGreyColor, fontSize: 16),
                       ),
                     ),
-                    title: const Text(
-                      "Online Payment",
-                      style: TextStyle(color: kDarkGreyColor, fontSize: 16),
-                    ),
-                  ),
-                  body: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Image(
-                            width: screenWidth / 1.5,
-                            image:
-                                const AssetImage('assets/images/grey_logo.png'),
-                          ),
-                          ApplePay(
-                            config: paymentConfig!,
-                            onPaymentResult: onPaymentResult,
-                          ),
-                          Platform.isIOS ? const Text("or") : const SizedBox(),
-                          CreditCard(
-                            config: paymentConfig!,
-                            onPaymentResult: onPaymentResult,
-                          )
-                        ],
+                    body: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Image(
+                              width: screenWidth / 1.5,
+                              image: const AssetImage(
+                                  'assets/images/grey_logo.png'),
+                            ),
+                            ApplePay(
+                              config: paymentConfig!,
+                              onPaymentResult: onPaymentResult,
+                            ),
+                            Platform.isIOS
+                                ? const Text("or")
+                                : const SizedBox(),
+                            CreditCard(
+                              config: paymentConfig!,
+                              onPaymentResult: onPaymentResult,
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -487,26 +490,6 @@ class CheckoutLogic {
   void onPaymentResult(result) {
     if (result is PaymentResponse) {
       if (result.status == PaymentStatus.paid) {
-        print(result.status);
-        print(result.source);
-        print(result.id);
-        print(result.amount);
-        print(result.createdAt);
-        print(result.refunded);
-        print(result.updatedAt);
-        print(result.metadata);
-        print(result.description);
-        print(result.currency);
-        print(result.amountFormat);
-        print(result.voidedAt);
-        print(result.callbackUrl);
-        print(result.captured);
-        print(result.capturedAt);
-        print(result.capturedFormat);
-        print(result.fee);
-        print(result.feeFormat);
-        print(result.invoiceId);
-        print(result.ip);
         ApiManger.payOrder(
           orderId: orderId,
           payStatus: 'success',

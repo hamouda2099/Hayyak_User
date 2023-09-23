@@ -30,6 +30,12 @@ class _SplashScreenState extends State<SplashScreen> {
         if (element.key == 'reservation_timer') {
           UserData.reservationTimer = int.parse(element.value.toString());
         }
+        if (element.key == 'moyasar_publishable_key') {
+          UserData.moyasarPublishableKey = element.value;
+        }
+        if (element.key == 'moyasar_secret_key') {
+          UserData.moyasarSecretKey = element.value;
+        }
       });
       UserData.language = await Hive.box('user_data').get('lang') ?? 'en';
       localLanguage = UserData.language ?? 'en';

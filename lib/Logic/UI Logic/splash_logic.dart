@@ -19,6 +19,12 @@ class SplashLogic {
         if (element.key == 'reservation_timer') {
           UserData.reservationTimer = int.parse(element.value.toString());
         }
+        if (element.key == 'moyasar_publishable_key') {
+          UserData.moyasarPublishableKey = element.value;
+        }
+        if (element.key == 'moyasar_secret_key') {
+          UserData.moyasarSecretKey = element.value;
+        }
       });
       ApiManger.getTranslationsKeys().then((value) async {
         if (value.success ?? false) {
