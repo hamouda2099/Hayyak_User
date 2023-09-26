@@ -50,7 +50,10 @@ class PrivacyPolicy extends StatelessWidget {
                       }
                     default:
                       if (snapShot.hasError) {
-                        return Text('Error: ${snapShot.error}');
+                        return Text(UserData
+                                .translation.data?.noInternetConnection
+                                ?.toString() ??
+                            'Error: ${snapShot.error}');
                       } else {
                         _outputHtml = MyHtmlParser.parseHtmlToListOfTextWidgets(
                             snapShot.data?.data?.aboutDescription);

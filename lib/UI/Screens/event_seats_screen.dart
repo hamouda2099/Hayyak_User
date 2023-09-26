@@ -44,7 +44,11 @@ class EventSeatsScreen extends StatelessWidget {
           default:
             if (snapShot.hasError) {
               return Scaffold(
-                  body: Center(child: Text('Error: ${snapShot.error}')));
+                  body: Center(
+                      child: Text(UserData
+                              .translation.data?.noInternetConnection
+                              ?.toString() ??
+                          'Error: ${snapShot.error}')));
             } else {
               return Scaffold(
                 bottomNavigationBar: Container(

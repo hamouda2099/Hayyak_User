@@ -42,7 +42,10 @@ class EditAccountScreen extends StatelessWidget {
                       }
                     default:
                       if (snapShot.hasError) {
-                        return Text('Error: ${snapShot.error}');
+                        return Text(UserData
+                                .translation.data?.noInternetConnection
+                                ?.toString() ??
+                            'Error: ${snapShot.error}');
                       } else {
                         logic.init(snapShot);
                         return SingleChildScrollView(

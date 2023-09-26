@@ -7,6 +7,7 @@ import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/Dialogs/loading_dialog.dart';
 import 'package:hayyak/Dialogs/message_dialog.dart';
 import 'package:hayyak/Models/aviable_for_sale_model.dart';
+import 'package:hayyak/UI/Screens/my_tickets_screen.dart';
 import 'package:moyasar/moyasar.dart';
 
 // import 'package:urwaypayment/urwaypayment.dart';
@@ -15,7 +16,6 @@ import '../../Config/constants.dart';
 import '../../Config/user_data.dart';
 import '../../Dialogs/order_created_successfully.dart';
 import '../../Models/static_services_model.dart';
-import '../../UI/Screens/home_screen.dart';
 import '../../main.dart';
 import '../Services/api_manger.dart';
 
@@ -516,12 +516,12 @@ class CheckoutLogic {
         ).then((value) {
           print(value);
           if (value['success'] == true) {
-            navigator(context: context, screen: HomeScreen(), remove: true);
-            messageDialog(
-                context, value["message"] ?? 'order created successfully');
-          } else {
+            navigator(
+                context: context, screen: MyTicketsScreen(), remove: true);
             messageDialog(context,
-                value["message"] ?? "an error occurred, please contact us");
+                "${UserData.translation.data?.thankYou?.toString() ?? "Thank you !"}\n${value["message"]}");
+          } else {
+            messageDialog(context, value["message"].toString());
           }
         });
       } else {

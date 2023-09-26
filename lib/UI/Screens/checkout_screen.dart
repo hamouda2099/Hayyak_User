@@ -72,7 +72,9 @@ class CheckoutScreen extends StatelessWidget {
             if (snapShot.hasError) {
               return Scaffold(
                 body: Center(
-                  child: Text('Error: ${snapShot.error}'),
+                  child: Text(UserData.translation.data?.noInternetConnection
+                          ?.toString() ??
+                      'Error: ${snapShot.error}'),
                 ),
               );
             } else {
@@ -95,7 +97,10 @@ class CheckoutScreen extends StatelessWidget {
                       if (snapShot.hasError) {
                         return Scaffold(
                             body: Center(
-                          child: Text('Error: ${snapShot.error}'),
+                          child: Text(UserData
+                                  .translation.data?.noInternetConnection
+                                  ?.toString() ??
+                              'Error: ${snapShot.error}'),
                         ));
                       } else {
                         logic.init(snapShot);
@@ -212,7 +217,7 @@ class CheckoutScreen extends StatelessWidget {
                                       padding: EdgeInsets.only(bottom: 5),
                                       margin: const EdgeInsets.all(10),
                                       decoration: BoxDecoration(
-                                        color: const Color(0xFF1fde1f),
+                                        color: const Color(0xFF00B317),
                                         borderRadius: BorderRadius.circular(5),
                                       ),
                                       child: Text(
@@ -666,8 +671,8 @@ class CheckoutScreen extends StatelessWidget {
                                                                           Icon(
                                                                         Icons
                                                                             .check_box,
-                                                                        color: Colors
-                                                                            .blue,
+                                                                        color:
+                                                                            kPrimaryColor,
                                                                         size:
                                                                             18,
                                                                       ),
@@ -782,8 +787,8 @@ class CheckoutScreen extends StatelessWidget {
                                                                           Icon(
                                                                         Icons
                                                                             .check_box,
-                                                                        color: Colors
-                                                                            .blue,
+                                                                        color:
+                                                                            kPrimaryColor,
                                                                         size:
                                                                             18,
                                                                       ),
@@ -887,8 +892,8 @@ class CheckoutScreen extends StatelessWidget {
                                                                   child: Icon(
                                                                     Icons
                                                                         .check_box,
-                                                                    color: Colors
-                                                                        .blue,
+                                                                    color:
+                                                                        kPrimaryColor,
                                                                     size: 18,
                                                                   ),
                                                                 ),

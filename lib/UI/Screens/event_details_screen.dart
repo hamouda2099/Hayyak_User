@@ -46,7 +46,11 @@ class EventDetails extends StatelessWidget {
           default:
             if (snapShot.hasError) {
               return Scaffold(
-                  body: Center(child: Text('Error: ${snapShot.error}')));
+                  body: Center(
+                      child: Text(UserData
+                              .translation.data?.noInternetConnection
+                              ?.toString() ??
+                          'Error: ${snapShot.error}')));
             } else {
               double? lat = double.tryParse(snapShot.data!.data!.latLng!
                   .substring(0, snapShot.data?.data!.latLng!.indexOf(','))

@@ -56,7 +56,11 @@ class EventTicketsScreen extends StatelessWidget {
               default:
                 if (snapShot.hasError) {
                   return Scaffold(
-                      body: Center(child: Text('Error: ${snapShot.error}')));
+                      body: Center(
+                          child: Text(UserData
+                                  .translation.data?.noInternetConnection
+                                  ?.toString() ??
+                              'Error: ${snapShot.error}')));
                 } else {
                   selectedTickets = [];
                   selectedServices = [];
@@ -138,8 +142,12 @@ class EventTicketsScreen extends StatelessWidget {
                           InkWell(
                             onTap: () {
                               if (selectedTickets.isEmpty) {
-                                messageDialog(context,
-                                    'Please select one ticket at least');
+                                messageDialog(
+                                    context,
+                                    UserData.translation.data
+                                            ?.pleaseSelectTicketAtLeast
+                                            ?.toString() ??
+                                        'Please select one ticket at least');
                               } else {
                                 navigator(
                                     context: context,

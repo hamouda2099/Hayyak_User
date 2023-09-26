@@ -119,13 +119,16 @@ class EventHomeCard extends StatelessWidget {
                                     screen: HomeScreen(),
                                     replacement: true);
                               } else {
-                                messageDialog(context, 'An error occurred');
+                                messageDialog(context,
+                                    value['error'] ?? 'An error occurred');
                               }
                             });
                           } else {
                             loadingDialog(context);
                             ApiManger.addToFav(eventId: id.toString())
                                 .then((value) {
+                              print(value);
+
                               Navigator.pop(context);
                               if (value['success']) {
                                 navigator(
@@ -133,7 +136,8 @@ class EventHomeCard extends StatelessWidget {
                                     screen: HomeScreen(),
                                     replacement: true);
                               } else {
-                                messageDialog(context, 'An Error Occurred');
+                                messageDialog(context,
+                                    value['error'] ?? 'An Error Occurred');
                               }
                             });
                           }

@@ -35,7 +35,10 @@ class HomeScreen extends StatelessWidget {
                       }
                     default:
                       if (snapShot.hasError) {
-                        return Text('Error: ${snapShot.error}');
+                        return Text(UserData
+                                .translation.data?.noInternetConnection
+                                ?.toString() ??
+                            'Error: ${snapShot.error}');
                       } else {
                         return ListView(
                           primary: true,

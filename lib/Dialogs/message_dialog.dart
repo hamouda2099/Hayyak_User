@@ -11,6 +11,7 @@ void messageDialog(BuildContext context, String message, {Function? function}) {
       title: Center(
         child: Text(
           message,
+          textAlign: TextAlign.center,
           style: const TextStyle(
             color: kDarkGreyColor,
             fontSize: 14,

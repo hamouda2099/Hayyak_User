@@ -69,7 +69,10 @@ class SearchScreen extends ConsumerWidget {
                         }
                       default:
                         if (snapShot.hasError) {
-                          return Text('Error: ${snapShot.error}');
+                          return Text(UserData
+                                  .translation.data?.noInternetConnection
+                                  ?.toString() ??
+                              'Error: ${snapShot.error}');
                         } else {
                           return snapShot.data!.success == true
                               ? Expanded(

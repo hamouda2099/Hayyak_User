@@ -52,66 +52,75 @@ class SettingsScreen extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    width: screenWidth / 5,
-                    height: screenWidth / 5,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: kLightGreyColor, width: 1),
-                      image: DecorationImage(
-                          fit: BoxFit.contain,
-                          image: NetworkImage(UserData.imageUrl ?? '')),
-                    ),
-                  ),
+                  UserData.id == null
+                      ? SizedBox()
+                      : Container(
+                          width: screenWidth / 5,
+                          height: screenWidth / 5,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border:
+                                Border.all(color: kLightGreyColor, width: 1),
+                            image: DecorationImage(
+                                fit: BoxFit.contain,
+                                image: NetworkImage(UserData.imageUrl ?? '')),
+                          ),
+                        ),
                   const SizedBox(
                     width: 10,
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(UserData.userName ?? '',
-                          style: const TextStyle(
-                              color: kDarkGreyColor,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold)),
-                      Text(UserData.email ?? '',
-                          style: const TextStyle(
-                              color: kDarkGreyColor, fontSize: 12)),
-                    ],
-                  ),
+                  UserData.id == null
+                      ? SizedBox()
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(UserData.userName ?? '',
+                                style: const TextStyle(
+                                    color: kDarkGreyColor,
+                                    fontSize: 14,
+                                    fontFamily: "ArbFONTS-DINNextLTArabic",
+                                    fontWeight: FontWeight.bold)),
+                            Text(UserData.email ?? '',
+                                style: const TextStyle(
+                                    color: kDarkGreyColor, fontSize: 12)),
+                          ],
+                        ),
                 ],
               ),
-              InkWell(
-                onTap: () {
-                  navigator(context: context, screen: AccountScreen());
-                },
-                child: Container(
-                  margin: const EdgeInsets.all(10),
-                  width: screenWidth / 1.1,
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: boxShadow),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                          UserData.translation.data?.account?.toString() ??
-                              'Account',
-                          style: TextStyle(
-                              color: kLightGreyColor,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold)),
-                      Icon(
-                        Icons.arrow_forward_ios,
-                        color: kDarkGreyColor,
-                        size: 20,
+              UserData.id == null
+                  ? SizedBox()
+                  : InkWell(
+                      onTap: () {
+                        navigator(context: context, screen: AccountScreen());
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.all(10),
+                        width: screenWidth / 1.1,
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: boxShadow),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                                UserData.translation.data?.account
+                                        ?.toString() ??
+                                    'Account',
+                                style: TextStyle(
+                                    color: kLightGreyColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold)),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              color: kDarkGreyColor,
+                              size: 20,
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
+                    ),
               InkWell(
                 onTap: () {
                   loadingDialog(context);
@@ -169,9 +178,12 @@ class SettingsScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(localLanguage == 'ar' ? "English" : 'العربية',
-                          style: const TextStyle(
+                          style: TextStyle(
                               color: kLightGreyColor,
                               fontSize: 14,
+                              fontFamily: localLanguage == 'en'
+                                  ? "ArbFONTS-DINNextLTArabic"
+                                  : "TisaSansPro",
                               fontWeight: FontWeight.bold)),
                       Icon(
                         Icons.arrow_forward_ios,

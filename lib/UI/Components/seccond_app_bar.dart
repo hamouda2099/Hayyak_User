@@ -60,83 +60,99 @@ class SecondAppBar extends StatelessWidget {
                 fontSize: 20,
                 fontWeight: FontWeight.bold),
           ),
-          shareAndFav || UserData.token == ''
-              ? Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0, right: 10),
-                      child: InkWell(
-                          onTap: () {
-                            Share.share(
-                                'https://hayyak.net/$localLanguage/event/$eventId',
-                                subject: title);
-                          },
-                          child: const Icon(
-                            Icons.file_upload_outlined,
-                            size: 20,
-                            color: kDarkGreyColor,
-                          )),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        if (UserData.id == null) {
-                          messageDialog(
-                              context,
-                              UserData.translation.data?.pleaseLoginFirst
-                                      ?.toString() ??
-                                  'Please Login to Add to Favourites !');
-                        } else {
-                          if (eventIsFav ?? false) {
-                            loadingDialog(context);
-                            ApiManger.removeFromFav(id: eventId.toString())
-                                .then((value) {
-                              Navigator.pop(context);
-                              if (value['success']) {
-                                navigator(
-                                    context: context,
-                                    screen: HomeScreen(),
-                                    replacement: true);
-                              } else {
-                                messageDialog(context, 'An error occurred');
-                              }
-                            });
-                          } else {
-                            loadingDialog(context);
-                            ApiManger.addToFav(eventId: eventId.toString())
-                                .then((value) {
-                              Navigator.pop(context);
-                              if (value['success']) {
-                                navigator(
-                                    context: context,
-                                    screen: HomeScreen(),
-                                    replacement: true);
-                              } else {
-                                messageDialog(context, 'An Error Occurred');
-                              }
-                            });
-                          }
-                        }
-                      },
-                      child: (eventIsFav ?? false)
-                          ? Padding(
-                              padding: EdgeInsets.only(left: 1.0, right: 1),
-                              child: SvgPicture.asset(
+          shareAndFav
+              ? UserData.token == ''
+                  ? SizedBox()
+                  : Padding(
+                      padding: const EdgeInsets.only(left: 5.0, right: 5),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 10.0, right: 10),
+                            child: InkWell(
+                                onTap: () {
+                                  Share.share(
+                                      'https://hayyak.net/$localLanguage/event/$eventId',
+                                      subject: title);
+                                },
+                                child: const Icon(
+                                  Icons.file_upload_outlined,
+                                  size: 20,
                                   color: kLightGreyColor,
-                                  width: 20,
-                                  height: 20,
-                                  'assets/icon/solid_heart.svg'),
-                            )
-                          : Padding(
-                              padding: EdgeInsets.only(left: 1.0, right: 1),
-                              child: SvgPicture.asset(
-                                  color: kLightGreyColor,
-                                  width: 13,
-                                  height: 13,
-                                  'assets/icon/Icon feather-heart.svg'),
-                            ),
+                                )),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              if (UserData.id == null) {
+                                messageDialog(
+                                    context,
+                                    UserData.translation.data?.pleaseLoginFirst
+                                            ?.toString() ??
+                                        'Please Login to Add to Favourites !');
+                              } else {
+                                if (eventIsFav ?? false) {
+                                  loadingDialog(context);
+                                  ApiManger.removeFromFav(
+                                          id: eventId.toString())
+                                      .then((value) {
+                                    Navigator.pop(context);
+                                    if (value['success']) {
+                                      navigator(
+                                          context: context,
+                                          screen: HomeScreen(),
+                                          replacement: true);
+                                    } else {
+                                      messageDialog(
+                                          context,
+                                          value['error'] ??
+                                              'An error occurred');
+                                    }
+                                  });
+                                } else {
+                                  loadingDialog(context);
+                                  ApiManger.addToFav(
+                                          eventId: eventId.toString())
+                                      .then((value) {
+                                    Navigator.pop(context);
+                                    if (value['success']) {
+                                      navigator(
+                                          context: context,
+                                          screen: HomeScreen(),
+                                          replacement: true);
+                                    } else {
+                                      messageDialog(
+                                          context,
+                                          value['error'] ??
+                                              'An Error Occurred');
+                                    }
+                                  });
+                                }
+                              }
+                            },
+                            child: (eventIsFav ?? false)
+                                ? Padding(
+                                    padding:
+                                        EdgeInsets.only(left: 3.0, right: 3),
+                                    child: SvgPicture.asset(
+                                        color: kLightGreyColor,
+                                        width: 20,
+                                        height: 20,
+                                        'assets/icon/solid_heart.svg'),
+                                  )
+                                : Padding(
+                                    padding:
+                                        EdgeInsets.only(left: 3.0, right: 3),
+                                    child: SvgPicture.asset(
+                                        color: kLightGreyColor,
+                                        width: 13,
+                                        height: 13,
+                                        'assets/icon/Icon feather-heart.svg'),
+                                  ),
+                          )
+                        ],
+                      ),
                     )
-                  ],
-                )
               : const SizedBox(
                   width: 50,
                 )
