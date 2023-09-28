@@ -29,7 +29,8 @@ class TicketSliderItem extends StatelessWidget {
             child: Column(
               children: [
                 QrImageView(
-                  data: "https://hayyak.net/${orderTicket.eventName}",
+                  // data: "https://hayyak.net/${orderTicket.numId}",
+                  data: "${orderTicket.numId}",
                   version: QrVersions.auto,
                   size: screenWidth / 1.6,
                 ),

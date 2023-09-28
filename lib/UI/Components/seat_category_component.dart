@@ -75,8 +75,14 @@ class SeatCategoryComponent extends ConsumerWidget {
                               onTap: () {
                                 if (selectedSeats.length ==
                                     seatCategory.countLimit) {
+
+
+                                  print(UserData.translation.data
+                                      ?.theLimitsOfTicketsToThisCategoryIs);
+
                                   messageDialog(context,
-                                      'The limits of tickets to this category is ${seatCategory.countLimit}');
+                                      (UserData.translation.data
+                                          ?.theLimitsOfTicketsToThisCategoryIs ?? 'The limits of tickets to this category is') + ' ${seatCategory.countLimit}');
                                 } else {
                                   if (chairs.isNotEmpty) {
                                     if (!chairs.last.submitted) {
@@ -170,12 +176,15 @@ class SeatCategoryComponent extends ConsumerWidget {
                             if (selectedSeats.length ==
                                 seatCategory.countLimit) {
                               messageDialog(context,
-                                  'The limits of tickets to this category is ${seatCategory.countLimit}');
+                                  (UserData.translation.data
+                                      ?.theLimitsOfTicketsToThisCategoryIs ?? 'The limits of tickets to this category is') + ' ${seatCategory.countLimit}');
                             } else {
                               if (chairs.isNotEmpty) {
                                 if (!chairs.last.submitted) {
                                   messageDialog(context,
-                                      'Please choose the current seat');
+                                      UserData.translation.data
+                                          ?.pleaseChooseTheCurrentSeat ??
+                                          'Please choose the current seat');
                                 } else {
                                   List rows = [];
                                   rows.add('Row');

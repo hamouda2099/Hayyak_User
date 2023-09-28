@@ -213,8 +213,8 @@ class SignUpScreen extends StatelessWidget {
                           },
                           decoration: InputDecoration(
                             hintText:
-                                UserData.translation.data?.phone?.toString() ??
-                                    'Phone',
+                                '5xxxxxxxx',
+                            // UserData.translation.data?.phone?.toString() ?? 'Phone',
                             hintStyle: TextStyle(
                                 color: kLightGreyColor.withOpacity(0.8),
                                 fontWeight: FontWeight.bold,
@@ -254,7 +254,7 @@ class SignUpScreen extends StatelessWidget {
                     enabled: false,
                     controller: logic.dateOfBirthController,
                     decoration: InputDecoration(
-                      hintText: 'dd-mm-yy',
+                      hintText: UserData.translation.data?.birth?.toString() ?? 'DoB',
                       suffixIcon: IconButton(
                         onPressed: () async {},
                         icon: const Icon(
