@@ -126,9 +126,9 @@ class EventSeatsScreen extends StatelessWidget {
                             messageDialog(
                                 context,
                                 UserData.translation.data
-                                        ?.pleaseChooseTheCurrentSeat
+                                        ?.pleaseSelectTicketAtLeast
                                         ?.toString() ??
-                                    "Please select seats");
+                                    "Please Select One Ticket At Least");
                           } else {
                             navigator(
                                 context: context,
