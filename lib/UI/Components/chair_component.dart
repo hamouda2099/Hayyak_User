@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hayyak/Config/constants.dart';
@@ -82,7 +83,7 @@ class ChairComponent extends ConsumerWidget {
                     return DropdownMenuItem(
                       value: location,
                       child: Text(
-                        location.toString(),
+                        location.toString().tr(),
                         style: TextStyle(
                             color: kLightGreyColor.withOpacity(0.8),
                             fontSize: 12),
