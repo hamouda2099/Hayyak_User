@@ -131,6 +131,17 @@ class SettingsScreen extends StatelessWidget {
                     textDirection = ui.TextDirection.rtl;
                     Hive.box('user_data').put('lang', "ar");
                     ApiManger.getTranslationsKeys().then((value) async {
+                      UserData.settings.data?.forEach((element) {
+                        if (localLanguage == 'en') {
+                          if (element.key == 'address_en') {
+                            UserData.hayyakAddress = element.value;
+                          }
+                        } else {
+                          if (element.key == 'address_ar') {
+                            UserData.hayyakAddress = element.value;
+                          }
+                        }
+                      });
                       Navigator.pop(context);
                       if (value.success ?? false) {
                         UserData.translation = value;
@@ -151,6 +162,17 @@ class SettingsScreen extends StatelessWidget {
                     textDirection = ui.TextDirection.ltr;
                     Hive.box('user_data').put('lang', "en");
                     ApiManger.getTranslationsKeys().then((value) async {
+                      UserData.settings.data?.forEach((element) {
+                        if (localLanguage == 'en') {
+                          if (element.key == 'address_en') {
+                            UserData.hayyakAddress = element.value;
+                          }
+                        } else {
+                          if (element.key == 'address_ar') {
+                            UserData.hayyakAddress = element.value;
+                          }
+                        }
+                      });
                       Navigator.pop(context);
                       if (value.success ?? false) {
                         UserData.translation = value;

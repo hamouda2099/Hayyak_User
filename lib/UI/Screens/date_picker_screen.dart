@@ -106,6 +106,8 @@ class _DatePickerScreenState extends State<DatePickerScreen> {
                   onTap: () {
                     if (DateTime.tryParse(widget.startDate)?.day ==
                             DateTime.tryParse(widget.endDate)?.day &&
+                        DateTime.tryParse(widget.startDate)?.month ==
+                            DateTime.tryParse(widget.endDate)?.month &&
                         DateTime.tryParse(widget.startDate)?.year ==
                             DateTime.tryParse(widget.endDate)?.year) {
                       selectedDate =
@@ -114,9 +116,9 @@ class _DatePickerScreenState extends State<DatePickerScreen> {
                     if (selectedDate == '') {
                       messageDialog(
                           context,
-                          UserData.translation.data?.pleaseSelectDate
+                          (UserData.translation.data?.pleaseSelectDate
                                   ?.toString() ??
-                              'Please select date!');
+                              'Please select date!'));
                     } else {
                       if (widget.navigateScreen == 'seats') {
                         navigator(
@@ -127,10 +129,6 @@ class _DatePickerScreenState extends State<DatePickerScreen> {
                               eventIsFav: widget.eventIsFav,
                             ));
                       } else {
-                        print("selectedDate");
-                        print(selectedDate);
-                        print(widget.startDate);
-                        print(DateTime.parse(selectedDate ?? '').toString());
                         navigator(
                             context: context,
                             screen: EventTicketsScreen(

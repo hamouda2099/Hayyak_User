@@ -143,6 +143,10 @@ class Data {
   String? noInternetConnection;
   String? thankYou;
   String? pleaseSelectTicketAtLeast;
+  String? subject;
+  String? details;
+  String? submit;
+  String? send;
 
   Data({
     this.signIn,
@@ -252,6 +256,10 @@ class Data {
     this.noInternetConnection,
     this.thankYou,
     this.pleaseSelectTicketAtLeast,
+    this.subject,
+    this.details,
+    this.submit,
+    this.send,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -363,6 +371,10 @@ class Data {
         noInternetConnection: json["noInternetConnection"],
         thankYou: json["thank_you"],
         pleaseSelectTicketAtLeast: json["please_select_one_ticket_at_least"],
+        subject: json["subject"],
+        details: json["details"],
+        submit: json["submit"],
+        send: json["send"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -471,6 +483,10 @@ class Data {
         "PleaseSelectSeats": pleaseSelectSeats,
         "noInternetConnection": noInternetConnection,
         "thank_you": thankYou,
-        "please_select_one_ticket_at_least": pleaseSelectTicketAtLeast
+        "please_select_one_ticket_at_least": pleaseSelectTicketAtLeast,
+        "subject": subject,
+        "details": details,
+        "submit": submit,
+        "send": send,
       };
 }

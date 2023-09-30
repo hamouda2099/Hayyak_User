@@ -15,4 +15,12 @@ class UserData {
   static num reservationTimer = 0;
   static String? moyasarPublishableKey;
   static String? moyasarSecretKey;
+  static String? hayyakPhone;
+  static String? site;
+  static String? facebook;
+  static String? insta;
+  static String? twitter;
+  static String? gmail;
+  static String? linkedIn;
+  static String? hayyakAddress;
 }

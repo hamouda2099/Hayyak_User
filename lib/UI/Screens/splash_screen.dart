@@ -36,6 +36,36 @@ class _SplashScreenState extends State<SplashScreen> {
         if (element.key == 'moyasar_secret_key') {
           UserData.moyasarSecretKey = element.value;
         }
+        if (element.key == 'phone') {
+          UserData.hayyakPhone = element.value;
+        }
+        if (localLanguage == 'en') {
+          if (element.key == 'address_en') {
+            UserData.hayyakAddress = element.value;
+          }
+        } else {
+          if (element.key == 'address_ar') {
+            UserData.hayyakAddress = element.value;
+          }
+        }
+        if (element.key == 'website') {
+          UserData.site = element.value;
+        }
+        if (element.key == 'facebook') {
+          UserData.facebook = element.value;
+        }
+        if (element.key == 'twitter') {
+          UserData.twitter = element.value;
+        }
+        if (element.key == 'instagram') {
+          UserData.insta = element.value;
+        }
+        if (element.key == 'gmail') {
+          UserData.gmail = element.value;
+        }
+        if (element.key == 'linkedin') {
+          UserData.linkedIn = element.value;
+        }
       });
       UserData.language = await Hive.box('user_data').get('lang') ?? 'en';
       localLanguage = UserData.language ?? 'en';
