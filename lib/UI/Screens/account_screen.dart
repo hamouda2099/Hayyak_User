@@ -7,8 +7,8 @@ import 'package:hayyak/Config/navigator.dart';
 import 'package:hayyak/Dialogs/loading_screen.dart';
 import 'package:hayyak/Models/profile_model.dart';
 import 'package:hayyak/UI/Components/box_shadow.dart';
-import 'package:hayyak/UI/Components/seccond_app_bar.dart';
 import 'package:hayyak/UI/Screens/edit_account_screen.dart';
+import 'package:hayyak/UI/Screens/home_screen.dart';
 import 'package:hayyak/main.dart';
 
 import '../../Config/user_data.dart';
@@ -21,14 +21,28 @@ class AccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        title: Text(
+          UserData.translation.data?.account?.toString() ?? 'Account',
+          style: const TextStyle(
+              color: kDarkGreyColor, fontWeight: FontWeight.bold, fontSize: 20),
+        ),
+        leading: IconButton(
+          onPressed: () {
+            navigator(context: context, screen: HomeScreen());
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: kLightGreyColor,
+          ),
+        ),
+      ),
       body: SafeArea(
         child: Column(
           children: [
-            SecondAppBar(
-                title:
-                    UserData.translation.data?.account?.toString() ?? 'Account',
-                shareAndFav: false,
-                backToHome: false),
             FutureBuilder<ProfileModel>(
               future: ApiManger.getProfileData(),
               builder:
@@ -45,6 +59,9 @@ class AccountScreen extends StatelessWidget {
                               ?.toString() ??
                           'Error: ${snapShot.error}');
                     } else {
+                      UserData.imageUrl = snapShot.data?.data?.image;
+                      UserData.userName = snapShot.data?.data?.firstName;
+                      UserData.phone = snapShot.data?.data?.phone;
                       var fetchedOrder = snapShot.data;
                       return SingleChildScrollView(
                         child: Column(
