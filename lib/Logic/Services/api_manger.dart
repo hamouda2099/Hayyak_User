@@ -444,7 +444,7 @@ class ApiManger {
           'image',
           image.readAsBytes().asStream(),
           image.lengthSync(),
-          filename: "filename",
+          filename: "filename.${image.path.split('.').last}",
           contentType: MediaType('image', 'jpeg'),
         ),
       );
@@ -456,6 +456,9 @@ class ApiManger {
       'password': password ?? '',
       'phone': mobile ?? '',
     });
+    print("image?.path");
+    print("filename.${image?.path.split('.').last}");
+    print(image?.path);
     var res = await request.send();
     return jsonDecode(await res.stream.bytesToString());
   }

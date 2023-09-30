@@ -6,10 +6,11 @@ import 'package:hayyak/Config/constants.dart';
 import 'package:hayyak/Dialogs/loading_screen.dart';
 import 'package:hayyak/Logic/UI%20Logic/profile_logic.dart';
 import 'package:hayyak/Models/profile_model.dart';
-import 'package:hayyak/UI/Components/seccond_app_bar.dart';
+import 'package:hayyak/UI/Screens/account_screen.dart';
 import 'package:hayyak/main.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../Config/navigator.dart';
 import '../../Config/user_data.dart';
 import '../../Logic/Services/api_manger.dart';
 
@@ -22,15 +23,29 @@ class EditAccountScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     logic.context = context;
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        title: Text(
+          UserData.translation.data?.account?.toString() ?? 'Edit Account',
+          style: const TextStyle(
+              color: kDarkGreyColor, fontWeight: FontWeight.bold, fontSize: 20),
+        ),
+        leading: IconButton(
+          onPressed: () {
+            navigator(context: context, screen: AccountScreen());
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: kLightGreyColor,
+          ),
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SecondAppBar(
-                  title: UserData.translation.data?.account?.toString() ??
-                      'Edit Account',
-                  shareAndFav: false,
-                  backToHome: false),
               FutureBuilder<ProfileModel>(
                 future: ApiManger.getProfileData(),
                 builder: (BuildContext context,
