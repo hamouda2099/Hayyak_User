@@ -62,7 +62,6 @@ class AccountScreen extends StatelessWidget {
                       UserData.imageUrl = snapShot.data?.data?.image;
                       UserData.userName = snapShot.data?.data?.firstName;
                       UserData.phone = snapShot.data?.data?.phone;
-                      var fetchedOrder = snapShot.data;
                       return SingleChildScrollView(
                         child: Column(
                           children: [

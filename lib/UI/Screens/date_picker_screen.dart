@@ -8,6 +8,7 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../../Config/user_data.dart';
 import '../../Dialogs/message_dialog.dart';
+import '../Components/seat_category_component.dart';
 
 class DatePickerScreen extends StatefulWidget {
   DatePickerScreen(
@@ -121,6 +122,8 @@ class _DatePickerScreenState extends State<DatePickerScreen> {
                               'Please select date!'));
                     } else {
                       if (widget.navigateScreen == 'seats') {
+                        globalSelectedSeats = [];
+                        globalSelectedSeatsServices = [];
                         navigator(
                             context: context,
                             screen: EventSeatsScreen(
